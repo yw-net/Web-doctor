@@ -1,0 +1,1744 @@
+{include file="public/meta" /}
+{include file="public/header" /}
+{include file="public/left" /}
+{include file="public/nav" /}
+<link rel="stylesheet" href="/static/bootstrap-fileinput/css/fileinput.min.css">
+<script src="/static/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script src="/static/bootstrap-fileinput/js/locales/zh.js"></script>
+<style>
+    .control-label{text-align: left !important;}
+    input[type="checkbox"]{margin-right: 5px;}
+    .flex-row{display: flex;justify-content: space-around;flex-direction: row;}
+    .flex-col{display: flex;flex-direction: column;}
+</style>
+<!--术前检查页面-->
+<div class="content">
+    <div class="panel panel-info">
+        <div class="panel-heading yw-flex-row">
+            <h4 class="panel-title">术前检查</h4>
+            <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
+        </div>
+        <input type="text" id="patients_id" class="hidden" value="{$patientid}">
+        <input type="text" id="ct_info" class="hidden" value="{$ct_info}">
+        <div class="panel-body">
+            <div class="layui-tab layui-tab-card" lay-filter="main">
+                <ul class="layui-tab-title" style="background-color: #dff0d8">
+                    <li class="layui-this">CT</li>
+                    <li>血液检查</li>
+                    <li>超声</li>
+                    <li>肺功能</li>
+                    <li>气管镜</li>
+                    <li>头颅MRI/CT</li>
+                    <li>骨扫描</li>
+                    <li>骨MRI/CT</li>
+                    <li>肝脏CT</li>
+                    <li>PET</li>
+                </ul>
+                <div class="layui-tab-content has-success">
+                    <div class="layui-tab-item layui-show">
+
+                        <button class="btn btn-success" data-type="tabAddCt" id="tabAddCt">添加新的CT记录</button>
+
+                        <div class="layui-tab layui-tab-card" lay-filter="addCt">
+                            <ul class="layui-tab-title" id="ct-tab-title">
+
+                                {if $ct_info == null}
+                                <li class="layui-this ct-id" lay-id="1">
+                                    新记录
+                                </li>
+                                {else}
+                                {foreach $ct_info as $ct_info_li}
+                                <li class="ct-id" lay-id="{$ct_info_li->ct_id}">
+                                    CT{$ct_info_li->ct_id}
+                                    <span class="layui-badge-dot layui-bg-green"></span>
+                                </li>
+                                {/foreach}
+                                {/if}
+                            </ul>
+                            <div class="layui-tab-content has-success" style="overflow: hidden" id="ctShow">
+                                {if $ct_info == null}
+                                <form class="layui-tab-item layui-show" id="ctForm1">
+                                    <button class="btn btn-info save" id="ctSaveNew" type="button" onclick="save('ctSaveNew','#ctForm')">保存修改</button>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label" style="margin-left: 5.2%;">1-部位</label>
+                                        <div class="checkbox flex-row">
+                                            <label><input name="buwei" type="checkbox" value="右肺上叶"> 右肺上叶</label>
+                                            <label><input name="buwei" type="checkbox" value="右肺中叶"> 右肺中叶</label>
+                                            <label><input name="buwei" type="checkbox" value="右肺下叶"> 右肺下叶</label>
+                                            <label><input name="buwei" type="checkbox" value="左肺上叶"> 左肺上叶</label>
+                                            <label><input name="buwei" type="checkbox" value="左肺下叶"> 左肺下叶</label>
+                                            <label><input name="buwei" type="checkbox" value="中心型"> 中心型</label>
+                                            <label><input name="buwei" type="checkbox" value="外周型"> 外周型</label>
+                                            <label><input name="buwei" type="checkbox" value="跨列"> 跨列</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="overflow: hidden">
+                                        <label class="col-sm-1 control-label" style="margin-left: 5.2%;">2-大小</label>
+                                        <div class="col-sm-5 row flex-row">
+                                            <div class="input-group col-sm-3">
+                                                <input type="text" class="form-control input-sm" name="daxiao1" value="">
+                                                <span class="input-group-addon" for="daxiao1">cm</span>
+                                            </div>
+                                            <span class="glyphicon glyphicon-remove" style="line-height: 30px;"></span>
+                                            <div class="input-group col-sm-3">
+                                                <input type="text" class="form-control input-sm" name="daxiao2" value="">
+                                                <span class="input-group-addon" for="daxiao2">cm</span>
+                                            </div>
+                                            <span class="glyphicon glyphicon-remove" style="line-height: 30px;"></span>
+                                            <div class="input-group col-sm-3">
+                                                <input type="text" class="form-control input-sm" name="daxiao3" value="">
+                                                <span class="input-group-addon" for="daxiao3">cm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">3-GGO</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="ggo" value="1"/> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="ggo" value="0" checked /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">4-钙化</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="gaihua" value="1"/> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="gaihua" value="0" checked/> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">5-分叶症</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="fenyezheng" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="fenyezheng" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">6-毛刺症</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="maocizheng" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="maocizheng" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">7-胸膜皱缩</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xiongmozhousuo" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xiongmozhousuo" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">8-棘状突起</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="jizhuangtuqi" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="jizhuangtuqi" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">9-空洞</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="kongdong" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="kongdong" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">10-支气管征</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zhiqiguanzheng" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zhiqiguanzheng" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">11-阻塞性肺炎</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zushaixingfeiyan" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zushaixingfeiyan" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">12-肿瘤侵犯血管</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zhongliuqingfanxueguan" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zhongliuqingfanxueguan" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">13-侵犯膈肌</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="qingfangeji" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="qingfangeji" value="0" /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">14-侵犯椎体</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="qingfanzhuiti" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="qingfanzhuiti" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">15-侵犯胸壁</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="qingfanxiongbi" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="qingfanxiongbi" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">16-胸水</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xiongshui" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xiongshui" value="0" /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">17-同叶结节</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="tongyejiejie" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="tongyejiejie" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">18-不同叶结节</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="butongyejiejie" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="butongyejiejie" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">19-SPN</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="spn" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="spn" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">20-淋巴结肿大</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="linbajiezhognda" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="linbajiezhognda" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-12">
+                                        <input hidden id="ctImgAddress1" />
+                                        <input type="file" id="imgShowCt1"  name="imgShowCt1" multiple class="file-loading">
+                                    </div>
+                                </form>
+                                {else}
+                                {foreach $ct_info as $ct_info_item}
+                                <form class="layui-tab-item" id="ctForm{$ct_info_item->ct_id}">
+                                    <button class="btn btn-danger del" id="delCtInfo" type="button" onclick="delBtn('delCtInfo','{$ct_info_item->ct_id}')">删除</button>
+                                    <button class="btn btn-info save" id="ctSave" type="button" onclick="save('ctSave','#ctForm')">保存修改</button>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label" style="margin-left: 5.2%;">1-部位</label>
+                                        <div class="checkbox flex-row">
+                                            <label><input name="buwei" type="checkbox" value="右肺上叶" <?php if(strstr($ct_info_item->buwei,'右肺上叶')) echo 'checked="checked"'; ?> > 右肺上叶</label>
+                                            <label><input name="buwei" type="checkbox" value="右肺中叶" <?php if(strstr($ct_info_item->buwei,'右肺中叶')) echo 'checked="checked"'; ?> > 右肺中叶</label>
+                                            <label><input name="buwei" type="checkbox" value="右肺下叶" <?php if(strstr($ct_info_item->buwei,'右肺下叶')) echo 'checked="checked"'; ?> > 右肺下叶</label>
+                                            <label><input name="buwei" type="checkbox" value="左肺上叶" <?php if(strstr($ct_info_item->buwei,'左肺上叶')) echo 'checked="checked"'; ?> > 左肺上叶</label>
+                                            <label><input name="buwei" type="checkbox" value="左肺下叶" <?php if(strstr($ct_info_item->buwei,'左肺下叶')) echo 'checked="checked"'; ?> > 左肺下叶</label>
+                                            <label><input name="buwei" type="checkbox" value="中心型" <?php if(strstr($ct_info_item->buwei,'中心型')) echo 'checked="checked"'; ?> > 中心型</label>
+                                            <label><input name="buwei" type="checkbox" value="外周型" <?php if(strstr($ct_info_item->buwei,'外周型')) echo 'checked="checked"'; ?> > 外周型</label>
+                                            <label><input name="buwei" type="checkbox" value="跨列" <?php if(strstr($ct_info_item->buwei,'跨列')) echo 'checked="checked"'; ?> > 跨列</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="overflow: hidden">
+                                        <label class="col-sm-1 control-label" style="margin-left: 5.2%;">2-大小</label>
+                                        <div class="col-sm-5 row flex-row">
+                                            <div class="input-group col-sm-3">
+                                                <input type="text" class="form-control input-sm" name="daxiao1" value="{$ct_info_item->daxiao1}">
+                                                <span class="input-group-addon" for="daxiao1">cm</span>
+                                            </div>
+                                            <span class="glyphicon glyphicon-remove" style="line-height: 30px;"></span>
+                                            <div class="input-group col-sm-3">
+                                                <input type="text" class="form-control input-sm" name="daxiao2" value="{$ct_info_item->daxiao2}">
+                                                <span class="input-group-addon" for="daxiao2">cm</span>
+                                            </div>
+                                            <span class="glyphicon glyphicon-remove" style="line-height: 30px;"></span>
+                                            <div class="input-group col-sm-3">
+                                                <input type="text" class="form-control input-sm" name="daxiao3" value="{$ct_info_item->daxiao3}">
+                                                <span class="input-group-addon" for="daxiao3">cm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">3-GGO</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="ggo" value="1" <?php if($ct_info_item->ggo =='1') echo 'checked="checked"'; ?> /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="ggo" value="0"  <?php if($ct_info_item->ggo =='0') echo 'checked="checked"'; ?> /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">4-钙化</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="gaihua" value="1" <?php if($ct_info_item->gaihua =='1') echo 'checked="checked"'; ?> /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="gaihua" value="0" <?php if($ct_info_item->gaihua =='0') echo 'checked="checked"'; ?> /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">5-分叶症</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="fenyezheng" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="fenyezheng" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">6-毛刺症</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="maocizheng" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="maocizheng" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">7-胸膜皱缩</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xiongmozhousuo" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xiongmozhousuo" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">8-棘状突起</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="jizhuangtuqi" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="jizhuangtuqi" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">9-空洞</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="kongdong" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="kongdong" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">10-支气管征</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zhiqiguanzheng" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zhiqiguanzheng" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">11-阻塞性肺炎</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zushaixingfeiyan" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zushaixingfeiyan" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">12-肿瘤侵犯血管</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zhongliuqingfanxueguan" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zhongliuqingfanxueguan" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">13-侵犯膈肌</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="qingfangeji" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="qingfangeji" value="0" /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">14-侵犯椎体</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="qingfanzhuiti" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="qingfanzhuiti" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">15-侵犯胸壁</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="qingfanxiongbi" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="qingfanxiongbi" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">16-胸水</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xiongshui" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xiongshui" value="0" /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">17-同叶结节</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="tongyejiejie" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="tongyejiejie" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">18-不同叶结节</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="butongyejiejie" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="butongyejiejie" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">19-SPN</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="spn" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="spn" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label col-sm-offset-1">20-淋巴结肿大</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="linbajiezhognda" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="linbajiezhognda" value="0"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-12">
+                                        <input type="file" id="imgShowCt{$ct_info_item->ct_id}"  name="imgShowCt{$ct_info_item->ct_id}" multiple class="file-loading">
+                                    </div>
+                                </form>
+                                {/foreach}
+                                {/if}
+                                <div id="addCtView" class="layui-tab-item"></div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 130px;font-weight: 600;">血液检查</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="show" id="xueyeShow">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><span class="col-sm-2" style="line-height: 23px;">血常规</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico"></a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                        <div class="panel-body">
+                                            <div class="form-group has-success">
+                                                <label for="checkdate" class="col-sm-2 control-label">1-检查时间：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
+                                                    <span class="input-group-addon" style="cursor: pointer;">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                            </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">2-白细胞计数：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">10^9/L</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">3-中性粒细胞计数：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">10^9/L</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">4-血红蛋白：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">g/L</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">5-血小板：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">10^9/L</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label class="col-sm-2 control-label">血型：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <select class="form-control input-sm" name="marry">
+                                                        <option value="0" />A</option>
+                                                        <option value="2"  />B</option>
+                                                        <option value="1"  />AB</option>
+                                                        <option value="1"  />O</option>
+                                                        <option value="1"  />其他</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingTwo">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"><span class="col-sm-2" style="line-height: 23px;">血生化</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico"></a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                        <div class="panel-body">
+                                            <div class="form-group has-success">
+                                                <label for="checkdate" class="col-sm-2 control-label">1-检查时间：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
+                                                    <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
+                         <span class="glyphicon glyphicon-remove"></span>
+                     </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">2-谷丙转氨酶：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">IU/L</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">3-谷草转氨酶：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">IU/L</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">4-总胆红素：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">umol/L</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">5-尿素氨：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">mmol/L</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">6-肌酐：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">umol/L</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">7-血蛋白：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">g/L</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">8-总蛋白：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">g/L</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">9-碱性磷酸酶：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">UL/L</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">10-血糖：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">mmol/L</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingThree">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree"><span class="col-sm-2" style="line-height: 23px;">血瘤标志物</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico"></a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                        <div class="panel-body">
+                                            <div class="form-group has-success">
+                                                <label for="checkdate" class="col-sm-2 control-label">1-检查时间：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
+                                                    <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                            </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">2-CEA</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">ng/ml</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">3-CYFRA211</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">ng/ml</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">4-CA199</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">U/ml</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">5-NSE</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">ng/ml</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">6-SCC</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">ng/ml</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">7-CA125</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                    <span class="input-group-addon">U/ml</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 130px;font-weight: 600;">超声</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="show" id="chaoshenShow">
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label col-sm-offset-1">1-颈部淋巴结肿大</label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                </label>
+                            </div>
+                            <div class="show form-group row" id="huojianJing">
+                                <label class="col-sm-1 control-label col-sm-offset-2">活检</label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                </label>
+                            </div>
+                            <div class="show" id="bingliJing">
+                                <div class="form-group has-success">
+                                    <label for="referralDoctor" class="col-sm-2 control-label col-sm-offset-2">病理号：</label>
+                                    <div class="input-group col-sm-2">
+                                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label col-sm-offset-2">WHO分类标准：</label>
+                                    <div class="input-group col-sm-2">
+                                        <select class="form-control input-sm" name="marry">
+                                            <option value="0" />标准1</option>
+                                            <option value="2" />标准2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label col-sm-offset-1">2-肝占位</label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                </label>
+                            </div>
+                            <div class="show form-group row" id="huojianGan">
+                                <label class="col-sm-1 control-label col-sm-offset-2">活检</label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                </label>
+                            </div>
+                            <div class="show" id="bingliGan">
+                                <div class="form-group has-success">
+                                    <label for="referralDoctor" class="col-sm-2 control-label col-sm-offset-2">病理号：</label>
+                                    <div class="input-group col-sm-2">
+                                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label col-sm-offset-2">WHO分类标准：</label>
+                                    <div class="input-group col-sm-2">
+                                        <select class="form-control input-sm" name="marry">
+                                            <option value="0" />标准1</option>
+                                            <option value="2" />标准2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label col-sm-offset-1">3-肾上腺结节</label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                </label>
+                            </div>
+                            <div class="show form-group row" id="huojianShenJie">
+                                <label class="col-sm-1 control-label col-sm-offset-2">活检</label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                </label>
+                            </div>
+                            <div class="show" id="bingliShenJie">
+                                <div class="form-group has-success">
+                                    <label for="referralDoctor" class="col-sm-2 control-label col-sm-offset-2">病理号：</label>
+                                    <div class="input-group col-sm-2">
+                                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label col-sm-offset-2">WHO分类标准：</label>
+                                    <div class="input-group col-sm-2">
+                                        <select class="form-control input-sm" name="marry">
+                                            <option value="0" />标准1</option>
+                                            <option value="2" />标准2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-offset-1">
+                                <input type="file" id="imgShowChaoShen"  name="input[]" multiple class="file-loading">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 130px;font-weight: 600;">肺功能</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="show" id="feiShow">
+                            <div class="form-group row">
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <label class="control-label">1-FVC</label>
+                                </div>
+                                <div class="form-group has-success col-sm-4 row">
+                                    <label for="inputAge" class="control-label col-sm-4">预测值:</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputAge" name="age" value="">
+                                        <span class="input-group-addon">/L</span>
+                                    </div>
+                                </div>
+                                <div class="form-group has-success col-sm-4 row col-sm-offset-1">
+                                    <label for="inputAge" class="control-label col-sm-4">实测值:</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputAge" name="age" value="">
+                                        <span class="input-group-addon">/L</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <label class="control-label">2-FEV1</label>
+                                </div>
+                                <div class="form-group has-success col-sm-4 row">
+                                    <label for="inputAge" class="control-label col-sm-4">预测值:</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputAge" name="age" value="">
+                                        <span class="input-group-addon">/L</span>
+                                    </div>
+                                </div>
+                                <div class="form-group has-success col-sm-4 row col-sm-offset-1">
+                                    <label for="inputAge" class="control-label col-sm-4">实测值:</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputAge" name="age" value="">
+                                        <span class="input-group-addon">/L</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <label class="control-label">3-DLCO</label>
+                                </div>
+                                <div class="form-group has-success col-sm-4 row">
+                                    <label for="inputAge" class="control-label col-sm-4">预测值:</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputAge" name="age" value="">
+                                        <span class="input-group-addon">/L</span>
+                                    </div>
+                                </div>
+                                <div class="form-group has-success col-sm-4 row col-sm-offset-1">
+                                    <label for="inputAge" class="control-label col-sm-4">实测值:</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputAge" name="age" value="">
+                                        <span class="input-group-addon">/L</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <label class="control-label">4-VC</label>
+                                </div>
+                                <div class="form-group has-success col-sm-4 row">
+                                    <label for="inputAge" class="control-label col-sm-4">预测值:</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputAge" name="age" value="">
+                                        <span class="input-group-addon">/L</span>
+                                    </div>
+                                </div>
+                                <div class="form-group has-success col-sm-4 row col-sm-offset-1">
+                                    <label for="inputAge" class="control-label col-sm-4">实测值:</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputAge" name="age" value="">
+                                        <span class="input-group-addon">/L</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <label class="control-label">5-血气分析</label>
+                                </div>
+                                <div class="form-group has-success col-sm-4">
+                                    <div class="col-sm-4">
+                                        <label for="inputAge" class="control-label">运动前:</label>
+                                    </div>
+                                    <div class="flex-col">
+                                        <div class="row">
+                                            <label for="inputAge" class="control-label col-sm-3">PO2：</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" id="inputAge" name="age" value="">
+                                                <span class="input-group-addon">mmHg</span>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 5px;">
+                                            <label for="inputAge" class="control-label col-sm-3">PCO2：</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" id="inputAge" name="age" value="">
+                                                <span class="input-group-addon">mmHg</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group has-success col-sm-4 col-sm-offset-1">
+                                    <div class="col-sm-4">
+                                        <label for="inputAge" class="control-label">运动后:</label>
+                                    </div>
+                                    <div class="flex-col">
+                                        <div class="row">
+                                            <label for="inputAge" class="control-label col-sm-3">PO2：</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" id="inputAge" name="age" value="">
+                                                <span class="input-group-addon">mmHg</span>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 5px;">
+                                            <label for="inputAge" class="control-label col-sm-3">PCO2：</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" id="inputAge" name="age" value="">
+                                                <span class="input-group-addon">mmHg</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-offset-1">
+                                <button class="btn btn-success">上传图片</button>
+                                <button class="btn btn-success">展示图片</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 130px;font-weight: 600;">气管镜</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="show" id="qiguanShow">
+                            <div class="col-sm-offset-1">
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 正常
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 异常
+                                </label>
+                            </div>
+                            <div class="show" id="qiguanShow1" style="margin-top: 10px;">
+                                <div class="has-success form-group row">
+                                    <label class="col-sm-2 control-label col-sm-offset-1">1-主支气管</label>
+                                    <div class="checkbox flex-row" style="width: 500px;">
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 隆突</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 左主</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 右主</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 气管</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="show row" id="feiLRshow">
+                                <div class="col-sm-6 has-success form-group">
+                                    <div class="col-sm-4 col-sm-offset-2" style="top: 100px;">
+                                        <label class="control-label">2-右肺</label>
+                                    </div>
+                                    <div class="col-sm-6 flex-col checkbox clearfix">
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 上叶尖段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 上叶后段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 上叶前段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 下叶背段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 中叶外侧段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 中叶内侧段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 下叶内基底段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 下叶前基底段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 下叶外基底段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 下叶后基底段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 中间干</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 第二隆突</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 has-success form-group">
+                                    <div class="col-sm-4" style="top: 100px;">
+                                        <label class="control-label">3-左肺</label>
+                                    </div>
+                                    <div class="col-sm-6 flex-col checkbox clearfix">
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 上叶尖后段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 上叶前段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 上舌段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 下舌段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 下叶背段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 下叶内前基底段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 下叶外基底段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 下叶后基底段</label>
+                                        <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 第二隆突</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="has-success form-group row">
+                                <label class="col-sm-2 control-label col-sm-offset-1">4-镜下活检</label>
+                                <div class="checkbox flex-row" style="width: 500px;">
+                                    <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 钳取</label>
+                                    <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 刷检</label>
+                                    <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 灌洗</label>
+                                    <label for=""><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 其他</label>
+                                </div>
+                                <div class="show input-group col-sm-offset-3" style="margin-top: 10px;">
+                                    <label for=""><input class="form-control input-sm" placeholder="请输入……" name="xiongneifei1" type="text" id="xiongneifei1" value=""></label>
+                                </div>
+                            </div>
+                            <div class="has-success form-group row">
+                                <label class="col-sm-2 control-label col-sm-offset-1">5-TBNA</label>
+                                <div class="checkbox flex-row">
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 2L</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 2R</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 4L</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 4R</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 7</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 10L</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 10R</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 11L</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 11R</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 其他</label>
+                                </div>
+                                <div class="show input-group col-sm-offset-3" style="margin-top: 10px;">
+                                    <label for=""><input class="form-control input-sm" placeholder="请输入……" name="xiongneifei1" type="text" id="xiongneifei1" value=""></label>
+                                </div>
+                            </div>
+                            <div class="has-success form-group row">
+                                <label class="col-sm-2 control-label col-sm-offset-1">6-EBUS</label>
+                                <div class="checkbox flex-row">
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 2L</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 2R</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 4L</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 4R</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 7</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 10L</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 10R</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 11L</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 11R</label>
+                                    <label for="" class="col-sm-2"><input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 其他</label>
+                                </div>
+                                <div class="show input-group col-sm-offset-3" style="margin-top: 10px;">
+                                    <label for=""><input class="form-control input-sm" placeholder="请输入……" name="xiongneifei1" type="text" id="xiongneifei1" value=""></label>
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label for="referralDoctor" class="col-sm-2 control-label col-sm-offset-1">7-TBLB</label>
+                                <div class="input-group col-sm-2">
+                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label for="referralDoctor" class="col-sm-2 control-label col-sm-offset-1">8-其他</label>
+                                <div class="input-group col-sm-2">
+                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label class="col-sm-2 control-label col-sm-offset-1">9-WHO分类标准：</label>
+                                <div class="input-group col-sm-2">
+                                    <select class="form-control input-sm" name="marry">
+                                        <option value="0" />标准1</option>
+                                        <option value="2" />标准2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-offset-1">
+                                <button class="btn btn-success">上传图片</button>
+                                <button class="btn btn-success">展示图片</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 130px;font-weight: 600;">头颅MRI/CT</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="show" id="touluShow">
+                            <div class="form-group has-success">
+                                <label class="col-sm-1 control-label col-sm-offset-2">转移</label>
+                                <div class="input-group col-sm-2">
+                                    <select class="form-control input-sm" name="marry">
+                                        <option value="0"  />请选择</option>
+                                        <option value="2"  />单发</option>
+                                        <option value="1"  />多发</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 130px;font-weight: 600;">骨扫描</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="show" id="gusaomiaoShow">
+                            <div class="form-group has-success">
+                                <label class="col-sm-1 control-label col-sm-offset-2">转移</label>
+                                <div class="input-group col-sm-2">
+                                    <select class="form-control input-sm" name="marry">
+                                        <option value="0"  />请选择</option>
+                                        <option value="2"  />单发</option>
+                                        <option value="1"  />多发</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 130px;font-weight: 600;">骨MRI/CT</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="show" id="guctShow">
+                            <div class="form-group has-success">
+                                <label class="col-sm-1 control-label col-sm-offset-2">转移</label>
+                                <div class="input-group col-sm-2">
+                                    <select class="form-control input-sm" name="marry">
+                                        <option value="0"  />请选择</option>
+                                        <option value="2"  />单发</option>
+                                        <option value="1"  />多发</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 130px;font-weight: 600;">肝脏CT</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="show" id="ganzhangShow">
+                            <div class="form-group has-success">
+                                <label class="col-sm-1 control-label col-sm-offset-2">转移</label>
+                                <div class="input-group col-sm-2">
+                                    <select class="form-control input-sm" name="marry">
+                                        <option value="0"  />请选择</option>
+                                        <option value="2"  />单发</option>
+                                        <option value="1"  />多发</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 130px;font-weight: 600;">PET</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="show" id="petShow">
+                            <div class="row">
+                                <label class="col-sm-2 control-label col-sm-offset-1">本院检查</label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                </label>
+                            </div>
+                            <div class="form-group has-success">
+                                <label for="referralDoctor" class="col-sm-2 control-label col-sm-offset-1">PET号</label>
+                                <div class="input-group col-sm-2">
+                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label for="checkdate" class="col-sm-2 control-label col-sm-offset-1">检查时间</label>
+                                <div class="input-group col-sm-2">
+                                    <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
+                                    <span class="input-group-addon" style="cursor: pointer;">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                            </span>
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label for="referralDoctor" class="col-sm-2 control-label col-sm-offset-1">SUV</label>
+                                <div class="input-group col-sm-2">
+                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 control-label col-sm-offset-1">PET分期</label>
+                                <div class="col-sm-2 flex-row">
+                                    <label class="col-sm-1 control-label" style="padding-left: 0 !important;">T</label>
+                                    <select class="form-control input-sm">
+                                        <option value="0"  />请选择</option>
+                                        <option value="2"  />单发</option>
+                                        <option value="1"  />多发</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2 flex-row">
+                                    <label class="col-sm-1 control-label">N</label>
+                                    <select class="form-control input-sm">
+                                        <option value="0"  />请选择</option>
+                                        <option value="2"  />单发</option>
+                                        <option value="1"  />多发</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2 flex-row">
+                                    <label class="col-sm-1 control-label">M</label>
+                                    <select class="form-control input-sm">
+                                        <option value="0"  />请选择</option>
+                                        <option value="2"  />单发</option>
+                                        <option value="1"  />多发</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group has-success" style="margin-top: 15px;">
+                                <label class="col-sm-2 control-label col-sm-offset-1">意外发现</label>
+                                <div class="input-group col-sm-4">
+                                    <textarea class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-offset-1">
+                                <button class="btn btn-success">上传图片</button>
+                                <button class="btn btn-success">展示图片</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--新增CT模版-->
+<script id="ctModel" type="text/html" >
+    <form class="layui-tab-item layui-show" id="ctForm{{d.ctFormId}}">
+        <button class="btn btn-info save" id="ctSaveNew" type="button" onclick="save('ctSaveNew','#ctForm')">保存修改</button>
+        <div class="form-group">
+            <label class="col-sm-1 control-label" style="margin-left: 5.2%;">1-部位</label>
+            <div class="checkbox flex-row">
+                <label><input name="buwei" type="checkbox" value="右肺上叶"> 右肺上叶</label>
+                <label><input name="buwei" type="checkbox" value="右肺中叶"> 右肺中叶</label>
+                <label><input name="buwei" type="checkbox" value="右肺下叶"> 右肺下叶</label>
+                <label><input name="buwei" type="checkbox" value="左肺上叶"> 左肺上叶</label>
+                <label><input name="buwei" type="checkbox" value="左肺下叶"> 左肺下叶</label>
+                <label><input name="buwei" type="checkbox" value="中心型"> 中心型</label>
+                <label><input name="buwei" type="checkbox" value="外周型"> 外周型</label>
+                <label><input name="buwei" type="checkbox" value="跨列"> 跨列</label>
+            </div>
+        </div>
+        <div class="form-group" style="overflow: hidden">
+            <label class="col-sm-1 control-label" style="margin-left: 5.2%;">2-大小</label>
+            <div class="col-sm-5 row flex-row">
+                <div class="input-group col-sm-3">
+                    <input type="text" class="form-control input-sm" name="daxiao1" value="">
+                    <span class="input-group-addon" for="daxiao1">cm</span>
+                </div>
+                <span class="glyphicon glyphicon-remove" style="line-height: 30px;"></span>
+                <div class="input-group col-sm-3">
+                    <input type="text" class="form-control input-sm" name="daxiao2" value="">
+                    <span class="input-group-addon" for="daxiao2">cm</span>
+                </div>
+                <span class="glyphicon glyphicon-remove" style="line-height: 30px;"></span>
+                <div class="input-group col-sm-3">
+                    <input type="text" class="form-control input-sm" name="daxiao3" value="">
+                    <span class="input-group-addon" for="daxiao3">cm</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">3-GGO</label>
+            <label class="radio-inline">
+                <input type="radio" name="ggo" value="1"/> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="ggo" value="0" checked /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">4-钙化</label>
+            <label class="radio-inline">
+                <input type="radio" name="gaihua" value="1"/> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="gaihua" value="0" checked/> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">5-分叶症</label>
+            <label class="radio-inline">
+                <input type="radio" name="fenyezheng" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="fenyezheng" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">6-毛刺症</label>
+            <label class="radio-inline">
+                <input type="radio" name="maocizheng" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="maocizheng" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">7-胸膜皱缩</label>
+            <label class="radio-inline">
+                <input type="radio" name="xiongmozhousuo" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="xiongmozhousuo" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">8-棘状突起</label>
+            <label class="radio-inline">
+                <input type="radio" name="jizhuangtuqi" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="jizhuangtuqi" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">9-空洞</label>
+            <label class="radio-inline">
+                <input type="radio" name="kongdong" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="kongdong" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">10-支气管征</label>
+            <label class="radio-inline">
+                <input type="radio" name="zhiqiguanzheng" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="zhiqiguanzheng" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">11-阻塞性肺炎</label>
+            <label class="radio-inline">
+                <input type="radio" name="zushaixingfeiyan" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="zushaixingfeiyan" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">12-肿瘤侵犯血管</label>
+            <label class="radio-inline">
+                <input type="radio" name="zhongliuqingfanxueguan" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="zhongliuqingfanxueguan" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">13-侵犯膈肌</label>
+            <label class="radio-inline">
+                <input type="radio" name="qingfangeji" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="qingfangeji" value="0" /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">14-侵犯椎体</label>
+            <label class="radio-inline">
+                <input type="radio" name="qingfanzhuiti" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="qingfanzhuiti" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">15-侵犯胸壁</label>
+            <label class="radio-inline">
+                <input type="radio" name="qingfanxiongbi" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="qingfanxiongbi" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">16-胸水</label>
+            <label class="radio-inline">
+                <input type="radio" name="xiongshui" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="xiongshui" value="0" /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">17-同叶结节</label>
+            <label class="radio-inline">
+                <input type="radio" name="tongyejiejie" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="tongyejiejie" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">18-不同叶结节</label>
+            <label class="radio-inline">
+                <input type="radio" name="butongyejiejie" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="butongyejiejie" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">19-SPN</label>
+            <label class="radio-inline">
+                <input type="radio" name="spn" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="spn" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label col-sm-offset-1">20-淋巴结肿大</label>
+            <label class="radio-inline">
+                <input type="radio" name="linbajiezhognda" value="1" /> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="linbajiezhognda" value="0"  /> 否
+            </label>
+        </div>
+        <div class="form-group col-sm-12">
+            <input type="file" id="imgShowCt{{d.ctFormId}}"  name="imgShowCt{{d.ctFormId}}" multiple class="file-loading">
+        </div>
+    </form>
+
+</script>
+
+<!--左侧导航栏样式-->
+<script>
+    window.onload = function(){
+        $('.nav-left').css('display','block');
+        $('#preoperative-left').addClass('active');
+    }
+</script>
+
+<!--页面加载默认显示-->
+<script>
+    $(document).ready(function () {
+        //默认显示选项卡
+        $("#ct-tab-title li:first").addClass('layui-this');
+        $("#ctShow form:first").addClass('layui-show');
+
+        let ctId = $("#ct-tab-title li:first").attr('lay-id');
+        let patients_id = $('#patients_id').val();
+
+        //获取CT信息预览地址
+        $.ajax({
+            type:"post",
+            url:"/PreSave/getCTAddress",
+            dataType:'JSON',
+            data: {
+                patients_id:patients_id,
+                ct_id:ctId
+            },
+            success:function (data) {
+                layui.use('layer', function(){
+                    if(data.status == 1){
+
+                    }
+                    else {
+
+                    }
+                });
+            }
+        });
+
+        initFileInput("imgShowCt"+ctId, "/PreSave/imgCtSave", "/PreSave/imgCtDel",patients_id,ctId);
+
+    })
+</script>
+
+<!--监听新增CT选项卡-->
+<script>
+    layui.use(['element','laytpl'], function(){
+        let i = 0;
+        let element = layui.element;
+        let laytpl = layui.laytpl;
+        let $ = layui.jquery;
+        let newId = parseInt($('.ct-id:first').attr('lay-id'));
+        let patients_id = $('#patients_id').val();
+
+        $('#tabAddCt').on('click', function(){
+            $(this).attr('disabled',true);//设置新增按钮为不可用
+            newId+=1;
+            i+=1;
+            //给新增表单动态添加ID
+            var getCt = document.getElementById('ctModel').innerHTML
+            ,ctView = document.getElementById('addCtView');
+            var data = { //数据
+                "ctFormId":newId
+            }
+
+            //渲染上传文件控件
+            initFileInput("imgShowCt"+newId, "/PreSave/imgCtSave", "/PreSave/imgCtDel" ,patients_id ,newId);
+
+            //新增选项卡
+            element.tabAdd('addCt', {
+                title: '新记录'+ i
+                ,content: laytpl(getCt).render(data, function(html){ctView.innerHTML = html}) //取得模版
+                ,id: newId
+            })
+
+            //自动切换至新建选项卡
+            element.tabChange('addCt', newId);
+        });
+
+    });
+</script>
+
+<!--保存按钮函数-->
+<script>
+    function save(saveTo,formName){
+        let click_id = saveTo;
+        let patients_id = $('#patients_id').val();
+        let ct_id = parseInt($('.ct-id.layui-this').attr('lay-id'));
+        let ct_form_data = decodeURIComponent($(""+formName + ct_id +"").serialize());
+
+
+        let DataDeal = {
+            //将从form中通过$('#form').serialize()获取的值转成json字符串
+            formToJson: function (data) {
+                data=data.replace(/&/g,"\",\"");
+                data=data.replace(/=/g,"\":\"");
+                data="{\""+data+"\"}";
+                return data;
+            },
+            //json对象相同key合并value值
+            jsonData: function (s) {
+                var kv = {}, m, reg = /"[^"]+":"[^"]+"/gi;
+                var m = s.match(reg);
+
+                var o={};
+                for(var i=0;i<m.length;i++){
+                    kv=m[i].match(/"[^"]+"/gi);
+                    var _arr1=[];;
+                    for(var j=0;j<kv.length; j++){
+                        _arr1.push(kv[j].replace(/"/g,''));
+                    }
+                    if(_arr1[0] in o){
+                        if(typeof(o[_arr1[0]])=='string')
+                        {
+                            o[_arr1[0]]=[o[_arr1[0]]]
+                        };
+                        o[_arr1[0]].push(_arr1[1])
+                    }else{
+                        o[_arr1[0]]=_arr1[1]
+                    }
+                }
+                return o;
+            },
+        };
+
+        let toData=DataDeal.formToJson(ct_form_data);//转化为json字符串
+
+        let jsonData = DataDeal.jsonData(toData);//json字符串相同key合并value值并转化为json对象
+        console.log(click_id);
+
+        $.ajax({
+            type:"POST",
+            url:"/PreSave/"+click_id,
+            dataType:'JSON',
+            data: {
+                patients_id:patients_id,
+                ct_form_data:jsonData,
+                ct_id:ct_id
+            },
+            success:function (data) {
+
+                layui.use('layer', function(){
+                    let layer = layui.layer;
+                    if(data.status == 1){
+                        layer.msg(data.msg, {icon: 1});
+                        if (data.msg =='保存成功'){
+                            location.reload();
+                        }
+                    }
+                    else {
+                        layer.msg(data.msg, {icon: 5});
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+<!--删除按钮函数-->
+<script>
+    function delBtn(delTo,ctId){
+        layui.use('element', function(){
+
+            let element = layui.element;
+            let $ = layui.jquery;
+
+            let click_id = delTo;
+            let ct_id = ctId;
+            let patients_id = $('#patients_id').val();
+
+            element.tabDelete('addCt', ct_id);
+            console.log('ajax');
+
+            $.ajax({
+                type:"POST",
+                url:"/PreSave/"+click_id,
+                dataType:'JSON',
+                data: {
+                    patients_id:patients_id,
+                    ct_id:ct_id
+                },
+                success:function (data) {
+
+                    layui.use('layer', function(){
+                        let layer = layui.layer;
+                        if(data.status == 1){
+                            layer.msg(data.msg, {icon: 1});
+                            location.reload();
+                        }
+                        else {
+                            layer.msg(data.msg, {icon: 5});
+                        }
+                    });
+                }
+            });
+
+        });
+
+    }
+</script>
+
+<!--CT选项卡切换-->
+<script>
+    layui.use('element', function(){
+        let element = layui.element;
+
+        let patients_id = $('#patients_id').val();
+        element.on('tab(addCt)', function(){
+            $(this).addClass("ct-id");
+            let ctId = $(this).attr('lay-id');
+            console.log($(this).attr('lay-id'));
+            //渲染上传文件控件
+            initFileInput("imgShowCt"+ctId, "/PreSave/imgCtSave", "/PreSave/imgCtDel", patients_id, ctId);
+        });
+
+    });
+
+</script>
+
+<!--图片显示上传函数-->
+<script>
+    function initFileInput(formName, uploadUrl ,delUrl ,patients_id ,form_id) {
+        let formId = $('#' + formName);
+        formId.fileinput({
+            language: 'zh',                    //设置语言
+
+            //预览地址
+            initialPreview: [
+                'https://cdn.jsdelivr.net/gh/yw-net/ssrweb@1.0/images/iosAccount00.jpg',
+                'https://cdn.jsdelivr.net/gh/yw-net/ssrweb@1.0/images/iosAccount01.jpg'
+            ],
+            initialPreviewAsData: true,        // 确定传入预览数据，而不是原生标记语言
+            //预览图显示信息
+            initialPreviewConfig: [
+                {caption: "Moon.jpg", size: 930321, width: "120px", key: 1},
+                {caption: "Earth.jpg", size: 1218822, width: "120px", key: 2}
+            ],
+            initialCaption: ['月球','地球'],
+
+            //自定义按钮样式
+            showRemove: false,                 //不显示删除按钮
+            browseClass: "btn btn-success",
+            browseLabel: "选择图片",
+            uploadClass: "btn btn-info",
+            uploadLabel: "开始上传",
+
+            deleteUrl: delUrl,                 //删除操作的URL地址
+            overwriteInitial: false,           //不允许覆盖初始的预览，所以添加文件时不会覆盖
+            maxFileSize: 102400,               //文件最大不超过100mb
+
+            uploadAsync: true,                 //异步上传
+            uploadUrl: uploadUrl, //服务器端上传处理程序
+            uploadExtraData: {patients_id: patients_id,form_id:form_id}                //发送额外数据
+
+        });
+        formId.on("fileuploaded", function (event, data) {
+            var result = data.response; //后台返回的json
+            console.log(result);
+        });
+        formId.on("fileerror", function (event, data) {
+            var result = data.response; //后台返回的json
+            console.log(result);
+        });
+    }
+</script>
+
+
+
+{include file="public/footer" /}

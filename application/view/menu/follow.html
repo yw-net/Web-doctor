@@ -1,0 +1,262 @@
+{include file="public/meta" /}
+{include file="public/header" /}
+{include file="public/left" /}
+{include file="public/nav" /}
+<style>
+    .img-ico{width: 20px;margin-bottom: 3px;margin-left: 20px;}
+</style>
+<!--末次随访页面-->
+<div class="content">
+    <form class="form-horizontal" action="{:url('Save/history')}" method="post">
+        <div class="panel panel-info">
+            <div class="panel-heading yw-flex-row">
+                <h4 class="panel-title">末次随访</h4>
+                <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
+            </div>
+            <div class="panel-body">
+                <div class="layui-tab layui-tab-card">
+                    <ul class="layui-tab-title" style="background-color: #dff0d8">
+                        <li class="layui-this">联系方式</li>
+                        <li>复发转移</li>
+                        <li>复发后治疗</li>
+                    </ul>
+                    <div class="layui-tab-content">
+
+                        <div class="layui-tab-item layui-show">
+                            <div class="row">
+                                <div class="form-group has-success col-sm-6">
+                                    <label for="inputName" class="col-sm-4 control-label">联系人姓名：</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group has-success col-sm-6">
+                                    <label for="inputName" class="col-sm-4 control-label">与患者关系：</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group has-success col-sm-6">
+                                    <label for="inputName" class="col-sm-4 control-label">移动电话：</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group has-success col-sm-6">
+                                    <label for="inputName" class="col-sm-4 control-label">宅电：</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group has-success col-sm-6">
+                                    <label for="inputName" class="col-sm-4 control-label">即时通讯：</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group has-success col-sm-6">
+                                    <label for="inputName" class="col-sm-4 control-label">单位电话：</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group has-success col-sm-6">
+                                    <label for="inputName" class="col-sm-4 control-label">联系人Email：</label>
+                                    <div class="input-group col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div><button class="btn btn-success" style="margin-left: 30px;">添加新的联系人信息</button></div>
+                        </div>
+
+                        <div class="layui-tab-item">
+                            <div class="layui-form">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" style="width: 130px;font-weight: 600;">复发转移</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="show">
+                                <div class="form-group has-success">
+                                    <label for="inputDateInHospital" class="col-sm-2 control-label">1、时间</label>
+                                    <div class="input-group col-sm-2">
+                                        <input size="16" type="text" readonly class="form-control input-sm form_datetime datetimepicker-days" id="inputDateInHospital" name="inhospital" value="">
+                                        <span class="input-group-addon" onclick="clearFormIn();" style="cursor: pointer;">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        </span>
+                                        </div>
+                                </div>
+
+                                <div class="has-success">
+                                    <div class="show form-group">
+                                        <label for="" class="control-label col-sm-2 col-sm-offset-1" style="text-align: left;">
+                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 局部复发
+                                        </label>
+                                        <label for="" class="control-label col-sm-2" style="text-align: left;">
+                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 纵隔淋巴结转移
+                                        </label>
+                                        <label for="" class="control-label col-sm-2" style="text-align: left;">
+                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 脑转移
+                                        </label>
+                                        <label for="" class="control-label col-sm-2" style="text-align: left;">
+                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 肺转移
+                                        </label>
+                                    </div>
+                                    <div class="show form-group">
+                                        <label for="" class="control-label col-sm-2 col-sm-offset-1" style="text-align: left;">
+                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 骨转移
+                                        </label>
+                                        <label for="" class="control-label col-sm-2" style="text-align: left;">
+                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 肝转移
+                                        </label>
+                                        <label for="" class="control-label col-sm-2" style="text-align: left;">
+                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 其他
+                                        </label>
+                                        <label for="" class="control-label col-sm-2" style="text-align: left;">
+                                            <input class="input-sm form-control" name="xiongneifei1" type="text" id="xiongneifei1" value="1">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-tab-item has-success">
+                            <div class="layui-form">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" style="width: 130px;font-weight: 600;">复发后治疗</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                <span class="col-sm-1" style="line-height: 23px;">化疗</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                        <div class="panel-body">
+                                            <button class="btn btn-success">添加新的化疗记录</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingTwo">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                <span class="col-sm-1" style="line-height: 23px;">放疗</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                        <div class="panel-body">
+                                            <button class="btn btn-success">添加新的放疗记录</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingThree">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                <span class="col-sm-1" style="line-height: 23px;">伽玛刀</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                        <div class="panel-body">
+                                            <button class="btn btn-success">添加新的记录</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingFour">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                                                <span class="col-sm-1" style="line-height: 23px;">靶向</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                        <div class="panel-body">
+                                            <div class="form-group has-success">
+                                                <label for="referralDoctor" class="col-sm-2 control-label">药物名称：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="checkdate" class="col-sm-2 control-label">开始时间：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
+                                                    <span class="input-group-addon" style="cursor: pointer;">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="checkdate" class="col-sm-2 control-label">结束时间：</label>
+                                                <div class="input-group col-sm-2">
+                                                    <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
+                                                    <span class="input-group-addon" style="cursor: pointer;">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-success">添加新的靶向记录</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+</script>
+<!--layui模块加载-->
+<script>
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //一些事件监听
+        element.on('tab(demo)', function(data){
+            console.log(data);
+        });
+    });
+</script>
+<script>
+    window.onload = function(){
+        $('.nav-left').css('display','block');
+        $('#follow-left').addClass('active');
+    }
+</script>
+<!--点击显示输入框-->
+<script>
+
+    var options=$(".inputhide");
+    for (var i = 0; i < options.length; i++) {
+        console.log($(options[i]).val());
+    }
+</script>
+
+{include file="public/footer" /}

@@ -1,0 +1,197 @@
+{include file="public/meta" /}
+{include file="public/header" /}
+{include file="public/leftmyinfo" /}
+{include file="public/nav" /}
+<style>
+    .edituser-right{width: 150px;height: 170px;margin-top: 10px;margin-left: 40px;}
+    .img-rounded{display: block;width: 180px;height: 200px;}
+    .layui-form-label{width: 100px;}
+</style>
+<!--个人资料页面-->
+<div class="content">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h4 class="panel-title">个人资料修改</h4>
+        </div>
+        <div class="panel-body">
+            <form class="layui-form" action="">
+                <div class="layui-form-item" style="display: none;">
+                    <label class="layui-form-label">用户ID</label>
+                    <div class="layui-input-block" style="width: 300px;">
+                        <input type="text" name="userid" id="userid" autocomplete="off" class="layui-input" value="">
+                    </div>
+                </div>
+                <div style="display: flex;justify-content: flex-start;flex-direction: row">
+                    <div class="edituser-left">
+                        <div class="layui-form-item" style="margin-top: 30px;">
+                            <label class="layui-form-label">用户名</label>
+                            <div class="layui-input-block" style="width: 300px;">
+                                <input type="text" name="username" id="username" required  lay-verify="required" autocomplete="off" class="layui-input" value="">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">医生姓名</label>
+                            <div class="layui-input-block" style="width: 300px;">
+                                <input type="text" name="neckname" id="neckname" required  lay-verify="required" autocomplete="off" class="layui-input"
+                                value="">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">年龄</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="age" id="age" autocomplete="off" class="layui-input" value="">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">性别</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="sex" value="1" title="男" id="man">
+                                <input type="radio" name="sex" value="0" title="女" id="women">
+                            </div>
+                        </div>
+                    </div>
+                    <!--            用户照片-->
+                    <div class="edituser-right">
+                        <img src="" class="img-rounded" id="preImg">
+                        <button type="button" id="upImg" class="btn btn-success"style="height: 30px;width:180px;line-height: 15px;margin-top: 5px;"><i class="layui-icon">&#xe67c;</i>上传照片</button>
+                    </div>
+                    <input type="hidden" name="img" id="img" value="">
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 110px;">级别职称</label>
+                    <div class="layui-input-inline">
+                        <select name="userLevel" id="userLevel">
+                            <option value="无">无</option>
+                            <option value="教授">教授</option>
+                            <option value="副教授">副教授</option>
+                            <option value="主任医师">主任医师</option>
+                            <option value="副主任医师">副主任医师</option>
+                        </select>
+                    </div>
+                    <label class="layui-form-label" style="width: 110px;">所属科室</label>
+                    <div class="layui-input-inline">
+                        <select name="userClass" id="userClass">
+                            <option value="无">无</option>
+                            <option value="胸外科">胸外科</option>
+                            <option value="呼吸科">呼吸科</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button id="submit" class="layui-btn" lay-submit lay-filter="formEditUser" type="button">
+                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;&nbsp;保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--layui框架-->
+<script>
+    layui.use(['form','layer','upload'], function(){
+        var form = layui.form;
+        var layer = layui.layer;
+        var upload = layui.upload;
+
+        upload.render({
+            elem: '#upImg' //绑定元素
+            ,url: "{:url('Api/uploadImg')}" //上传接口
+            ,size: 1024*5
+            ,done: function(res){
+                if(res.status==100)
+                    layer.alert(res.message, {icon: 6},function (thiswindow) {
+                        $('#preImg').attr('src',res.url);
+                        $('#img').val(res.url);
+                        layer.close(thiswindow);
+                    });
+                else
+                    layer.alert(res.message, {icon: 5},function (thiswindow) {
+                        $('#preImg').attr('src',res.url);
+                        $('#img').val(res.url);
+                        layer.close(thiswindow);
+                    });
+            }
+        });
+
+
+        //提交数据
+        form.on('submit(formEditUser)', function(data){
+            console.log(data.field);
+            $.ajax({
+                type:"POST",
+                url:"{:url('Api/editMyInfo')}",
+                data:data.field,
+                dataType:'json',
+                success:function (data) {
+                    if (data.status==100){
+                        layer.msg(data.msg, {icon: 1},function() {
+                            window.parent.location.reload();//刷新父页面
+                            parent.layer.close(index);//关闭弹出层
+                        });
+                    }
+                    else {
+                        layer.msg(data.msg, {icon: 5});
+                    }
+                }
+            });
+        });
+    });
+
+
+    window.onload = function(){
+        //为当前选中页面添加背景
+        $('#myinfo-top').addClass('active');
+        $('#basic-info-left').addClass('active');
+        //页面加载当前用户资料
+        layui.use(['form','layer','upload'], function() {
+            var form = layui.form;
+            var layer = layui.layer;
+            var upload = layui.upload;
+            $.ajax({
+                type: "POST",
+                url: "{:url('Index/getinfo')}",
+                success: function (data) {
+                    console.log(data.data);
+                    if (data.status == 100) {
+                        $('#userid').attr('value', data.data['userid']);
+                        $('#username').attr('value', data.data['name']);
+                        $('#neckname').attr('value', data.data['neckname']);
+                        $('#age').attr('value', data.data['user_age']);
+                        $('#preImg').attr('src',data.data['face_img']);
+                        $('#img').val(data.data['face_img']);
+                        //单选框赋值
+                        if (data.data['user_sex'] == 1) {
+                            $('#man').prop('checked',true);
+                        } else if (data.data['user_sex'] == 0) {
+                            $('#women').prop('checked', true);
+                        }
+                        //下拉列表赋值
+                        switch (data.data['user_level']) {
+                            case '无':   $("#userLevel option[value='无']").prop("selected", true);break;
+                            case '教授': $("#userLevel option[value='教授']").prop("selected", true);break;
+                            case '副教授': $("#userLevel option[value='副教授']").prop("selected", true);break;
+                            case '主任医师': $("#userLevel option[value='主任医师']").prop("selected", true);break;
+                            case '副主任医师': $("#userLevel option[value='副主任医师']").prop("selected", true);break;
+
+                        };
+                        switch (data.data['user_class']) {
+                            case '无':   $("#userClass option[value='无']").prop("selected", true);break;
+                            case '胸外科': $("#userClass option[value='胸外科']").prop("selected", true);break;
+                            case '呼吸科': $("#userClass option[value='呼吸科']").prop("selected", true);break;
+                        };
+
+                        form.render();
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+        });
+    }
+</script>
+
+
+{include file="public/footer" /}

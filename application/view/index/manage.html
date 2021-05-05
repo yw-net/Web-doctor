@@ -1,0 +1,448 @@
+{include file="public/meta" /}
+{include file="public/header" /}
+{include file="public/leftmanage" /}
+{include file="public/nav" /}
+
+<style>
+    .edituser-right{width: 150px;height: 170px;margin-top: 10px;margin-right: 40px;}
+    .img-rounded{display: block;width: 150px;height: 170px;}
+    .layui-table-tool{background-color: #dff0d8;}
+</style>
+
+<!--后台管理主页面-->
+<div class="content">
+    <form class="form-horizontal" method="post">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">用户管理</h4>
+            </div>
+            <div class="panel-body">
+                <!--表格主体-->
+                <table class="layui-hide" id="userManager" lay-filter="userManager"></table>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--为当前选中页面添加背景-->
+<script>
+    window.onload = function(){
+        $('#manage-top').addClass('active');
+        $('#user-manage-left').addClass('active');
+    };
+</script>
+
+<!--添加/编辑用户弹出层模版-->
+<script type="text/html" id="editUser">
+    <style>
+        .layui-form-label{width: 100px;}
+    </style>
+    <form class="layui-form" action="">
+        <div class="layui-form-item" style="display: none;">
+            <label class="layui-form-label">用户ID</label>
+            <div class="layui-input-block" style="width: 300px;">
+                <input type="text" name="userid" id="userid" autocomplete="off" class="layui-input" value="">
+            </div>
+        </div>
+        <div style="display: flex;justify-content: space-between;flex-direction: row">
+            <div class="edituser-left">
+                <div class="layui-form-item" style="margin-top: 30px;">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block" style="width: 300px;">
+                        <input type="text" name="username" id="username" required  lay-verify="required" autocomplete="off" class="layui-input" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">医生姓名</label>
+                    <div class="layui-input-block" style="width: 300px;">
+                        <input type="text" name="neckname" id="neckname" required  lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block"  style="width: 300px;">
+                        <input type="password" name="password"  id="password" required lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+<!--            用户照片-->
+            <div class="edituser-right">
+                <img src="" class="img-rounded" id="preImg">
+                <button type="button" id="upImg" class="btn btn-success"style="height: 30px;width:150px;line-height: 15px;"><i class="layui-icon">&#xe67c;</i>上传照片</button>
+            </div>
+            <input type="hidden" name="img" id="img" value="">
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">年龄</label>
+            <div class="layui-input-inline">
+                <input type="text" name="age" id="age" autocomplete="off" class="layui-input">
+            </div>
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="sex" value="1" title="男" id="man" checked>
+                <input type="radio" name="sex" value="0" title="女" id="women">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否启用</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="active" value="1" title="启用" id="activeOn" checked>
+                <input type="radio" name="active" value="0" title="停用" id="activeOff">
+            </div>
+            <label class="layui-form-label">是否管理员</label>
+            <div class="layui-input-inline" style="width: 210px;">
+                <input type="radio" name="level" value="1" title="管理员" id="levelUp">
+                <input type="radio" name="level" value="0" title="普通用户" id="levelNor" checked>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">级别职称</label>
+            <div class="layui-input-inline">
+                <select name="userLevel" id="userLevel">
+                    <option value="无">无</option>
+                    <option value="教授">教授</option>
+                    <option value="副教授">副教授</option>
+                    <option value="主任医师">主任医师</option>
+                    <option value="副主任医师">副主任医师</option>
+                </select>
+            </div>
+            <label class="layui-form-label">所属科室</label>
+            <div class="layui-input-inline">
+                <select name="userClass" id="userClass">
+                    <option value="无">无</option>
+                    <option value="胸外科">胸外科</option>
+                    <option value="呼吸科">呼吸科</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button id="submit" class="layui-btn" lay-submit lay-filter="formAddUser" type="button">立即提交</button>
+            </div>
+        </div>
+    </form>
+</script>
+
+<!--表格创建新用户/查询按钮-->
+<script type="text/html" id="addNewUser">
+    <div class="layui-inline">
+        <input class="layui-input" name="reload" id="reload" autocomplete="off" placeholder="请输入用户名或医生姓名" style="width: 300px;height: 30px;">
+    </div>
+    <button type="button" class="layui-btn layui-btn-sm" data-type="search" id="search" style="line-height: 15px;"><i class="layui-icon">&#xe615;</i>查询</button>
+    <button type="button" class="layui-btn layui-btn-sm layui-btn-warm" onclick="javascript:location.reload();"><i class="layui-icon">&#xe669;</i>刷新</button>
+    <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" lay-event="addNewUser"><i class="layui-icon">&#xe654;</i>创建新用户</button>
+    <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" lay-event="clearPhoto"><i class="layui-icon">&#xe640;</i>清理冗余头像图片</button>
+</script>
+
+<!--表格右侧功能按钮-->
+<script type="text/html" id="toolbar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit" style="text-decoration: none">编辑/查看</a>
+<!--不能删除当前用户-->
+    {{#  if(d.userid == {:session('user_id')}){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-disabled" style="text-decoration: none"><i class="layui-icon layui-icon-delete"></i></a>
+    {{#  } else { }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="text-decoration: none"><i class="layui-icon layui-icon-delete"></i></a>
+    {{#  } }}
+
+</script>
+
+<!--表格样式（是否启用）-->
+<script type="text/html" id="activeTemplet">
+    {{#  if(d.active == 1){ }}
+    <span style="color: #f0f0f0;background-color: #5eb95e;padding: 3px;border-radius: 3px;">已启用</span>
+    {{#  } else { }}
+    <span style="color: white;background-color: #999;padding: 3px;border-radius: 3px;">未启用</span>
+    {{#  } }}
+</script>
+
+<!--表格样式（性别）-->
+<script type="text/html" id="sexTemplet">
+    {{#  if(d.user_sex == 1){ }}
+    <span style="color: #334553;">男</span>
+    {{#  } else { }}
+    <span style="color: #B84038;">女</span>
+    {{#  } }}
+</script>
+
+<!--表格样式（是否管理员）-->
+<script type="text/html" id="levelTemplet">
+    {{#  if(d.level == 1){ }}
+    <span style="color: #f0f0f0;background-color: #dd514c;padding: 3px;border-radius: 3px;">管理员</span>
+    {{#  } else { }}
+    <span style="color: #f0f0f0;background-color: #5eb95e;padding: 3px;border-radius: 3px;">普通用户</span>
+    {{#  } }}
+</script>
+
+<!--表格样式（是否添加头像）-->
+<script type="text/html" id="imgTemplet">
+    {{#  if(d.face_img){ }}
+    <span style="color: #f0f0f0;background-color: #5eb95e;padding: 3px;border-radius: 3px;">已上传</span>
+    {{#  } else { }}
+    <span style="color: white;background-color: #999;padding: 3px;border-radius: 3px;">未上传</span>
+    {{#  } }}
+</script>
+
+<!--layui框架（表格相关操作）-->
+<script>
+    layui.use(["form","table","layer","laypage","upload"], function(){
+        var table = layui.table;
+        var form = layui.form;
+        var layer = layui.layer;
+        var laypage = layui.laypage;
+        var upload = layui.upload;
+
+        //表格渲染
+        table.render({
+            elem: '#userManager'
+            ,id: 'userTable'
+            ,url:"{:url('Api/userManager')}"
+            ,toolbar: '#addNewUser' //开启头部工具栏，并为其绑定左侧模板
+            ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                ,layEvent: 'LAYTABLE_TIPS'
+                ,icon: 'layui-icon-tips'
+            }]
+            ,page: {
+                limit:10 //一页显示多少条
+                ,limits:[10,20,30]//每页条数的选择项
+                ,groups: 5 //连续页码
+                ,first: "首页"
+                ,last: "尾页"
+                ,prev:"上一页"
+                ,next:"下一页"
+            }
+
+            ,title: '用户数据表'
+            ,cols: [[
+                {field:'userid', title:'系统ID', width:100,hide:true,sort: true}
+                ,{field:'face_img', title:'用户头像',width:120,templet:'#imgTemplet',align:'center'}
+                ,{field:'name', title:'用户名', width:100}
+                ,{field:'user_age', title:'年龄',sort:true,hide:true,width:80,align:'center'}
+                ,{field:'user_sex', title:'性别',sort: true,width:80,templet:'#sexTemplet',align:'center'}
+                ,{field:'password', title:'密码',hide:true,width:120}
+                ,{field:'neckname', title:'医生姓名', width:120}
+                ,{field:'user_class', title:'所属科室', width:120,sort:true}
+                ,{field:'user_level', title:'级别职称', width:120, sort: true}
+                ,{field:'level', title:'是否管理员',sort:true,width:120,templet:'#levelTemplet',align:'center'}
+                ,{field:'active', title:'是否启用', width:120,sort:true,templet: '#activeTemplet',align:'center'}
+                ,{field: 'user_reg_date', title:'注册时间', sort:true,width:140}
+                ,{fixed: 'right', title:'操作', toolbar: '#toolbar', width:145,align:'center'}
+            ]]
+        });
+
+        //添加用户
+        table.on('toolbar(userManager)', function(obj){
+            switch(obj.event){
+                case 'addNewUser':
+                    layer.open({
+                        type: 1 //Page层类型
+                        ,area: ['680px', '520px']
+                        ,title: '添加用户'
+                        ,shade: 0.6 //遮罩透明度
+                        ,shadeClose:false
+                        ,anim: 1 //0-6的动画形式，-1不开启
+                        ,content: $("#editUser").html()
+                        ,cancel: function(index, layero){
+                            layer.close(index)
+                            parent.layui.table.reload('userManager');
+                        }
+                    });
+                    form.render();
+                    form.on('submit(formAddUser)', function(data){
+                        $.ajax({
+                            type:"POST",
+                            url:"{:url('Save/saveUser')}",
+                            data:data.field,
+                            dataType:'json',
+                            success:function (data) {
+                                if (data.status==100){
+                                    layer.msg(data.msg, {icon: 1},function() {
+                                        window.parent.location.reload();//刷新父页面
+                                        parent.layer.close(index);//关闭弹出层
+                                    });
+                                }
+                                else {
+                                    layer.msg(data.msg, {icon: 5});
+                                }
+                            }
+                        });
+                    });
+                    //上传用户头像
+                    var uploadInst = upload.render({
+                        elem: '#upImg' //绑定元素
+                        ,url: "{:url('Api/uploadImg')}" //上传接口
+                        ,size: 1024*5
+                        ,done: function(res,index, upload){
+                            if(res.status==100)
+                                layer.alert(res.message, {icon: 6},function (thiswindow) {
+                                    $('#preImg').attr('src',res.url);
+                                    $('#img').val(res.url);
+                                    layer.close(thiswindow);
+                                });
+                            else
+                                layer.alert(res.message, {icon: 5},function (thiswindow) {
+                                    $('#preImg').attr('src',res.url);
+                                    $('#img').val(res.url);
+                                    layer.close(thiswindow);
+                                });
+                        }
+                    });
+                    break;
+                case 'clearPhoto':
+                    $.ajax({
+                        type:"POST",
+                        url:"{:url('Api/clearPhoto')}",
+                        dataType:'json',
+                        success:function (data) {
+                            layer.msg(data);
+                        }
+                    });
+                    break;
+            };
+        });
+
+        //编辑/删除
+        table.on('tool(userManager)', function(obj){
+            var userid = obj.data.userid;
+            //删除
+            if(obj.event === 'del'){
+                layer.confirm('真的删除么', function(index){
+                    obj.del();
+                    $.ajax({
+                        type:"GET",
+                        url:"{:url('Api/delUser')}",
+                        data:{userid:userid},
+                        dataType:'json',
+                        success:function (data) {
+                            layer.msg('删除成功');
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+            //编辑
+            else if(obj.event === 'edit'){
+                //打开图层
+                layer.open({
+                    type: 1 //Page层类型
+                    ,area: ['680px', '520px']
+                    ,title: '用户编辑'
+                    ,shade: 0.6 //遮罩透明度
+                    ,shadeClose:false
+                    ,anim: 1 //0-6的动画形式，-1不开启
+                    ,content: $('#editUser').html()
+                    ,cancel: function(index, layero){
+                        layer.close(index);
+                        parent.layui.table.reload('userTable');
+                    }
+                });
+                //图层赋值
+
+                $('#userid').attr('value',obj.data.userid);
+                $('#username').attr('value',obj.data.name);
+                $('#neckname').attr('value',obj.data.neckname);
+                $('#password').attr('value',obj.data.password);
+                $('#age').attr('value',obj.data.user_age);
+                $('#preImg').attr('src',obj.data.face_img);
+                $('#img').val(obj.data.face_img);
+                //单选框赋值
+                if (obj.data.level == 1){
+                    $('#levelUp').prop({'checked':true});
+                }else if(obj.data.level == 0){
+                    $('#levelNor').prop({'checked':true});
+                }
+                if (obj.data.active == 1){
+                    $('#activeOn').prop('checked',true);
+                }else if(obj.data.active == 0){
+                    $('#activeOff').prop({'checked':true});
+                }
+                if (obj.data.user_sex == 1){
+                    $('#man').prop('checked',true);
+                }else if(obj.data.user_sex == 0){
+                    $('#women').prop('checked',true);
+                }
+                //下拉列表赋值
+                switch (obj.data.user_level) {
+                    case '无':   $("#userLevel option[value='无']").prop("selected", true);break;
+                    case '教授': $("#userLevel option[value='教授']").prop("selected", true);break;
+                    case '副教授': $("#userLevel option[value='副教授']").prop("selected", true);break;
+                    case '主任医师': $("#userLevel option[value='主任医师']").prop("selected", true);break;
+                    case '副主任医师': $("#userLevel option[value='副主任医师']").prop("selected", true);break;
+
+                };
+                switch (obj.data.user_class) {
+                    case '无':   $("#userClass option[value='无']").prop("selected", true);break;
+                    case '胸外科': $("#userClass option[value='胸外科']").prop("selected", true);break;
+                    case '呼吸科': $("#userClass option[value='呼吸科']").prop("selected", true);break;
+                };
+                form.render(); //渲染页面
+                //修改用户头像
+                var uploadInst = upload.render({
+                    elem: '#upImg' //绑定元素
+                    ,url: "{:url('Api/uploadImg')}" //上传接口
+                    ,size: 1024*5
+                    ,done: function(res,index, upload){
+                        if(res.status==100)
+                            layer.alert(res.message, {icon: 6},function (thiswindow) {
+                                $('#preImg').attr('src',res.url);
+                                $('#img').val(res.url);
+                                layer.close(thiswindow);
+                            });
+                        else
+                            layer.alert(res.message, {icon: 5},function (thiswindow) {
+                                $('#preImg').attr('src',res.url);
+                                $('#img').val(res.url);
+                                layer.close(thiswindow);
+                            });
+                    }
+                });
+                $('#submit').attr('lay-filter','formEditUser'); //改变提交按钮自定义名称
+                //提交数据
+                form.on('submit(formEditUser)', function(data){
+                    $.ajax({
+                        type:"POST",
+                        url:"{:url('Api/editUser')}",
+                        data:data.field,
+                        dataType:'json',
+                        success:function (data) {
+                            if (data.status==100){
+                                $('#submit').addClass('layui-btn-disabled');
+                                layer.msg(data.msg, {icon: 1},function() {
+                                    window.parent.location.reload();//刷新父页面
+                                    parent.layer.close(index);//关闭弹出层
+                                });
+                            }
+                            else {
+                                layer.msg(data.msg, {icon: 5});
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
+        //查询按钮（按用户名、医生姓名查询）
+        $(function () {
+            $("#search").on('click',function (event) {
+                let inputinfo = $('#reload').val();
+                table.reload('userTable', {
+                    url: "{:url('Api/searchUser')}"
+                    ,where: { //设定异步数据接口的额外参数
+                        "inputinfo":inputinfo
+                    }
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+
+            })
+        })
+
+    });
+</script>
+
+
+
+{include file="public/footer" /}

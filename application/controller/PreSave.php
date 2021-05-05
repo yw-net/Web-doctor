@@ -1,0 +1,205 @@
+<?php
+
+
+namespace app\controller;
+use app\controller\Base;
+use app\model\Patients;
+use app\model\Preoperative_ct;
+use think\Db;
+use app\model\User;
+use think\facade\Request;
+use think\db\Where;
+use think\facade\Session;
+use think\facade\Env;
+
+class PreSave extends Base
+{
+    //获取患者CT数量
+    public function getCtNum()
+    {
+        $patients_id = $this->request->param('patients_id');
+        $ct_num_res = Preoperative_ct::where('patients_id',$patients_id)->select();
+        return count($ct_num_res);
+    }
+
+    //删除CT信息
+    public function delCtInfo()
+    {
+        $patients_id = $this->request->param('patients_id');
+        $ct_id = $this->request->param('ct_id');
+        $del = Preoperative_ct::where(['ct_id'=>$ct_id,'patients_id'=>$patients_id])->delete();
+        if ($del){
+            $res['msg'] = '删除成功';
+            $res['status'] = 1 ;
+            return $res;
+        }
+        $res['msg'] = '数据库连接失败';
+        $res['status'] = 0 ;
+        return $res;
+    }
+
+    //新增CT信息
+    public function ctSaveNew()
+    {
+        //数据处理-获取表单数据
+        $patients_id = $this->request->param('patients_id');
+        $ct_data = $this->request->param('ct_form_data');
+        $ct_id = $this->request->param('ct_id');
+
+
+
+        //新增数据
+        $pre_ct = new Preoperative_ct();
+        $pre_ct->ct_id =$ct_id;
+        $pre_ct->patients_id =$patients_id;
+        $pre_ct->create_date = date('Y-m-d');
+
+        //处理空值问题
+        if (isset($ct_data['buwei'])){
+            //判断多选框值是否为数组（当选择两个以下强制转换为数组）
+            if (!is_array($ct_data['buwei'])){
+                $ct_data['buwei'] = json_encode($ct_data['buwei']);
+            }
+            $pre_ct->buwei = $ct_data['buwei'];
+        }
+        if (isset($ct_data['daxiao1'])){
+            $pre_ct->daxiao1 = $ct_data['daxiao1'];
+        }
+        if (isset($ct_data['daxiao2'])){
+            $pre_ct->daxiao2 = $ct_data['daxiao2'];
+        }
+        if (isset($ct_data['daxiao3'])){
+            $pre_ct->daxiao3 = $ct_data['daxiao3'];
+        }
+
+        //单选框数据写入
+        $pre_ct->ggo = $ct_data['ggo'];
+        $pre_ct->gaihua = $ct_data['gaihua'];
+        $pre_ct->save();
+
+        if ($pre_ct){
+            $res['status'] = 1;
+            $res['msg'] ='保存成功';
+            return $res;
+        }
+
+        $res['status'] =$pre_ct;
+        $res['msg'] ='新增数据失败';
+        return $res;
+    }
+
+    //更新CT信息
+    public function ctSave()
+    {
+        //数据处理-获取表单数据
+        $patients_id = $this->request->param('patients_id');
+        $ct_data = $this->request->param('ct_form_data');
+        $ct_id = $this->request->param('ct_id');
+
+        //解决多选框及输入框为空
+        if (isset($ct_data['buwei'])){
+            //判断多选框值是否为数组（当选择两个以下强制转换为数组）
+            if (!is_array($ct_data['buwei'])){
+                $ct_data['buwei'] = json_encode($ct_data['buwei']);
+            }
+        }else{
+            $ct_data['buwei'] =null;
+        }
+        if (!isset($ct_data['daxiao1'])){
+            $ct_data['daxiao1'] =null;
+        }
+        if (!isset($ct_data['daxiao2'])){
+            $ct_data['daxiao2'] =null;
+        }
+        if (!isset($ct_data['daxiao3'])){
+            $ct_data['daxiao3'] =null;
+        }
+
+        //判断数据库当前患者下ct_id是否存在
+        $ct_id_res = Preoperative_ct::where(['ct_id'=>$ct_id,'patients_id'=>$patients_id])->find();
+        //更新数据
+        if ($ct_id_res){
+            $res_ct = Db::name('Preoperative_ct')
+                ->where(['ct_id'=>$ct_id,'patients_id'=>$patients_id])
+                ->data([
+                    'edit_date'=>date('Y-m-d'),
+                    'ggo'=>$ct_data['ggo'],
+                    'buwei'=>$ct_data['buwei'],
+                    'daxiao1'=>$ct_data['daxiao1'],
+                    'daxiao2'=>$ct_data['daxiao2'],
+                    'daxiao3'=>$ct_data['daxiao3'],
+                    'gaihua'=>$ct_data['gaihua'],
+                ])
+                ->update();
+            if ($res_ct){
+                $res['status'] = 1;
+                $res['msg'] ='保存成功';
+                return $res;
+            }
+            $res['status'] =0;
+            $res['msg'] ='数据未更改';
+            return $res;
+        }
+        return $res['msg'] = '未知错误，请刷新后重试';
+
+    }
+
+    //保存CT图像
+    public function imgCtSave()
+    {
+        $savePath = Env::get('root_path').'storge/preoperative/ct/';
+
+        $info = $this->request->param();
+        $file = $this->request->file();
+
+        $patients_id =$info['patients_id'];
+        $form_id =$info['form_id'];
+
+        $res = $file['imgShowCt'.$form_id]->move($savePath);
+
+        if($res)
+        {
+            $url = $res->getSaveName();
+
+            return  (['status'=>1,'message'=>'图片上传成功，请核对其他信息后点击提交','url'=>$url]);
+        }
+        else
+        {
+            return  (['status'=>0,'message'=>$file->getError(),'url'=>'']);
+        }
+    }
+
+    //显示CT图像
+    public function imgCtShow()
+    {
+        $type = trim($this->request->getQueryParams()['type']);
+        $type = trim($this->request->getQueryParams()['ct_id']);
+        $type = trim($this->request->getQueryParams()['patients_id']);
+        switch ($type) {
+            case 'clash-win':
+                $file_path = BASE_PATH . '/resources/ssr-down/Clash-Windows.7z';
+                $newResponse = $response->withHeader('Content-type', ' application/octet-stream')->withHeader('Content-Disposition', ' attachment; filename=' . $type . '.zip');
+                $newResponse->write(file_get_contents($file_path));
+                return $newResponse;
+            case 'netch-win':
+                $file_path = BASE_PATH . '/resources/ssr-down/netch-windows.7z';
+                $newResponse = $response->withHeader('Content-type', ' application/octet-stream')->withHeader('Content-Disposition', ' attachment; filename=' . $type . '.zip');
+                $newResponse->write(file_get_contents($file_path));
+                return $newResponse;
+            case 'clashx-mac':
+                $file_path = BASE_PATH . '/resources/ssr-down/ClashX.dmg';
+                $newResponse = $response->withHeader('Content-type', ' application/octet-stream')->withHeader('Content-Disposition', ' attachment; filename=' . $type . '.zip');
+                $newResponse->write(file_get_contents($file_path));
+                return $newResponse;
+            case 'v2rayu-mac':
+                $file_path = BASE_PATH . '/resources/ssr-down/V2rayU.dmg';
+                $newResponse = $response->withHeader('Content-type', ' application/octet-stream')->withHeader('Content-Disposition', ' attachment; filename=' . $type . '.zip');
+                $newResponse->write(file_get_contents($file_path));
+                return $newResponse;
+            default:
+                return 'gg';
+        }
+        return $response;
+
+    }
+}

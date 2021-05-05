@@ -1,0 +1,749 @@
+{include file="public/meta" /}
+{include file="public/header" /}
+{include file="public/left" /}
+{include file="public/nav" /}
+<style>
+    .img-ico{width: 20px;margin-bottom: 3px;}
+</style>
+<!--辅助治疗页面-->
+<div class="content">
+    <form class="form-horizontal" action="{:url('Save/history')}" method="post">
+        <div class="panel panel-info">
+            <div class="panel-heading yw-flex-row">
+                <h4 class="panel-title">辅助治疗</h4>
+                <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
+            </div>
+            <div class="panel-body">
+
+                <div class="layui-tab layui-tab-card">
+                    <ul class="layui-tab-title" style="background-color: #dff0d8">
+                        <li class="layui-this">化疗</li>
+                        <li>放疗</li>
+                        <li>伽马刀</li>
+                        <li>靶向</li>
+                    </ul>
+                    <div class="layui-tab-content">
+
+                        <div class="layui-tab-item layui-show">
+                            <div class="has-success">
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 control-label" style="font-size: 16px;text-align: left;margin-left: 25px;">1、化疗周期:</label>
+                                    <label for="" class="input-group" style="margin-left: -15px;">
+                                        <input class="col-sm-2 form-control input-sm" type="text" name="radioshoushu" value="" id="shoushu1" />
+                                    </label>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 control-label" style="font-size: 16px;text-align: left;margin-left: 25px;">2、化疗时间:</label>
+                                    <div style="display: flex;flex-direction: row;">
+                                        <div class="input-group col-sm-2">
+                                            <input size="16" type="text" readonly class="form-control input-sm form_datetime datetimepicker-days" id="inputDateInHospital" name="inhospital" value="">
+                                            <span class="input-group-addon" onclick="clearFormIn();" style="cursor: pointer;">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </span>
+                                        </div>
+                                        <div class="input-group col-sm-2 col-sm-offset-2">
+                                            <input size="16" type="text" readonly class="form-control input-sm form_datetime datetimepicker-days" id="inputDateInHospital" name="inhospital" value="">
+                                            <span class="input-group-addon" onclick="clearFormIn();" style="cursor: pointer;">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 control-label" style="font-size: 16px;text-align: left;margin-left: 25px;">3、化疗方案:</label>
+                                    <div class="input-group col-sm-2">
+                                        <select class="form-control input-sm" name="marry">
+                                            <option value="0"  />请选择</option>
+                                            <option value="2"  />DP</option>
+                                            <option value="1"  />TP</option>
+                                            <option value="1"  />PC</option>
+                                            <option value="1"  />PP</option>
+                                            <option value="1"  />NP</option>
+                                            <option value="1"  />MVP</option>
+                                            <option value="1"  />GP</option>
+                                            <option value="1"  />MIP</option>
+                                            <option value="1"  />EP</option>
+                                            <option value="1"  />EC</option>
+                                            <option value="1"  />T1</option>
+                                            <option value="1"  />CAO</option>
+                                            <option value="1"  />CEV</option>
+                                            <option value="1"  />CEA</option>
+                                            <option value="1"  />VIP</option>
+                                            <option value="1"  />NVB</option>
+                                            <option value="1"  />Docetaxel</option>
+                                            <option value="1"  />Gemcitabine</option>
+                                            <option value="1"  />Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label" style="font-size: 16px;text-align: left;margin-left: 40px;">4、毒性:</label>
+                                    </div>
+
+                                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="margin: 20px;">
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingOne">
+                                                <h4 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                        <span class="col-sm-2" style="line-height: 23px;">血液系统<code>级</code></span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">血红蛋白（g/L）</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />>=110</option>
+                                                            <option value="1"  />95~109</option>
+                                                            <option value="1"  />80~94</option>
+                                                            <option value="1"  />65~79</option>
+                                                            <option value="1"  /><65</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">粒细胞（10g/L）</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />>=2.0</option>
+                                                            <option value="1"  />1.5~1.9</option>
+                                                            <option value="1"  />1.0~1.4</option>
+                                                            <option value="1"  />0.5~0.9</option>
+                                                            <option value="1"  /><0.5</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">白细胞（10g/L）</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />>=4.0</option>
+                                                            <option value="1"  />3.0~3.9</option>
+                                                            <option value="1"  />2.0~2.9</option>
+                                                            <option value="1"  />1.0~1.9</option>
+                                                            <option value="1"  /><1.0</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">血小板（10g/L）</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />>=100</option>
+                                                            <option value="1"  />75~99</option>
+                                                            <option value="1"  />50~74</option>
+                                                            <option value="1"  />25~49</option>
+                                                            <option value="1"  /><25</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">出血（10g/L）</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />无</option>
+                                                            <option value="1"  />瘀点</option>
+                                                            <option value="1"  />轻度失血</option>
+                                                            <option value="1"  />明显失血</option>
+                                                            <option value="1"  />大量失血</option>
+                                                        </select></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingTwo">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                        <span class="col-sm-2" style="line-height: 23px;">胃肠道<code>级</code></span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">胆红素（xN）</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  /><=1.25</option>
+                                                            <option value="1"  />1.26~2.5</option>
+                                                            <option value="1"  />2.6~5</option>
+                                                            <option value="1"  />5.1~10</option>
+                                                            <option value="1"  />>10</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">转氨酶（xN）</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  /><=1.25</option>
+                                                            <option value="1"  />1.26~2.5</option>
+                                                            <option value="1"  />2.6~5</option>
+                                                            <option value="1"  />5.1~10</option>
+                                                            <option value="1"  />>10</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">碱性磷酸酶（xN）</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  /><=1.25</option>
+                                                            <option value="1"  />1.26~2.5</option>
+                                                            <option value="1"  />2.6~5</option>
+                                                            <option value="1"  />5.1~10</option>
+                                                            <option value="1"  />>10</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">口腔</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />无</option>
+                                                            <option value="1"  />疼痛、红斑</option>
+                                                            <option value="1"  />红斑、溃疡能进食</option>
+                                                            <option value="1"  />溃疡、只能进流食</option>
+                                                            <option value="1"  />不能进食</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">恶心呕吐</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />无</option>
+                                                            <option value="1"  />恶心</option>
+                                                            <option value="1"  />间有呕吐</option>
+                                                            <option value="1"  />呕吐需要治疗</option>
+                                                            <option value="1"  />难以控制的呕吐</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">腹泻</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />无</option>
+                                                            <option value="1"  />短暂<2天</option>
+                                                            <option value="1"  />能耐受，但>2天</option>
+                                                            <option value="1"  />不能耐受需治疗</option>
+                                                            <option value="1"  />血性腹泻</option>
+                                                        </select></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingThree">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        <span class="col-sm-2" style="line-height: 23px;">肾、膀胱<code>级</code></span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">BUN（xN）</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  /><=1.25</option>
+                                                            <option value="1"  />1.26~2.5</option>
+                                                            <option value="1"  />2.6~5</option>
+                                                            <option value="1"  />5.1~10</option>
+                                                            <option value="1"  />>10</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">肌酐（xN）</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  /><=1.25</option>
+                                                            <option value="1"  />1.26~2.5</option>
+                                                            <option value="1"  />2.6~5</option>
+                                                            <option value="1"  />5.1~10</option>
+                                                            <option value="1"  />>10</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">蛋白尿</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />无</option>
+                                                            <option value="1"  />+,<3q/L</option>
+                                                            <option value="1"  />++,+++.<3~10q/L</option>
+                                                            <option value="1"  />++++,<3~10q/L</option>
+                                                            <option value="1"  />肾病综合征</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">血尿</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />无</option>
+                                                            <option value="1"  />镜下血尿</option>
+                                                            <option value="1"  />严重血尿</option>
+                                                            <option value="1"  />严重血尿，带血块</option>
+                                                            <option value="1"  />泌尿道梗阻</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">肺</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />正常</option>
+                                                            <option value="1"  />轻微症状</option>
+                                                            <option value="1"  />活动后呼吸困难</option>
+                                                            <option value="1"  />休息时呼吸困难</option>
+                                                            <option value="1"  />需完全卧床</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">发热</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />无</option>
+                                                            <option value="1"  />发烧<38度</option>
+                                                            <option value="1"  />38度～40度</option>
+                                                            <option value="1"  />>40度</option>
+                                                            <option value="1"  />发烧伴低血压</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">过敏</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />无</option>
+                                                            <option value="1"  />水肿</option>
+                                                            <option value="1"  />支气管痉挛不需治疗</option>
+                                                            <option value="1"  />支气管痉挛需治疗</option>
+                                                            <option value="1"  />过敏反应</option>
+                                                        </select></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingFour">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                        <span class="col-sm-2" style="line-height: 23px;">皮肤损害<code>级</code></span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">皮肤</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />正常</option>
+                                                            <option value="1"  />红斑</option>
+                                                            <option value="1"  />干性脱皮、水疱、瘙痒</option>
+                                                            <option value="1"  />皮炎、溃疡</option>
+                                                            <option value="1"  />剥脱性皮炎、坏死、需手术</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">头发</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />无</option>
+                                                            <option value="1"  />轻微脱发</option>
+                                                            <option value="1"  />斑秃</option>
+                                                            <option value="1"  />完全脱发可再生</option>
+                                                            <option value="1"  />不能再生之脱发</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">感染（特殊部位）</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />无</option>
+                                                            <option value="1"  />轻度感染</option>
+                                                            <option value="1"  />中度感染</option>
+                                                            <option value="1"  />重复感染</option>
+                                                            <option value="1"  />重复感染伴低血压</option>
+                                                        </select></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingFive">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                                        <span class="col-sm-2" style="line-height: 23px;">神经系统<code>级</code></span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">神志</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />清醒</option>
+                                                            <option value="1"  />短暂时间嗜睡</option>
+                                                            <option value="1"  />嗜睡时间不及清醒时间的50%</option>
+                                                            <option value="1"  />嗜睡时间超过清醒时间的50%</option>
+                                                            <option value="1"  />昏迷</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">周围神经</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />正常</option>
+                                                            <option value="1"  />感觉异常或腱反射减退</option>
+                                                            <option value="1"  />严重感觉异常或轻度无力</option>
+                                                            <option value="1"  />不能忍受的感觉异常或显著运动障碍</option>
+                                                            <option value="1"  />瘫痪</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">便秘</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />无</option>
+                                                            <option value="1"  />轻度</option>
+                                                            <option value="1"  />中度</option>
+                                                            <option value="1"  />腹胀</option>
+                                                            <option value="1"  />腹胀呕吐</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">疼痛（非肿瘤引起）</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />无</option>
+                                                            <option value="1"  />轻度</option>
+                                                            <option value="1"  />中度</option>
+                                                            <option value="1"  />严重</option>
+                                                            <option value="1"  />难控制</option>
+                                                        </select></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingSix">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                                        <span class="col-sm-2" style="line-height: 23px;">心脏<code>级</code></span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">心率</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />正常</option>
+                                                            <option value="2"  />窦性心动过速，休息心率>110</option>
+                                                            <option value="2"  />单灶性早搏，房性心率失常</option>
+                                                            <option value="2"  />多造性早搏</option>
+                                                            <option value="1"  />室性心律不齐</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">心功能</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />正常</option>
+                                                            <option value="1"  />无症状，有异常心脏体征</option>
+                                                            <option value="1"  />短暂心功不全，不需治疗</option>
+                                                            <option value="1"  />心功不全症状，治疗有效</option>
+                                                            <option value="1"  />心功不全，治疗无效</option>
+                                                        </select></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div><label class="col-sm-2 control-label">心包炎</label></div>
+                                                        <div class="input-group col-sm-2"><select class="form-control input-sm" name="marry">
+                                                            <option value="0"  />请选择</option>
+                                                            <option value="2"  />正常</option>
+                                                            <option value="1"  />有心包积液，无症状</option>
+                                                            <option value="1"  />有症状，但不需抽积液</option>
+                                                            <option value="1"  />心包填塞，需抽积液</option>
+                                                            <option value="1"  />心包填塞，需治疗</option>
+                                                        </select></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" style="margin-left: 40px;font-size: 16px;">5、辅助化疗后瘤标:</label>
+                                    <div class="form-group has-success" style="margin-top: 20px;">
+                                        <label for="inputDateInHospital" class="col-sm-2 control-label" style="text-align: center;">检查时间</label>
+                                        <div class="input-group col-sm-2">
+                                            <input size="16" type="text" readonly class="form-control input-sm form_datetime datetimepicker-days" id="inputDateInHospital" name="inhospital" value="">
+                                            <span class="input-group-addon" onclick="clearFormIn();" style="cursor: pointer;">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="form-group has-success col-sm-4">
+                                            <label for="referralDoctor" class="col-sm-4 control-label">CEA：</label>
+                                            <div class="input-group col-sm-4">
+                                                <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                <span class="input-group-addon">ng/ml</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-success col-sm-4">
+                                            <label for="referralDoctor" class="col-sm-4 control-label">CYFRA211：</label>
+                                            <div class="input-group col-sm-4">
+                                                <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                <span class="input-group-addon">ng/ml</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-success col-sm-4">
+                                            <label for="referralDoctor" class="col-sm-4 control-label">CA199：</label>
+                                            <div class="input-group col-sm-4">
+                                                <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                <span class="input-group-addon">U/ml</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-success col-sm-4">
+                                            <label for="referralDoctor" class="col-sm-4 control-label">CEA：</label>
+                                            <div class="input-group col-sm-4">
+                                                <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                <span class="input-group-addon">ng/ml</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-success col-sm-4">
+                                            <label for="referralDoctor" class="col-sm-4 control-label">NSE：</label>
+                                            <div class="input-group col-sm-4">
+                                                <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                <span class="input-group-addon">ng/ml</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-success col-sm-4">
+                                            <label for="referralDoctor" class="col-sm-4 control-label">CA125：</label>
+                                            <div class="input-group col-sm-4">
+                                                <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                                <span class="input-group-addon">U/ml</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div><button class="btn btn-success">添加新的化疗记录</button></div>
+
+                            </div>
+                        </div>
+
+                        <div class="layui-tab-item">
+                            <div>
+                                <div class="form-group has-success">
+                                    <label for="inputDateInHospital" class="col-sm-2 control-label">1.放疗时间：</label>
+                                    <div class="input-group col-sm-3">
+                                        <input size="16" type="text" readonly class="form-control input-sm form_datetime datetimepicker-days" id="inputDateInHospital" name="inhospital" value="">
+                                        <span class="input-group-addon" onclick="clearFormIn();" style="cursor: pointer;">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group has-success">
+                                    <label for="referralDoctor" class="col-sm-2 control-label">2.肺部：</label>
+                                    <div class="input-group col-sm-3">
+                                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                        <span class="input-group-addon">GY</span>
+                                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                        <span class="input-group-addon">f</span>
+                                    </div>
+                                </div>
+                                <div class="form-group has-success">
+                                    <label for="referralDoctor" class="col-sm-2 control-label">3.脑部：</label>
+                                    <div class="input-group col-sm-3">
+                                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                        <span class="input-group-addon">GY</span>
+                                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                        <span class="input-group-addon">f</span>
+                                    </div>
+                                </div>
+                                <div class="form-group has-success">
+                                    <label for="referralDoctor" class="col-sm-2 control-label">4.骨骼：</label>
+                                    <div class="input-group col-sm-3">
+                                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                        <span class="input-group-addon">GY</span>
+                                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                        <span class="input-group-addon">f</span>
+                                    </div>
+                                </div>
+                                <div class="form-group has-success">
+                                    <label for="referralDoctor" class="col-sm-2 control-label">5.其他：</label>
+                                    <div class="input-group col-sm-3">
+                                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                        <span class="input-group-addon">GY</span>
+                                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                        <span class="input-group-addon">f</span>
+                                    </div>
+                                </div>
+                                <div><button class="btn btn-success">添加新的放疗记录</button></div>
+                            </div>
+                        </div>
+
+                        <div class="layui-tab-item">
+                            <div>
+                                <div class="form-group has-success">
+                                    <label for="checkdate" class="col-sm-2 control-label">时间：</label>
+                                    <div class="input-group col-sm-3">
+                                        <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
+                                        <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="has-success">
+                                    <div class="form-group">
+                                        <label for="checkdate" class="col-sm-2 control-label">部位：</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">肝</label>
+                                        <div class="input-group col-sm-3">
+                                            <input type="text" class="form-control input-sm" id="inputPhone" value="">
+                                            <span class="input-group-addon">
+                                                <span>GY</span>
+                                            </span>
+
+                                            <input type="text" class="form-control input-sm" id="inputPhone" value="">
+                                            <span class="input-group-addon">
+                                                <span>f</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkdate" class="col-sm-2 control-label">脑</label>
+                                        <div class="input-group col-sm-3">
+                                            <input type="text" class="form-control input-sm" id="inputPhone" value="">
+                                            <span class="input-group-addon">
+                                                <span>GY</span>
+                                            </span>
+
+                                            <input type="text" class="form-control input-sm" id="inputPhone" value="">
+                                            <span class="input-group-addon">
+                                                <span>f</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkdate" class="col-sm-2 control-label">骨</label>
+                                        <div class="input-group col-sm-3">
+                                            <input type="text" class="form-control input-sm" id="inputPhone" value="">
+                                            <span class="input-group-addon">
+                                                <span>GY</span>
+                                            </span>
+
+                                            <input type="text" class="form-control input-sm" id="inputPhone" value="">
+                                            <span class="input-group-addon">
+                                                <span>f</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkdate" class="col-sm-2 control-label">肺</label>
+                                        <div class="input-group col-sm-3">
+                                            <input type="text" class="form-control input-sm" id="inputPhone" value="">
+                                            <span class="input-group-addon">
+                                                <span>GY</span>
+                                            </span>
+
+                                            <input type="text" class="form-control input-sm" id="inputPhone" value="">
+                                            <span class="input-group-addon">
+                                                <span>f</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkdate" class="col-sm-2 control-label">其他</label>
+                                        <div class="input-group col-sm-3">
+                                            <input type="text" class="form-control input-sm" id="inputPhone" value="">
+                                            <span class="input-group-addon">
+                                                <span>GY</span>
+                                            </span>
+
+                                            <input type="text" class="form-control input-sm" id="inputPhone" value="">
+                                            <span class="input-group-addon">
+                                                <span>f</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success">添加新的伽马刀记录</button>
+                        </div>
+
+                        <div class="layui-tab-item">
+                            <div class="has-success">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">药物名称：</label>
+                                    <label for="" class="input-group col-sm-3">
+                                        <input class="form-control input-sm" type="text" name="radioshoushu" value="" id="shoushu1" />
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">开始时间：</label>
+                                    <div class="input-group col-sm-3">
+                                        <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
+                                        <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="checkdate" class="col-sm-2 control-label">结束时间：</label>
+                                    <div class="input-group col-sm-3">
+                                        <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
+                                        <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success">添加新的靶向记录</button>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </form>
+</div>
+<!--layui模块加载-->
+<script>
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //一些事件监听
+        element.on('tab(demo)', function(data){
+            console.log(data);
+        });
+    });
+</script>
+<script>
+    window.onload = function(){
+        $('.nav-left').css('display','block');
+        $('#complementaryTreatment-left').addClass('active');
+    }
+</script>
+<!--点击显示输入框-->
+<script>
+
+    var options=$(".inputhide");
+    for (var i = 0; i < options.length; i++) {
+        console.log($(options[i]).val());
+    }
+</script>
+
+{include file="public/footer" /}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>病人管理系统</title>
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+
+</head>
+<body class="bg">
+<div class="container">
+    <form class="login" method="post" action="{:url('Index/login')}">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon-user">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                </span>
+                <input type="text" class="form-control" placeholder="用户名" aria-describedby="basic-addon-user" name="user" autofocus/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon-password">
+                    <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                </span>
+                <input type="password" class="form-control" placeholder="密码" aria-describedby="basic-addon-password" name="password">
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary btn-block" id="login">登录</button>
+    </form>
+</div>
+
+<script src="/static/jquery-3.4.1.min.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    $(function () {
+        $("#login").on('click',function (event) {
+            $.ajax({
+                type:"POST",
+                url:"{:url('Index/checkLogin')}",
+                data:$("form").serialize(),
+                dataType:'json',
+                success:function (data) {
+                    if(data.status == 1){
+                        window.location.href="{:url('Index/index')}";
+                    }
+                    else {
+                        alert(data.message);
+                    }
+                }
+            });
+        })
+    })
+    $(document).keyup(function(event){
+        if(event.keyCode == 13){
+            $.ajax({
+                type:"POST",
+                url:"{:url('Index/checkLogin')}",
+                data:$("form").serialize(),
+                dataType:'json',
+                success:function (data) {
+                    if(data.status == 1){
+                        window.location.href="{:url('Index/index')}";
+                    }
+                    else {
+                        alert(data.message);
+                    }
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

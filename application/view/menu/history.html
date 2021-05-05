@@ -1,0 +1,388 @@
+{include file="public/meta" /}
+{include file="public/header" /}
+{include file="public/left" /}
+{include file="public/nav" /}
+<style>
+    .form-group{display: flex;justify-content: flex-start;flex-direction: row}
+    .control-label{display: block;text-align: left !important;padding-left: 50px !important;}
+    .radio-inline{display: block;margin-left: 5px;}
+    .row{display: block;}
+    .glyphicon{margin-left: 10px;}
+    .input-group{margin: 0 auto;width: 240px;}
+    .yejing-width1{width: 418px;display: flex;justify-content: flex-start;flex-direction: row;}
+    .yejing-width2{width: 80px;}
+    .yejing-lable{padding-left: 0 !important;width: 130px;text-align: right !important;font-weight: 400;}
+    .yejing-guilv{display: flex;margin-left: 16.66666667%;padding-left: 0;justify-content: flex-start;flex-direction: row;margin-top: 10px;}
+    .yejing-content{display: flex;justify-content: flex-start;flex-direction: column;}
+    .jiazu-content{display: flex;flex-direction: column;justify-content: flex-start;}
+    .jiazu-label{display: flex;flex-direction: row;justify-content: flex-start;}
+    .jiazu-checkbox{padding: 15px 90px;display: flex;flex-direction: column;margin-left: 100px;}
+    .checkbox-inline{margin-left: 0 !important;}
+    .jiazu-checkbox-child{display: block;overflow: hidden;}
+    .jiazu-checkbox-other{display: flex;justify-content: flex-start;flex-direction: row;}
+    .img-ico{width: 20px;margin-bottom: 3px;margin-left: 20px;}
+</style>
+
+<!--既往病史页面-->
+<div class="content">
+    <form class="form-horizontal" action="{:url('Save/history')}" method="post">
+        <div class="panel panel-info">
+            <div class="panel-heading yw-flex-row">
+                <h4 class="panel-title">既往病史</h4>
+                <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
+            </div>
+            <div class="panel-body">
+                <section class="sec-left col-sm-12">
+                    <input type="text" name="patientsid" style="display: none;" value="{$patientid}">
+
+                    <div class="layui-tab layui-tab-card">
+                        <ul class="layui-tab-title" style="background-color: #dff0d8;">
+                            <li class="layui-this">术前合并症</li>
+                            <li>个人史</li>
+                            <li>家族肿瘤史</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label">1、循环系统</label>
+                                    <label class="radio-inline js-yes">
+                                        <input type="radio" name="radioxunhuan" value="1" id="xunhuan1" /> 有
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioxunhuan" value="0" id="xunhuan2" checked /> 无
+                                    </label>
+                                    <div class="has-success row">
+                                        <input type="text" class="form-control input-sm col-md-offset-2" id="ixunhuan" placeholder="请输入..." name="ixunhuan" value="" style="margin-top: 5px;width: 300px;display: none;"  >
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label">2、呼吸系统</label>
+                                    <label class="radio-inline js-yes">
+                                        <input type="radio" name="radiohuxi" value="1" id="huxi1" /> 有
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radiohuxi" value="0" id="huxi2" checked /> 无
+                                    </label>
+                                    <div class="has-success row">
+                                        <input type="text" class="form-control input-sm col-md-offset-2" id="ihuxi" placeholder="请输入..." name="ihuxi" value="" style="margin-top: 5px;width: 300px;display: none;">
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label">3、消化系统</label>
+                                    <label class="radio-inline js-yes">
+                                        <input type="radio" name="radioxiaohua" value="1" id="xiaohua1" /> 有
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioxiaohua" value="0" id="xiaohua2" checked /> 无
+                                    </label>
+                                    <div class="has-success row">
+                                        <input type="text" class="form-control input-sm col-md-offset-2" id="ixiaohua" placeholder="请输入..." name="ixiaohua" value="" style="margin-top: 5px;width: 300px;display: none;">
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label">4、泌尿系统</label>
+                                    <label class="radio-inline js-yes">
+                                        <input type="radio" name="radiomiliao" value="1" id="miliao1" /> 有
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radiomiliao" value="0" id="miliao2" checked /> 无
+                                    </label>
+                                    <div class="has-success row">
+                                        <input type="text" class="form-control input-sm col-md-offset-2" id="imiliao" placeholder="请输入..." name="imiliao" value="" style="margin-top: 5px;width: 300px;display: none;">
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label">5、内分泌系统</label>
+                                    <label class="radio-inline js-yes">
+                                        <input type="radio" name="radioneifenmi" value="1" id="neifenmi1" /> 有
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioneifenmi" value="0" id="neifenmi2" checked /> 无
+                                    </label>
+                                    <div class="has-success row">
+                                        <input type="text" class="form-control input-sm col-md-offset-2" id="ineifenmi" placeholder="请输入..." name="ineifenmi" value="" style="margin-top: 5px;width: 300px;display: none;">
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label">6、免疫系统</label>
+                                    <label class="radio-inline js-yes">
+                                        <input type="radio" name="radiomianyi" value="1" id="mianyi1" /> 有
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radiomianyi" value="0" id="mianyi2" checked /> 无
+                                    </label>
+                                    <div class="has-success row">
+                                        <input type="text" class="form-control input-sm col-md-offset-2" id="imianyi" placeholder="请输入..." name="imianyi" value="" style="margin-top: 5px;width: 300px;display: none;">
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label">7、血液系统</label>
+                                    <label class="radio-inline js-yes">
+                                        <input type="radio" name="radioxueye" value="1" id="xueye1" /> 有
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioxueye" value="0" id="xueye2" checked /> 无
+                                    </label>
+                                    <div class="has-success row">
+                                        <input type="text" class="form-control input-sm col-md-offset-2" id="ixueye" placeholder="请输入..." name="ixueye" value="" style="margin-top: 5px;width: 300px;display: none;">
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label">8、其他</label>
+                                    <label class="radio-inline js-yes">
+                                        <input type="radio" name="radioother" value="1" id="shuqianother1" /> 有
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioother" value="0" id="shuqianother2" checked /> 无
+                                    </label>
+                                    <div class="has-success row">
+                                        <input type="text" class="form-control input-sm col-md-offset-2" id="ishuqianother" placeholder="请输入..." name="iother" value="" style="margin-top: 5px;width: 300px;display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label">1、吸烟</label>
+                                    <label class="radio-inline js-yes">
+                                        <input type="radio" name="radioxiyan" value="1" id="xiyan1" /> 有
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioxiyan" value="0" id="xiyan2" checked /> 否
+                                    </label>
+                                    <div class="has-success row">
+                                        <input type="text" class="form-control input-sm col-md-offset-2" id="ixiyan" placeholder="请输入..." name="ixiyan" value="" style="margin-top: 5px;width: 300px;display: none;">
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label">2、饮酒</label>
+                                    <label class="radio-inline js-yes">
+                                        <input type="radio" name="radioyingjiu" value="1" id="yingjiu1" /> 有
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioyingjiu" value="0" id="yingjiu2" checked /> 否
+                                    </label>
+                                    <div class="has-success row">
+                                        <input type="text" class="form-control input-sm col-md-offset-2" id="iyingjiu" placeholder="请输入..." name="iyingjiu" value="" style="margin-top: 5px;width: 300px;display: none;">
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label">3、手术史</label>
+                                    <label class="radio-inline js-yes">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 有
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2" checked /> 无
+                                    </label>
+                                    <div class="has-success row">
+                                        <input type="text" class="form-control input-sm col-md-offset-2" id="ishoushu" placeholder="请输入..." name="ishoushu" value="" style="margin-top: 5px;width: 300px;display: none;">
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label">4、肿瘤史</label>
+                                    <label class="radio-inline js-yes">
+                                        <input type="radio" name="radiozhongliu" value="1" id="zhongliu1" /> 有
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radiozhongliu" value="0" id="zhongliu2" checked /> 无
+                                    </label>
+                                    <div class="has-success row">
+                                        <input type="text" class="form-control input-sm col-md-offset-2" id="izhongliu" placeholder="请输入..." name="izhongliu" value="" style="margin-top: 5px;width: 300px;display: none;">
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-success">
+                                    <label class="col-sm-2 control-label">5、致癌因素</label>
+                                    <label class="radio-inline js-yes">
+                                        <input type="radio" name="radiozhiai" value="1" id="zhiai1" /> 有
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radiozhiai" value="0" id="zhiai2" checked /> 无
+                                    </label>
+                                    <div class="has-success row">
+                                        <input type="text" class="form-control input-sm col-md-offset-2" id="izhiai" placeholder="请输入..." name="izhiai" value="" style="margin-top: 5px;width: 300px;display: none;">
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-success yejing-content">
+                                    <div>
+                                        <label class="col-sm-2 control-label">6、月经史</label>
+                                        <div class="has-success row yejing-width1">
+                                            <label for="firstAge" class="col-sm-1 control-label yejing-lable">初潮年龄：</label>
+                                            <div class="input-group yejing-width2">
+                                                <input type="text" class="form-control input-sm" id="firstAge" placeholder="" name="firstage" value="{$resultyuejing[0]['firstage']|default=''}">
+                                                <span class="input-group-addon">岁</span>
+                                            </div>
+                                            <label for="endAge" class="col-sm-1 control-label yejing-lable">绝经年龄：</label>
+                                            <div class="input-group yejing-width2">
+                                                <input type="text" class="form-control input-sm" id="endAge" placeholder="" name="endage" value="{$resultyuejing[0]['endage']|default=''}">
+                                                <span class="input-group-addon">岁</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="yejing-guilv">
+                                        <label for="firstAge" class="control-label" style="width: 130px;padding-left: 0 !important;text-align: right !important;font-weight: 400 !important;padding-right: 15px;">是否规律：</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="radioguilv" value="1" id="yuejing-guilv-radio1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="radioguilv" value="0" id="yuejing-guilv-radio2"  /> 否
+                                        </label>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="form-group has-success jiazu-content">
+                                    <div class="has-success row jiazu-checkbox" id="checkjiazu">
+                                        <div class="jiazu-checkbox-child">
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="toujing" type="checkbox" id="inlineCheckbox1" value="1"> 头颈部
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="shiguan" type="checkbox" id="inlineCheckbox2" value="1"> 食管
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="fei" type="checkbox" id="inlineCheckbox3" value="1"> 肺
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="zongge" type="checkbox" id="inlineCheckbox4" value="1"> 纵隔
+                                            </label>
+                                        </div>
+                                        <div class="jiazu-checkbox-child">
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="wei" type="checkbox" id="inlineCheckbox5" value="1"> 胃
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="ganzhang" type="checkbox" id="inlineCheckbox6" value="1"> 肝脏
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="yixian" type="checkbox" id="inlineCheckbox7" value="1"> 胰腺
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="xiaochang" type="checkbox" id="inlineCheckbox8" value="1"> 小肠
+                                            </label>
+                                        </div>
+                                        <div class="jiazu-checkbox-child">
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="jiechang" type="checkbox" id="inlineCheckbox9" value="1"> 结肠
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="zhichang" type="checkbox" id="inlineCheckbox10" value="1"> 直肠
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="sheng" type="checkbox" id="inlineCheckbox11" value="1"> 肾
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="pangguang" type="checkbox" id="inlineCheckbox12" value="1"> 膀胱
+                                            </label>
+                                        </div>
+                                        <div class="jiazu-checkbox-child">
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="qianliexian" type="checkbox" id="inlineCheckbox13" value="1"> 前列腺
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="shengzhi" type="checkbox" id="inlineCheckbox14" value="1"> 生殖系统
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="lingba" type="checkbox" id="inlineCheckbox15" value="1"> 淋巴系统
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="ruxian" type="checkbox" id="inlineCheckbox16" value="1"> 乳腺
+                                            </label>
+                                        </div>
+                                        <div class="jiazu-checkbox-child">
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="zigong" type="checkbox" id="inlineCheckbox17" value="1"> 子宫
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="heise" type="checkbox" id="inlineCheckbox18" value="1"> 黑色素瘤
+                                            </label>
+                                            <label class="checkbox-inline col-sm-3">
+                                                <input name="rouliu" type="checkbox" id="inlineCheckbox19" value="1"> 肉瘤
+                                            </label>
+                                        </div>
+                                        <div class="jiazu-checkbox-other">
+                                            <label class="checkbox-inline">
+                                                <input name="othercheck" type="checkbox" id="inlineCheckbox20" value="1"> 其他
+                                            </label>
+
+                                            <div class="has-success row">
+                                                <input type="text" class="form-control input-sm col-md-offset-2" id="jiazuother" placeholder="请输入..." name="iothercheck" value="" style="margin-top: 5px;width: 300px;display: none;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <button type="submit" class="btn btn-primary save-btn" id="save">保存修改</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+    </form>
+</div>
+
+<script>
+    //保存成功弹窗
+    $("#save").click(function(){
+        alert('保存成功')
+    });
+
+</script>
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //…
+    });
+</script>
+<script>
+    window.onload = function(){
+        $('.nav-left').css('display','block');
+        $('#history-left').addClass('active');
+    }
+</script>
+<!--点击显示输入框-->
+<script>
+    $(document).ready(function () {
+        //家族史--其他显示切换
+        $("#inlineCheckbox20").click(function(){
+            if($('#inlineCheckbox20').css('checked','checked')){
+                $('#jiazuother').css('display','block');
+            }else {$('#jiazuother').css('display',null);}
+        })
+
+
+    })
+</script>
+
+<!--获取后台传入的数据-->
+<script>
+    let resultshuqian = <?php echo $resultshuqian?>;
+    let resultgeren = <?php echo $resultgeren?>;
+    let resultyuejing = <?php echo $resultyuejing?>;
+    let resultjiazu = <?php echo $resultjiazu?>;
+</script>
+
+<!--页面赋值、控制js-->
+<script src="/static/js/history.js"></script>
+
+{include file="public/footer" /}

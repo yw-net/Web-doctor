@@ -1,0 +1,655 @@
+{include file="public/meta" /}
+{include file="public/header" /}
+{include file="public/left" /}
+{include file="public/nav" /}
+<style>
+    .control-label{text-align: left !important;}
+    input[type="checkbox"]{margin-right: 5px;}
+    .flex-row{display: flex;justify-content: space-around;flex-direction: row;}
+    .flex-row-start{display: flex;justify-content: flex-start;flex-direction: row;}
+</style>
+<!--术后并发症页面-->
+<div class="content">
+
+    <form class="form-horizontal" action="{:url('Save/history')}" method="post">
+        <div class="panel panel-info">
+            <div class="panel-heading yw-flex-row">
+                <h4 class="panel-title">术后并发症</h4>
+                <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
+            </div>
+            <div class="panel-body">
+                <div class="layui-tab layui-tab-card has-success">
+                    <ul class="layui-tab-title" style="background-color: #dff0d8;">
+                        <li class="layui-this">术中并发症</li>
+                        <li>术后并发症</li>
+                        <li>二次手术</li>
+                        <li>SICU</li>
+                    </ul>
+                    <div class="layui-tab-content has-success">
+
+                        <div class="layui-tab-item layui-show">
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">1-急性呼吸道梗阻</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">2-低氧血症</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="control-label col-sm-5">3-术中大出血</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                                <div class="show col-sm-6">
+                                    <div class="col-sm-6">
+                                        <label class="col-sm-5 control-label">出血量：</label>
+                                        <div class="input-group col-sm-7">
+                                            <input  class="input-sm form-control" type="text" name="radioshoushu" value="" id="shoushu1" />
+                                            <span class="input-group-addon">ml/</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="col-sm-4 control-label">原因：</label>
+                                        <div class="input-group col-sm-8">
+                                            <input  class="form-control input-sm" type="text" name="radioshoushu" value="" id="shoushu1" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">4-高碳酸血症</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">5-空气栓塞</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">6-术中休克</label>
+                                    <div>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">7-心率失常</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control input-sm" name="marry">
+                                        <option value="0" />请选择</option>
+                                        <option value="2"  />房颤</option>
+                                        <option value="1"  />室颤</option>
+                                        <option value="1"  />房扑</option>
+                                        <option value="1"  />室速</option>
+                                        <option value="1"  />室上速</option>
+                                        <option value="1"  />停搏</option>
+                                        <option value="1"  />窦缓</option>
+                                        <option value="1"  />其他</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">8-术中高血压</label>
+                                    <div class="input-group col-sm-7">
+                                        <input class="form-control input-sm" type="text" name="radioshoushu" value="" id="shoushu1" />
+                                        <span class="input-group-addon">mmHG/</span>
+                                        <input  class="form-control input-sm" type="text" name="radioshoushu" value="" id="shoushu1" style="margin-left: 10px;"/>
+                                        <span class="input-group-addon">mmHG/</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="col-sm-4 control-label">持续时间</label>
+                                    <div class="input-group col-sm-6">
+                                        <input  class="form-control input-sm" type="text" name="radioshoushu" value="" id="shoushu1" />
+                                        <span class="input-group-addon">分钟</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">9-术中低血压</label>
+                                    <div class="input-group col-sm-7">
+                                        <input class="form-control input-sm" type="text" name="radioshoushu" value="" id="shoushu1" />
+                                        <span class="input-group-addon">mmHG/</span>
+                                        <input  class="form-control input-sm" type="text" name="radioshoushu" value="" id="shoushu1" style="margin-left: 10px;"/>
+                                        <span class="input-group-addon">mmHG/</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="col-sm-4 control-label">持续时间</label>
+                                    <div class="input-group col-sm-6">
+                                        <input  class="form-control input-sm" type="text" name="radioshoushu" value="" id="shoushu1" />
+                                        <span class="input-group-addon">分钟</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">10-术中损伤</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control input-sm" name="marry">
+                                        <option value="0" />请选择</option>
+                                        <option value="2"  />气管</option>
+                                        <option value="1"  />主支气管</option>
+                                        <option value="1"  />膈神经</option>
+                                        <option value="1"  />迷走神经</option>
+                                        <option value="1"  />肺动脉</option>
+                                        <option value="1"  />肺静脉</option>
+                                        <option value="1"  />奇静脉</option>
+                                        <option value="1"  />腔静脉</option>
+                                        <option value="1"  />肋间血管</option>
+                                        <option value="1"  />肋间神经</option>
+                                        <option value="1"  />食管</option>
+                                        <option value="1"  />心包</option>
+                                        <option value="1"  />其他</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="layui-tab-item">
+
+                            <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label class="col-sm-5 control-label">1-围手术期死亡</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="show col-sm-3">
+                                        <select class="form-control input-sm" name="marry">
+                                            <option value="0" />请选择</option>
+                                            <option value="2"  />30天内</option>
+                                            <option value="1"  />60天内</option>
+                                            <option value="1"  />90天内</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label class="col-sm-5 control-label">2-心血管意外</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="show col-sm-3">
+                                        <select class="form-control input-sm" name="marry">
+                                            <option value="0" />请选择</option>
+                                            <option value="2"  />心梗</option>
+                                            <option value="1"  />心跳骤停</option>
+                                            <option value="1"  />心衰</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label class="col-sm-5 control-label">3-心率失常</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                        </label>
+                                    </div>
+                                    <div class="show col-sm-3">
+                                        <select class="form-control input-sm" name="marry">
+                                            <option value="0" />请选择</option>
+                                            <option value="2"  />房颤</option>
+                                            <option value="1"  />室颤</option>
+                                            <option value="1"  />房扑</option>
+                                            <option value="1"  />室速</option>
+                                            <option value="1"  />室上速</option>
+                                            <option value="1"  />停搏</option>
+                                            <option value="1"  />窦缓</option>
+                                            <option value="1"  />其他</option>
+                                        </select>
+                                    </div>
+                                    <div class="show col-sm-3">
+                                        <input class="input-sm form-control" type="text" name="radioshoushu" placeholder="请输入……" id="shoushu1" />
+                                    </div>
+                                </div>
+
+                            <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label class="col-sm-5 control-label">4-肺栓塞</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                        </label>
+                                    </div>
+                                </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">5-心包疝</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">6-胸腔、纵隔活动性出血</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">7-肺不张</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">8-急性肺水肿</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">9-呼吸衰竭</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">10-肺叶扭转或坏疽</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">11-支气管胸膜瘘</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">12-脓胸</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">13-胸膜残腔</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">14-肺部感染</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">15-切口感染</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">16-漏气>5天</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">17-气管镜吸痰</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">18-皮瓣坏死</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">19-植入物感染</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">20-乳糜胸</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-5 control-label">21-重肌症无力</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-4 control-label">22-其他</label>
+                                    <div class="input-group">
+                                        <input class="input-sm form-control" type="text" name="radioshoushu" value="" id="shoushu1" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="layui-tab-item">
+                            <div class="row">
+                                <label class="col-sm-2 control-label">二次手术</label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                </label>
+                            </div>
+                            <div class="row" style="margin-top: 25px;">
+                                <label class="col-sm-2 control-label">1-时间</label>
+                                <div class="input-group col-sm-3">
+                                    <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
+                                    <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 25px;">
+                                <label class="col-sm-2 control-label">2-原因</label>
+                                <div class="input-group col-sm-3">
+                                    <select class="form-control input-sm" name="marry">
+                                        <option value="0" />请选择</option>
+                                        <option value="2"  />支气管胸膜瘘</option>
+                                        <option value="1"  />胸腔活动性出血</option>
+                                        <option value="1"  />乳糜胸</option>
+                                        <option value="1"  />脓胸</option>
+                                        <option value="1"  />其他</option>
+                                    </select>
+                                    <input style="margin-top: 10px;" class="show form-control input-sm" type="text" placeholder="请输入……" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-tab-item">
+                            <div>
+                                <div class="row">
+                                    <label class="col-sm-2 control-label">SICU</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                                <div class="row" style="margin-top: 25px;">
+                                    <label class="col-sm-2 control-label">1-入住时间：</label>
+                                    <div class="input-group col-sm-3">
+                                        <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
+                                        <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 25px;">
+                                    <label class="col-sm-2 control-label">2-原因：</label>
+                                    <div class="input-group col-sm-3">
+                                        <select class="form-control input-sm" name="marry">
+                                            <option value="0" />请选择</option>
+                                            <option value="2"  />呼衰</option>
+                                            <option value="1"  />心衰</option>
+                                            <option value="1"  />心梗</option>
+                                            <option value="1"  />其他</option>
+                                        </select>
+                                        <input style="margin-top: 10px;" class="show form-control input-sm" type="text" placeholder="请输入……" />
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 25px;">
+                                    <label class="col-sm-2 control-label">3-二次插管</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                    </label>
+                                </div>
+                                <div class="show input-group row">
+                                    <label class="col-sm-2 control-label col-sm-offset-2">呼吸机支持时间</label>
+                                    <div class="input-group col-sm-3">
+                                        <input class="form-control input-sm" type="text" name="radioshoushu" value="1" id="shoushu1" />
+                                        <span class="input-group-addon">小时</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 25px;">
+                                    <label class="col-sm-2 control-label">4-离开时间：</label>
+                                    <div class="input-group col-sm-3">
+                                        <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
+                                        <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 25px;">
+                                    <label class="col-sm-2 control-label">5-转归：</label>
+                                    <div class="input-group col-sm-3">
+                                        <select class="form-control input-sm" name="marry">
+                                            <option value="0" />请选择</option>
+                                            <option value="2"  />转回</option>
+                                            <option value="1"  />出院</option>
+                                            <option value="1"  />病危离院</option>
+                                            <option value="1"  />死亡</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!--layui模块加载-->
+<script>
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //一些事件监听
+        element.on('tab(demo)', function(data){
+            console.log(data);
+        });
+    });
+</script>
+<!--页面加载对按钮的背景激活-->
+<script>
+    window.onload = function(){
+        $('.nav-left').css('display','block');
+        $('#postoperativeComplications-left').addClass('active');
+    }
+</script>
+<!--点击显示输入框-->
+<script>
+
+    var options=$(".inputhide");
+    for (var i = 0; i < options.length; i++) {
+        console.log($(options[i]).val());
+    }
+</script>
+
+{include file="public/footer" /}

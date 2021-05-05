@@ -1,0 +1,155 @@
+{include file="public/meta" /}
+{include file="public/header" /}
+{include file="public/leftempty" /}
+{include file="public/nav" /}
+<style>
+    .layui-table-tool{background-color: #dff0d8;}
+</style>
+<!--患者列表主页面-->
+<div class="content">
+    <form class="form-horizontal" method="post">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">患者管理</h4>
+            </div>
+            <div class="panel-body">
+                <!--表格主体-->
+                <table class="layui-hide" id="userManager" lay-filter="userManager"></table>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--为当前选中页面添加背景-->
+<script>
+    window.onload = function(){
+        $('#dblist-top').addClass('active');
+        $('.nav-left').css('display','none');
+    }
+</script>
+
+<!--表格左上按钮-->
+<script type="text/html" id="addNewPatient">
+    <div style="display: flex;justify-content: flex-start;flex-direction: row;">
+        <div class="layui-inline">
+            <input class="layui-input" name="reload" id="reload" autocomplete="off" placeholder="请输入（患者ID/患者姓名/住院号）查询" style="width: 300px;height: 30px;">
+        </div>
+        <button type="button" class="layui-btn layui-btn-sm" data-type="search" id="search" style="margin-left: 5px;"><i class="layui-icon">&#xe615;</i>查询</button>
+        <button type="button" class="layui-btn layui-btn-sm layui-btn-warm" style="margin-left: 15px;" onclick="javascript:location.reload();"><i class="layui-icon">&#xe669;</i>刷新</button>
+        <div class="layui-btn-container" style="margin-left: 15px;">
+            <a type="button" class="layui-btn layui-btn-sm layui-btn-normal" href="{:url('Api/addpatients')}" style="text-decoration:none;"><i class="layui-icon">&#xe654;</i>添加新患者</a>
+        </div>
+    </div>
+
+</script>
+
+<!--表格右侧功能按钮-->
+<script type="text/html" id="toolbar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit" style="text-decoration:none;">编辑/查看</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="text-decoration:none;"><i class="layui-icon layui-icon-delete"></i></a>
+</script>
+
+<!--表格样式（性别）-->
+<script type="text/html" id="sexTemplet">
+    {{#  if(d.sex == 1){ }}
+    <span style="color: #334553;">男</span>
+    {{#  } else { }}
+    <span style="color: #B84038;">女</span>
+    {{#  } }}
+</script>
+
+<!--layui框架（表格相关操作）-->
+<script>
+    layui.use(["form","table","layer","laypage","upload"], function(){
+        var table = layui.table;
+        var form = layui.form;
+        var layer = layui.layer;
+        var laypage = layui.laypage;
+        var upload = layui.upload;
+
+        //表格渲染
+        table.render({
+            elem: '#userManager'
+            ,url:"{:url('Api/patientsManager')}"
+            ,toolbar: '#addNewPatient' //开启头部工具栏，并为其绑定左侧模板
+            ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                ,layEvent: 'LAYTABLE_TIPS'
+                ,icon: 'layui-icon-tips'
+            }]
+            ,page: {
+                limit:10 //一页显示多少条
+                ,limits:[10,15,20]//每页条数的选择项
+                ,groups: 5 //连续页码
+                ,first: "首页"
+                ,last: "尾页"
+                ,prev:"上一页"
+                ,next:"下一页"
+            }
+
+            ,title: '患者基本信息'
+            ,cols: [[
+                {field:'patients_id', title:'患者ID', width:120,sort: true,align:'center'}
+                ,{field:'patients_name', title:'患者姓名',width:120,align:'center'}
+                ,{field:'phone', title:'电话', width:120,align:'center'}
+                ,{field:'hospital_id', title:'住院号', width:120,sort: true,align:'center'}
+                ,{field:'sex', title:'性别',sort:true,width:80,templet:'#sexTemplet',align:'center'}
+                ,{field:'age', title:'年龄',sort: true,width:80,align:'center'}
+                ,{field:'doctor', title:'主治医生',width:120,sort: true,align:'center'}
+                ,{field:'hospitalized_time', title:'入院日期', width:120,sort:true,align:'center'}
+                ,{field:'leaving_hospital', title:'离院日期', width:120,sort:true,align:'center'}
+                ,{fixed: 'right', title:'操作', toolbar: '#toolbar', width:160,align:'center'}
+            ]]
+        });
+
+        //编辑/删除
+        table.on('tool(userManager)', function(obj){
+
+            var patientsid = obj.data.patients_id;
+            //删除
+            if(obj.event === 'del'){
+                layer.confirm('真的删除么', function(index){
+                    obj.del();
+                    $.ajax({
+                        type:"GET",
+                        url:"{:url('Api/delPatient')}",
+                        data:{patientsid:patientsid},
+                        dataType:'json',
+                        success:function (data) {
+                            layer.msg('删除成功')
+                        }
+                    });
+                    layer.close(index);
+                });
+                console.log(obj);
+            }
+            //编辑
+            else if(obj.event === 'edit'){
+                $('.nav-left').css('display','block');
+                window.location.href='/menu/patients?patientsid='+patientsid;
+            }
+        });
+
+        //查询按钮（按用户名、医生姓名查询）
+        $(function () {
+            $("#search").on('click',function (event) {
+                let inputinfo = $('#reload').val();
+                table.reload('userManager', {
+                    url: "{:url('Api/searchPatient')}"
+                    ,where: { //设定异步数据接口的额外参数
+                        "inputinfo":inputinfo
+                    }
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+
+            })
+        })
+
+    });
+</script>
+
+
+
+{include file="public/footer" /}

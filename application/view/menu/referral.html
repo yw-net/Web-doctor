@@ -1,0 +1,292 @@
+{include file="public/meta" /}
+{include file="public/header" /}
+{include file="public/left" /}
+{include file="public/nav" /}
+<style>
+    .xueliubiao-content{display: flex;flex-direction: column;}
+    .xuliubiao-input{display: flex;flex-direction: row;margin-top: 10px;}
+    .ct-content{display: flex;flex-direction: column;}
+    .radio-inline{margin-left: 0 !important;}
+    .radio-inline2{margin-left: 15px !important;}
+    .update-img{margin-top: 10px;}
+</style>
+<!--复诊信息页面-->
+<div class="content">
+    <form class="form-horizontal" action="{:url('Save/history')}" method="post">
+        <div class="panel panel-info">
+            <div class="panel-heading yw-flex-row">
+                <h4 class="panel-title">复诊信息</h4>
+                <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
+            </div>
+            <div class="panel-body">
+                <div class="form-group has-success">
+                    <label for="referralDate" class="col-sm-2 control-label">复诊日期：</label>
+                    <div class="input-group col-sm-2">
+                        <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime" id="referralDate" name="referraldate" placeholder="选择日期">
+                        <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
+                             <span class="glyphicon glyphicon-remove"></span>
+                         </span>
+                    </div>
+                </div>
+                <div class="form-group has-success">
+                    <label for="referralDoctor" class="col-sm-2 control-label">复诊医生：</label>
+                    <div class="input-group col-sm-2">
+                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                        <span class="input-group-addon">医生</span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-heading">
+                <h4 class="panel-title">复诊内容</h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-group has-success">
+                    <label for="zhengzhuang" class="col-sm-1 control-label">症状：</label>
+                    <div class="input-group col-sm-3">
+                        <input type="text" class="form-control input-sm" id="zhengzhuang" placeholder="" name="zhengzhuang" value="">
+                    </div>
+                </div>
+
+                <div class="form-group has-success">
+                    <label for="tizheng" class="col-sm-1 control-label">体征：</label>
+                    <div class="input-group col-sm-3">
+                        <input type="text" class="form-control input-sm" id="tizheng" placeholder="" name="tizheng" value="">
+                    </div>
+                </div>
+
+                <div class="form-group has-success xueliubiao-content">
+                    <div>
+                        <label class="col-sm-1 control-label">血瘤标：</label>
+                    </div>
+                    <div class="xuliubiao-input col-sm-offset-1">
+                        <label for="cea" class="col-sm-1 control-label">CEA</label>
+                        <div class="input-group col-sm-2">
+                            <input type="text" class="form-control input-sm" id="cea" placeholder="" name="cea" value="">
+                            <span class="input-group-addon">ng/ml</span>
+                        </div>
+                        <label for="cyfra" class="col-sm-1 control-label">CYFRA211</label>
+                        <div class="input-group col-sm-2">
+                            <input type="text" class="form-control input-sm" id="cyfra" placeholder="" name="cyfra" value="">
+                            <span class="input-group-addon">ng/ml</span>
+                        </div>
+                        <label for="ca199" class="col-sm-1 control-label">CA199</label>
+                        <div class="input-group col-sm-2">
+                            <input type="text" class="form-control input-sm" id="ca199" placeholder="" name="ca199" value="">
+                            <span class="input-group-addon">U/ml</span>
+                        </div>
+                    </div>
+                    <div class="xuliubiao-input col-sm-offset-1">
+                        <label for="nse" class="col-sm-1 control-label">NSE</label>
+                        <div class="input-group col-sm-2">
+                            <input type="text" class="form-control input-sm" id="nse" placeholder="" name="nse" value="">
+                            <span class="input-group-addon">ng/ml</span>
+                        </div>
+                        <label for="scc" class="col-sm-1 control-label">SCC</label>
+                        <div class="input-group col-sm-2">
+                            <input type="text" class="form-control input-sm" id="scc" placeholder="" name="scc" value="">
+                            <span class="input-group-addon">ng/ml</span>
+                        </div>
+                        <label for="ca125" class="col-sm-1 control-label">CA125</label>
+                        <div class="input-group col-sm-2">
+                            <input type="text" class="form-control input-sm" id="ca125" placeholder="" name="ca125" value="">
+                            <span class="input-group-addon">U/ml</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group has-success ct-content">
+                    <div class="ct-label">
+                        <label class="col-sm-1 control-label">超声：</label>
+                        <label class="radio-inline">
+                            <input class="" type="radio" name="radiochaoshen" value="1" id="chaoshen1" /> 是
+                        </label>
+                        <label class="radio-inline radio-inline2">
+                            <input class="" type="radio" name="radiochaoshen" value="0" id="chaoshen2" checked /> 否
+                        </label>
+                    </div>
+                    <div class="has-success row ct-checkbox col-sm-offset-1" id="chaoshencheckbox">
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 淋巴结转移
+                        </label>
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck2" type="checkbox" id="chaoshenCheckbox2" value="1"> 肝转移
+                        </label>
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck3" type="checkbox" id="chaoshenCheckbox3" value="1"> 肾上腺转移
+                        </label>
+                    </div>
+                    <div class="ct-checkbox-other col-sm-offset-1">
+                        <label class="checkbox-inline">
+                            <input name="chaoshencheckother" type="checkbox" id="chaoshencheckother" value="1"> 其他
+                        </label>
+                    </div>
+                    <div class="has-success row">
+                        <input type="text" class="form-control input-sm col-md-offset-1" id="chaoshenotherinput" placeholder="请输入..." name="chaoshenotherinput" value="" style="margin-top: 5px;width: 300px;">
+                    </div>
+                    <div class="update-img col-sm-offset-1">
+                        <button class="btn btn-success">上传图片</button><button class="btn btn-success" style="margin-left: 15px;">展示图片</button>
+                    </div>
+                </div>
+
+                <div class="form-group has-success ct-content">
+                    <div class="ct-label">
+                        <label class="col-sm-1 control-label">CT：</label>
+                        <label class="radio-inline">
+                            <input class="" type="radio" name="radiochaoshen" value="1" id="chaoshen1" /> 是
+                        </label>
+                        <label class="radio-inline radio-inline2">
+                            <input class="" type="radio" name="radiochaoshen" value="0" id="chaoshen2" checked /> 否
+                        </label>
+                    </div>
+                    <div class="has-success row ct-checkbox col-sm-offset-1" id="chaoshencheckbox">
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 局部复发
+                        </label>
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck2" type="checkbox" id="chaoshenCheckbox2" value="1"> 纵隔淋巴转移
+                        </label>
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck3" type="checkbox" id="chaoshenCheckbox3" value="1"> 肺转移
+                        </label>
+                    </div>
+                    <div class="ct-checkbox-other col-sm-offset-1">
+                        <label class="checkbox-inline">
+                            <input name="chaoshencheckother" type="checkbox" id="chaoshencheckother" value="1"> 其他
+                        </label>
+                    </div>
+                    <div class="has-success row">
+                        <input type="text" class="form-control input-sm col-md-offset-1" id="chaoshenotherinput" placeholder="请输入..." name="chaoshenotherinput" value="" style="margin-top: 5px;width: 300px;">
+                    </div>
+                    <div class="update-img col-sm-offset-1">
+                        <button class="btn btn-success">上传图片</button><button class="btn btn-success" style="margin-left: 15px;">展示图片</button>
+                    </div>
+                </div>
+
+                <div class="form-group has-success ct-content">
+                    <div class="ct-label">
+                        <label class="col-sm-1 control-label">ECT：</label>
+                        <label class="radio-inline">
+                            <input class="" type="radio" name="radiochaoshen" value="1" id="chaoshen1" /> 是
+                        </label>
+                        <label class="radio-inline radio-inline2">
+                            <input class="" type="radio" name="radiochaoshen" value="0" id="chaoshen2" checked /> 否
+                        </label>
+                    </div>
+                    <div class="has-success row ct-checkbox col-sm-offset-1" id="chaoshencheckbox">
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 局部复发
+                        </label>
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck2" type="checkbox" id="chaoshenCheckbox2" value="1"> 纵隔淋巴转移
+                        </label>
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck3" type="checkbox" id="chaoshenCheckbox3" value="1"> 肺转移
+                        </label>
+                    </div>
+                    <div class="ct-checkbox-other col-sm-offset-1">
+                        <label class="checkbox-inline">
+                            <input name="chaoshencheckother" type="checkbox" id="chaoshencheckother" value="1"> 其他
+                        </label>
+                    </div>
+                    <div class="has-success row">
+                        <input type="text" class="form-control input-sm col-md-offset-1" id="chaoshenotherinput" placeholder="请输入..." name="chaoshenotherinput" value="" style="margin-top: 5px;width: 300px;">
+                    </div>
+                    <div class="update-img col-sm-offset-1">
+                        <button class="btn btn-success">上传图片</button><button class="btn btn-success" style="margin-left: 15px;">展示图片</button>
+                    </div>
+                </div>
+
+                <div class="form-group has-success ct-content">
+                    <div class="ct-label">
+                        <label class="col-sm-1 control-label">头颅MRI</label>
+                        <label class="radio-inline">
+                            <input class="" type="radio" name="radiochaoshen" value="1" id="chaoshen1" /> 是
+                        </label>
+                        <label class="radio-inline radio-inline2">
+                            <input class="" type="radio" name="radiochaoshen" value="0" id="chaoshen2" checked /> 否
+                        </label>
+                    </div>
+                    <div class="has-success row ct-checkbox col-sm-offset-1" id="chaoshencheckbox">
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 局部复发
+                        </label>
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck2" type="checkbox" id="chaoshenCheckbox2" value="1"> 纵隔淋巴转移
+                        </label>
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck3" type="checkbox" id="chaoshenCheckbox3" value="1"> 肺转移
+                        </label>
+                    </div>
+                    <div class="ct-checkbox-other col-sm-offset-1">
+                        <label class="checkbox-inline">
+                            <input name="chaoshencheckother" type="checkbox" id="chaoshencheckother" value="1"> 其他
+                        </label>
+                    </div>
+                    <div class="has-success row">
+                        <input type="text" class="form-control input-sm col-md-offset-1" id="chaoshenotherinput" placeholder="请输入..." name="chaoshenotherinput" value="" style="margin-top: 5px;width: 300px;">
+                    </div>
+                    <div class="update-img col-sm-offset-1">
+                        <button class="btn btn-success">上传图片</button><button class="btn btn-success" style="margin-left: 15px;">展示图片</button>
+                    </div>
+                </div>
+
+                <div class="form-group has-success ct-content">
+                    <div class="ct-label">
+                        <label class="col-sm-1 control-label">PET：</label>
+                        <label class="radio-inline">
+                            <input class="" type="radio" name="radiochaoshen" value="1" id="chaoshen1" /> 是
+                        </label>
+                        <label class="radio-inline radio-inline2">
+                            <input class="" type="radio" name="radiochaoshen" value="0" id="chaoshen2" checked /> 否
+                        </label>
+                    </div>
+                    <div class="has-success row ct-checkbox col-sm-offset-1" id="chaoshencheckbox">
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 局部复发
+                        </label>
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck2" type="checkbox" id="chaoshenCheckbox2" value="1"> 纵隔淋巴转移
+                        </label>
+                        <label class="checkbox-inline col-sm-3">
+                            <input name="chaoshencheck3" type="checkbox" id="chaoshenCheckbox3" value="1"> 肺转移
+                        </label>
+                    </div>
+                    <div class="ct-checkbox-other col-sm-offset-1">
+                        <label class="checkbox-inline">
+                            <input name="chaoshencheckother" type="checkbox" id="chaoshencheckother" value="1"> 其他
+                        </label>
+                    </div>
+                    <div class="has-success row">
+                        <input type="text" class="form-control input-sm col-md-offset-1" id="chaoshenotherinput" placeholder="请输入..." name="chaoshenotherinput" value="" style="margin-top: 5px;width: 300px;">
+                    </div>
+                    <div class="update-img col-sm-offset-1">
+                        <button class="btn btn-success">上传图片</button><button class="btn btn-success" style="margin-left: 15px;">展示图片</button>
+                    </div>
+                </div>
+
+                <div class="form-group has-success">
+                    <label for="tizheng" class="col-sm-1 control-label">其他：</label>
+                    <div class="input-group col-sm-5">
+                        <input type="text" class="form-control input-sm" id="tizheng" placeholder="" name="tizheng" value="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    window.onload = function(){
+        $('.nav-left').css('display','block');
+        $('#referral-left').addClass('active');
+    }
+</script>
+<!--点击显示输入框-->
+<script>
+
+    var options=$(".inputhide");
+    for (var i = 0; i < options.length; i++) {
+        console.log($(options[i]).val());
+    }
+</script>
+
+{include file="public/footer" /}

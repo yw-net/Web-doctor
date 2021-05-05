@@ -1,0 +1,426 @@
+{include file="public/meta" /}
+{include file="public/header" /}
+{include file="public/left" /}
+{include file="public/nav" /}
+<style>
+    .control-label{text-align: left !important;}
+    input[type="checkbox"]{margin-right: 5px;}
+    .flex-row{display: flex;justify-content: space-around;flex-direction: row;}
+    .flex-row-start{display: flex;justify-content: flex-start;flex-direction: row;}
+</style>
+<!--诱导治疗页面-->
+<div class="content">
+    <form class="form-horizontal" action="{:url('Save/history')}" method="post">
+        <div class="panel panel-info">
+            <div class="panel-heading yw-flex-row">
+                <h4 class="panel-title">诱导治疗</h4>
+                <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
+            </div>
+            <div class="panel-body has-success">
+
+                <div class="layui-tab layui-tab-card">
+                    <ul class="layui-tab-title" style="background-color: #dff0d8">
+                        <li class="layui-this">诱导前分期</li>
+                        <li>诱导化疗</li>
+                        <li>诱导放疗</li>
+                        <li>靶向诱导</li>
+                        <li>诱导后分期</li>
+                        <li>诱导后CT</li>
+                        <li>诱导后PET</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <div class="row" style="margin-top: 15px;">
+                                <div class="col-sm-2 flex-row col-sm-offset-1">
+                                    <label class="col-sm-1 control-label" style="padding-left: 0 !important;">T</label>
+                                    <select class="form-control input-sm">
+                                        <option value="0"  />请选择</option>
+                                        <option value="2"  />单发</option>
+                                        <option value="1"  />多发</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2 flex-row">
+                                    <label class="col-sm-1 control-label">N</label>
+                                    <select class="form-control input-sm">
+                                        <option value="0"  />请选择</option>
+                                        <option value="2"  />单发</option>
+                                        <option value="1"  />多发</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2 flex-row">
+                                    <label class="col-sm-1 control-label">M</label>
+                                    <select class="form-control input-sm">
+                                        <option value="0"  />请选择</option>
+                                        <option value="2"  />单发</option>
+                                        <option value="1"  />多发</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="layui-form">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" style="width: 130px;font-weight: 600;">诱导化疗</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="show" id="hualiaoShow">
+                                <table  class="table table-bordered" style="margin-top: 15px;">
+                                    <thead>
+                                    <tr>
+                                        <th>化疗周期</th>
+                                        <th>化疗方案</th>
+                                        <th>查看详情</th>
+                                        <th>删除</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-success">添加新的化疗记录</button>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="layui-form">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" style="width: 130px;font-weight: 600;">诱导放疗</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="show" id="fangliaoShow">
+                                <table  class="table table-bordered" style="margin-top: 15px;">
+                                    <thead>
+                                    <tr>
+                                        <th>放疗时间</th>
+                                        <th>放疗方式</th>
+                                        <th>查看详情</th>
+                                        <th>删除</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-success">添加新的放疗记录</button>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="layui-form">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" style="width: 130px;font-weight: 600;">靶向诱导</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="show" id="baxiangShow">
+                                <table  class="table table-bordered" style="margin-top: 15px;">
+                                    <thead>
+                                    <tr>
+                                        <th>靶向时间</th>
+                                        <th>药物名称</th>
+                                        <th>查看详情</th>
+                                        <th>删除</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-success">添加新的靶向记录</button>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="layui-form">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" style="width: 130px;font-weight: 600;">诱导后分期</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="show" id="houfenqiShow">
+                                <table  class="table table-bordered" style="margin-top: 15px;">
+                                    <thead>
+                                    <tr>
+                                        <th>后分期时间</th>
+                                        <th>查看详情</th>
+                                        <th>删除</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                                <div class="row">
+                                    <label class="col-sm-2 control-label col-sm-offset-1">后分期时间</label>
+                                    <div class="input-group col-sm-2">
+                                        <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
+                                        <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 15px;">
+                                    <div class="col-sm-2 flex-row col-sm-offset-1">
+                                        <label class="col-sm-1 control-label" style="padding-left: 0 !important;">T</label>
+                                        <select class="form-control input-sm">
+                                            <option value="0"  />请选择</option>
+                                            <option value="2"  />单发</option>
+                                            <option value="1"  />多发</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2 flex-row">
+                                        <label class="col-sm-1 control-label">N</label>
+                                        <select class="form-control input-sm">
+                                            <option value="0"  />请选择</option>
+                                            <option value="2"  />单发</option>
+                                            <option value="1"  />多发</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2 flex-row">
+                                        <label class="col-sm-1 control-label">M</label>
+                                        <select class="form-control input-sm">
+                                            <option value="0"  />请选择</option>
+                                            <option value="2"  />单发</option>
+                                            <option value="1"  />多发</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2 flex-row">
+                                        <label class="control-label" style="width: 120px;">Stage变化</label>
+                                        <select class="form-control input-sm">
+                                            <option value="0"  />请选择</option>
+                                            <option value="2"  />单发</option>
+                                            <option value="1"  />多发</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success" style="margin-top: 15px;">添加新的后分期记录</button>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="layui-form">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" style="width: 130px;font-weight: 600;">诱导后CT</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="show" id="houctShow">
+                                <table  class="table table-bordered" style="margin-top: 15px;">
+                                    <thead>
+                                    <tr>
+                                        <th>Resist</th>
+                                        <th>查看详情</th>
+                                        <th>删除</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                                <div class="flex-row-start">
+                                    <label class="col-sm-2 control-label">Resist</label>
+                                    <select class="form-control input-sm" style="width: 150px;">
+                                        <option value="0"  />请选择</option>
+                                        <option value="2"  />CR</option>
+                                        <option value="1"  />PR</option>
+                                        <option value="1"  />SD</option>
+                                        <option value="1"  />PD</option>
+                                    </select>
+                                </div>
+                                <label class="col-sm-2 control-label" style="padding-bottom: 15px;">诱导后N变化</label>
+                                <table  class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>1组</th>
+                                        <th>2组</th>
+                                        <th>3组</th>
+                                        <th>4组</th>
+                                        <th>5组</th>
+                                        <th>6组</th>
+                                        <th>7组</th>
+                                        <th>8组</th>
+                                        <th>9组</th>
+                                        <th>10组</th>
+                                        <th>11组</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <select class="form-control input-sm" name="marry">
+                                                <option value="0"  />请选择</option>
+                                                <option value="1"  />增大</option>
+                                                <option value="2"  />缩小</option>
+                                                <option value="3"  />新增</option>
+                                                <option value="4"  />不变</option>
+                                            </select>
+                                        </td>
+                                        <td><select class="form-control input-sm" name="marry">
+                                            <option value="0"  />请选择</option>
+                                            <option value="1"  />增大</option>
+                                            <option value="2"  />缩小</option>
+                                            <option value="3"  />新增</option>
+                                            <option value="4"  />不变</option>
+                                        </select></td>
+                                        <td><select class="form-control input-sm" name="marry">
+                                            <option value="0"  />请选择</option>
+                                            <option value="1"  />增大</option>
+                                            <option value="2"  />缩小</option>
+                                            <option value="3"  />新增</option>
+                                            <option value="4"  />不变</option>
+                                        </select></td>
+                                        <td><select class="form-control input-sm" name="marry">
+                                            <option value="0"  />请选择</option>
+                                            <option value="1"  />增大</option>
+                                            <option value="2"  />缩小</option>
+                                            <option value="3"  />新增</option>
+                                            <option value="4"  />不变</option>
+                                        </select></td>
+                                        <td><select class="form-control input-sm" name="marry">
+                                            <option value="0"  />请选择</option>
+                                            <option value="1"  />增大</option>
+                                            <option value="2"  />缩小</option>
+                                            <option value="3"  />新增</option>
+                                            <option value="4"  />不变</option>
+                                        </select></td>
+                                        <td><select class="form-control input-sm" name="marry">
+                                            <option value="0"  />请选择</option>
+                                            <option value="1"  />增大</option>
+                                            <option value="2"  />缩小</option>
+                                            <option value="3"  />新增</option>
+                                            <option value="4"  />不变</option>
+                                        </select></td>
+                                        <td><select class="form-control input-sm" name="marry">
+                                            <option value="0"  />请选择</option>
+                                            <option value="1"  />增大</option>
+                                            <option value="2"  />缩小</option>
+                                            <option value="3"  />新增</option>
+                                            <option value="4"  />不变</option>
+                                        </select></td>
+                                        <td><select class="form-control input-sm" name="marry">
+                                            <option value="0"  />请选择</option>
+                                            <option value="1"  />增大</option>
+                                            <option value="2"  />缩小</option>
+                                            <option value="3"  />新增</option>
+                                            <option value="4"  />不变</option>
+                                        </select></td>
+                                        <td><select class="form-control input-sm" name="marry">
+                                            <option value="0"  />请选择</option>
+                                            <option value="1"  />增大</option>
+                                            <option value="2"  />缩小</option>
+                                            <option value="3"  />新增</option>
+                                            <option value="4"  />不变</option>
+                                        </select></td>
+                                        <td><select class="form-control input-sm" name="marry">
+                                            <option value="0"  />请选择</option>
+                                            <option value="1"  />增大</option>
+                                            <option value="2"  />缩小</option>
+                                            <option value="3"  />新增</option>
+                                            <option value="4"  />不变</option>
+                                        </select></td>
+                                        <td><select class="form-control input-sm" name="marry">
+                                            <option value="0"  />请选择</option>
+                                            <option value="1"  />增大</option>
+                                            <option value="2"  />缩小</option>
+                                            <option value="3"  />新增</option>
+                                            <option value="4"  />不变</option>
+                                        </select></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-success">添加新的后CT记录</button>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="layui-form">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" style="width: 130px;font-weight: 600;">诱导后PET</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="show" id="petShow">
+                                <table  class="table table-bordered" style="margin-top: 15px;">
+                                    <thead>
+                                    <tr>
+                                        <th>PET号</th>
+                                        <th>查看详情</th>
+                                        <th>删除</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                                <div class="form-group has-success" style="margin-top: 10px;">
+                                    <label for="referralDoctor" class="col-sm-1 control-label">PET号</label>
+                                    <div class="input-group col-sm-3">
+                                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group has-success" style="margin-top: 15px;">
+                                    <label class="col-sm-1 control-label">内容</label>
+                                    <div class="input-group col-sm-3">
+                                        <textarea class="form-control" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success">添加新的后PET记录</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+</script>
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //…
+    });
+</script>
+<script>
+    window.onload = function(){
+        $('.nav-left').css('display','block');
+        $('#inductionTherapy-left').addClass('active');
+    }
+</script>
+<!--点击显示输入框-->
+<script>
+
+    var options=$(".inputhide");
+    for (var i = 0; i < options.length; i++) {
+        console.log($(options[i]).val());
+    }
+</script>
+
+{include file="public/footer" /}

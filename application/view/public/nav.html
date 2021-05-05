@@ -1,0 +1,62 @@
+<style>
+    .nav-top>li>a{
+        display: inline-block;
+        padding: 6px 20px;
+        color: white;
+        font-weight: 600;
+        line-height: 40px;
+    }
+    .nav-top>li>a:hover{
+        color: #cd470d;
+        background: url(/static/image/sys/nav-hover.jpg) repeat-x;
+    }
+    .nav-top > li.active > a{
+        background: url(/static/image/sys/nav-hover.jpg) repeat-x;
+        color: #cd470d;
+        background-color: #fff0;
+    }
+    .nav-top > li.active > a:hover{
+        color: #cd470d;
+        background-color: #fff0;
+    }
+    .disable-li{
+
+    }
+</style>
+<!--功能导航模块-->
+<div class="main-right">
+    <div class="nav-content">
+        <ul class="nav nav-pills pull-right nav-top">
+            <li role="presentation" class="" id="group-info-top">
+                <a href="{:url('index/index')}">团队简介</a>
+                <img src="/static/image/sys/nav-space.jpg">
+            </li>
+            <li role="presentation" class="" id="dblist-top">
+                <a href="{:url('/index/patientsList')}">患者信息</a>
+                <img src="/static/image/sys/nav-space.jpg">
+            </li>
+            <li role="presentation" class="" id="search-top">
+                <a href="{:url('/search/patient_list')}">统计报表</a>
+                <img src="/static/image/sys/nav-space.jpg">
+            </li>
+            <li role="presentation" class="" id="myinfo-top">
+                <a href="{:url('/index/myinfo')}">用户中心</a>
+                <img src="/static/image/sys/nav-space.jpg">
+            </li>
+            <li role="presentation" id="manage-top" data-session="{:session('user_level')}">
+                <a href="{:url('/index/manage')}">后台管理</a>
+                <img src="/static/image/sys/nav-space.jpg">
+            </li>
+            <li role="presentation">
+                <a href="{:url('Index/logout')}">退出登录</a>
+                <img src="/static/image/sys/nav-space.jpg">
+            </li>
+        </ul>
+    </div>
+    <script>
+        var user_level = $('#manage-top').attr('data-session');
+        if (user_level == 0){
+            $('#manage-top').find('a').attr('href','#');
+            $('#manage-top').prop('class','disabled');
+        }
+    </script>

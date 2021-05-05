@@ -1,0 +1,71 @@
+<style>
+    .nav-left>li>a{
+        display: inline-block;
+        padding: 0 30px;
+        color: black;
+        font-weight: 600;
+        line-height: 36px;
+    }
+    .nav-left>li>a:hover{
+        color: white;
+        background: url(/static/image/sys/menus-hover.png) no-repeat;
+    }
+    .nav-pills > li.active > a{
+        color: white;
+        background: url(/static/image/sys/menus-hover.png) no-repeat;
+        background-color: #fff0;
+    }
+    .nav-pills > li.active > a:hover{
+        background-color: #fff0;
+    }
+    .fixed{position: fixed;top: 120px; width: 18%;}
+</style>
+<!--左侧边栏-->
+<div class="container-fluid">
+    <div class="main-left">
+        <div class="fixed">
+            <div class="info-left" style="color: black">{:session('user_neckname')}医生</div>
+            <div class="img-left">
+                <img src="{:session('user_img')}" class="img-face">
+            </div>
+            <div class="menu-left-title">当前患者：{:session('patientsname')}</div>
+        </div>
+
+        <div class="menu-left"  style="padding-bottom: 50px;">
+            <ul class="nav nav-pills nav-stacked align-center nav-left" >
+                <li id="basic-info-left" class="">
+                    <a href="{:url('/Menu/patients')}?patientsid={$patientid}">基本信息</a>
+                </li>
+                <li id="history-left" class="">
+                    <a href="{:url('/Menu/history')}?patientsid={$patientid}">既往病史</a>
+                </li>
+                <li id="symptomatic-left" class="">
+                    <a href="{:url('/Menu/symptomatic')}?patientsid={$patientid}">症状体征</a>
+                </li>
+                <li id="preoperative-left" class="">
+                    <a href="{:url('/Menu/preoperative')}?patientsid={$patientid}">术前检查</a>
+                </li>
+                <li id="inductionTherapy-left" class="">
+                    <a href="{:url('/Menu/inductionTherapy')}?patientsid={$patientid}">诱导治疗</a>
+                </li>
+                <li id="surgicalInformation-left" class="">
+                    <a href="{:url('/Menu/surgicalInformation')}?patientsid={$patientid}">手术信息</a>
+                </li>
+                <li id="postoperativeComplications-left" class="long-word">
+                    <a href="{:url('/Menu/postoperativeComplications')}?patientsid={$patientid}">术后并发症</a>
+                </li>
+                <li id="postoperativePathology-left" class="">
+                    <a href="{:url('/Menu/postoperativePathology')}?patientsid={$patientid}">术后病理</a>
+                </li>
+                <li id="complementaryTreatment-left" class="">
+                    <a href="{:url('/Menu/complementaryTreatment')}?patientsid={$patientid}">辅助治疗</a>
+                </li>
+                <li id="follow-left" class="">
+                    <a href="{:url('/Menu/follow')}?patientsid={$patientid}">末次随访</a>
+                </li>
+                <li id="referral-left" class="">
+                    <a href="{:url('/Menu/referral')}?patientsid={$patientid}">复诊信息</a>
+                </li>
+            </ul>
+        </div>
+    </div>

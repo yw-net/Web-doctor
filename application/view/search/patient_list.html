@@ -1,0 +1,1456 @@
+{include file="public/meta" /}
+{include file="public/header" /}
+{include file="public/leftSearch" /}
+{include file="public/nav" /}
+<!--患者基本信息报表页面-->
+
+<style>
+    .yw-select{width: 250px;}
+    .flex-row{display: flex;justify-content: flex-start;flex-direction: row;}
+    /*表格头部工具栏背景色*/
+    .layui-table-tool{background-color: #dff0d8;}
+</style>
+
+<!--导入图形报表js文件-->
+<script src="/static/js/echarts.min.js"></script>
+<script src="/static/js/china.js"></script>
+
+<!--页面主体-->
+<div class="content">
+    <form class="layui-form" action="">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">患者基本信息统计报表</h4>
+            </div>
+            <div class="panel-body">
+                <!--下拉框-->
+                <div class="flex-row">
+                    <!--类别查询框-->
+                    <div class="layui-form-item yw-select">
+                        <label class="layui-form-label">分类：</label>
+                        <div class="layui-input-block">
+                            <select name="type" lay-verify="required" lay-filter="type">
+<!--                                饼图-->
+                                <option value="sex">性别</option>
+<!--                                年龄段柱图-->
+                                <option value="age">年龄</option>
+<!--                                饼图-->
+                                <option value="nat">民族</option>
+<!--                                饼图-->
+                                <option value="sed">二次入院</option>
+<!--                                双线图-->
+                                <option value="io">出入院日期</option>
+<!--                                地图分布图-->
+                                <option value="map">患者分布</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--管理员医生查询框-->
+                    <div class="layui-form-item yw-select hide" id="chooseDoctor">
+                        <label class="layui-form-label" style="width: 100px;">选择医生</label>
+                        <div class="layui-input-block">
+                            <select name="doctor" id="inputDoctor" lay-filter="doctor">
+                                <option value="0">全部</option>
+                                {volist name="doctor" id="vo"}
+                                <option value="{$vo.neckname}">{$vo.neckname}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!--图形界面-->
+                <div id="dbList">
+                    <div id="sex" style="width: 600px;height:400px;" class="show"></div>
+                    <div id="age" style="width: 600px;height:400px;" class="hide"></div>
+                    <div id="nat" style="width: 600px;height:400px;" class="hide"></div>
+                    <div id="sed" style="width: 600px;height:400px;" class="hide"></div>
+                    <div id="io" style="width: 800px;height:580px;" class="hide"></div>
+                    <table>
+                        <tr>
+                            <td>
+                                <div id="map" style="width: 600px;height:600px;" class="hide"></div>
+                            </td>
+                            <td>
+                                <div id="mapRight" style="width: 480px;height:600px;background-color: #dff0d8;margin-left: 20px;" class="hide"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!--表格主体-->
+                <table class="layui-hide" id="userManager" lay-filter="userManager"></table>
+
+                <!--页面隐藏传值-->
+                <div class="hide">
+                    <input type="text" id="hidetextUrl" value="">
+                    <input type="text" id="hidetextClick" value="">
+                    <input type="text" id="hidetextClickIndex" value="">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--表格模版-->
+<script>
+    window.SEXTABLE=function()  {
+        layui.use('table', function() {
+            var doctor = $('#inputDoctor').val();
+            var table = layui.table;
+            var clicktype = $('#hidetextUrl').val();
+            var click = $('#hidetextClick').val();
+            var clickIndex = $('#hidetextClickIndex').val();
+            //表格渲染
+            table.render({
+                elem: '#userManager'
+                ,url:"{:url('DbList/')}"+clicktype
+                ,toolbar: true //开启头部工具栏
+                ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                    title: '提示'
+                    ,layEvent: 'LAYTABLE_TIPS'
+                    ,icon: 'layui-icon-tips'
+                }]
+                ,page: {
+                    limit:5 //一页显示多少条
+                    ,limits:[5,10,20,30]//每页条数的选择项
+                    ,groups: 5 //连续页码
+                    ,first: "首页"
+                    ,last: "尾页"
+                    ,prev:"上一页"
+                    ,next:"下一页"
+                }
+                ,where:{
+                    doctor:doctor
+                    ,click: click
+                    ,clickIndex: clickIndex//多图使用，点击图表的indexID
+                }
+                ,title: '患者基本信息'
+                ,initSort: {
+                    field: 'hospitalized_time' //排序字段，对应 cols 设定的各字段名(现在按入院日期排序)
+                    ,type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+                }
+                ,cols: [[
+                    {field:'patients_id', title:'患者ID', width:120,sort: true,align:'center'}
+                    ,{field:'patients_name', title:'患者姓名',width:120,align:'center'}
+                    ,{field:'identity_card', title:'身份证号',width:120,align:'center',hide:true}
+                    ,{field:'second_hospital_in', title:'二次入院',width:120,templet:'#sedTemplet',align:'center',hide:true}
+                    ,{field:'previous_hospital', title:'上次入院医院',width:120,align:'center',hide:true}
+                    ,{field:'birthday', title:'生日',width:120,align:'center',hide:true}
+                    ,{field:'national', title:'民族',width:120,align:'center',hide:true}
+                    ,{field:'height', title:'身高',width:120,align:'center',hide:true}
+                    ,{field:'weight', title:'体重',width:120,align:'center',hide:true}
+                    ,{field:'phone', title:'电话', width:120,align:'center'}
+                    ,{field:'hospital_id', title:'住院号', width:120,sort: true,align:'center'}
+                    ,{field:'id_photo_num', title:'影像号', width:120,sort: true,align:'center',hide:true}
+                    ,{field:'id_pathological', title:'病理号', width:120,sort: true,align:'center',hide:true}
+                    ,{field:'sex', title:'性别',sort:true,width:80,templet:'#sexTemplet',align:'center'}
+                    ,{field:'age', title:'年龄',sort: true,width:80,align:'center'}
+                    ,{field:'married', title:'婚姻',sort: true,width:80,align:'center',hide:true}
+                    ,{field:'doctor', title:'主治医生',width:120,sort: true,align:'center'}
+                    ,{field:'hospitalized_time', title:'入院日期', width:120,sort:true,align:'center'}
+                    ,{field:'leaving_hospital', title:'离院日期', width:120,sort:true,align:'center'}
+                    ,{field:'hospital_out_to', title:'离院去向',width:120,align:'center',hide:true}
+                    ,{field:'adress1a', title:'省',width:120,align:'center',hide:true}
+                    ,{field:'adress1b', title:'市',width:120,align:'center',hide:true}
+                    ,{field:'adress1c', title:'区',width:120,align:'center',hide:true}
+                    ,{field:'adress2', title:'详细地址',width:120,align:'center',hide:true}
+                    ,{fixed: 'right', title:'操作', toolbar: '#toolbar', width:160,align:'center'}
+                ]]
+            });
+
+
+            //编辑/删除
+            table.on('tool(userManager)', function(obj){
+
+                var patientsid = obj.data.patients_id;
+                //删除
+                if(obj.event === 'del'){
+                    layer.confirm('真的删除么', function(index){
+                        obj.del();
+                        $.ajax({
+                            type:"GET",
+                            url:"{:url('Api/delPatient')}",
+                            data:{patientsid:patientsid},
+                            dataType:'json',
+                            success:function (data) {
+                                layer.msg('删除成功')
+                            }
+                        });
+                        layer.close(index);
+                    });
+                }
+                //编辑
+                else if(obj.event === 'edit'){
+                    $('.nav-left').css('display','block');
+                    window.location.href='/menu/patients?patientsid='+patientsid;
+                }
+            });
+        });
+    }
+</script>
+
+<!--表格右侧功能按钮-->
+<script type="text/html" id="toolbar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑/查看</a>
+    <!--不能删除当前用户-->
+    {{#  if(d.userid == {:session('user_id')}){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-disabled">删除</a>
+    {{#  } else { }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    {{#  } }}
+</script>
+
+<!--表格样式（性别）-->
+<script type="text/html" id="sexTemplet">
+    {{#  if(d.sex == 1){ }}
+    <span style="color: #334553;">男</span>
+    {{#  } else { }}
+    <span style="color: #B84038;">女</span>
+    {{#  } }}
+</script>
+
+<!--表格样式（二次入院）-->
+<script type="text/html" id="sedTemplet">
+    {{#  if(d.second_hospital_in == 1){ }}
+    <span style="color: #B84038;">是</span>
+    {{#  } else { }}
+    <span style="color: #334553;">否</span>
+    {{#  } }}
+</script>
+
+<!--性别饼图-->
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var sexChart = echarts.init(document.getElementById('sex'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title : {
+            text: '患者性别比例',
+            subtext: [],
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['男','女']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        series : [
+            {
+                name: '性别比例',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '60%'],
+                data:[
+                    {value:[], name:'女'},
+                    {value:[], name:'男'}
+                ],
+                //详细数值标签
+                label: {
+                    normal: {
+                        formatter: '{b|{b}：}{c}  {per|{d}%}  ',
+                        backgroundColor: '#eee',
+                        borderColor: '#aaa',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        rich: {
+                            b: {
+                                fontSize: 16,
+                                lineHeight: 33
+                            },
+                            per: {
+                                color: '#eee',
+                                backgroundColor: '#334455',
+                                padding: [2, 4],
+                                borderRadius: 2
+                            }
+                        }
+                    }
+                },
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 20,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    sexChart.setOption(option);
+</script>
+
+<!--年龄柱图-->
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var ageChart = echarts.init(document.getElementById('age'));
+
+    // 指定图表的配置项和数据
+    option = {
+        title : {
+            text: '患者年龄分布',
+            subtext: [],
+            x:'center'
+        },
+        color: ['#3398DB'],
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data : ['0-10岁', '11-20岁', '21-30岁', '31-40岁', '41-50岁', '51-60岁', '61-70岁','71-80岁','80岁以上'],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                name:'患者个数',
+                type:'bar',
+                barWidth: '40%',
+                data:[[], [], [], [], [], [], [],[],[]]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    ageChart.setOption(option);
+</script>
+
+<!--民族柱图-->
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var natChart = echarts.init(document.getElementById('nat'));
+
+    // 指定图表的配置项和数据
+    option = {
+        title : {
+            text: '患者民族分布',
+            subtext: [],
+            x:'center'
+        },
+        color: ['#3398DB'],
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data : [],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                name:'患者个数',
+                type:'bar',
+                barWidth: '40%',
+                data:[]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    natChart.setOption(option);
+</script>
+
+<!--二次入院饼图-->
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var sedChart = echarts.init(document.getElementById('sed'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title : {
+            text: '患者二次入院比例',
+            subtext: [],
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['二次入院','首次入院']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        series : [
+            {
+                name: '二次入院比例',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '60%'],
+                data:[
+                    {value:[], name:'二次入院'},
+                    {value:[], name:'首次入院'}
+                ],
+                //详细数值标签
+                label: {
+                    normal: {
+                        formatter: '{b|{b}：}{c}  {per|{d}%}  ',
+                        backgroundColor: '#eee',
+                        borderColor: '#aaa',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        rich: {
+                            b: {
+                                fontSize: 16,
+                                lineHeight: 33
+                            },
+                            per: {
+                                color: '#eee',
+                                backgroundColor: '#334455',
+                                padding: [2, 4],
+                                borderRadius: 2
+                            }
+                        }
+                    }
+                },
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 20,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    sedChart.setOption(option);
+</script>
+
+<!--出入院双线图-->
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var ioChart = echarts.init(document.getElementById('io'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '患者出入院图',
+            subtext: [],
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            }
+        },
+        legend: {
+            data: ['入院日期', '出院日期'],
+            left: 10
+        },
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        axisPointer: {
+            link: {xAxisIndex: 'all'}
+        },
+        dataZoom: [
+            {
+                show: true,
+                realtime: true,
+                start: 30,
+                end: 70,
+                xAxisIndex: [0, 1]
+            },
+            {
+                type: 'inside',
+                realtime: true,
+                start: 30,
+                end: 70,
+                xAxisIndex: [0, 1]
+            }
+        ],
+        grid: [{
+            left: 50,
+            right: 50,
+            height: '35%'
+        }, {
+            left: 50,
+            right: 50,
+            top: '55%',
+            height: '35%'
+        }],
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                axisLine: {onZero: true},
+                data: []
+            },
+            {
+                gridIndex: 1,
+                type: 'category',
+                boundaryGap: false,
+                axisLine: {onZero: true},
+                data: [],
+                position: 'top'
+            }
+        ],
+        yAxis: [
+            {
+                name: '入院人数',
+                type: 'value',
+            },
+            {
+                name: '出院人数',
+                gridIndex: 1,
+                type: 'value',
+                inverse: true
+            }
+        ],
+        series: [
+            {
+                name: '入院人数',
+                type: 'line',
+                symbolSize: 8,
+                data:[]
+            },
+            {
+                name: '出院人数',
+                type: 'line',
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                symbolSize: 8,
+                data: []
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    ioChart.setOption(option);
+</script>
+
+<!--患者分布地图（中国）(包含点击事件)-->
+<script type="text/javascript">
+    function initEchartsMap(mydata) {
+        // console.log(mydata);
+        // 基于准备好的dom，初始化echarts实例
+        var mapChart = echarts.init(document.getElementById('map'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            //背景色
+            backgroundColor: '#fff',
+            //标题
+            title: {
+                text: '全国患者分布图',
+                subtext: '',
+                x:'center'
+            },
+
+            //提示框组件
+            tooltip : {
+                trigger: 'item'
+            },
+
+            //图片另存为
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+
+            //左侧小导航图标
+            visualMap: {
+                show : true,
+                x: 'left',
+                y: 'top',
+                pieces: [
+                     {min: 1000}
+                    ,{min: 500, max: 1000}
+                    ,{min: 100, max: 500}
+                    ,{max: 100},
+                ],
+                color: [
+                      '#5475f5'
+                    , '#9feaa5'
+                    , '#85daef'
+                    , '#00cc69']
+            },
+
+            //配置属性
+            series: [
+                {
+                name: '患者数量',
+                type: 'map',
+                mapType: 'china',
+                roam: false,
+                label: {
+                    normal: {
+                        show: true  //省份名称
+                        },
+                    emphasis: {
+                        show: true
+                        }
+                    },
+                data:mydata  //数据
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        mapChart.setOption(option);
+
+        // 患者分布图点击
+        mapChart.on('click', function (params) {
+            //获取医生选择框的值
+            var form2 = $('#inputDoctor').val();
+            var mapRight = params.name;//获取点击的中国地图的省份名称
+            //设置输入框的值（传入数据表模版用于对应的url地址）
+            $('#hidetextUrl').val('clickListRightMap');
+            //设置输入框的值（传入数据表模版用于上传后台确认点击点击）
+            $('#hidetextClick').val(mapRight);
+            //调用表格模版
+            SEXTABLE();
+            //右侧柱状图改变
+            //后台获取数据
+            $.get("{:url('DbList/mapDb')}",{[form2]:[mapRight]}).done(function (data) {
+                // 右侧柱状图
+                mapRightChart.setOption({
+                    yAxis: {
+                        data: data.listAdress1bName
+                    },
+                    series: [
+                        {
+                            type: 'bar',
+                            label: {
+                                show: true,
+                                position: 'inside'
+                            },
+                            data: data.listAdress1bValue
+                        }
+                    ],
+                    //副标题显示医生姓名
+                    title : {
+                        subtext: data.doctor+"医生",
+                    },
+                });
+            });
+
+        });
+
+    }
+</script>
+
+<!--患者分布地图（左侧柱状图）-->
+<script>
+    var mapRightChart = echarts.init(document.getElementById('mapRight'));
+
+    var option = {
+        title: {
+            text: '患者分布数据',
+            subtext: '',
+            x:'center'
+        },
+        tooltip: {
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+        },
+        yAxis: {
+            data: []
+
+        },
+        series: [
+            {
+                type: 'bar',
+                label: {
+                    show: true,
+                    position: 'inside'
+                },
+                data: []
+            }
+        ]
+    };
+    mapRightChart.setOption(option);
+</script>
+
+<!--监听选择框-->
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交（选择类别）
+        form.on('select(type)', function(data){
+            var form2 = data.elem.form[2].value
+            var  temp = 'null';
+            switch(data.value){
+                //    性别图
+                case "sex":
+                    $('#sex').removeClass();
+                    $('#age').removeClass();
+                    $('#nat').removeClass();
+                    $('#sed').removeClass();
+                    $('#io').removeClass();
+                    $('#map').removeClass();
+                    $('#mapRight').removeClass();
+                    $('#sex').addClass('show');
+                    $('#age').addClass('hide');
+                    $('#nat').addClass('hide');
+                    $('#sed').addClass('hide');
+                    $('#io').addClass('hide');
+                    $('#map').addClass('hide');
+                    $('#mapRight').addClass('hide');
+                    //获取后台数据
+                    $.get("{:url('DbList/sexDb')}",{[form2]:''}).done(function (data) {
+                        // 填入数据
+                        sexChart.setOption({
+                            series: [{
+                                data: [
+                                    {value:data.countwomen,name:'女'},
+                                    {value:data.countman,name:'男'}
+                                ]
+                            }],
+                            //副标题显示医生姓名
+                            title : {
+                                subtext: data.doctor+"医生",
+                            },
+                        });
+                    });
+
+                    break;
+
+                //    年龄图
+                case "age":
+                    $('#sex').removeClass();
+                    $('#age').removeClass();
+                    $('#nat').removeClass();
+                    $('#sed').removeClass();
+                    $('#io').removeClass();
+                    $('#map').removeClass();
+                    $('#mapRight').removeClass();
+                    $('#sex').addClass('hide');
+                    $('#age').addClass('show');
+                    $('#nat').addClass('hide');
+                    $('#sed').addClass('hide');
+                    $('#io').addClass('hide');
+                    $('#map').addClass('hide');
+                    $('#mapRight').addClass('hide');
+                    //后台获取数据
+                    $.get("{:url('DbList/ageDb')}",{[form2]:''}).done(function (data) {
+                        // 填入数据
+                        ageChart.setOption({
+                            series : [
+                                {
+                                    data:[data.count10, data.count20, data.count30, data.count40, data.count50, data.count60, data.count70,data.count80,data.count100]
+                                }
+                            ],
+                            title : {
+                                subtext: data.doctor+'医生',
+                            },
+                        });
+                    });
+                    break;
+
+                //    民族图
+                case "nat":
+                    $('#sex').removeClass();
+                    $('#age').removeClass();
+                    $('#nat').removeClass();
+                    $('#sed').removeClass();
+                    $('#io').removeClass();
+                    $('#map').removeClass();
+                    $('#mapRight').removeClass();
+                    $('#sex').addClass('hide');
+                    $('#age').addClass('hide');
+                    $('#nat').addClass('show');
+                    $('#sed').addClass('hide');
+                    $('#io').addClass('hide');
+                    $('#map').addClass('hide');
+                    $('#mapRight').addClass('hide');
+                    //去掉表格默认隐藏属性
+                    $('th[data-field=national]').removeClass();
+                    $('td[data-field=national]').removeClass();
+                    //后台获取数据
+                    $.get("{:url('DbList/natDb')}",{[form2]:''}).done(function (data) {
+                        // 填入数据
+                        natChart.setOption({
+                            series : [
+                                {
+                                    data:  data.nationalValue
+                                }
+                            ],
+                            xAxis : [
+                                {
+                                    data : data.nationalKey
+                                }
+                            ],
+                            title : {
+                                subtext: data.doctor+'医生',
+                            },
+                        });
+                    });
+                    break;
+
+                //    二次入院图
+                case "sed":
+                    $('#sex').removeClass();
+                    $('#age').removeClass();
+                    $('#nat').removeClass();
+                    $('#sed').removeClass();
+                    $('#io').removeClass();
+                    $('#map').removeClass();
+                    $('#mapRight').removeClass();
+                    $('#sex').addClass('hide');
+                    $('#age').addClass('hide');
+                    $('#nat').addClass('hide');
+                    $('#sed').addClass('show');
+                    $('#io').addClass('hide');
+                    $('#map').addClass('hide');
+                    $('#mapRight').addClass('hide');
+                    //去掉表格默认隐藏属性
+                    $('th[data-field=second_hospital_in]').removeClass();
+                    $('td[data-field=second_hospital_in]').removeClass();
+                    //获取后台数据
+                    $.get("{:url('DbList/sedDb')}",{[form2]:''}).done(function (data) {
+                        // 填入数据
+                        sedChart.setOption({
+                            series: [{
+                                data: [
+                                    {value:data.countSecond,name:'二次入院'},
+                                    {value:data.countFirst,name:'首次入院'}
+                                ]
+                            }],
+                            //副标题显示医生姓名
+                            title : {
+                                subtext: data.doctor+"医生",
+                            },
+                        });
+                    });
+                    break;
+
+                //    出入院时间图
+                case "io":
+                    $('#sex').removeClass();
+                    $('#age').removeClass();
+                    $('#nat').removeClass();
+                    $('#sed').removeClass();
+                    $('#io').removeClass();
+                    $('#map').removeClass();
+                    $('#mapRight').removeClass();
+                    $('#sex').addClass('hide');
+                    $('#age').addClass('hide');
+                    $('#nat').addClass('hide');
+                    $('#sed').addClass('hide');
+                    $('#io').addClass('show');
+                    $('#map').addClass('hide');
+                    $('#mapRight').addClass('hide');
+                    //去掉表格默认隐藏属性
+                    $('th[data-field=hospitalized_time]').removeClass();
+                    $('td[data-field=hospitalized_time]').removeClass();
+                    $('th[data-field=leaving_hospital]').removeClass();
+                    $('td[data-field=leaving_hospital]').removeClass();
+                    //获取后台数据
+                    $.get("{:url('DbList/ioDb')}",{[form2]:''}).done(function (data) {
+                        // console.log(data);
+                        // 填入数据
+                        ioChart.setOption({
+                            xAxis: [
+                                {
+                                    type: 'category',
+                                    boundaryGap: false,
+                                    axisLine: {onZero: true},
+                                    data: data.inKey
+                                },
+                                {
+                                    gridIndex: 1,
+                                    type: 'category',
+                                    boundaryGap: false,
+                                    axisLine: {onZero: true},
+                                    data: data.outKey,
+                                    position: 'top'
+                                }
+                            ],
+                            series: [
+                                {
+                                    name: '出院人数',
+                                    type: 'line',
+                                    xAxisIndex: 1,
+                                    yAxisIndex: 1,
+                                    symbolSize: 8,
+                                    data: data.outValue
+                                },
+                                {
+                                    name: '入院人数',
+                                    type: 'line',
+                                    symbolSize: 8,
+                                    data: data.inValue
+                                }
+
+                            ],
+                            //副标题显示医生姓名
+                            title : {
+                                subtext: data.doctor+"医生",
+                            },
+                        });
+                    });
+                    break;
+
+                //    地址图
+                case "map":
+                    $('#sex').removeClass();
+                    $('#age').removeClass();
+                    $('#nat').removeClass();
+                    $('#sed').removeClass();
+                    $('#io').removeClass();
+                    $('#map').removeClass();
+                    $('#mapRight').removeClass();
+                    $('#sex').addClass('hide');
+                    $('#age').addClass('hide');
+                    $('#nat').addClass('hide');
+                    $('#sed').addClass('hide');
+                    $('#io').addClass('hide');
+                    $('#map').addClass('show');
+                    $('#mapRight').addClass('show');
+                    //后台获取数据
+                    $.get("{:url('DbList/mapDb')}",{[form2]:[temp]}).done(function (data) {
+                        // 填入数据(中国地图)
+                        mapdata(data.listAdress1a);
+                        //右侧柱状图
+                        mapRightChart.setOption({
+                            yAxis: {
+                                data: data.listAdress1aName
+                            },
+                            series: [
+                                {
+                                    type: 'bar',
+                                    label: {
+                                        show: true,
+                                        position: 'inside'
+                                    },
+                                    data: data.listAdress1aValue
+                                }
+                            ],
+                            //副标题显示医生姓名
+                            title : {
+                                subtext: data.doctor+"医生",
+                            },
+                        });
+
+                    });
+
+                    //获取ajax返回值并调用地图函数(中国地图)
+                    function mapdata(mydata){
+                        initEchartsMap(mydata);
+                    }
+                    break;
+            };
+        });
+
+        //监听提交（选择医生）
+        form.on('select(doctor)',function (data) {
+            var  form2 = data.elem.form[2].value;
+            var  temp = 'null';
+
+            switch (data.elem.form[1].value) {
+                case "性别":
+                    $.ajax({
+                        type:"GET",
+                        url:"{:url('DbList/sexDb')}",
+                        data:data.value,
+                        dataType:'json',
+                        success:function(data){
+                            // 填入数据
+                            sexChart.setOption({
+                                series: [{
+                                    data: [
+                                        {value:data.countwomen,name:'女'},
+                                        {value:data.countman,name:'男'}
+                                    ]
+                                }],
+                                title : {
+                                    subtext: data.doctor+'医生',
+                                },
+                            });
+                        }
+                    });
+
+                    //清空已选的性别
+                    $('#hidetextClick').val(null);
+                    //设置输入框的值（传入数据表模版用于对应的url地址）
+                    $('#hidetextUrl').val('tableList');
+                    //渲染表格
+                    SEXTABLE();
+
+                case "年龄":
+                    $.ajax({
+                        type:"GET",
+                        url:"{:url('DbList/ageDb')}",
+                        data:data.value,
+                        dataType:'json',
+                        success:function(data){
+                            // 填入数据
+                            ageChart.setOption({
+                                series : [
+                                    {
+                                        data:[data.count10, data.count20, data.count30, data.count40, data.count50, data.count60, data.count70,data.count80,data.count100]
+                                    }
+                                ],
+                                title : {
+                                    subtext: data.doctor+'医生',
+                                },
+                            });
+                        }
+                    })
+                    //清空已选的性别
+                    $('#hidetextClick').val(null);
+                    //设置输入框的值（传入数据表模版用于对应的url地址）
+                    $('#hidetextUrl').val('tableList');
+                    //渲染表格
+                    SEXTABLE();
+
+                case "民族":
+                    $.ajax({
+                        type:"GET",
+                        url:"{:url('DbList/natDb')}",
+                        data:data.value,
+                        dataType:'json',
+                        success:function(data){
+                            // 填入数据
+                            natChart.setOption({
+                                series : [
+                                    {
+                                        data:  data.nationalValue
+                                    }
+                                ],
+                                xAxis : [
+                                    {
+                                        data : data.nationalKey
+                                    }
+                                ],
+                                title : {
+                                    subtext: data.doctor+'医生',
+                                },
+                            });
+                        }
+                    })
+                    //清空已选的性别
+                    $('#hidetextClick').val(null);
+                    //设置输入框的值（传入数据表模版用于对应的url地址）
+                    $('#hidetextUrl').val('tableList');
+                    //渲染表格
+                    SEXTABLE();
+
+                case "二次入院":
+                    $.ajax({
+                        type:"GET",
+                        url:"{:url('DbList/sedDb')}",
+                        data:data.value,
+                        dataType:'json',
+                        success:function(data){
+                            // 填入数据
+                            sedChart.setOption({
+                                series: [{
+                                    data: [
+                                        {value:data.countSecond,name:'二次入院'},
+                                        {value:data.countFirst,name:'首次入院'}
+                                    ]
+                                }],
+                                title : {
+                                    subtext: data.doctor+'医生',
+                                },
+                            });
+                        }
+                    });
+
+                    //清空已选的类别选择框的值
+                    $('#hidetextClick').val(null);
+                    //设置输入框的值（传入数据表模版用于对应的url地址）
+                    $('#hidetextUrl').val('tableList');
+                    //渲染表格
+                    SEXTABLE();
+
+                case "出入院日期":
+                    $.ajax({
+                        type:"GET",
+                        url:"{:url('DbList/ioDb')}",
+                        data:data.value,
+                        dataType:'json',
+                        success:function(data){
+                            // 填入数据
+                            ioChart.setOption({
+                                xAxis: [
+                                    {
+                                        type: 'category',
+                                        boundaryGap: false,
+                                        axisLine: {onZero: true},
+                                        data: data.inKey
+                                    },
+                                    {
+                                        gridIndex: 1,
+                                        type: 'category',
+                                        boundaryGap: false,
+                                        axisLine: {onZero: true},
+                                        data: data.outKey,
+                                        position: 'top'
+                                    }
+                                ],
+                                series: [
+                                    {
+                                        name: '出院人数',
+                                        type: 'line',
+                                        xAxisIndex: 1,
+                                        yAxisIndex: 1,
+                                        symbolSize: 8,
+                                        data: data.outValue
+                                    },
+                                    {
+                                        name: '入院人数',
+                                        type: 'line',
+                                        symbolSize: 8,
+                                        data: data.inValue
+                                    }
+
+                                ],
+                                //副标题显示医生姓名
+                                title : {
+                                    subtext: data.doctor+"医生",
+                                },
+                            });
+                        }
+                    });
+
+                    //清空已选的类别选择框的值
+                    $('#hidetextClick').val(null);
+                    //设置输入框的值（传入数据表模版用于对应的url地址）
+                    $('#hidetextUrl').val('tableList');
+                    //渲染表格
+                    SEXTABLE();
+
+                case "患者分布":
+                    //后台获取数据
+                    $.get("{:url('DbList/mapDb')}",{[form2]:[temp]}).done(function (data) {
+                        // 填入数据(中国地图)
+                        mapdata(data.listAdress1a);
+                        //右侧柱状图
+                        mapRightChart.setOption({
+                            yAxis: {
+                                data: data.listAdress1aName
+                            },
+                            series: [
+                                {
+                                    type: 'bar',
+                                    label: {
+                                        show: true,
+                                        position: 'inside'
+                                    },
+                                    data: data.listAdress1aValue
+                                }
+                            ],
+                            //副标题显示医生姓名
+                            title : {
+                                subtext: data.doctor+"医生",
+                            },
+                        });
+
+                    });
+
+                    //获取ajax返回值并调用地图函数(中国地图)
+                function mapdata(mydata){
+                    initEchartsMap(mydata);
+                }
+
+                    //清空已选的类别选择框的值
+                    $('#hidetextClick').val(null);
+                    //设置输入框的值（传入数据表模版用于对应的url地址）
+                    $('#hidetextUrl').val('tableList');
+                    //渲染表格
+                    SEXTABLE();
+            }
+        })
+    });
+</script>
+
+<!--监听图形点击-->
+<script>
+
+    // 性别图点击
+    sexChart.on('click', function (params) {
+        //获取医生选择栏的值
+        var doctor = $('#inputDoctor').val();
+        //获取点击的对象
+        var sex = params.name;
+        //设置输入框的值（传入数据表模版用于对应的url地址）
+        $('#hidetextUrl').val('clickListSex');
+        //设置输入框的值（传入数据表模版用于上传后台确认点击的性别）
+        $('#hidetextClick').val(sex);
+        //调用表格模版
+        SEXTABLE();
+    });
+
+    // 年龄图点击
+    ageChart.on('click', function (params) {
+        //获取医生选择栏的值
+        var doctor = $('#inputDoctor').val();
+        //获取点击的对象
+        var age = params.name;
+        //设置输入框的值（传入数据表模版用于对应的url地址）
+        $('#hidetextUrl').val('clickListAge');
+        //设置输入框的值（传入数据表模版用于上传后台确认点击的年龄段）
+        $('#hidetextClick').val(age);
+        //调用表格模版
+        SEXTABLE();
+    });
+
+    // 民族图点击
+    natChart.on('click', function (params) {
+        //获取医生选择栏的值
+        var doctor = $('#inputDoctor').val();
+        //获取点击的对象
+        var nat = params.name;
+        //设置输入框的值（传入数据表模版用于对应的url地址）
+        $('#hidetextUrl').val('clickListNat');
+        //设置输入框的值（传入数据表模版用于上传后台确认点击的民族）
+        $('#hidetextClick').val(nat);
+        //调用表格模版
+        SEXTABLE();
+    });
+
+    // 二次入院图点击
+    sedChart.on('click', function (params) {
+        //获取医生选择栏的值
+        var doctor = $('#inputDoctor').val();
+        //获取点击的对象
+        var sed = params.name;
+        //设置输入框的值（传入数据表模版用于对应的url地址）
+        $('#hidetextUrl').val('clickListSed');
+        //设置输入框的值（传入数据表模版用于上传后台确认点击）
+        $('#hidetextClick').val(sed);
+        //调用表格模版
+        SEXTABLE();
+    });
+
+    // 出入院日期图点击
+    ioChart.on('click', function (params) {
+        //获取医生选择栏的值
+        var doctor = $('#inputDoctor').val();
+        //获取点击的对象
+        // console.log(params.componentIndex)
+        var clickIndex = params.componentIndex;//获取点击的图像索引号
+        var io = params.name;//获取点击图像的值
+        //设置输入框的值（传入数据表模版用于对应的url地址）
+        $('#hidetextUrl').val('clickListIo');
+        //设置输入框的值（传入数据表模版用于上传后台确认点击的性别）
+        $('#hidetextClick').val(io);
+        //设置输入框的值（多图--传入数据表模版用于上传后台确认点击）
+        $('#hidetextClickIndex').val(clickIndex);
+        //调用表格模版
+        SEXTABLE();
+    });
+
+    // 患者分布图右侧柱状图点击
+    mapRightChart.on('click', function (params) {
+        //获取医生选择框的值
+        var form2 = $('#inputDoctor').val();
+        //获取点击图像的值
+        var mapRight = params.name;
+        //设置输入框的值（传入数据表模版用于对应的url地址）
+        $('#hidetextUrl').val('clickListRightMap');
+        //设置输入框的值（传入数据表模版用于上传后台确认点击点击）
+        $('#hidetextClick').val(mapRight);
+        //调用表格模版
+        SEXTABLE();
+        //右侧柱状图改变
+        //后台获取数据
+        $.get("{:url('DbList/mapDb')}",{[form2]:[mapRight]}).done(function (data) {
+            console.log(data.listAdress1b.length);
+            if(data.listAdress1b.length == 0){
+                // 查询结果为空
+                mapRightChart.setOption({
+                    yAxis: {
+                        data: tempName
+                    },
+                    series: [
+                        {
+                            type: 'bar',
+                            label: {
+                                show: true,
+                                position: 'inside'
+                            },
+                            data: tempValue
+                        }
+                    ],
+                    //副标题显示医生姓名
+                    title : {
+                        subtext: '患者详情见下方表格',
+                    },
+                });
+
+            }else {
+                //临时变量，用于查询结果为空时显示
+                tempName = data.listAdress1bName;
+                tempValue = data.listAdress1bValue;
+                // 右侧柱状图
+                mapRightChart.setOption({
+                    yAxis: {
+                        data: data.listAdress1bName
+                    },
+                    series: [
+                        {
+                            type: 'bar',
+                            label: {
+                                show: true,
+                                position: 'inside'
+                            },
+                            data: data.listAdress1bValue
+                        }
+                    ],
+                    //副标题显示医生姓名
+                    title : {
+                        subtext: data.doctor+"医生",
+                    },
+                });
+            }
+
+        });
+    });
+
+
+</script>
+
+<!--系统加载（默认性别饼图）-->
+<script>
+    //为当前选中页面添加背景
+    window.onload = function(){
+        $('#search-top').addClass('active');
+        $('#patient_list-left').addClass('active');
+
+        //页面加载默认加载性别饼图
+        $('#sex').removeClass();
+        $('#age').removeClass();
+        $('#nat').removeClass();
+        $('#sed').removeClass();
+        $('#io').removeClass();
+        $('#map').removeClass();
+        $('#mapRight').removeClass();
+        $('#sex').addClass('show');
+        $('#age').addClass('hide');
+        $('#nat').addClass('hide');
+        $('#sed').addClass('hide');
+        $('#io').addClass('hide');
+        $('#map').addClass('hide');
+        $('#mapRight').addClass('hide');
+        //获取后台数据
+        $.get("{:url('DbList/sexDb')}",{0:''}).done(function (data) {
+            // 填入数据
+            sexChart.setOption({
+                series: [{
+                    data: [
+                        {value:data.countwomen,name:'女'},
+                        {value:data.countman,name:'男'}
+                    ]
+                }],
+                //副标题显示医生姓名
+                title : {
+                    subtext: data.doctor+"医生",
+                },
+            });
+        });
+        //根据用户级别判断是否显示医生选择框
+        $.get("{:url('Index/getinfo')}").done(function (data) {
+            if(data.status == 100){
+                if (data.data.level == 1){
+                    $('#chooseDoctor').addClass('show')
+                }
+            }else {alert(data.msg)}
+        });
+        //渲染表格
+        $('#hidetextUrl').val('tableList');//设置后台路径
+        //调用表格模版
+        SEXTABLE();
+    }
+</script>
+
+{include file="public/footer" /}
