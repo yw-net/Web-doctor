@@ -1,35 +1,50 @@
-![](https://box.kancloud.cn/5a0aaa69a5ff42657b5c4715f3d49221) 
 
-ThinkPHP 5.1（LTS版本） —— 12载初心，你值得信赖的PHP框架
+患者信息管理系统
 ===============
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/top-think/framework/badges/quality-score.png?b=5.1)](https://scrutinizer-ci.com/g/top-think/framework/?branch=5.1)
-[![Build Status](https://travis-ci.org/top-think/framework.svg?branch=master)](https://travis-ci.org/top-think/framework)
-[![Total Downloads](https://poser.pugx.org/topthink/framework/downloads)](https://packagist.org/packages/topthink/framework)
-[![Latest Stable Version](https://poser.pugx.org/topthink/framework/v/stable)](https://packagist.org/packages/topthink/framework)
-[![PHP Version](https://img.shields.io/badge/php-%3E%3D5.6-8892BF.svg)](http://www.php.net/)
-[![License](https://poser.pugx.org/topthink/framework/license)](https://packagist.org/packages/topthink/framework)
+###系统主要框架：
+ + bootstrap 3.0
+ + thinkphp 5.1
+ + jquery 3.4.1
+ + layui
 
-ThinkPHP5.1对底层架构做了进一步的改进，减少依赖，其主要特性包括：
+###系统插件包括：
+ + 使用Echarts图形报表对数据进行统计展示
+ + 使用bootstrap inputfile插件进行文件图片上传
+   
+###系统功能包括：
 
- + 采用容器统一管理对象
- + 支持Facade
- + 注解路由支持
- + 路由跨域请求支持
- + 配置和路由目录独立
- + 取消系统常量
- + 助手函数增强
- + 类库别名机制
- + 增加条件查询
- + 改进查询机制
- + 配置采用二级
- + 依赖注入完善
- + 支持`PSR-3`日志规范
- + 中间件支持（V5.1.6+）
- + Swoole/Workerman支持（V5.1.18+）
+ + 团队简介
+   - 登录首页
+ + 患者信息
+   - 患者信息录入界面入口
+   - 患者信息的增、删、改、查
+ + 统计报表
+   - 基本信息表
+      - 图形列表关联查询患者相关数据
+   - 其他报表--待开发
+ + 用户中心
+   - 个人资料修改
+   - 登录密码修改
+ + 后台管理
+   - 用户管理
+      - 对系统现有用户的增、删、改、查
+      - 用户权限及医生相关信息设置
 
+###患者信息录入包括：
 
-> ThinkPHP5的运行环境要求PHP5.6以上。
+ + 基本信息
+ + 既往病史
+ + 症状体征
+ + 术前检查
+ + 诱导治疗
+ + 手术信息
+ + 术后并发症
+ + 术后病理
+ + 辅助治疗
+ + 末次随访
+ + 复诊信息
+
 
 ## 安装
 
@@ -67,71 +82,6 @@ composer update topthink/framework
 
 初始的目录结构如下：
 
-~~~
-www  WEB部署目录（或者子目录）
-├─application           应用目录
-│  ├─common             公共模块目录（可以更改）
-│  ├─module_name        模块目录
-│  │  ├─common.php      模块函数文件
-│  │  ├─controller      控制器目录
-│  │  ├─model           模型目录
-│  │  ├─view            视图目录
-│  │  └─ ...            更多类库目录
-│  │
-│  ├─command.php        命令行定义文件
-│  ├─common.php         公共函数文件
-│  └─tags.php           应用行为扩展定义文件
-│
-├─config                应用配置目录
-│  ├─module_name        模块配置目录
-│  │  ├─database.php    数据库配置
-│  │  ├─cache           缓存配置
-│  │  └─ ...            
-│  │
-│  ├─app.php            应用配置
-│  ├─cache.php          缓存配置
-│  ├─cookie.php         Cookie配置
-│  ├─database.php       数据库配置
-│  ├─log.php            日志配置
-│  ├─session.php        Session配置
-│  ├─template.php       模板引擎配置
-│  └─trace.php          Trace配置
-│
-├─route                 路由定义目录
-│  ├─route.php          路由定义
-│  └─...                更多
-│
-├─public                WEB目录（对外访问目录）
-│  ├─index.php          入口文件
-│  ├─router.php         快速测试文件
-│  └─.htaccess          用于apache的重写
-│
-├─thinkphp              框架系统目录
-│  ├─lang               语言文件目录
-│  ├─library            框架类库目录
-│  │  ├─think           Think类库包目录
-│  │  └─traits          系统Trait目录
-│  │
-│  ├─tpl                系统模板目录
-│  ├─base.php           基础定义文件
-│  ├─console.php        控制台入口文件
-│  ├─convention.php     框架惯例配置文件
-│  ├─helper.php         助手函数文件
-│  ├─phpunit.xml        phpunit配置文件
-│  └─start.php          框架入口文件
-│
-├─extend                扩展类库目录
-├─runtime               应用的运行时目录（可写，可定制）
-├─vendor                第三方类库目录（Composer依赖库）
-├─build.php             自动生成定义文件（参考）
-├─composer.json         composer 定义文件
-├─LICENSE.txt           授权说明文件
-├─README.md             README 文件
-├─think                 命令行入口文件
-~~~
-
-> 可以使用php自带webserver快速测试
-> 切换到根目录后，启动命令：php think run
 
 ## 命名规范
 
@@ -171,10 +121,8 @@ ThinkPHP遵循Apache2开源协议发布，并提供免费使用。
 
 本项目包含的第三方源码和二进制文件之版权信息另行标注。
 
-版权所有Copyright © 2006-2018 by ThinkPHP (http://thinkphp.cn)
+版权所有Copyright © 2020-2021 by youwei network ltd (https://www.ailaiyun.com)
 
 All rights reserved。
 
-ThinkPHP® 商标和著作权所有者为上海顶想信息科技有限公司。
 
-更多细节参阅 [LICENSE.txt](LICENSE.txt)
