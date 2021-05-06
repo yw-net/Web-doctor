@@ -147,21 +147,26 @@ class PreSave extends Base
     //保存CT图像
     public function imgCtSave()
     {
-        $savePath = Env::get('root_path').'storge/preoperative/ct/';
+        $pre_ct = new Preoperative_ct();
 
-        $info = $this->request->param();
-        $file = $this->request->file();
+        $savePath = Env::get('root_path').'storge/preoperative/ct/';//CT图片保存根目录
 
+        $info = $this->request->param();//获取附加信息
         $patients_id =$info['patients_id'];
         $form_id =$info['form_id'];
 
-        $res = $file['imgShowCt'.$form_id]->move($savePath);
+        $file = $this->request->file();//获取上传文件本体
+        $res = $file['imgShowCt'.$form_id]->move($savePath);//文件保存
+
 
         if($res)
         {
             $url = $res->getSaveName();
 
-            return  (['status'=>1,'message'=>'图片上传成功，请核对其他信息后点击提交','url'=>$url]);
+            $pre_ct->img_address = json_encode($savePath.$url);
+            $pre_ct->where(['ct_id'=>$form_id,'patients_id'=>$patients_id])->data('img_address',$pre_ct->img_address)->update();
+
+            return  (['status'=>1,'message'=>'图片上传成功，请核对其他信息后点击提交','url'=>$url,'arrUrl'=>json_decode($pre_ct->img_address)]);
         }
         else
         {
@@ -169,37 +174,28 @@ class PreSave extends Base
         }
     }
 
-    //显示CT图像
+    //获取CT图像预览地址
+    public function getCTAddress()
+    {
+        $patients_id = $this->request->param('patients_id');
+        $ct_id = $this->request->param('ct_id');
+        $res = Preoperative_ct::where(['patients_id'=>$patients_id,'ct_id'=>$ct_id])->field('img_address')->select();
+        foreach ($res as $key=>$val){
+            return $val;
+        }
+
+
+    }
+
+
+    //显示CT图像路由
     public function imgCtShow()
     {
-        $type = trim($this->request->getQueryParams()['type']);
-        $type = trim($this->request->getQueryParams()['ct_id']);
-        $type = trim($this->request->getQueryParams()['patients_id']);
-        switch ($type) {
-            case 'clash-win':
-                $file_path = BASE_PATH . '/resources/ssr-down/Clash-Windows.7z';
-                $newResponse = $response->withHeader('Content-type', ' application/octet-stream')->withHeader('Content-Disposition', ' attachment; filename=' . $type . '.zip');
-                $newResponse->write(file_get_contents($file_path));
-                return $newResponse;
-            case 'netch-win':
-                $file_path = BASE_PATH . '/resources/ssr-down/netch-windows.7z';
-                $newResponse = $response->withHeader('Content-type', ' application/octet-stream')->withHeader('Content-Disposition', ' attachment; filename=' . $type . '.zip');
-                $newResponse->write(file_get_contents($file_path));
-                return $newResponse;
-            case 'clashx-mac':
-                $file_path = BASE_PATH . '/resources/ssr-down/ClashX.dmg';
-                $newResponse = $response->withHeader('Content-type', ' application/octet-stream')->withHeader('Content-Disposition', ' attachment; filename=' . $type . '.zip');
-                $newResponse->write(file_get_contents($file_path));
-                return $newResponse;
-            case 'v2rayu-mac':
-                $file_path = BASE_PATH . '/resources/ssr-down/V2rayU.dmg';
-                $newResponse = $response->withHeader('Content-type', ' application/octet-stream')->withHeader('Content-Disposition', ' attachment; filename=' . $type . '.zip');
-                $newResponse->write(file_get_contents($file_path));
-                return $newResponse;
-            default:
-                return 'gg';
-        }
-        return $response;
+
+        $file_path = Env::get('root_path').'storge/preoperative/ct';
+        header('Content-Type: image/jpeg');
+        $newResponse->write(file_get_contents($file_path));
+        return $newResponse;
 
     }
 }

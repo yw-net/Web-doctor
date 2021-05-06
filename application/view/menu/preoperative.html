@@ -49,7 +49,7 @@
                                 {else}
                                 {foreach $ct_info as $ct_info_li}
                                 <li class="ct-id" lay-id="{$ct_info_li->ct_id}">
-                                    CT{$ct_info_li->ct_id}
+                                    【{$ct_info_li->create_date}】
                                     <span class="layui-badge-dot layui-bg-green"></span>
                                 </li>
                                 {/foreach}
@@ -261,6 +261,7 @@
                                 {else}
                                 {foreach $ct_info as $ct_info_item}
                                 <form class="layui-tab-item" id="ctForm{$ct_info_item->ct_id}">
+                                    <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: red">{$ct_info_item->edit_date}</span></div>
                                     <button class="btn btn-danger del" id="delCtInfo" type="button" onclick="delBtn('delCtInfo','{$ct_info_item->ct_id}')">删除</button>
                                     <button class="btn btn-info save" id="ctSave" type="button" onclick="save('ctSave','#ctForm')">保存修改</button>
                                     <div class="form-group">
@@ -1492,27 +1493,29 @@
         let patients_id = $('#patients_id').val();
 
         //获取CT信息预览地址
-        $.ajax({
-            type:"post",
-            url:"/PreSave/getCTAddress",
-            dataType:'JSON',
-            data: {
-                patients_id:patients_id,
-                ct_id:ctId
-            },
-            success:function (data) {
-                layui.use('layer', function(){
-                    if(data.status == 1){
+        // $.ajax({
+        //     type:"post",
+        //     url:"/PreSave/imgCtShow",
+        //     dataType:'JSON',
+        //     data: {
+        //         patients_id:patients_id,
+        //         ct_id:ctId
+        //     },
+        //     success:function (data) {
+        //         console.log(data)
+        //         layui.use('layer', function(){
+        //             if(data.status == 1){
+        //
+        //             }
+        //             else {
+        //
+        //
+        //             }
+        //         });
+        //     }
+        // });
 
-                    }
-                    else {
-
-                    }
-                });
-            }
-        });
-
-        initFileInput("imgShowCt"+ctId, "/PreSave/imgCtSave", "/PreSave/imgCtDel",patients_id,ctId);
+        initFileInput("imgShowCt"+ctId, "/PreSave/imgCtSave", "/PreSave/imgCtDel",patients_id,ctId,);
 
     })
 </script>
@@ -1694,16 +1697,14 @@
 
 <!--图片显示上传函数-->
 <script>
-    function initFileInput(formName, uploadUrl ,delUrl ,patients_id ,form_id) {
+    function initFileInput(formName, uploadUrl ,delUrl ,patients_id ,form_id,preAddress) {
         let formId = $('#' + formName);
         formId.fileinput({
             language: 'zh',                    //设置语言
 
             //预览地址
-            initialPreview: [
-                'https://cdn.jsdelivr.net/gh/yw-net/ssrweb@1.0/images/iosAccount00.jpg',
-                'https://cdn.jsdelivr.net/gh/yw-net/ssrweb@1.0/images/iosAccount01.jpg'
-            ],
+            initialPreview: ['http://xn--ekr067e4gfunbf4dzx0d:8888/storge/preoperative/ct/20210430/563820c192bdf7deb06ca3d957a811fd.png',
+                '../storge/preoperative/ct/20210430/563820c192bdf7deb06ca3d957a811fd.png'],
             initialPreviewAsData: true,        // 确定传入预览数据，而不是原生标记语言
             //预览图显示信息
             initialPreviewConfig: [

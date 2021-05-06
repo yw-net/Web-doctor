@@ -12,10 +12,13 @@
 Route::get('think', function () {
     return 'hello,ThinkPHP5!';
 });
-Route::get('youwei/haha', function () {
+Route::get('youwei/test', function () {
     return 'hello,youwei!';
 });
 
 Route::get('hello/:name', 'index/hello');
 Route::rule('clean','app/command/AutoCleanPhoto');
+Route::rule('ct_image/:ct_id/:patients_id', function () {
+    return 'hello,youwei!';
+});
 
