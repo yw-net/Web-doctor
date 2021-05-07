@@ -12,6 +12,7 @@
       <path value="$PROJECT_DIR$/vendor/workerman/workerman" />
       <path value="$PROJECT_DIR$/vendor/topthink/think-helper" />
       <path value="$PROJECT_DIR$/vendor/topthink/think-mongo" />
+      <path value="$PROJECT_DIR$/vendor/diversen/http-send-file" />
     </include_path>
   </component>
 </project>

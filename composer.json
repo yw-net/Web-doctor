@@ -23,7 +23,9 @@
         "topthink/think-helper": "^3.0",
         "topthink/think-migration": "^2.0",
         "topthink/think-worker": "^2.0",
-        "topthink/think-mongo": "^2.0"
+        "topthink/think-mongo": "^2.0",
+        "diversen/http-send-file": "^2.0",
+        "ext-gd": "*"
     },
     "autoload": {
         "psr-4": {

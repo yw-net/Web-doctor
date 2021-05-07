@@ -18,6 +18,7 @@ Route::get('youwei/test', function () {
 
 Route::get('hello/:name', 'index/hello');
 Route::rule('clean','app/command/AutoCleanPhoto');
+Route::rule('test','PreSave/imgCtShow');
 Route::rule('ct_image/:ct_id/:patients_id', function () {
     return 'hello,youwei!';
 });

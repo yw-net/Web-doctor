@@ -261,7 +261,7 @@
                                 {else}
                                 {foreach $ct_info as $ct_info_item}
                                 <form class="layui-tab-item" id="ctForm{$ct_info_item->ct_id}">
-                                    <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: red">{$ct_info_item->edit_date}</span></div>
+                                    <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$ct_info_item->edit_date}</span></div>
                                     <button class="btn btn-danger del" id="delCtInfo" type="button" onclick="delBtn('delCtInfo','{$ct_info_item->ct_id}')">删除</button>
                                     <button class="btn btn-info save" id="ctSave" type="button" onclick="save('ctSave','#ctForm')">保存修改</button>
                                     <div class="form-group">
@@ -1703,15 +1703,13 @@
             language: 'zh',                    //设置语言
 
             //预览地址
-            initialPreview: ['http://xn--ekr067e4gfunbf4dzx0d:8888/storge/preoperative/ct/20210430/563820c192bdf7deb06ca3d957a811fd.png',
-                '../storge/preoperative/ct/20210430/563820c192bdf7deb06ca3d957a811fd.png'],
+            initialPreview: ['http://xn--ekr067e4gfunbf4dzx0d:8888/test'],
             initialPreviewAsData: true,        // 确定传入预览数据，而不是原生标记语言
             //预览图显示信息
             initialPreviewConfig: [
                 {caption: "Moon.jpg", size: 930321, width: "120px", key: 1},
                 {caption: "Earth.jpg", size: 1218822, width: "120px", key: 2}
             ],
-            initialCaption: ['月球','地球'],
 
             //自定义按钮样式
             showRemove: false,                 //不显示删除按钮
@@ -1743,3 +1741,4 @@
 
 
 {include file="public/footer" /}
+

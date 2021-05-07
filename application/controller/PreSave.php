@@ -11,6 +11,7 @@ use think\facade\Request;
 use think\db\Where;
 use think\facade\Session;
 use think\facade\Env;
+use diversen\sendfile;
 
 class PreSave extends Base
 {
@@ -122,7 +123,7 @@ class PreSave extends Base
             $res_ct = Db::name('Preoperative_ct')
                 ->where(['ct_id'=>$ct_id,'patients_id'=>$patients_id])
                 ->data([
-                    'edit_date'=>date('Y-m-d'),
+                    'edit_date'=>date('Y-m-d H:i:s'),
                     'ggo'=>$ct_data['ggo'],
                     'buwei'=>$ct_data['buwei'],
                     'daxiao1'=>$ct_data['daxiao1'],
@@ -187,15 +188,22 @@ class PreSave extends Base
 
     }
 
-
     //显示CT图像路由
     public function imgCtShow()
     {
 
         $file_path = Env::get('root_path').'storge/preoperative/ct';
-        header('Content-Type: image/jpeg');
-        $newResponse->write(file_get_contents($file_path));
-        return $newResponse;
+//        $filename = $_GET['filename'];
+
+
+        $file = $file_path . '/20210506/5e7899280ef5cd5f10199168424cb2d6.png';
+        $im = imagecreatefrompng($file);
+        ob_start();
+        imagepng($im);
+        $content = ob_get_clean();
+        imagedestroy($im);
+        return response($content,200,['content-length'=>strlen($content)])->contentType('image/png');
+
 
     }
 }

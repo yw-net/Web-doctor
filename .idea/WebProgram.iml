@@ -17,6 +17,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/workerman/workerman" />
       <excludeFolder url="file://$MODULE_DIR$/storge/preoperative" />
       <excludeFolder url="file://$MODULE_DIR$/runtime/log" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/diversen/http-send-file" />
       <excludePattern pattern="/runtime/log/*" />
     </content>
     <orderEntry type="inheritedJdk" />
