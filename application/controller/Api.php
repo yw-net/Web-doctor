@@ -11,8 +11,7 @@ use think\facade\Session;
 
 class Api extends Base
 {
-     //患者列表（展示患者信息）
-
+    //患者列表（展示患者信息）
     public function patientsManager()
     {
         //获取登录用户级别

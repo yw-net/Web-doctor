@@ -3,7 +3,7 @@
 {include file="public/left" /}
 {include file="public/nav" /}
 <link rel="stylesheet" href="/static/bootstrap-fileinput/css/fileinput.min.css">
-<script src="/static/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script src="/static/bootstrap-fileinput/js/fileinput.js"></script>
 <script src="/static/bootstrap-fileinput/js/locales/zh.js"></script>
 <style>
     .control-label{text-align: left !important;}
@@ -59,6 +59,7 @@
                                 {if $ct_info == null}
                                 <form class="layui-tab-item layui-show" id="ctForm1">
                                     <button class="btn btn-info save" id="ctSaveNew" type="button" onclick="save('ctSaveNew','#ctForm')">保存修改</button>
+                                    <hr>
                                     <div class="form-group">
                                         <label class="col-sm-1 control-label" style="margin-left: 5.2%;">1-部位</label>
                                         <div class="checkbox flex-row">
@@ -254,8 +255,10 @@
                                         </label>
                                     </div>
                                     <div class="form-group col-sm-12">
-                                        <input hidden id="ctImgAddress1" />
-                                        <input type="file" id="imgShowCt1"  name="imgShowCt1" multiple class="file-loading">
+                                        <blockquote class="layui-elem-quote" style="padding: 10px;">CT文件、图像资料</blockquote>
+                                    </div>
+                                    <div class="form-group col-sm-12">
+                                        <input type="file" id="imgShowCt1"  name="imgShowCt1" multiple="multiple" class="file-loading">
                                     </div>
                                 </form>
                                 {else}
@@ -263,7 +266,8 @@
                                 <form class="layui-tab-item" id="ctForm{$ct_info_item->ct_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$ct_info_item->edit_date}</span></div>
                                     <button class="btn btn-danger del" id="delCtInfo" type="button" onclick="delBtn('delCtInfo','{$ct_info_item->ct_id}')">删除</button>
-                                    <button class="btn btn-info save" id="ctSave" type="button" onclick="save('ctSave','#ctForm')">保存修改</button>
+                                    <button class="btn btn-info save" id="ctSave" type="button" onclick="save('ctSaveNew','#ctForm')">保存修改</button>
+                                    <hr>
                                     <div class="form-group">
                                         <label class="col-sm-1 control-label" style="margin-left: 5.2%;">1-部位</label>
                                         <div class="checkbox flex-row">
@@ -459,7 +463,10 @@
                                         </label>
                                     </div>
                                     <div class="form-group col-sm-12">
-                                        <input type="file" id="imgShowCt{$ct_info_item->ct_id}"  name="imgShowCt{$ct_info_item->ct_id}" multiple class="file-loading">
+                                        <blockquote class="layui-elem-quote" style="padding: 10px;">CT文件、图像资料</blockquote>
+                                    </div>
+                                    <div class="form-group col-sm-12">
+                                        <input type="file" id="imgShowCt{$ct_info_item->ct_id}"  name="imgShowCt{$ct_info_item->ct_id}" multiple="multiple" class="file-loading">
                                     </div>
                                 </form>
                                 {/foreach}
@@ -1273,6 +1280,7 @@
 <script id="ctModel" type="text/html" >
     <form class="layui-tab-item layui-show" id="ctForm{{d.ctFormId}}">
         <button class="btn btn-info save" id="ctSaveNew" type="button" onclick="save('ctSaveNew','#ctForm')">保存修改</button>
+        <hr>
         <div class="form-group">
             <label class="col-sm-1 control-label" style="margin-left: 5.2%;">1-部位</label>
             <div class="checkbox flex-row">
@@ -1468,7 +1476,10 @@
             </label>
         </div>
         <div class="form-group col-sm-12">
-            <input type="file" id="imgShowCt{{d.ctFormId}}"  name="imgShowCt{{d.ctFormId}}" multiple class="file-loading">
+            <blockquote class="layui-elem-quote" style="padding: 10px">CT文件、图像资料</blockquote>
+        </div>
+        <div class="form-group col-sm-12">
+            <input type="file" id="imgShowCt{{d.ctFormId}}"  name="imgShowCt{{d.ctFormId}}" multiple="multiple" class="file-loading">
         </div>
     </form>
 
@@ -1493,29 +1504,36 @@
         let patients_id = $('#patients_id').val();
 
         //获取CT信息预览地址
-        // $.ajax({
-        //     type:"post",
-        //     url:"/PreSave/imgCtShow",
-        //     dataType:'JSON',
-        //     data: {
-        //         patients_id:patients_id,
-        //         ct_id:ctId
-        //     },
-        //     success:function (data) {
-        //         console.log(data)
-        //         layui.use('layer', function(){
-        //             if(data.status == 1){
-        //
-        //             }
-        //             else {
-        //
-        //
-        //             }
-        //         });
-        //     }
-        // });
+        $.ajax({
+            type:"post",
+            url:"/PreSave/getCTAddress",
+            async:false,
+            dataType:'JSON',
+            data: {
+                patients_id:patients_id,
+                ct_id:ctId
+            },
+            success:function (data) {
+                // console.log(data);
+                preAddress = data['img_address'];
+                preInfo = data['img_info'];
+            }
+        });
+        if(preAddress!=null && Array.isArray(preAddress)){
+            //组合成图片显示路由地址数组
+            var preAddressArr = [];
+            for (i = 0;i<preAddress.length;i++){
+                preAddressArr.push('http://xn--ekr067e4gfunbf4dzx0d:8888/file/' + preAddress[i])
+            }
+        }
+        else {
 
-        initFileInput("imgShowCt"+ctId, "/PreSave/imgCtSave", "/PreSave/imgCtDel",patients_id,ctId,);
+            preAddressArr = [];
+            preAddressArr.push('http://xn--ekr067e4gfunbf4dzx0d:8888/file/' + preAddress)
+        }
+
+
+        initFileInput("imgShowCt"+ctId, "/PreSave/imgCtSave", "/PreSave/imgCtDel",patients_id,ctId,preAddressArr,preInfo);
 
     })
 </script>
@@ -1541,12 +1559,41 @@
                 "ctFormId":newId
             }
 
+            //获取CT信息预览地址
+            $.ajax({
+                type:"post",
+                url:"/PreSave/getCTAddress",
+                async:false,
+                dataType:'JSON',
+                data: {
+                    patients_id:patients_id,
+                    ct_id:newId
+                },
+                success:function (data) {
+                    // console.log(data);
+                    preAddress = data['img_address'];
+                    preInfo = data['img_info'];
+                }
+            });
+            if(preAddress!=null && Array.isArray(preAddress)){
+                //组合成图片显示路由地址数组
+                var preAddressArr = [];
+                for (i = 0;i<preAddress.length;i++){
+                    preAddressArr.push('http://xn--ekr067e4gfunbf4dzx0d:8888/file/' + preAddress[i])
+                }
+            }
+            else {
+
+                preAddressArr = [];
+                preAddressArr.push('http://xn--ekr067e4gfunbf4dzx0d:8888/file/' + preAddress)
+            }
+
             //渲染上传文件控件
-            initFileInput("imgShowCt"+newId, "/PreSave/imgCtSave", "/PreSave/imgCtDel" ,patients_id ,newId);
+            initFileInput("imgShowCt"+newId, "/PreSave/imgCtSave", "/PreSave/imgCtDel",patients_id,newId,preAddressArr,preInfo);
 
             //新增选项卡
             element.tabAdd('addCt', {
-                title: '新记录'+ i
+                title: '新记录'
                 ,content: laytpl(getCt).render(data, function(html){ctView.innerHTML = html}) //取得模版
                 ,id: newId
             })
@@ -1686,55 +1733,125 @@
         element.on('tab(addCt)', function(){
             $(this).addClass("ct-id");
             let ctId = $(this).attr('lay-id');
-            console.log($(this).attr('lay-id'));
+
+            //获取CT信息预览地址
+            $.ajax({
+                type:"post",
+                url:"/PreSave/getCTAddress",
+                async:false,
+                dataType:'JSON',
+                data: {
+                    patients_id:patients_id,
+                    ct_id:ctId
+                },
+                success:function (data) {
+                    // console.log(data);
+                    preAddress = data['img_address'];
+                    preInfo = data['img_info'];
+                }
+            });
+            if(preAddress!=null && Array.isArray(preAddress)){
+                //组合成图片显示路由地址数组
+                var preAddressArr = [];
+                for (i = 0;i<preAddress.length;i++){
+                    preAddressArr.push('http://xn--ekr067e4gfunbf4dzx0d:8888/file/' + preAddress[i])
+                }
+            }
+            else {
+
+                preAddressArr = [];
+                preAddressArr.push('http://xn--ekr067e4gfunbf4dzx0d:8888/file/' + preAddress)
+            }
             //渲染上传文件控件
-            initFileInput("imgShowCt"+ctId, "/PreSave/imgCtSave", "/PreSave/imgCtDel", patients_id, ctId);
+            initFileInput("imgShowCt"+ctId, "/PreSave/imgCtSave", "/PreSave/imgCtDel",patients_id,ctId,preAddressArr,preInfo);
         });
 
     });
 
 </script>
 
-<!--图片显示上传函数-->
+<!--文件上传函数-->
 <script>
-    function initFileInput(formName, uploadUrl ,delUrl ,patients_id ,form_id,preAddress) {
+    function initFileInput(formName, uploadUrl ,delUrl ,patients_id ,form_id,preAddressArr,preInfo) {
         let formId = $('#' + formName);
         formId.fileinput({
             language: 'zh',                    //设置语言
 
-            //预览地址
-            initialPreview: ['http://xn--ekr067e4gfunbf4dzx0d:8888/test'],
+            initialPreview: preAddressArr,     //预览地址
             initialPreviewAsData: true,        // 确定传入预览数据，而不是原生标记语言
-            //预览图显示信息
-            initialPreviewConfig: [
-                {caption: "Moon.jpg", size: 930321, width: "120px", key: 1},
-                {caption: "Earth.jpg", size: 1218822, width: "120px", key: 2}
-            ],
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",//当检测到用于预览的不可读文件类型时，将在每个预览文件缩略图中显示的图标
+            //预览文件信息
+            initialPreviewConfig: preInfo,
 
             //自定义按钮样式
+            fileActionSettings: {                               // 在预览窗口中为新选择的文件缩略图设置文件操作的对象配置
+                showCancel:true,
+                showDrag: false,
+                showDownload: true,
+            },
             showRemove: false,                 //不显示删除按钮
+            showUpload: false,                 //不显示上传按钮
             browseClass: "btn btn-success",
-            browseLabel: "选择图片",
-            uploadClass: "btn btn-info",
-            uploadLabel: "开始上传",
+            browseLabel: "选择文件",
+            dropZoneEnabled: false,
+
+            enctype: 'multipart/form-data',
 
             deleteUrl: delUrl,                 //删除操作的URL地址
+            deleteExtraData:{patients_id: patients_id,form_id:form_id},
+
             overwriteInitial: false,           //不允许覆盖初始的预览，所以添加文件时不会覆盖
-            maxFileSize: 102400,               //文件最大不超过100mb
+            maxFileSize: 1024000,               //文件最大不超过1000mb
 
             uploadAsync: true,                 //异步上传
             uploadUrl: uploadUrl, //服务器端上传处理程序
             uploadExtraData: {patients_id: patients_id,form_id:form_id}                //发送额外数据
 
         });
-        formId.on("fileuploaded", function (event, data) {
+        //上传完成
+        formId.on("fileuploaded", function (event, data,previewId) {
+            //在上传成功事件中将服务器返回的所需数据，添加到该文件对应的div中
+            console.log(data.response.fileid);
+            $('#' + previewId).attr('fileid', data.response.fileid);
             var result = data.response; //后台返回的json
-            console.log(result);
+            layui.use('layer', function(){
+                let layer = layui.layer;
+                layer.msg(result.message);
+
+            });
+
         });
+        //错误提示
         formId.on("fileerror", function (event, data) {
             var result = data.response; //后台返回的json
-            console.log(result);
+            layui.use('layer', function(){
+                let layer = layui.layer;
+                layer.msg(result.error);
+
+            });
         });
+        //删除前提示
+        formId.on('filepredelete', function(event, key, jqXHR, data) {
+            if (!confirm("确定删除原文件？删除后不可恢复")) {
+                return false;
+            }
+        });
+        //成功删除
+        formId.on('filedeleted', function(event, key,data) {
+            layui.use('layer', function(){
+                let layer = layui.layer;
+                layer.msg(data.responseJSON.message);
+            });
+        });
+        //删除预览
+        formId.on('filepreremove', function (event, previewId, extra,data) {
+            //在移除事件里取出所需数据，并执行相应的删除指令
+            layui.use('layer', function(){
+                let layer = layui.layer;
+                layer.msg('如需删除服务器文件！请先刷新页面！');
+            });
+        });
+
     }
 </script>
 

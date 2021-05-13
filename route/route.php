@@ -10,15 +10,17 @@
 // +----------------------------------------------------------------------
 
 Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
+    return 'hello,doctor!';
 });
-Route::get('youwei/test', function () {
-    return 'hello,youwei!';
-});
-
-Route::get('hello/:name', 'index/hello');
+//图片路由
+Route::rule('file/:date/:name','PreSave/imgRoute')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
+//文件下载路由
+Route::rule('download/:date/:name','PreSave/download')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
+//自动清理冗余图片
 Route::rule('clean','app/command/AutoCleanPhoto');
-Route::rule('test','PreSave/imgCtShow');
+
+//测试
+Route::rule('test','PreSave/ceshi');
 Route::rule('ct_image/:ct_id/:patients_id', function () {
     return 'hello,youwei!';
 });
