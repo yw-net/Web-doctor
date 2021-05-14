@@ -3,430 +3,397 @@
 {include file="public/left" /}
 {include file="public/nav" /}
 <style>
-    .panel-col{display: flex;flex-direction: column;}
-    .img-ico{width: 20px;margin-bottom: 3px;margin-left: 20px;}
     .layui-form-item{margin-bottom: 0;margin-top: 10px;}
+    .label-font{width: 150px;font-size: 16px;font-weight: bolder;color: #3c763d;}
+    .control-label{text-align: left!important;}
 </style>
 <!--症状体征页面-->
 <div class="content">
-    <form class="form-horizontal" action="{:url('Save/history')}" method="post">
+    <form class="form-horizontal" method="post">
         <div class="panel panel-info">
             <div class="panel-heading yw-flex-row">
+                <input type="text" id="patients_id" class="hidden" value="{$patientid}">
                 <h4 class="panel-title">症状体征</h4>
                 <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
             </div>
             <div class="panel-body">
-                <section class="sec-left col-sm-12">
+
+                <section>
 
                     <input type="text" name="patientsid" style="display: none;" value="{$patientid}">
-                    <div class="layui-tab layui-tab-card">
-                        <ul class="layui-tab-title" style="background-color: #dff0d8;">
-                            <li class="layui-this">症状</li>
-                            <li>体征</li>
-                        </ul>
-                        <div class="layui-tab-content">
-                            <div class="layui-tab-item layui-show">
-                                <div class="layui-form">
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label" style="width: 130px;">体检发现</label>
-                                        <div class="layui-input-block">
-                                            <input type="checkbox" lay-skin="switch" lay-text="是|否">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="layui-form">
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label" style="width: 130px;">胸内肺表现</label>
-                                        <div class="layui-input-block">
-                                            <input type="checkbox" lay-skin="switch" lay-text="是|否">
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="layui-tab layui-tab-card" lay-filter="zhengzhuangtizheng">
 
-<!--                                <div class="has-success checkbox form-group">-->
-<!--                                    <label class="input-group col-sm-offset-1">-->
-<!--                                        <input name="tijian" type="checkbox" id="tijian" value="1"> 体检发现-->
-<!--                                    </label>-->
-<!--                                </div>-->
-<!--                                <div class="has-success checkbox form-group">-->
-<!--                                    <label class="input-group col-sm-offset-1">-->
-<!--                                        <input name="xiongneifei" type="checkbox" id="xiongneifei" value="1"> 胸内肺表现-->
-<!--                                    </label>-->
-<!--                                </div>-->
-                                <div class="has-success col-sm-offset-1">
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 1-刺激性干咳
-                                        </label>
-                                        <label class="col-sm-3">
-                                            <input name="xiongneifei2" type="checkbox" id="xiongneifei2" value="1"> 2-阵咳
-                                        </label>
-                                        <label class="col-sm-3">
-                                            <input name="xiongneifei3" type="checkbox" id="xiongneifei3" value="1"> 3-咳痰
-                                        </label>
-                                        <label class="col-sm-3">
-                                            <input name="xiongneifei4" type="checkbox" id="xiongneifei4" value="1"> 4-血丝咳
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="xiongneifei5" type="checkbox" id="xiongneifei5" value="1"> 5-咯血
-                                        </label>
-                                        <label class="col-sm-3">
-                                            <input name="xiongneifei6" type="checkbox" id="xiongneifei6" value="1"> 6-咯水
-                                        </label>
-                                        <label class="col-sm-3">
-                                            <input name="xiongneifei7" type="checkbox" id="xiongneifei7" value="1"> 7-胸痛
-                                        </label>
-                                        <label class="col-sm-3">
-                                            <input name="xiongneifei8" type="checkbox" id="xiongneifei8" value="1"> 8-肩痛
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="xiongneifei9" type="checkbox" id="xiongneifei9" value="1"> 9-发热
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="xiongneifeiother" type="checkbox" id="xiongneifeiother" value="1"> 其他
-                                        </label>
-                                    </div>
-                                    <div class="">
-                                        <input type="text" class="form-control input-sm" id="xiongneifeiinput" placeholder="请输入..." name="xiongneifeiinput" value="" style="margin-top: 5px;width: 300px;">
-                                    </div>
+                        <ul class="layui-tab-title" style="background-color: #dff0d8;">
+                            <li class="layui-this" lay-id="zhengzhuang">症状</li>
+                            <li lay-id="tizheng">体征</li>
+                        </ul>
+
+                        <div class="layui-tab-content">
+
+<!--                            症状-->
+                            <div class="layui-tab-item layui-show">
+                                <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
+                                    创建时间：
+                                    <span style="color: #ff0000;margin-right: 20px;">
+                                        {$zhengzhuang_info==null ? '未保存': $zhengzhuang_info->created_time }
+                                    </span>
+                                    上次修改时间：
+                                    <span style="color: #ff0000">
+                                        {$zhengzhuang_info==null ? '未修改': $zhengzhuang_info->edit_time }
+                                    </span>
                                 </div>
-                                <div class="layui-form">
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label" style="width: 130px;">胸内肺外表现</label>
-                                        <div class="layui-input-block">
-                                            <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                <button class="btn btn-danger del" id="delZZ" type="button" onclick="delZZForm()">删除</button>
+                                <button class="btn btn-info save" id="saveZZ" type="button" onclick="saveZZForm()">保存修改</button>
+
+                                <form class="layui-form-item" id="zzForm">
+<!--                                    体检发现-->
+                                    <div class="checkbox has-success">
+                                        <blockquote class="layui-elem-quote" style="padding: 10px;">
+                                            <label>
+                                                <input name="tijianfaxian" type="checkbox" value="体检发现">体检发现
+                                            </label>
+                                        </blockquote>
+                                    </div>
+<!--                                    胸内肺表现-->
+                                    <div class="checkbox has-success">
+                                        <blockquote class="layui-elem-quote" style="padding: 10px;">
+                                            <label>
+                                                <input name="xiongneifeibiaoxian" type="checkbox" value="胸内肺表现">胸内肺表现
+                                            </label>
+                                        </blockquote>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="刺激性干咳"> 1-刺激性干咳
+                                        </label>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="阵咳"> 2-阵咳
+                                        </label>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="咳痰"> 3-咳痰
+                                        </label>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="血丝咳"> 4-血丝咳
+                                        </label>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="咯血"> 5-咯血
+                                        </label>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="咯水"> 6-咯水
+                                        </label>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="胸痛"> 7-胸痛
+                                        </label>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="肩痛"> 8-肩痛
+                                        </label>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="发热"> 9-发热
+                                        </label>
+
+                                        <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
+                                            <span class="input-group-addon">其他</span>
+                                            <input type="text" class="form-control input-sm" name="other_xiongneifeibiaoxian" value="" />
                                         </div>
                                     </div>
-                                </div>
-<!--                                <div class="has-success checkbox form-group">-->
-<!--                                    <label class="input-group col-sm-offset-1">-->
-<!--                                        <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 胸内肺外表现-->
-<!--                                    </label>-->
-<!--                                </div>-->
-                                <div class="has-success col-sm-offset-1">
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 1-胸水
+<!--                                    胸内肺外表现-->
+                                    <div class="checkbox has-success">
+                                        <blockquote class="layui-elem-quote" style="padding: 10px;">
+                                            <label>
+                                                <input name="xiongneifeiwaibiaoxian" type="checkbox" value="胸内肺外表现">胸内肺外表现
+                                            </label>
+                                        </blockquote>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="胸水"> 1-胸水
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 2-喉返神经压迫
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="喉返神经压迫"> 2-喉返神经压迫
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 3-膈神经压迫
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="膈神经压迫"> 3-膈神经压迫
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 4-腔静脉压迫
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="腔静脉压迫"> 4-腔静脉压迫
                                         </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 5-颈交感压迫
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="颈交感压迫"> 5-颈交感压迫
                                         </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 其他
-                                        </label>
-                                    </div>
-                                    <div class="">
-                                        <input type="text" class="form-control input-sm" id="chaoshenotherinput" placeholder="请输入..." name="chaoshenotherinput" value="" style="margin-top: 5px;width: 300px;">
-                                    </div>
-                                </div>
-                                <div class="layui-form">
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label" style="width: 130px;">胸外非转移表现</label>
-                                        <div class="layui-input-block">
-                                            <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                        <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
+                                            <span class="input-group-addon">其他</span>
+                                            <input type="text" class="form-control input-sm" name="other_xiongneifeiwaibiaoxian" value="" />
                                         </div>
                                     </div>
-                                </div>
-<!--                                <div class="has-success checkbox form-group">-->
-<!--                                    <label class="input-group col-sm-offset-1">-->
-<!--                                        <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 胸外非转移表现-->
-<!--                                    </label>-->
-<!--                                </div>-->
-                                <div class="has-success col-sm-offset-1">
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 1-肺性骨关节病
+<!--                                    胸外非转移表现-->
+                                    <div class="checkbox has-success">
+                                        <blockquote class="layui-elem-quote" style="padding: 10px;">
+                                            <label>
+                                                <input name="xiongwaifeizhuanyibiaoxian" type="checkbox" value="胸外非转移表现">胸外非转移表现
+                                            </label>
+                                        </blockquote>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="肺性骨关节病"> 1-肺性骨关节病
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 2-多发性肌炎
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="多发性肌炎"> 2-多发性肌炎
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 3-外周神经感觉/运动障碍
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="外周神经感觉、运动障碍"> 3-外周神经感觉、运动障碍
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 4-库欣综合征
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="库欣综合征"> 4-库欣综合征
                                         </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 5-高钙血症
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="高钙血症"> 5-高钙血症
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 6-类瘤
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="类瘤"> 6-类瘤
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 7-贫血
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="贫血"> 7-贫血
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 8-游走性血栓性静脉炎
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="游走性血栓性静脉炎"> 8-游走性血栓性静脉炎
                                         </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 9-肺栓塞
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="肺栓塞"> 9-肺栓塞
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 10-硬皮病
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="硬皮病"> 10-硬皮病
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 11-黑色棘皮病
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="黑色棘皮病"> 11-黑色棘皮病
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 12-呼吸睡眠暂停综合征
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="呼吸睡眠暂停综合征"> 12-呼吸睡眠暂停综合征
                                         </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 其他
-                                        </label>
-                                    </div>
-                                    <div class="">
-                                        <input type="text" class="form-control input-sm" id="chaoshenotherinput" placeholder="请输入..." name="chaoshenotherinput" value="" style="margin-top: 5px;width: 300px;">
-                                    </div>
-                                </div>
-                                <div class="layui-form">
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label" style="width: 130px;">胸外转移表现</label>
-                                        <div class="layui-input-block">
-                                            <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                                        <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
+                                            <span class="input-group-addon">其他</span>
+                                            <input type="text" class="form-control input-sm" name="other_xiongwaifeizhuanyibiaoxian" value="" />
                                         </div>
                                     </div>
-                                </div>
-<!--                                <div class="has-success checkbox form-group">-->
-<!--                                    <label class="input-group col-sm-offset-1">-->
-<!--                                        <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 胸外转移表现-->
-<!--                                    </label>-->
-<!--                                </div>-->
-                                <div class="has-success col-sm-offset-1">
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 1-骨痛
+
+                                    <div class="checkbox has-success">
+                                        <blockquote class="layui-elem-quote" style="padding: 10px;">
+                                            <label>
+                                                <input name="xiongwaizhuanyibiaoxian" type="checkbox" value="胸外转移表现">胸外转移表现
+                                            </label>
+                                        </blockquote>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="骨痛"> 1-骨痛
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 2-肢体无力
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="肢体无力"> 2-肢体无力
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 3-头晕
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="头晕"> 3-头晕
                                         </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 4-头痛
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="头痛"> 4-头痛
                                         </label>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="视力障碍"> 5-视力障碍
+                                        </label>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="语言障碍"> 6-语言障碍
+                                        </label>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="协调障碍"> 7-协调障碍
+                                        </label>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="皮下结节"> 8-皮下结节
+                                        </label>
+                                        <label class="col-sm-3" style="margin-top: 10px">
+                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="黄疸"> 9-黄疸
+                                        </label>
+                                        <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
+                                            <span class="input-group-addon">其他</span>
+                                            <input type="text" class="form-control input-sm" name="other_xiongwaizhuanyibiaoxian" value="" />
+                                        </div>
                                     </div>
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 5-视力障碍
-                                        </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 6-语言障碍
-                                        </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 7-协调障碍
-                                        </label>
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 8-皮下结节
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 9-黄疸
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label class="col-sm-3">
-                                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 其他
-                                        </label>
-                                    </div>
-                                    <div class="">
-                                        <input type="text" class="form-control input-sm" id="chaoshenotherinput" placeholder="请输入..." name="chaoshenotherinput" value="" style="margin-top: 5px;width: 300px;">
-                                    </div>
-                                </div>
+                                </form>
                             </div>
+
+<!--                            体征-->
                             <div class="layui-tab-item">
+                                <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
+                                    创建时间：
+                                    <span style="color: #ff0000;margin-right: 20px;">
+                                        {$tizheng_info==null ? '未保存': $tizheng_info->created_time }
+                                    </span>
+                                    上次修改时间：
+                                    <span style="color: #ff0000">
+                                        {$tizheng_info==null ? '未修改': $tizheng_info->edit_time }
+                                    </span>
+                                </div>
+                                <button class="btn btn-danger del" id="delTZ" type="button" onclick="delTZ()">删除</button>
+                                <button class="btn btn-info save" id="saveTZ" type="button" onclick="saveTZ()">保存修改</button>
+                                <hr>
                                 <div class="row has-success">
                                     <div class="form-group col-sm-6">
-                                        <label class="col-sm-5 control-label">1-ECOG评分</label>
+                                        <label class="col-sm-4 control-label">1-ECOG评分</label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="ecog" id="inlineRadio1" value="1"> 1
+                                            <input type="radio" name="ecog" value="1"> 1
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="ecog" id="inlineRadio2" value="2"> 2
+                                            <input type="radio" name="ecog" value="2"> 2
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="ecog" id="inlineRadio3" value="3"> 3
+                                            <input type="radio" name="ecog" value="3"> 3
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="ecog" id="inlineRadio4" value="4"> 4
+                                            <input type="radio" name="ecog" value="4"> 4
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="ecog" id="inlineRadio5" value="5"> 5
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-5 control-label">2-锁骨上淋巴结肿大</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                            <input type="radio" name="ecog" value="5"> 5
                                         </label>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label class="col-sm-5 control-label">3-静脉曲张</label>
+                                        <label class="col-sm-4 control-label">2-锁骨上淋巴结肿大</label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                            <input type="radio" name="suogushanglingbajie" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-5 control-label">4-️胸壁畸形</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                            <input type="radio" name="suogushanglingbajie" value="0" /> 否
                                         </label>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label class="col-sm-5 control-label">5-胸廓出口综合症</label>
+                                        <label class="col-sm-4 control-label">3-静脉曲张</label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                            <input type="radio" name="jingmaiquzhang" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-5 control-label">6-紫绀</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                            <input type="radio" name="jingmaiquzhang" value="0" /> 否
                                         </label>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label class="col-sm-5 control-label">7-杵状指</label>
+                                        <label class="col-sm-4 control-label">4-️胸壁畸形</label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                            <input type="radio" name="xiongbijixing" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-5 control-label">8-水肿</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                            <input type="radio" name="xiongbijixing" value="0" /> 否
                                         </label>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label class="col-sm-5 control-label">9-雷诺现象</label>
+                                        <label class="col-sm-4 control-label">5-胸廓出口综合症</label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                            <input type="radio" name="xiongkuochukou" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-5 control-label">10-胸膜摩擦音</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                            <input type="radio" name="xiongkuochukou" value="0" /> 否
                                         </label>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label class="col-sm-5 control-label">11-肢端肥大症</label>
+                                        <label class="col-sm-4 control-label">6-紫绀</label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
+                                            <input type="radio" name="ziqian" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-5 control-label">12-体重下降</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="1" id="shoushu1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="radioshoushu" value="0" id="shoushu2"  /> 否
+                                            <input type="radio" name="ziqian" value="0" /> 否
                                         </label>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label class="col-sm-5 control-label">其他</label>
+                                        <label class="col-sm-4 control-label">7-杵状指</label>
                                         <label class="radio-inline">
-                                            <input type="text" name="radioshoushu" value="1" id="shoushu1" />
+                                            <input type="radio" name="chuzhuangzhi" value="1" /> 是
                                         </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="chuzhuangzhi" value="0" /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label">8-水肿</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="shuizhong" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="shuizhong" value="0" /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label">9-雷诺现象</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="leiluo" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="leiluo" value="0" /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label">10-胸膜摩擦音</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xiongmo" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xiongmo" value="0" /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label">11-肢端肥大症</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zhiduanfeida" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="zhiduanfeida" value="0" /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4 control-label">12-体重下降</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="tizhongxiajiang" value="1" /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="tizhongxiajiang" value="0" /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group" style="width: 240px;margin-top: 10px;margin-left: 20px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">其他</span>
+                                            <input type="text" class="form-control input-sm" name="other" value="" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </section>
             </div>
         </div>
     </form>
 </div>
+
+<!--选项卡定位-->
 <script>
-    //Demo
-    layui.use('form', function(){
+    layui.use(['element','form'], function(){
+        var element = layui.element;
         var form = layui.form;
 
-        //监听提交
-        form.on('submit(formDemo)', function(data){
-            layer.msg(JSON.stringify(data.field));
-            return false;
+        //获取hash来切换选项卡，假设当前地址的hash为lay-id对应的值
+        var layid = location.hash.replace(/^#zhengzhuangtizheng=/, '');
+        element.tabChange('zhengzhuangtizheng', layid); //
+
+        //监听Tab切换，以改变地址hash值
+        element.on('tab(zhengzhuangtizheng)', function(){
+            location.hash = 'zhengzhuangtizheng='+ this.getAttribute('lay-id');
         });
     });
 </script>
-<script>
-    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
-    layui.use('element', function(){
-        var element = layui.element;
 
-        //…
-    });
-</script>
+<!--页面加载左侧导航栏-->
 <script>
     window.onload = function(){
         $('.nav-left').css('display','block');
         $('#symptomatic-left').addClass('active');
+
     }
 </script>
-<!--点击显示输入框-->
-<script>
 
-    var options=$(".inputhide");
-    for (var i = 0; i < options.length; i++) {
-        console.log($(options[i]).val());
+<!--症状保存按钮-->
+<script>
+    function saveZZForm(){
+        let patients_id = $('#patients_id').val();
+        let form_data = decodeURIComponent($("#zzForm").serialize());
+        console.log(patients_id);
+        console.log(form_data);
+
     }
 </script>
 

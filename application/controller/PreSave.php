@@ -125,6 +125,22 @@ class PreSave extends Base
                     'daxiao2'=>$ct_data['daxiao2'],
                     'daxiao3'=>$ct_data['daxiao3'],
                     'gaihua'=>$ct_data['gaihua'],
+                    'fenyezheng'=>$ct_data['fenyezheng'],
+                    'maocizheng'=>$ct_data['maocizheng'],
+                    'xiongmozhousuo'=>$ct_data['xiongmozhousuo'],
+                    'jizhuangtuqi'=>$ct_data['jizhuangtuqi'],
+                    'kongdong'=>$ct_data['kongdong'],
+                    'zhiqiguanzheng'=>$ct_data['zhiqiguanzheng'],
+                    'zushaixingfeiyan'=>$ct_data['zushaixingfeiyan'],
+                    'zhongliuqingfanxueguan'=>$ct_data['zhongliuqingfanxueguan'],
+                    'qingfangeji'=>$ct_data['qingfangeji'],
+                    'qingfanzhuiti'=>$ct_data['qingfanzhuiti'],
+                    'qingfanxiongbi'=>$ct_data['qingfanxiongbi'],
+                    'xiongshui'=>$ct_data['xiongshui'],
+                    'tongyejiejie'=>$ct_data['tongyejiejie'],
+                    'butongyejiejie'=>$ct_data['butongyejiejie'],
+                    'spn'=>$ct_data['spn'],
+                    'linbajiezhongda'=>$ct_data['linbajiezhongda'],
                 ])
                 ->update();
             if ($res_ct){
@@ -165,6 +181,22 @@ class PreSave extends Base
         //单选框数据写入
         $pre_ct->ggo = $ct_data['ggo'];
         $pre_ct->gaihua = $ct_data['gaihua'];
+        $pre_ct->fenyezheng = $ct_data['fenyezheng'];
+        $pre_ct->maocizheng = $ct_data['maocizheng'];
+        $pre_ct->xiongmozhousuo = $ct_data['xiongmozhousuo'];
+        $pre_ct->jizhuangtuqi = $ct_data['jizhuangtuqi'];
+        $pre_ct->kongdong = $ct_data['kongdong'];
+        $pre_ct->zhiqiguanzheng = $ct_data['zhiqiguanzheng'];
+        $pre_ct->zushaixingfeiyan = $ct_data['zushaixingfeiyan'];
+        $pre_ct->zhongliuqingfanxueguan = $ct_data['zhongliuqingfanxueguan'];
+        $pre_ct->qingfangeji = $ct_data['qingfangeji'];
+        $pre_ct->qingfanzhuiti = $ct_data['qingfanzhuiti'];
+        $pre_ct->qingfanxiongbi = $ct_data['qingfanxiongbi'];
+        $pre_ct->xiongshui = $ct_data['xiongshui'];
+        $pre_ct->tongyejiejie = $ct_data['tongyejiejie'];
+        $pre_ct->butongyejiejie = $ct_data['butongyejiejie'];
+        $pre_ct->spn = $ct_data['spn'];
+        $pre_ct->linbajiezhongda = $ct_data['linbajiezhongda'];
         $pre_ct->save();
 
         if ($pre_ct){
@@ -388,14 +420,7 @@ class PreSave extends Base
     //测试
     public function ceshi()
     {
-        $file_path = Env::get('root_path').'storge/preoperative/ct/20210512/IMG_4903.JPG';//CT图片保存根目录
 
-        dump($file_path);
-
-        $imgInfo = filesize($file_path); //解析图片文件信息
-        dump($imgInfo);
-        $size = Tools::flowAutoShow($imgInfo);
-        dump($size);
 
     }
 

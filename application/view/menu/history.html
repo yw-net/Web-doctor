@@ -35,11 +35,11 @@
                 <section class="sec-left col-sm-12">
                     <input type="text" name="patientsid" style="display: none;" value="{$patientid}">
 
-                    <div class="layui-tab layui-tab-card">
+                    <div class="layui-tab layui-tab-card" lay-filter="jiwang">
                         <ul class="layui-tab-title" style="background-color: #dff0d8;">
-                            <li class="layui-this">术前合并症</li>
-                            <li>个人史</li>
-                            <li>家族肿瘤史</li>
+                            <li class="layui-this" lay-id="shuqian">术前合并症</li>
+                            <li lay-id="gerenshi">个人史</li>
+                            <li lay-id="jiazushi">家族肿瘤史</li>
                         </ul>
                         <div class="layui-tab-content">
                             <div class="layui-tab-item layui-show">
@@ -339,20 +339,28 @@
     </form>
 </div>
 
+<!--选项卡定位-->
+<script>
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //获取hash来切换选项卡，假设当前地址的hash为lay-id对应的值
+        var layid = location.hash.replace(/^#jiwang=/, '');
+        element.tabChange('jiwang', layid); //
+
+        //监听Tab切换，以改变地址hash值
+        element.on('tab(jiwang)', function(){
+            location.hash = 'jiwang='+ this.getAttribute('lay-id');
+        });
+    });
+</script>
+
 <script>
     //保存成功弹窗
     $("#save").click(function(){
         alert('保存成功')
     });
 
-</script>
-<script>
-    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
-    layui.use('element', function(){
-        var element = layui.element;
-
-        //…
-    });
 </script>
 <script>
     window.onload = function(){

@@ -3,6 +3,8 @@
 
 namespace app\controller;
 use app\controller\Base;
+use app\model\Patients;
+use think\facade\Session;
 
 
 class Tools extends Base
@@ -29,5 +31,6 @@ class Tools extends Base
             return round($value, 2) . "B";
         }
     }
+
 
 }

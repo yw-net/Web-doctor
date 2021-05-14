@@ -21,6 +21,7 @@ Route::rule('clean','app/command/AutoCleanPhoto');
 
 //测试
 Route::rule('test','PreSave/ceshi');
+Route::rule('t','Menu/ceshi');
 Route::rule('ct_image/:ct_id/:patients_id', function () {
     return 'hello,youwei!';
 });
