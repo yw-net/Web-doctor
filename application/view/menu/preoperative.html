@@ -1651,7 +1651,6 @@
         let toData=DataDeal.formToJson(ct_form_data);//转化为json字符串
 
         let jsonData = DataDeal.jsonData(toData);//json字符串相同key合并value值并转化为json对象
-        console.log(click_id);
 
         $.ajax({
             type:"POST",
@@ -1669,7 +1668,7 @@
                     if(data.status == 1){
                         layer.msg(data.msg, {icon: 1});
                         if (data.msg =='保存成功'){
-                            location.reload();
+                            setTimeout('location.reload()', 2000 )
                         }
                     }
                     else {

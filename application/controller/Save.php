@@ -8,6 +8,8 @@ use app\model\Patients;
 use app\model\History_self;
 use app\model\History_menstrual;
 use app\model\History_family;
+use app\model\Zhengzhuang;
+use app\model\Tizheng;
 use think\Db;
 use app\model\User;
 use think\facade\Request;
@@ -80,15 +82,17 @@ class Save extends Base
         $field=[
             'patients_id','patients_name','phone','second_hospital_in','birthday','national','height','weight',
             'hospitalized_time','leaving_hospital','hospital_out_to','adress1a','adress1b','adress1c','adress2','hospital_id','id_photo_num',
-            'id_pathological','identity_card','sex','age','married','doctor'
+            'id_pathological','identity_card','sex','age','married','doctor','created_time','edit_time'
         ];
         //查询患者ID是否已经存在
         $is_old = Patients::where('patients_id',$patientsid)->find();
 
         if ($is_old){
+            $data['edit_time'] = date("Y-m-d H:i:s");
             Patients::update($data,$where,$field);
         }
         else{
+            $data['created_time'] = date("Y-m-d H:i:s");
             Db::name('patients')->insert($data);
         }
 
@@ -182,12 +186,13 @@ class Save extends Base
             'iimmune'=>$imianyi,
             'iblood'=>$ixueye,
             'iothers'=>$ishuqianother,
+            'edit_time'=>date('Y-m-d H:i:s')
             ];
             $where=[
                 'patients_id'=>$patientsid
             ];
             $field=[
-                'circular','respiratory','digestive','urologic','endocrinological','immune','blood','others','icircular','irespiratory','idigestive','iurologic','iendocrinological','iimmune','iblood','iothers'
+                'circular','respiratory','digestive','urologic','endocrinological','immune','blood','others','icircular','irespiratory','idigestive','iurologic','iendocrinological','iimmune','iblood','iothers','edit_time'
             ];
             History_surgical::update($data,$where,$field);
         }
@@ -210,7 +215,8 @@ class Save extends Base
             'iendocrinological'=>$ineifenmi,
             'iimmune'=>$imianyi,
             'iblood'=>$ixueye,
-            'iothers'=>$ishuqianother,]
+            'iothers'=>$ishuqianother,
+            'created_time'=>date('Y-m-d H:i:s')]
             );
         }
 
@@ -234,12 +240,14 @@ class Save extends Base
                 'isurgical'=>$ishoushu,
                 'itumor'=>$izhongliu,
                 'icarcinogenic_factors'=>$izhiai,
+                'edit_time'=>date('Y-m-d H:i:s')
+
             ];
             $where=[
                 'patients_id'=>$patientsid
             ];
             $field=[
-                'smoking','drinking','surgical','tumor','carcinogenic_factors','ismoking','idrinking','isurgical','itumor','icarcinogenic_factors'
+                'smoking','drinking','surgical','tumor','carcinogenic_factors','ismoking','idrinking','isurgical','itumor','icarcinogenic_factors','edit_time'
             ];
             History_self::update($data,$where,$field);
         }
@@ -256,7 +264,8 @@ class Save extends Base
                     'idrinking'=>$iyingjiu,
                     'isurgical'=>$ishoushu,
                     'itumor'=>$izhongliu,
-                    'icarcinogenic_factors'=>$izhiai,]
+                    'icarcinogenic_factors'=>$izhiai,
+                    'created_time'=>date('Y-m-d H:i:s')]
             );
         }
 
@@ -324,12 +333,13 @@ class Save extends Base
                 'sarcoma'=>$rouliu,
                 'others'=>$othercheck,
                 'iothercheck'=>$iothercheck,
+                'edit_time'=>date('Y-m-d H:i:s')
             ];
             $where=[
                 'patients_id'=>$patientsid
             ];
             $field=[
-                'jiazu','head_neck','esophageal','lung','mediastinal','stomach','hepatic','pancreatic','small_intestina','colonic','transrectal','renal','vesical','prostatic','reproductive_system','lymphatic_system','galactophore','uterine','melanoma','sarcoma','others','iothercheck'
+                'jiazu','head_neck','esophageal','lung','mediastinal','stomach','hepatic','pancreatic','small_intestina','colonic','transrectal','renal','vesical','prostatic','reproductive_system','lymphatic_system','galactophore','uterine','melanoma','sarcoma','others','iothercheck','edit_time'
             ];
             History_family::update($data,$where,$field);
         }
@@ -358,7 +368,8 @@ class Save extends Base
                     'melanoma'=>$heise,
                     'sarcoma'=>$rouliu,
                     'others'=>$othercheck,
-                    'iothercheck'=>$iothercheck,]
+                    'iothercheck'=>$iothercheck,
+                    'created_time'=>date('Y-m-d H:i:s')]
             );
         }
 
@@ -406,6 +417,221 @@ class Save extends Base
                 return['msg'=>'添加失败！请重试！','status'=>200];
             }
         }
+    }
+
+
+    //症状保存模块
+    public function saveZZ(){
+        //数据处理-获取表单数据
+        $patients_id = $this->request->param('patients_id');
+        $data = $this->request->param('form_data');
+
+        //数据处理--解决多选框及输入框为空
+        if (!isset($data['tijianfaxian'])){   //体检发现
+            $data['tijianfaxian'] =null;
+        }
+
+        if (!isset($data['xiongneifeibiaoxian'])){   //胸内肺表现
+            $data['xiongneifeibiaoxian'] =null;
+        }
+        if (!isset($data['other_xiongneifeibiaoxian'])){
+            $data['other_xiongneifeibiaoxian'] =null;
+        }
+
+        if (!isset($data['xiongneifeiwaibiaoxian'])){   //胸内肺外表现
+            $data['xiongneifeiwaibiaoxian'] =null;
+        }
+        if (!isset($data['other_xiongneifeiwaibiaoxian'])){
+            $data['other_xiongneifeiwaibiaoxian'] =null;
+        }
+
+        if (!isset($data['xiongwaifeizhuanyibiaoxian'])){   //胸外非转移表现
+            $data['xiongwaifeizhuanyibiaoxian'] =null;
+        }
+        if (!isset($data['other_xiongwaifeizhuanyibiaoxian'])){
+            $data['other_xiongwaifeizhuanyibiaoxian'] =null;
+        }
+
+        if (!isset($data['xiongwaizhuanyibiaoxian'])){   //胸外转移表现
+            $data['xiongwaizhuanyibiaoxian'] =null;
+        }
+        if (!isset($data['other_xiongwaizhuanyibiaoxian'])){
+            $data['other_xiongwaizhuanyibiaoxian'] =null;
+        }
+
+        if (isset($data['check_xiongneifeibiaoxian'])){   //胸内肺表现
+            //判断多选框值是否为数组（当选择两个以下强制转换为数组）
+            if (!is_array($data['check_xiongneifeibiaoxian'])){
+                $data['check_xiongneifeibiaoxian'] = json_encode($data['check_xiongneifeibiaoxian']);
+            }
+        }else{
+            $data['check_xiongneifeibiaoxian'] =null;
+        }
+
+        if (isset($data['check_xiongneifeiwaibiaoxian'])){   //胸内肺外表现
+            //判断多选框值是否为数组（当选择两个以下强制转换为数组）
+            if (!is_array($data['check_xiongneifeiwaibiaoxian'])){
+                $data['check_xiongneifeiwaibiaoxian'] = json_encode($data['check_xiongneifeiwaibiaoxian']);
+            }
+        }else{
+            $data['check_xiongneifeiwaibiaoxian'] =null;
+        }
+
+        if (isset($data['check_xiongwaifeizhuanyibiaoxian'])){   //胸外非转移表现
+            //判断多选框值是否为数组（当选择两个以下强制转换为数组）
+            if (!is_array($data['check_xiongwaifeizhuanyibiaoxian'])){
+                $data['check_xiongwaifeizhuanyibiaoxian'] = json_encode($data['check_xiongwaifeizhuanyibiaoxian']);
+            }
+        }else{
+            $data['check_xiongwaifeizhuanyibiaoxian'] =null;
+        }
+
+        if (isset($data['check_xiongwaizhuanyibiaoxian'])){   //胸外转移表现
+            //判断多选框值是否为数组（当选择两个以下强制转换为数组）
+            if (!is_array($data['check_xiongwaizhuanyibiaoxian'])){
+                $data['check_xiongwaizhuanyibiaoxian'] = json_encode($data['check_xiongwaizhuanyibiaoxian']);
+            }
+        }else{
+            $data['check_xiongwaizhuanyibiaoxian'] =null;
+        }
+        //判断数据库当前患者下ct_id是否存在
+        $res_data = Zhengzhuang::where('patients_id',$patients_id)->find();
+
+        //更新数据
+        if ($res_data){
+            $zz_update = Db::name('Zhengzhuang')
+                ->where('patients_id',$patients_id)
+                ->data([
+                    'edit_time'=>date('Y-m-d H:i:s'),
+                    'tijianfaxian'=>$data['tijianfaxian'],
+                    'xiongneifeibiaoxian'=>$data['xiongneifeibiaoxian'],
+                    'xiongneifeiwaibiaoxian'=>$data['xiongneifeiwaibiaoxian'],
+                    'xiongwaifeizhuanyibiaoxian'=>$data['xiongwaifeizhuanyibiaoxian'],
+                    'xiongwaizhuanyibiaoxian'=>$data['xiongwaizhuanyibiaoxian'],
+                    'check_xiongneifeibiaoxian'=>$data['check_xiongneifeibiaoxian'],
+                    'check_xiongneifeiwaibiaoxian'=>$data['check_xiongneifeiwaibiaoxian'],
+                    'check_xiongwaifeizhuanyibiaoxian'=>$data['check_xiongwaifeizhuanyibiaoxian'],
+                    'check_xiongwaizhuanyibiaoxian'=>$data['check_xiongwaizhuanyibiaoxian'],
+                    'other_xiongneifeibiaoxian'=>$data['other_xiongneifeibiaoxian'],
+                    'other_xiongneifeiwaibiaoxian'=>$data['other_xiongneifeiwaibiaoxian'],
+                    'other_xiongwaifeizhuanyibiaoxian'=>$data['other_xiongwaifeizhuanyibiaoxian'],
+                    'other_xiongwaizhuanyibiaoxian'=>$data['other_xiongwaizhuanyibiaoxian']
+                ])
+                ->update();
+            if ($zz_update){
+                $res['status'] = 1;
+                $res['msg'] ='保存成功';
+                return $res;
+            }
+            $res['status'] =0;
+            $res['msg'] ='数据未更改';
+            return $res;
+        }
+
+        //新增数据
+        $zz_save = new Zhengzhuang();
+        $zz_save->save([
+            'created_time'=>date('Y-m-d H:i:s'),
+            'patients_id'=>$patients_id,
+            'tijianfaxian'=>$data['tijianfaxian'],
+            'xiongneifeibiaoxian'=>$data['xiongneifeibiaoxian'],
+            'xiongneifeiwaibiaoxian'=>$data['xiongneifeiwaibiaoxian'],
+            'xiongwaifeizhuanyibiaoxian'=>$data['xiongwaifeizhuanyibiaoxian'],
+            'xiongwaizhuanyibiaoxian'=>$data['xiongwaizhuanyibiaoxian'],
+            'check_xiongneifeibiaoxian'=>$data['check_xiongneifeibiaoxian'],
+            'check_xiongneifeiwaibiaoxian'=>$data['check_xiongneifeiwaibiaoxian'],
+            'check_xiongwaifeizhuanyibiaoxian'=>$data['check_xiongwaifeizhuanyibiaoxian'],
+            'check_xiongwaizhuanyibiaoxian'=>$data['check_xiongwaizhuanyibiaoxian'],
+            'other_xiongneifeibiaoxian'=>$data['other_xiongneifeibiaoxian'],
+            'other_xiongneifeiwaibiaoxian'=>$data['other_xiongneifeiwaibiaoxian'],
+            'other_xiongwaifeizhuanyibiaoxian'=>$data['other_xiongwaifeizhuanyibiaoxian'],
+            'other_xiongwaizhuanyibiaoxian'=>$data['other_xiongwaizhuanyibiaoxian']
+        ]);
+        if ($zz_save){
+            $res['status'] = 1;
+            $res['msg'] ='保存成功';
+            return $res;
+        }
+
+        $res['status'] = 0;
+        $res['msg'] ='新增数据失败';
+        return $res;
+    }
+
+
+    //体征保存模块
+    public function saveTZ(){
+        //数据处理-获取表单数据
+        $patients_id = $this->request->param('patients_id');
+        $data = $this->request->param('form_data');
+
+        //数据处理--解决多选框及输入框为空
+        if (!isset($data['other'])){   //体检发现
+            $data['other'] =null;
+        }
+
+        //判断数据库当前患者下ct_id是否存在
+        $res_data = Tizheng::where('patients_id',$patients_id)->find();
+
+        //更新数据
+        if ($res_data){
+            $tz_update = Db::name('tizheng')
+                ->where('patients_id',$patients_id)
+                ->data([
+                    'edit_time'=>date('Y-m-d H:i:s'),
+                    'ecog'=>$data['ecog'],
+                    'suogushanglingbajie'=>$data['suogushanglingbajie'],
+                    'jingmaiquzhang'=>$data['jingmaiquzhang'],
+                    'xiongbijixing'=>$data['xiongbijixing'],
+                    'xiongkuochukou'=>$data['xiongkuochukou'],
+                    'ziqian'=>$data['ziqian'],
+                    'chuzhuangzhi'=>$data['chuzhuangzhi'],
+                    'shuizhong'=>$data['shuizhong'],
+                    'leiluo'=>$data['leiluo'],
+                    'xiongmo'=>$data['xiongmo'],
+                    'zhiduanfeida'=>$data['zhiduanfeida'],
+                    'tizhongxiajiang'=>$data['tizhongxiajiang'],
+                    'other'=>$data['other']
+                ])
+                ->update();
+            if ($tz_update){
+                $res['status'] = 1;
+                $res['msg'] ='保存成功';
+                return $res;
+            }
+            $res['status'] =0;
+            $res['msg'] ='数据未更改';
+            return $res;
+        }
+
+        //新增数据
+        $tz_save = new Tizheng();
+        $tz_save->save([
+            'created_time'=>date('Y-m-d H:i:s'),
+            'patients_id'=>$patients_id,
+            'ecog'=>$data['ecog'],
+            'suogushanglingbajie'=>$data['suogushanglingbajie'],
+            'jingmaiquzhang'=>$data['jingmaiquzhang'],
+            'xiongbijixing'=>$data['xiongbijixing'],
+            'xiongkuochukou'=>$data['xiongkuochukou'],
+            'ziqian'=>$data['ziqian'],
+            'chuzhuangzhi'=>$data['chuzhuangzhi'],
+            'shuizhong'=>$data['shuizhong'],
+            'leiluo'=>$data['leiluo'],
+            'xiongmo'=>$data['xiongmo'],
+            'zhiduanfeida'=>$data['zhiduanfeida'],
+            'tizhongxiajiang'=>$data['tizhongxiajiang'],
+            'other'=>$data['other']
+        ]);
+        if ($tz_save){
+            $res['status'] = 1;
+            $res['msg'] ='保存成功';
+            return $res;
+        }
+
+        $res['status'] = 0;
+        $res['msg'] ='新增数据失败';
+        return $res;
     }
 
 

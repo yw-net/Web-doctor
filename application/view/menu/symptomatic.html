@@ -9,355 +9,465 @@
 </style>
 <!--症状体征页面-->
 <div class="content">
-    <form class="form-horizontal" method="post">
-        <div class="panel panel-info">
-            <div class="panel-heading yw-flex-row">
-                <input type="text" id="patients_id" class="hidden" value="{$patientid}">
-                <h4 class="panel-title">症状体征</h4>
-                <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
-            </div>
-            <div class="panel-body">
+    <div class="panel panel-info">
+        <div class="panel-heading yw-flex-row">
+            <input type="text" id="patients_id" class="hidden" value="{$patientid}">
+            <h4 class="panel-title">症状体征</h4>
+            <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
+        </div>
+        <div class="panel-body">
 
-                <section>
+            <section>
 
-                    <input type="text" name="patientsid" style="display: none;" value="{$patientid}">
-                    <div class="layui-tab layui-tab-card" lay-filter="zhengzhuangtizheng">
+                <input type="text" name="patientsid" style="display: none;" value="{$patientid}">
+                <div class="layui-tab layui-tab-card" lay-filter="zhengzhuangtizheng">
 
-                        <ul class="layui-tab-title" style="background-color: #dff0d8;">
-                            <li class="layui-this" lay-id="zhengzhuang">症状</li>
-                            <li lay-id="tizheng">体征</li>
-                        </ul>
+                    <ul class="layui-tab-title" style="background-color: #dff0d8;">
+                        <li class="layui-this" lay-id="zhengzhuang">症状</li>
+                        <li lay-id="tizheng">体征</li>
+                    </ul>
 
-                        <div class="layui-tab-content">
+                    <div class="layui-tab-content">
 
 <!--                            症状-->
-                            <div class="layui-tab-item layui-show">
-                                <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
-                                    创建时间：
-                                    <span style="color: #ff0000;margin-right: 20px;">
-                                        {$zhengzhuang_info==null ? '未保存': $zhengzhuang_info->created_time }
-                                    </span>
-                                    上次修改时间：
-                                    <span style="color: #ff0000">
-                                        {$zhengzhuang_info==null ? '未修改': $zhengzhuang_info->edit_time }
-                                    </span>
-                                </div>
-                                <button class="btn btn-danger del" id="delZZ" type="button" onclick="delZZForm()">删除</button>
-                                <button class="btn btn-info save" id="saveZZ" type="button" onclick="saveZZForm()">保存修改</button>
-
-                                <form class="layui-form-item" id="zzForm">
-<!--                                    体检发现-->
-                                    <div class="checkbox has-success">
-                                        <blockquote class="layui-elem-quote" style="padding: 10px;">
-                                            <label>
-                                                <input name="tijianfaxian" type="checkbox" value="体检发现">体检发现
-                                            </label>
-                                        </blockquote>
-                                    </div>
-<!--                                    胸内肺表现-->
-                                    <div class="checkbox has-success">
-                                        <blockquote class="layui-elem-quote" style="padding: 10px;">
-                                            <label>
-                                                <input name="xiongneifeibiaoxian" type="checkbox" value="胸内肺表现">胸内肺表现
-                                            </label>
-                                        </blockquote>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="刺激性干咳"> 1-刺激性干咳
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="阵咳"> 2-阵咳
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="咳痰"> 3-咳痰
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="血丝咳"> 4-血丝咳
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="咯血"> 5-咯血
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="咯水"> 6-咯水
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="胸痛"> 7-胸痛
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="肩痛"> 8-肩痛
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeibiaoxian" type="checkbox" value="发热"> 9-发热
-                                        </label>
-
-                                        <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
-                                            <span class="input-group-addon">其他</span>
-                                            <input type="text" class="form-control input-sm" name="other_xiongneifeibiaoxian" value="" />
-                                        </div>
-                                    </div>
-<!--                                    胸内肺外表现-->
-                                    <div class="checkbox has-success">
-                                        <blockquote class="layui-elem-quote" style="padding: 10px;">
-                                            <label>
-                                                <input name="xiongneifeiwaibiaoxian" type="checkbox" value="胸内肺外表现">胸内肺外表现
-                                            </label>
-                                        </blockquote>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="胸水"> 1-胸水
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="喉返神经压迫"> 2-喉返神经压迫
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="膈神经压迫"> 3-膈神经压迫
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="腔静脉压迫"> 4-腔静脉压迫
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="颈交感压迫"> 5-颈交感压迫
-                                        </label>
-                                        <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
-                                            <span class="input-group-addon">其他</span>
-                                            <input type="text" class="form-control input-sm" name="other_xiongneifeiwaibiaoxian" value="" />
-                                        </div>
-                                    </div>
-<!--                                    胸外非转移表现-->
-                                    <div class="checkbox has-success">
-                                        <blockquote class="layui-elem-quote" style="padding: 10px;">
-                                            <label>
-                                                <input name="xiongwaifeizhuanyibiaoxian" type="checkbox" value="胸外非转移表现">胸外非转移表现
-                                            </label>
-                                        </blockquote>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="肺性骨关节病"> 1-肺性骨关节病
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="多发性肌炎"> 2-多发性肌炎
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="外周神经感觉、运动障碍"> 3-外周神经感觉、运动障碍
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="库欣综合征"> 4-库欣综合征
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="高钙血症"> 5-高钙血症
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="类瘤"> 6-类瘤
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="贫血"> 7-贫血
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="游走性血栓性静脉炎"> 8-游走性血栓性静脉炎
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="肺栓塞"> 9-肺栓塞
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="硬皮病"> 10-硬皮病
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="黑色棘皮病"> 11-黑色棘皮病
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="呼吸睡眠暂停综合征"> 12-呼吸睡眠暂停综合征
-                                        </label>
-                                        <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
-                                            <span class="input-group-addon">其他</span>
-                                            <input type="text" class="form-control input-sm" name="other_xiongwaifeizhuanyibiaoxian" value="" />
-                                        </div>
-                                    </div>
-
-                                    <div class="checkbox has-success">
-                                        <blockquote class="layui-elem-quote" style="padding: 10px;">
-                                            <label>
-                                                <input name="xiongwaizhuanyibiaoxian" type="checkbox" value="胸外转移表现">胸外转移表现
-                                            </label>
-                                        </blockquote>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="骨痛"> 1-骨痛
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="肢体无力"> 2-肢体无力
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="头晕"> 3-头晕
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="头痛"> 4-头痛
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="视力障碍"> 5-视力障碍
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="语言障碍"> 6-语言障碍
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="协调障碍"> 7-协调障碍
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="皮下结节"> 8-皮下结节
-                                        </label>
-                                        <label class="col-sm-3" style="margin-top: 10px">
-                                            <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="黄疸"> 9-黄疸
-                                        </label>
-                                        <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
-                                            <span class="input-group-addon">其他</span>
-                                            <input type="text" class="form-control input-sm" name="other_xiongwaizhuanyibiaoxian" value="" />
-                                        </div>
-                                    </div>
-                                </form>
+                        <div class="layui-tab-item layui-show">
+                            <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
+                                创建时间：
+                                <span style="color: #ff0000;margin-right: 20px;">
+                                    {$zhengzhuang_info==null ? '未保存': $zhengzhuang_info->created_time }
+                                </span>
+                                上次修改时间：
+                                <span style="color: #ff0000">
+                                    {$zhengzhuang_info==null ? '未修改': $zhengzhuang_info->edit_time }
+                                </span>
                             </div>
+
+
+                            <form class="layui-form-item" id="formZZ">
+                                <button class="btn btn-info save" id="saveZZ" type="button">保存修改</button>
+<!--                                    体检发现-->
+                                <div class="checkbox has-success">
+                                    <blockquote class="layui-elem-quote" style="padding: 10px;">
+                                        <label>
+                                            <input name="tijianfaxian" type="checkbox" value="体检发现" <?php
+                                            if ($zhengzhuang_info!=null)
+                                            if ($zhengzhuang_info->tijianfaxian =='体检发现')
+                                            echo 'checked="checked"';
+                                            ?> />体检发现
+                                        </label>
+                                    </blockquote>
+                                </div>
+
+<!--                                    胸内肺表现-->
+                                <div class="checkbox has-success">
+                                    <blockquote class="layui-elem-quote" style="padding: 10px;">
+                                        <label>
+                                            <input name="xiongneifeibiaoxian" type="checkbox" value="胸内肺表现" <?php
+                                            if($zhengzhuang_info != null)if($zhengzhuang_info->xiongneifeibiaoxian =='胸内肺表现') echo 'checked="checked"'; ?> />胸内肺表现
+                                        </label>
+                                    </blockquote>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeibiaoxian" type="checkbox" value="刺激性干咳" <?php if($zhengzhuang_info != null)if(strstr($zhengzhuang_info->check_xiongneifeibiaoxian,'刺激性干咳')) echo 'checked="checked"'; ?> /> 1-刺激性干咳
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeibiaoxian" type="checkbox" value="阵咳" <?php if($zhengzhuang_info != null)if(strstr($zhengzhuang_info->check_xiongneifeibiaoxian,'阵咳')) echo 'checked="checked"'; ?> /> 2-阵咳
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeibiaoxian" type="checkbox" value="咳痰" <?php if($zhengzhuang_info != null)if(strstr($zhengzhuang_info->check_xiongneifeibiaoxian,'咳痰')) echo 'checked="checked"'; ?> /> 3-咳痰
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeibiaoxian" type="checkbox" value="血丝咳" <?php if($zhengzhuang_info != null)if(strstr($zhengzhuang_info->check_xiongneifeibiaoxian,'血丝咳')) echo 'checked="checked"'; ?> /> 4-血丝咳
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeibiaoxian" type="checkbox" value="咯血" <?php if($zhengzhuang_info != null)if(strstr($zhengzhuang_info->check_xiongneifeibiaoxian,'咯血')) echo 'checked="checked"'; ?> /> 5-咯血
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeibiaoxian" type="checkbox" value="咯水" <?php if($zhengzhuang_info != null)if(strstr($zhengzhuang_info->check_xiongneifeibiaoxian,'咯水')) echo 'checked="checked"'; ?> /> 6-咯水
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeibiaoxian" type="checkbox" value="胸痛" <?php if($zhengzhuang_info != null)if(strstr($zhengzhuang_info->check_xiongneifeibiaoxian,'胸痛')) echo 'checked="checked"'; ?> /> 7-胸痛
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeibiaoxian" type="checkbox" value="肩痛" <?php if($zhengzhuang_info != null)if(strstr($zhengzhuang_info->check_xiongneifeibiaoxian,'肩痛')) echo 'checked="checked"'; ?> /> 8-肩痛
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeibiaoxian" type="checkbox" value="发热" <?php if($zhengzhuang_info != null)if(strstr($zhengzhuang_info->check_xiongneifeibiaoxian,'发热')) echo 'checked="checked"'; ?> /> 9-发热
+                                    </label>
+
+                                    <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
+                                        <span class="input-group-addon">其他</span>
+                                        <input type="text" class="form-control input-sm" name="other_xiongneifeibiaoxian" value="{$zhengzhuang_info ==null ? :$zhengzhuang_info->other_xiongneifeibiaoxian}" />
+                                    </div>
+                                </div>
+
+<!--                                    胸内肺外表现-->
+                                <div class="checkbox has-success">
+                                    <blockquote class="layui-elem-quote" style="padding: 10px;">
+                                        <label>
+                                            <input name="xiongneifeiwaibiaoxian" type="checkbox" value="胸内肺外表现" <?php
+                                            if ($zhengzhuang_info!=null)
+                                            if ($zhengzhuang_info->xiongneifeiwaibiaoxian =='胸内肺外表现') echo 'checked="checked"';
+                                            ?> />胸内肺外表现
+                                        </label>
+                                    </blockquote>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="胸水" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongneifeiwaibiaoxian,'胸水')) echo 'checked="checked"'; ?> /> 1-胸水
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="喉返神经压迫" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongneifeiwaibiaoxian,'喉返神经压迫')) echo 'checked="checked"'; ?> /> 2-喉返神经压迫
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="膈神经压迫" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongneifeiwaibiaoxian,'膈神经压迫')) echo 'checked="checked"'; ?> /> 3-膈神经压迫
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="腔静脉压迫" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongneifeiwaibiaoxian,'腔静脉压迫')) echo 'checked="checked"'; ?> /> 4-腔静脉压迫
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="颈交感压迫" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongneifeiwaibiaoxian,'颈交感压迫')) echo 'checked="checked"'; ?> /> 5-颈交感压迫
+                                    </label>
+                                    <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
+                                        <span class="input-group-addon">其他</span>
+                                        <input type="text" class="form-control input-sm" name="other_xiongneifeiwaibiaoxian" value="{$zhengzhuang_info==null?:$zhengzhuang_info->other_xiongneifeiwaibiaoxian}" />
+                                    </div>
+                                </div>
+
+<!--                                    胸外非转移表现-->
+                                <div class="checkbox has-success">
+                                    <blockquote class="layui-elem-quote" style="padding: 10px;">
+                                        <label>
+                                            <input name="xiongwaifeizhuanyibiaoxian" type="checkbox" value="胸外非转移表现" <?php
+                                            if ($zhengzhuang_info!=null)
+                                            if ($zhengzhuang_info->xiongwaifeizhuanyibiaoxian =='胸外非转移表现') echo 'checked="checked"';
+                                            ?> />胸外非转移表现
+                                        </label>
+                                    </blockquote>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="肺性骨关节病" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'肺性骨关节病')) echo 'checked="checked"'; ?> /> 1-肺性骨关节病
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="多发性肌炎" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'多发性肌炎')) echo 'checked="checked"'; ?> /> 2-多发性肌炎
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="外周神经感觉、运动障碍" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'外周神经感觉、运动障碍')) echo 'checked="checked"'; ?> /> 3-外周神经感觉、运动障碍
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="库欣综合征" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'库欣综合征')) echo 'checked="checked"'; ?> /> 4-库欣综合征
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="高钙血症" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'高钙血症')) echo 'checked="checked"'; ?> /> 5-高钙血症
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="类瘤" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'类瘤')) echo 'checked="checked"'; ?> /> 6-类瘤
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="贫血" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'贫血')) echo 'checked="checked"'; ?> /> 7-贫血
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="游走性血栓性静脉炎" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'游走性血栓性静脉炎')) echo 'checked="checked"'; ?> /> 8-游走性血栓性静脉炎
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="肺栓塞" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'肺栓塞')) echo 'checked="checked"'; ?> /> 9-肺栓塞
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="硬皮病" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'硬皮病')) echo 'checked="checked"'; ?> /> 10-硬皮病
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="黑色棘皮病" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'黑色棘皮病')) echo 'checked="checked"'; ?> /> 11-黑色棘皮病
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="呼吸睡眠暂停综合征" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'呼吸睡眠暂停综合征')) echo 'checked="checked"'; ?> /> 12-呼吸睡眠暂停综合征
+                                    </label>
+                                    <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
+                                        <span class="input-group-addon">其他</span>
+                                        <input type="text" class="form-control input-sm" name="other_xiongwaifeizhuanyibiaoxian" value="{$zhengzhuang_info==null ? :$zhengzhuang_info->other_xiongwaifeizhuanyibiaoxian}" />
+                                    </div>
+                                </div>
+
+<!--                                    胸外转移表现-->
+                                <div class="checkbox has-success">
+                                    <blockquote class="layui-elem-quote" style="padding: 10px;">
+                                        <label>
+                                            <input name="xiongwaizhuanyibiaoxian" type="checkbox" value="胸外转移表现" <?php
+                                            if ($zhengzhuang_info!=null)
+                                            if ($zhengzhuang_info->xiongwaizhuanyibiaoxian =='胸外转移表现') echo 'checked="checked"';
+                                            ?> />胸外转移表现
+                                        </label>
+                                    </blockquote>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="骨痛" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaizhuanyibiaoxian,'骨痛')) echo 'checked="checked"'; ?> /> 1-骨痛
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="肢体无力" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaizhuanyibiaoxian,'肢体无力')) echo 'checked="checked"'; ?> /> 2-肢体无力
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="头晕" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaizhuanyibiaoxian,'头晕')) echo 'checked="checked"'; ?> /> 3-头晕
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="头痛" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaizhuanyibiaoxian,'头痛')) echo 'checked="checked"'; ?> /> 4-头痛
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="视力障碍" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaizhuanyibiaoxian,'视力障碍')) echo 'checked="checked"'; ?> /> 5-视力障碍
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="语言障碍" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaizhuanyibiaoxian,'语言障碍')) echo 'checked="checked"'; ?> /> 6-语言障碍
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="协调障碍" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaizhuanyibiaoxian,'协调障碍')) echo 'checked="checked"'; ?> /> 7-协调障碍
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="皮下结节" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaizhuanyibiaoxian,'皮下结节')) echo 'checked="checked"'; ?> /> 8-皮下结节
+                                    </label>
+                                    <label class="col-sm-3" style="margin-top: 10px">
+                                        <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="黄疸" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaizhuanyibiaoxian,'黄疸')) echo 'checked="checked"'; ?> /> 9-黄疸
+                                    </label>
+                                    <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
+                                        <span class="input-group-addon">其他</span>
+                                        <input type="text" class="form-control input-sm" name="other_xiongwaizhuanyibiaoxian" value="{$zhengzhuang_info==null?:$zhengzhuang_info->other_xiongwaizhuanyibiaoxian}" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
 
 <!--                            体征-->
-                            <div class="layui-tab-item">
-                                <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
-                                    创建时间：
-                                    <span style="color: #ff0000;margin-right: 20px;">
-                                        {$tizheng_info==null ? '未保存': $tizheng_info->created_time }
-                                    </span>
-                                    上次修改时间：
-                                    <span style="color: #ff0000">
-                                        {$tizheng_info==null ? '未修改': $tizheng_info->edit_time }
-                                    </span>
-                                </div>
-                                <button class="btn btn-danger del" id="delTZ" type="button" onclick="delTZ()">删除</button>
-                                <button class="btn btn-info save" id="saveTZ" type="button" onclick="saveTZ()">保存修改</button>
-                                <hr>
-                                <div class="row has-success">
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label">1-ECOG评分</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="ecog" value="1"> 1
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="ecog" value="2"> 2
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="ecog" value="3"> 3
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="ecog" value="4"> 4
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="ecog" value="5"> 5
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label">2-锁骨上淋巴结肿大</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="suogushanglingbajie" value="1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="suogushanglingbajie" value="0" /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label">3-静脉曲张</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="jingmaiquzhang" value="1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="jingmaiquzhang" value="0" /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label">4-️胸壁畸形</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="xiongbijixing" value="1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="xiongbijixing" value="0" /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label">5-胸廓出口综合症</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="xiongkuochukou" value="1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="xiongkuochukou" value="0" /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label">6-紫绀</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="ziqian" value="1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="ziqian" value="0" /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label">7-杵状指</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="chuzhuangzhi" value="1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="chuzhuangzhi" value="0" /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label">8-水肿</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="shuizhong" value="1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="shuizhong" value="0" /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label">9-雷诺现象</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="leiluo" value="1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="leiluo" value="0" /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label">10-胸膜摩擦音</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="xiongmo" value="1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="xiongmo" value="0" /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label">11-肢端肥大症</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="zhiduanfeida" value="1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="zhiduanfeida" value="0" /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label">12-体重下降</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="tizhongxiajiang" value="1" /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="tizhongxiajiang" value="0" /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group" style="width: 240px;margin-top: 10px;margin-left: 20px;">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">其他</span>
-                                            <input type="text" class="form-control input-sm" name="other" value="" />
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="layui-tab-item">
+                            <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
+                                创建时间：
+                                <span style="color: #ff0000;margin-right: 20px;">
+                                    {$tizheng_info==null ? '未保存': $tizheng_info->created_time }
+                                </span>
+                                上次修改时间：
+                                <span style="color: #ff0000">
+                                    {$tizheng_info==null ? '未修改': $tizheng_info->edit_time }
+                                </span>
                             </div>
+                            <button class="btn btn-info save" id="saveTZ" type="button" style="margin-bottom: 10px;margin-top: 5px;">保存修改</button>
+                            <form class="row has-success" id="formTZ">
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4 control-label">1-ECOG评分</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="ecog" value="0" <?php
+                                        if($tizheng_info == null)
+                                        {echo 'checked="checked"';}
+                                        else
+                                        {if($tizheng_info->ecog =='0') echo 'checked="checked"';}
+                                        ?> /> 无
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="ecog" value="1" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->ecog =='1') echo 'checked="checked"';
+                                        ?> /> 1
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="ecog" value="2" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->ecog =='2') echo 'checked="checked"'; ?> /> 2
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="ecog" value="3" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->ecog =='3') echo 'checked="checked"'; ?> /> 3
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="ecog" value="4" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->ecog =='4') echo 'checked="checked"'; ?> /> 4
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="ecog" value="5" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->ecog =='5') echo 'checked="checked"'; ?> /> 5
+                                    </label>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4 control-label">2-锁骨上淋巴结肿大</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="suogushanglingbajie" value="1"  <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->suogushanglingbajie =='1') echo 'checked="checked"'; ?>/> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="suogushanglingbajie" value="0" <?php
+                                        if($tizheng_info == null)
+                                        {echo 'checked="checked"';}
+                                        else
+                                        {if($tizheng_info->suogushanglingbajie =='0') echo 'checked="checked"';}
+                                        ?>/> 否
+                                    </label>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4 control-label">3-静脉曲张</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="jingmaiquzhang" value="1" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->jingmaiquzhang =='1') echo 'checked="checked"'; ?>/> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="jingmaiquzhang" value="0" <?php
+                                        if($tizheng_info == null)
+                                        {echo 'checked="checked"';}
+                                        else
+                                        {if($tizheng_info->jingmaiquzhang =='0') echo 'checked="checked"';}
+                                        ?>/> 否
+                                    </label>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4 control-label">4-️胸壁畸形</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="xiongbijixing" value="1" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->xiongbijixing =='1') echo 'checked="checked"'; ?>/> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="xiongbijixing" value="0" <?php
+                                        if($tizheng_info == null)
+                                        {echo 'checked="checked"';}
+                                        else
+                                        {if($tizheng_info->xiongbijixing =='0') echo 'checked="checked"';}
+                                        ?>/> 否
+                                    </label>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4 control-label">5-胸廓出口综合症</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="xiongkuochukou" value="1" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->xiongkuochukou =='1') echo 'checked="checked"'; ?>/> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="xiongkuochukou" value="0" <?php
+                                        if($tizheng_info == null)
+                                        {echo 'checked="checked"';}
+                                        else
+                                        {if($tizheng_info->xiongkuochukou =='0') echo 'checked="checked"';}
+                                        ?>/> 否
+                                    </label>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4 control-label">6-紫绀</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="ziqian" value="1" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->ziqian =='1') echo 'checked="checked"'; ?>/> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="ziqian" value="0" <?php
+                                        if($tizheng_info == null)
+                                        {echo 'checked="checked"';}
+                                        else
+                                        {if($tizheng_info->ziqian =='0') echo 'checked="checked"';}
+                                        ?>/> 否
+                                    </label>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4 control-label">7-杵状指</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="chuzhuangzhi" value="1" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->chuzhuangzhi =='1') echo 'checked="checked"'; ?>/> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="chuzhuangzhi" value="0" <?php
+                                        if($tizheng_info == null)
+                                        {echo 'checked="checked"';}
+                                        else
+                                        {if($tizheng_info->chuzhuangzhi =='0') echo 'checked="checked"';}
+                                        ?>/> 否
+                                    </label>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4 control-label">8-水肿</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="shuizhong" value="1" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->shuizhong =='1') echo 'checked="checked"'; ?>/> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="shuizhong" value="0" <?php
+                                        if($tizheng_info == null)
+                                        {echo 'checked="checked"';}
+                                        else
+                                        {if($tizheng_info->shuizhong =='0') echo 'checked="checked"';}
+                                        ?>/> 否
+                                    </label>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4 control-label">9-雷诺现象</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="leiluo" value="1" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->leiluo =='1') echo 'checked="checked"'; ?>/> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="leiluo" value="0" <?php
+                                        if($tizheng_info == null)
+                                        {echo 'checked="checked"';}
+                                        else
+                                        {if($tizheng_info->leiluo =='0') echo 'checked="checked"';}
+                                        ?>/> 否
+                                    </label>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4 control-label">10-胸膜摩擦音</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="xiongmo" value="1" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->xiongmo =='1') echo 'checked="checked"'; ?>/> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="xiongmo" value="0" <?php
+                                        if($tizheng_info == null)
+                                        {echo 'checked="checked"';}
+                                        else
+                                        {if($tizheng_info->xiongmo =='0') echo 'checked="checked"';}
+                                        ?>/> 否
+                                    </label>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4 control-label">11-肢端肥大症</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="zhiduanfeida" value="1" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->zhiduanfeida =='1') echo 'checked="checked"'; ?>/> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="zhiduanfeida" value="0" <?php
+                                        if($tizheng_info == null)
+                                        {echo 'checked="checked"';}
+                                        else
+                                        {if($tizheng_info->zhiduanfeida =='0') echo 'checked="checked"';}
+                                        ?>/> 否
+                                    </label>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4 control-label">12-体重下降</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="tizhongxiajiang" value="1" <?php
+                                        if($tizheng_info != null)
+                                        if($tizheng_info->tizhongxiajiang =='1') echo 'checked="checked"'; ?>/> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="tizhongxiajiang" value="0" <?php
+                                        if($tizheng_info == null)
+                                        {echo 'checked="checked"';}
+                                        else
+                                        {if($tizheng_info->tizhongxiajiang =='0') echo 'checked="checked"';}
+                                        ?>/> 否
+                                    </label>
+                                </div>
+                                <div class="form-group" style="width: 240px;margin-top: 10px;margin-left: 20px;">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">其他</span>
+                                        <input type="text" class="form-control input-sm" name="other" value="{$tizheng_info==null?:$tizheng_info->other}" />
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
         </div>
-    </form>
+    </div>
 </div>
 
 <!--选项卡定位-->
@@ -388,13 +498,206 @@
 
 <!--症状保存按钮-->
 <script>
-    function saveZZForm(){
+    $('#saveZZ').on('click',function () {
         let patients_id = $('#patients_id').val();
-        let form_data = decodeURIComponent($("#zzForm").serialize());
-        console.log(patients_id);
-        console.log(form_data);
+        let form_data = decodeURIComponent($("#formZZ").serialize());
+        let DataDeal = {
+            //将从form中通过$('#form').serialize()获取的值转成json字符串
+            formToJson: function (data) {
+                data=data.replace(/&/g,"\",\"");
+                data=data.replace(/=/g,"\":\"");
+                data="{\""+data+"\"}";
+                return data;
+            },
+            //json对象相同key合并value值
+            jsonData: function (s) {
+                var kv = {}, m, reg = /"[^"]+":"[^"]+"/gi;
+                var m = s.match(reg);
 
-    }
+                var o={};
+                for(var i=0;i<m.length;i++){
+                    kv=m[i].match(/"[^"]+"/gi);
+                    var _arr1=[];;
+                    for(var j=0;j<kv.length; j++){
+                        _arr1.push(kv[j].replace(/"/g,''));
+                    }
+                    if(_arr1[0] in o){
+                        if(typeof(o[_arr1[0]])=='string')
+                        {
+                            o[_arr1[0]]=[o[_arr1[0]]]
+                        };
+                        o[_arr1[0]].push(_arr1[1])
+                    }else{
+                        o[_arr1[0]]=_arr1[1]
+                    }
+                }
+                return o;
+            },
+        };
+
+        let toData=DataDeal.formToJson(form_data);//转化为json字符串
+
+        let jsonData = DataDeal.jsonData(toData);//json字符串相同key合并value值并转化为json对象
+        console.log(patients_id);
+        console.log(jsonData);
+        $.ajax({
+            type:"POST",
+            url:"/Save/saveZZ",
+            dataType:'JSON',
+            data: {
+                patients_id:patients_id,
+                form_data:jsonData
+            },
+            success:function (data) {
+                layui.use('layer', function(){
+                    let layer = layui.layer;
+                    if(data.status == 1){
+                        layer.msg(data.msg, {icon: 1});
+                        if (data.msg =='保存成功'){
+                            setTimeout('location.reload()', 2000 )
+                        }
+                    }
+                    else {
+                        layer.msg(data.msg, {icon: 5});
+                    }
+                });
+            }
+        });
+    })
+</script>
+
+<!--体征保存按钮-->
+<script>
+    $('#saveTZ').on('click',function () {
+        let patients_id = $('#patients_id').val();
+        let form_data = decodeURIComponent($("#formTZ").serialize());
+        let DataDeal = {
+            //将从form中通过$('#form').serialize()获取的值转成json字符串
+            formToJson: function (data) {
+                data=data.replace(/&/g,"\",\"");
+                data=data.replace(/=/g,"\":\"");
+                data="{\""+data+"\"}";
+                return data;
+            },
+            //json对象相同key合并value值
+            jsonData: function (s) {
+                var kv = {}, m, reg = /"[^"]+":"[^"]+"/gi;
+                var m = s.match(reg);
+
+                var o={};
+                for(var i=0;i<m.length;i++){
+                    kv=m[i].match(/"[^"]+"/gi);
+                    var _arr1=[];;
+                    for(var j=0;j<kv.length; j++){
+                        _arr1.push(kv[j].replace(/"/g,''));
+                    }
+                    if(_arr1[0] in o){
+                        if(typeof(o[_arr1[0]])=='string')
+                        {
+                            o[_arr1[0]]=[o[_arr1[0]]]
+                        };
+                        o[_arr1[0]].push(_arr1[1])
+                    }else{
+                        o[_arr1[0]]=_arr1[1]
+                    }
+                }
+                return o;
+            },
+        };
+
+        let toData=DataDeal.formToJson(form_data);//转化为json字符串
+
+        let jsonData = DataDeal.jsonData(toData);//json字符串相同key合并value值并转化为json对象
+        console.log(patients_id);
+        console.log(jsonData);
+        $.ajax({
+            type:"POST",
+            url:"/Save/saveTZ",
+            dataType:'JSON',
+            data: {
+                patients_id:patients_id,
+                form_data:jsonData
+            },
+            success:function (data) {
+                layui.use('layer', function(){
+                    let layer = layui.layer;
+                    if(data.status == 1){
+                        layer.msg(data.msg, {icon: 1});
+                        if (data.msg =='保存成功'){
+                            setTimeout('location.reload()', 2000 )
+                        }
+                    }
+                    else {
+                        layer.msg(data.msg, {icon: 5});
+                    }
+                });
+            }
+        });
+    })
+</script>
+
+<!--多选框点击复选-->
+<script>
+    let check_xnf = $('input[name="check_xiongneifeibiaoxian"]');
+    let xnf = $('input[name="xiongneifeibiaoxian"]')
+    let check_xnfw = $('input[name="check_xiongneifeiwaibiaoxian"]');
+    let xnfw = $('input[name="xiongneifeiwaibiaoxian"]')
+    let check_xnfzy = $('input[name="check_xiongwaifeizhuanyibiaoxian"]');
+    let xnfzy = $('input[name="xiongwaifeizhuanyibiaoxian"]')
+    let check_xwzy = $('input[name="check_xiongwaizhuanyibiaoxian"]');
+    let xwzy = $('input[name="xiongwaizhuanyibiaoxian"]')
+
+    xnf.on('click',function () {
+        if ($(this)[0].checked===true){
+            check_xnf.attr('checked','checked')
+        }else {
+            check_xnf.attr('checked',false)
+        }
+    })
+    check_xnf.on('click',function () {
+        if ($(this)[0].checked===true){
+            xnf.attr('checked','checked')
+        }
+    })
+
+    xnfw.on('click',function () {
+        if ($(this)[0].checked===true){
+            check_xnfw.attr('checked','checked')
+        }else {
+            check_xnfw.attr('checked',false)
+        }
+    })
+    check_xnfw.on('click',function () {
+        if ($(this)[0].checked===true){
+            xnfw.attr('checked','checked')
+        }
+    })
+
+    xnfzy.on('click',function () {
+        if ($(this)[0].checked===true){
+            check_xnfzy.attr('checked','checked')
+        }else {
+            check_xnfzy.attr('checked',false)
+        }
+    })
+    check_xnfzy.on('click',function () {
+        if ($(this)[0].checked===true){
+            xnfzy.attr('checked','checked')
+        }
+    })
+
+    xwzy.on('click',function () {
+        if ($(this)[0].checked===true){
+            check_xwzy.attr('checked','checked')
+        }else {
+            check_xwzy.attr('checked',false)
+        }
+    })
+    check_xwzy.on('click',function () {
+        if ($(this)[0].checked===true){
+            xwzy.attr('checked','checked')
+        }
+    })
 </script>
 
 {include file="public/footer" /}

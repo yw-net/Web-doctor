@@ -40,7 +40,7 @@ class Menu extends Base
                 $query->field([
                     'patients_name','phone','second_hospital_in','birthday','national','height','weight',
                     'hospitalized_time','leaving_hospital','hospital_out_to','adress1a','adress1b','adress1c','adress2','hospital_id','id_photo_num',
-                    'id_pathological','identity_card','sex','age','married','doctor'
+                    'id_pathological','identity_card','sex','age','married','doctor','created_time','edit_time'
                 ])->where('patients_id','=',$patientsid);
             };
             $result = Patients::all($where);
@@ -75,14 +75,14 @@ class Menu extends Base
 
         //术前合并症数据库
         $whereshuqian = function ($query) use ($patientsid) {
-            $query->field(['circular','respiratory','digestive','urologic','endocrinological','immune','blood','others','icircular','irespiratory','idigestive','iurologic','iendocrinological','iimmune','iblood','iothers'])
+            $query->field(['circular','respiratory','digestive','urologic','endocrinological','immune','blood','others','icircular','irespiratory','idigestive','iurologic','iendocrinological','iimmune','iblood','iothers','created_time','edit_time'])
                 ->where('patients_id','=',$patientsid);
         };
 
         $resultshuqian = History_surgical::all($whereshuqian);
         //个人史数据库
         $wheregeren = function ($query) use ($patientsid) {
-            $query->field(['smoking','drinking','surgical','tumor','carcinogenic_factors','ismoking','idrinking','isurgical','itumor','icarcinogenic_factors'])
+            $query->field(['smoking','drinking','surgical','tumor','carcinogenic_factors','ismoking','idrinking','isurgical','itumor','icarcinogenic_factors','created_time','edit_time'])
                 ->where('patients_id','=',$patientsid);
         };
 
@@ -95,7 +95,7 @@ class Menu extends Base
         $resultyuejing = History_menstrual::all($whereyuejing);
         //家族史数据库
         $wherejiazu = function ($query) use ($patientsid) {
-            $query->field(['jiazu','head_neck','esophageal','lung','mediastinal','stomach','hepatic','pancreatic','small_intestina','colonic','transrectal','renal','vesical','prostatic','reproductive_system','lymphatic_system','galactophore','uterine','melanoma','sarcoma','others','iothercheck'])->where('patients_id','=',$patientsid);
+            $query->field(['jiazu','head_neck','esophageal','lung','mediastinal','stomach','hepatic','pancreatic','small_intestina','colonic','transrectal','renal','vesical','prostatic','reproductive_system','lymphatic_system','galactophore','uterine','melanoma','sarcoma','others','iothercheck','created_time','edit_time'])->where('patients_id','=',$patientsid);
         };
 
         $resultjiazu = History_family::all($wherejiazu);

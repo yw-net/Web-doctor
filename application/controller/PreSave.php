@@ -205,7 +205,7 @@ class PreSave extends Base
             return $res;
         }
 
-        $res['status'] =$pre_ct;
+        $res['status'] = 0;
         $res['msg'] ='新增数据失败';
         return $res;
     }

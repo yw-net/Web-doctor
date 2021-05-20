@@ -11,6 +11,16 @@
                 <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
             </div>
             <div class="panel-body">
+                <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
+                    创建时间：
+                    <span style="color: #ff0000;margin-right: 20px;">
+                                        {$patients_name==null ? '未保存': $patients_name[0]['created_time'] }
+                                    </span>
+                    上次修改时间：
+                    <span style="color: #ff0000">
+                                        {$patients_name==null ? '未修改': $patients_name[0]['edit_time'] }
+                                    </span>
+                </div>
                 <section class="sec-left col-sm-6">
 
                      <div class="form-group has-success">

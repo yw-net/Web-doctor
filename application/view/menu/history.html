@@ -32,10 +32,24 @@
                 <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
             </div>
             <div class="panel-body">
+                <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
+                    创建时间：
+                    <span style="color: #ff0000;margin-right: 20px;">
+                                        {$resultshuqian == '[]'? '未保存': $resultshuqian[0]['created_time'] }
+                                    </span>
+                    上次修改时间：
+                    <span style="color: #ff0000">
+                                        {$resultshuqian == '[]'? '未修改': $resultshuqian[0]['edit_time'] }
+                                    </span>
+                </div>
+                <div style="padding-left: 10px;padding-bottom: -10px">
+                    <button class="btn btn-info save" id="save" type="submit" onclick="save('ctSaveNew','#ctForm')">保存修改</button>
+                </div>
+
                 <section class="sec-left col-sm-12">
                     <input type="text" name="patientsid" style="display: none;" value="{$patientid}">
 
-                    <div class="layui-tab layui-tab-card" lay-filter="jiwang">
+                    <div class="layui-tab layui-tab-card" lay-filter="jiwang" style="margin: 0">
                         <ul class="layui-tab-title" style="background-color: #dff0d8;">
                             <li class="layui-this" lay-id="shuqian">术前合并症</li>
                             <li lay-id="gerenshi">个人史</li>
@@ -329,11 +343,7 @@
                     </div>
 
 
-                    <div class="form-group">
-                        <div class="input-group">
-                            <button type="submit" class="btn btn-primary save-btn" id="save">保存修改</button>
-                        </div>
-                    </div>
+
                 </section>
             </div>
     </form>
@@ -355,27 +365,47 @@
     });
 </script>
 
+<!--保存成功弹窗-->
 <script>
-    //保存成功弹窗
     $("#save").click(function(){
         alert('保存成功')
     });
 
 </script>
+
+<!--左侧导航栏样式-->
 <script>
     window.onload = function(){
         $('.nav-left').css('display','block');
         $('#history-left').addClass('active');
     }
 </script>
-<!--点击显示输入框-->
+
+<!--监听单选框切换显示输入框-->
+<script>
+    $(function($) {
+        $("input[type='radio']").on('click',function(){
+            let checked = $(this).eq(0).parent().nextAll('div').children();
+            if ($(this).val() == 1){
+                checked.show(200);
+            }else {
+                checked.hide(200);
+                checked.val('');
+            }
+        });
+
+    });
+</script>
+
+<!--点击显示输入框(家族史--其他)-->
 <script>
     $(document).ready(function () {
         //家族史--其他显示切换
         $("#inlineCheckbox20").click(function(){
-            if($('#inlineCheckbox20').css('checked','checked')){
-                $('#jiazuother').css('display','block');
-            }else {$('#jiazuother').css('display',null);}
+            $('#jiazuother').toggle();
+            // if($('#inlineCheckbox20').css('checked','checked')){
+            //     $('#jiazuother').css('display','block');
+            // }else {$('#jiazuother').css('display',null);}
         })
 
 
