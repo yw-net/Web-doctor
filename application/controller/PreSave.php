@@ -6,6 +6,9 @@ use app\controller\Base;
 use app\controller\Tools;
 use app\model\Patients;
 use app\model\Preoperative_ct;
+use app\model\Preoperative_xuechanggui;
+use app\model\Preoperative_xueshenghua;
+use app\model\Preoperative_xueliubiaozhiwu;
 use think\Db;
 use app\model\User;
 use think\facade\Request;
@@ -88,7 +91,7 @@ class PreSave extends Base
     {
         //数据处理-获取表单数据
         $patients_id = $this->request->param('patients_id');
-        $ct_data = $this->request->param('ct_form_data');
+        $ct_data = $this->request->param('form_data');
         $ct_id = $this->request->param('ct_id');
 
         //判断数据库当前患者下ct_id是否存在
@@ -413,6 +416,107 @@ class PreSave extends Base
             $s->send($file);
         } catch (\Exception $e) {
             echo $e->getMessage();
+        }
+
+    }
+
+    //更新、新增血常规信息
+    public function xueChangGuiSaveNew(){
+        //数据处理-获取表单数据
+        $patients_id = $this->request->param('patients_id');
+        $form_data = $this->request->param('form_data');
+        $xuechanggui_id = $this->request->param('xuechanggui_id');
+
+        $pre_xuechenggui = new Preoperative_xuechanggui();
+
+        //id
+        $pre_xuechenggui->patients_id=$patients_id;
+        $pre_xuechenggui->xuechanggui_id=$xuechanggui_id;
+
+        //判断数据库当前患者下form_id是否存在
+        $pre_xuechenggui_find = Preoperative_xuechanggui::where(['patients_id'=>$patients_id,'xuechanggui_id'=>$xuechanggui_id])->find();
+        //更新数据
+        if ($pre_xuechenggui_find){
+            $pre_xuechenggui_find->edit_time = date('Y-m-d H:i:s');
+            if (isset($form_data['checkdatexuechanggui'])) {
+                $pre_xuechenggui_find->checkdatexuechanggui = $form_data['checkdatexuechanggui'];
+            }
+            if (isset($form_data['baixibaojishu'])){
+                $pre_xuechenggui_find->baixibaojishu = $form_data['baixibaojishu'];
+            }
+            if (isset($form_data['zhongxinglixibaojishu'])){
+                $pre_xuechenggui_find->zhongxinglixibaojishu = $form_data['zhongxinglixibaojishu'];
+            }
+            if (isset($form_data['xuehongdanbai'])){
+                $pre_xuechenggui_find->xuehongdanbai = $form_data['xuehongdanbai'];
+            }
+            if (isset($form_data['xuexiaoban'])){
+                $pre_xuechenggui_find->xuexiaoban = $form_data['xuexiaoban'];
+            }
+            if (isset($form_data['xuexing'])){
+                $pre_xuechenggui_find->xuexing = $form_data['xuexing'];
+            }
+            $pre_xuechenggui_find->save();
+            return '更新成功';
+        }
+        //新增数据
+        $pre_xuechenggui->created_time = date('Y-m-d H:i:s');
+        if (isset($form_data['checkdatexuechanggui'])) {
+            $pre_xuechenggui->checkdatexuechanggui = $form_data['checkdatexuechanggui'];
+        }
+        if (isset($form_data['baixibaojishu'])){
+            $pre_xuechenggui->baixibaojishu = $form_data['baixibaojishu'];
+        }
+        if (isset($form_data['zhongxinglixibaojishu'])){
+            $pre_xuechenggui->zhongxinglixibaojishu = $form_data['zhongxinglixibaojishu'];
+        }
+        if (isset($form_data['xuehongdanbai'])){
+            $pre_xuechenggui->xuehongdanbai = $form_data['xuehongdanbai'];
+        }
+        if (isset($form_data['xuexiaoban'])){
+            $pre_xuechenggui->xuexiaoban = $form_data['xuexiaoban'];
+        }
+        if (isset($form_data['xuexing'])){
+            $pre_xuechenggui->xuexing = $form_data['xuexing'];
+        }
+            $pre_xuechenggui->save();
+            return '新增成功';
+
+
+
+    }
+
+    //选项卡切换获取患者信息
+    public function getInfo(){
+        $patients_id = $this->request->param('patients_id');
+        $tab_name = $this->request->param('tab_name');
+        //选项卡名称对应数据库
+        switch ($tab_name)
+        {
+            case 'pCt':
+                $get = Preoperative_ct::where('patients_id',$patients_id)->find();
+            break;
+            case 'pBlood':
+                $get['xuechanggui'] = Preoperative_xuechanggui::where('patients_id',$patients_id)->select();
+                $get['xueshenghua'] = Preoperative_xueshenghua::where('patients_id',$patients_id)->select();
+                $get['xueliubiaozhiwu'] = Preoperative_xueliubiaozhiwu::where('patients_id',$patients_id)->select();
+            break;
+        }
+//                    <li lay-id="pBlood">血液检查</li>
+//                    <li lay-id="pCc">超声</li>
+//                    <li lay-id="pFgn">肺功能</li>
+//                    <li lay-id="pQgj">气管镜</li>
+//                    <li lay-id="pToulu">头颅MRI/CT</li>
+//                    <li lay-id="pGsm">骨扫描</li>
+//                    <li lay-id="pGu">骨MRI/CT</li>
+//                    <li lay-id="pGz">肝脏CT</li>
+//                    <li lay-id="pPet">PET</li>
+        if ($get == null){
+            $res['info'] = null;
+            return $res;
+        }else{
+            $res['info'] = $get;
+            return $res;
         }
 
     }

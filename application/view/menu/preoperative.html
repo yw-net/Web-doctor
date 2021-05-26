@@ -23,18 +23,20 @@
         <div class="panel-body">
             <div class="layui-tab layui-tab-card" lay-filter="main">
                 <ul class="layui-tab-title" style="background-color: #dff0d8">
-                    <li class="layui-this">CT</li>
-                    <li>血液检查</li>
-                    <li>超声</li>
-                    <li>肺功能</li>
-                    <li>气管镜</li>
-                    <li>头颅MRI/CT</li>
-                    <li>骨扫描</li>
-                    <li>骨MRI/CT</li>
-                    <li>肝脏CT</li>
-                    <li>PET</li>
+                    <li class="layui-this" lay-id="pCt">CT</li>
+                    <li lay-id="pBlood">血液检查</li>
+                    <li lay-id="pCc">超声</li>
+                    <li lay-id="pFgn">肺功能</li>
+                    <li lay-id="pQgj">气管镜</li>
+                    <li lay-id="pToulu">头颅MRI/CT</li>
+                    <li lay-id="pGsm">骨扫描</li>
+                    <li lay-id="pGu">骨MRI/CT</li>
+                    <li lay-id="pGz">肝脏CT</li>
+                    <li lay-id="pPet">PET</li>
                 </ul>
                 <div class="layui-tab-content has-success">
+
+<!--                    CT-->
                     <div class="layui-tab-item layui-show">
 
                         <button class="btn btn-success" data-type="tabAddCt" id="tabAddCt">添加新的CT记录</button>
@@ -42,7 +44,7 @@
                         <div class="layui-tab layui-tab-card" lay-filter="addCt">
                             <ul class="layui-tab-title" id="ct-tab-title">
 
-                                {if $ct_info == null}
+                                {empty name='ct_info'}
                                 <li class="layui-this ct-id" lay-id="1">
                                     新记录
                                 </li>
@@ -53,12 +55,12 @@
                                     <span class="layui-badge-dot layui-bg-green"></span>
                                 </li>
                                 {/foreach}
-                                {/if}
+                                {/empty}
                             </ul>
                             <div class="layui-tab-content has-success" style="overflow: hidden" id="ctShow">
-                                {if $ct_info == null}
+                                {empty name = 'ct_info'}
                                 <form class="layui-tab-item layui-show" id="ctForm1">
-                                    <button class="btn btn-info save" id="ctSaveNew" type="button" onclick="save('ctSaveNew','#ctForm')">保存修改</button>
+                                    <button class="btn btn-info save" id="ctSaveNew" type="button" onclick="saveCT('ctSaveNew','#ctForm')">保存修改</button>
                                     <hr>
                                     <div class="form-group">
                                         <label class="col-sm-1 control-label" style="margin-left: 5.2%;">1-部位</label>
@@ -266,7 +268,7 @@
                                 <form class="layui-tab-item" id="ctForm{$ct_info_item->ct_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$ct_info_item->edit_date}</span></div>
                                     <button class="btn btn-danger del" id="delCtInfo" type="button" onclick="delBtn('delCtInfo','{$ct_info_item->ct_id}')">删除</button>
-                                    <button class="btn btn-info save" id="ctSave" type="button" onclick="save('ctSaveNew','#ctForm')">保存修改</button>
+                                    <button class="btn btn-info save" id="ctSave" type="button" onclick="saveCT('ctSaveNew','#ctForm')">保存修改</button>
                                     <hr>
                                     <div class="form-group">
                                         <label class="col-sm-1 control-label" style="margin-left: 5.2%;">1-部位</label>
@@ -470,232 +472,334 @@
                                     </div>
                                 </form>
                                 {/foreach}
-                                {/if}
+                                {/empty}
                                 <div id="addCtView" class="layui-tab-item"></div>
 
                             </div>
                         </div>
 
                     </div>
+
+<!--                    血液-->
                     <div class="layui-tab-item">
-                        <div class="layui-form">
-                            <div class="layui-form-item">
-                                <label class="layui-form-label" style="width: 130px;font-weight: 600;">血液检查</label>
-                                <div class="layui-input-block">
-                                    <input type="checkbox" lay-skin="switch" lay-text="是|否">
-                                </div>
-                            </div>
+
+                        <div class="checkbox has-success">
+                            <blockquote class="layui-elem-quote" style="padding: 10px;">
+                                <label>
+                                    <input name="xueyejiancha" type="checkbox" value="血液检查"/>血液检查
+                                </label>
+                            </blockquote>
                         </div>
-                        <div class="show" id="xueyeShow">
+
+                        <div class="show">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+<!--                                血常规-->
                                 <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingOne">
-                                        <h4 class="panel-title">
-                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><span class="col-sm-2" style="line-height: 23px;">血常规</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico"></a>
-                                        </h4>
+                                    <div class="panel-heading" role="tab" id="xuechanggui">
+                                        <div class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                <span class="layui-badge layui-bg-green" style="float: left" id="xueChangGuiBadge">{empty name = 'xuechanggui_info'}0{else}{$xuechanggui_info | count}{/empty}</span>
+                                                <span class="col-sm-2">血常规</span>
+                                                <img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+
+                                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="xuechanggui">
                                         <div class="panel-body">
-                                            <div class="form-group has-success">
-                                                <label for="checkdate" class="col-sm-2 control-label">1-检查时间：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
-                                                    <span class="input-group-addon" style="cursor: pointer;">
+                                            <button class="btn btn-success" data-type="tabAddCt" id="tabAddXueChangGui">添加新的血常规记录</button>
+                                            <div class="layui-tab layui-tab-card" lay-filter="addXueChangGui">
+
+                                                <ul class="layui-tab-title" id="xuechanggui-tab-title">
+                                                    {empty name ='xuechanggui_info'}
+                                                    <li class="layui-this xuechanggui-id" lay-id="1">
+                                                        新记录
+                                                    </li>
+                                                    {else}
+                                                    {foreach $xuechanggui_info as $xuechanggui_info_li}
+                                                    <li class="xuechanggui-id" lay-id="{$xuechanggui_info_li->xuechanggui_id}">
+                                                        【{$xuechanggui_info_li->created_time}】
+                                                        <span class="layui-badge-dot layui-bg-green"></span>
+                                                    </li>
+                                                    {/foreach}
+                                                    {/empty}
+                                                </ul>
+
+                                                <div class="layui-tab-content" style="overflow: hidden">
+                                                    {notempty name = 'xuechanggui_info'}
+                                                    {foreach $xuechanggui_info as $xuechanggui_info}
+                                                    <button class="btn btn-danger del" type="button" onclick="delBtn('delCtInfo','{$xuechanggui_info->xuechanggui_id}')">删除</button>
+                                                    <button class="btn btn-info save" type="button" onclick="saveXCG('xueChangGuiSaveNew')">保存修改</button>
+                                                    <form id="xueChangGuiForm" style="margin-top: 15px">
+                                                        <div class="form-group has-success">
+                                                            <label for="checkdate" class="col-sm-2 control-label">1-检查时间：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input size="16" type="text" value="{$xuechanggui_info->checkdatexuechanggui}" readonly class="form-control input-sm form_datetime datetimepicker-days" name="checkdatexuechanggui" placeholder="选择日期">
+                                                                <span class="input-group-addon" style="cursor: pointer;">
                                             <span class="glyphicon glyphicon-remove"></span>
                                             </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">2-白细胞计数：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="baixibaojishu" value="{$xuechanggui_info->baixibaojishu}">
+                                                                <span class="input-group-addon">10^9/L</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">3-中性粒细胞计数：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="zhongxinglixibaojishu" value="{$xuechanggui_info->zhongxinglixibaojishu}">
+                                                                <span class="input-group-addon">10^9/L</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">4-血红蛋白：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="xuehongdanbai" value="{$xuechanggui_info->xuehongdanbai}">
+                                                                <span class="input-group-addon">g/L</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">5-血小板：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="xuexiaoban" value="{$xuechanggui_info->xuexiaoban}">
+                                                                <span class="input-group-addon">10^9/L</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label class="col-sm-2 control-label">血型：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <select class="form-control input-sm" name="xuexing">
+                                                                    <option value="a"{if $xuechanggui_info->xuexing =='a'}selected{/if}>A</option>
+                                                                    <option value="b"{if $xuechanggui_info->xuexing =='b'}selected{/if}>B</option>
+                                                                    <option value="ab"{if $xuechanggui_info->xuexing =='ab'}selected{/if}>AB</option>
+                                                                    <option value="o"{if $xuechanggui_info->xuexing =='o'}selected{/if}>O</option>
+                                                                    <option value="其他"{if $xuechanggui_info->xuexing =='其他'}selected{/if}>其他</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    {/foreach}
+                                                    {/notempty}
                                                 </div>
                                             </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">2-白细胞计数：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">10^9/L</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">3-中性粒细胞计数：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">10^9/L</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">4-血红蛋白：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">g/L</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">5-血小板：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">10^9/L</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label class="col-sm-2 control-label">血型：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <select class="form-control input-sm" name="marry">
-                                                        <option value="0" />A</option>
-                                                        <option value="2"  />B</option>
-                                                        <option value="1"  />AB</option>
-                                                        <option value="1"  />O</option>
-                                                        <option value="1"  />其他</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
+<!--                                血生化-->
                                 <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingTwo">
-                                        <h4 class="panel-title">
-                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"><span class="col-sm-2" style="line-height: 23px;">血生化</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico"></a>
-                                        </h4>
+                                    <div class="panel-heading" role="tab" id="xueshenghua">
+                                        <div class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                                <span class="layui-badge layui-bg-green" style="float: left" id="xueShengHuaBadge">{empty name = 'xueshenghua_info'}0{else}{$xueshenghua_info | count}{/empty}</span>
+                                                <span class="col-sm-2">血生化</span>
+                                                <img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+
+                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="xueshenghua">
+
                                         <div class="panel-body">
-                                            <div class="form-group has-success">
-                                                <label for="checkdate" class="col-sm-2 control-label">1-检查时间：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
-                                                    <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
+                                            <button class="btn btn-success" data-type="tabAddCt" id="tabAddXueShengHua">添加新的血生化记录</button>
+                                            <div class="layui-tab layui-tab-card" lay-filter="addXueShengHua">
+                                                <ul class="layui-tab-title" id="xueshenghua-tab-title">
+                                                    {$xuechanggui_info = null}
+                                                    {if $xuechanggui_info == null}
+                                                    <li class="layui-this xuechanggui-id" lay-id="1">
+                                                        新记录
+                                                    </li>
+                                                    {else}
+                                                    {foreach $xuechanggui_info as $xuechanggui_info_li}
+                                                    <li class="xuechanggui-id" lay-id="{$xuechanggui_info_li->xuechanggui_id}">
+                                                        【{$xuechanggui_info_li->create_date}】
+                                                        <span class="layui-badge-dot layui-bg-green"></span>
+                                                    </li>
+                                                    {/foreach}
+                                                    {/if}
+                                                </ul>
+                                                <div class="layui-tab-content" style="overflow: hidden">
+                                                    <button class="btn btn-info save" id="xueShengHuaSave" type="button" onclick="save('xueShengHuaSaveNew','#xueShengHuaForm')">保存修改</button>
+                                                    <form id="xueShengHuaForm">
+                                                        <div class="form-group has-success">
+                                                            <label for="checkdate" class="col-sm-2 control-label">1-检查时间：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" name="checkdate" placeholder="选择日期">
+                                                                <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
                          <span class="glyphicon glyphicon-remove"></span>
                      </span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">2-谷丙转氨酶：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">IU/L</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">3-谷草转氨酶：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">IU/L</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">4-总胆红素：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">umol/L</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">5-尿素氨：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">mmol/L</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">6-肌酐：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">umol/L</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">7-血蛋白：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">g/L</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">8-总蛋白：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">g/L</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">9-碱性磷酸酶：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">UL/L</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">10-血糖：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">mmol/L</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">2-谷丙转氨酶：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="gubinzhuananmei" value="">
+                                                                <span class="input-group-addon">IU/L</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">3-谷草转氨酶：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="gucaozhuananmei" value="">
+                                                                <span class="input-group-addon">IU/L</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">4-总胆红素：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="zongdanhongsu" value="">
+                                                                <span class="input-group-addon">umol/L</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">5-尿素氨：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="niaosuan" value="">
+                                                                <span class="input-group-addon">mmol/L</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">6-肌酐：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="jigan" value="">
+                                                                <span class="input-group-addon">umol/L</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">7-血蛋白：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="xuedanbai" value="">
+                                                                <span class="input-group-addon">g/L</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">8-总蛋白：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="zongdanbai" value="">
+                                                                <span class="input-group-addon">g/L</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">9-碱性磷酸酶：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="jianxinglingsuanmei" value="">
+                                                                <span class="input-group-addon">UL/L</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">10-血糖：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="xuetang" value="">
+                                                                <span class="input-group-addon">mmol/L</span>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+<!--                                血瘤标志物-->
                                 <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingThree">
+                                    <div class="panel-heading" role="tab" id="xueliubiaozhi">
                                         <h4 class="panel-title">
-                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree"><span class="col-sm-2" style="line-height: 23px;">血瘤标志物</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico"></a>
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                                <span class="layui-badge layui-bg-green" style="float: left" id="xueLiuBiaoZhiWuBadge">{empty name = 'xueliubiaozhiwu_info'}0{else}{$xueliubiaozhiwu_info | count}{/empty}</span>
+                                                <span class="col-sm-2">血瘤标志物</span>
+                                                <img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
+                                            </a>
                                         </h4>
                                     </div>
-                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+
+                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="xueliubiaozhi">
                                         <div class="panel-body">
-                                            <div class="form-group has-success">
-                                                <label for="checkdate" class="col-sm-2 control-label">1-检查时间：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
-                                                    <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
+                                            <button class="btn btn-success" data-type="tabAddCt" id="tabAddXueLiuBiaoZhiWu">添加新的血瘤标志物记录</button>
+                                            <div class="layui-tab layui-tab-card" lay-filter="addXueLiuBiaoZhiWu">
+                                                <ul class="layui-tab-title" id="xueliubiaozhiwu-tab-title">
+                                                    {$xuechanggui_info = null}
+                                                    {if $xuechanggui_info == null}
+                                                    <li class="layui-this xuechanggui-id" lay-id="1">
+                                                        新记录
+                                                    </li>
+                                                    {else}
+                                                    {foreach $xuechanggui_info as $xuechanggui_info_li}
+                                                    <li class="xuechanggui-id" lay-id="{$xuechanggui_info_li->xuechanggui_id}">
+                                                        【{$xuechanggui_info_li->create_date}】
+                                                        <span class="layui-badge-dot layui-bg-green"></span>
+                                                    </li>
+                                                    {/foreach}
+                                                    {/if}
+                                                </ul>
+                                                <div class="layui-tab-content" style="overflow: hidden">
+                                                    <button class="btn btn-info save" id="xueLiuBiaoZhiWuSave" type="button" onclick="save('xueLiuBiaoZhiWuSaveNew','#xueLiuBiaoZhiWuForm')">保存修改</button>
+                                                    <form id="xueLiuBiaoZhiWuForm">
+                                                        <div class="form-group has-success">
+                                                            <label for="checkdate" class="col-sm-2 control-label">1-检查时间：</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" name="checkdate" placeholder="选择日期">
+                                                                <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
                                             <span class="glyphicon glyphicon-remove"></span>
                                             </span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">2-CEA</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">ng/ml</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">3-CYFRA211</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">ng/ml</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">4-CA199</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">U/ml</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">5-NSE</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">ng/ml</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">6-SCC</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">ng/ml</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">7-CA125</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                    <span class="input-group-addon">U/ml</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">2-CEA</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="cea" value="">
+                                                                <span class="input-group-addon">ng/ml</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">3-CYFRA211</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="cyfra211" value="">
+                                                                <span class="input-group-addon">ng/ml</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">4-CA199</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="ca199" value="">
+                                                                <span class="input-group-addon">U/ml</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">5-NSE</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="nse" value="">
+                                                                <span class="input-group-addon">ng/ml</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">6-SCC</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="scc" value="">
+                                                                <span class="input-group-addon">ng/ml</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                            <label for="referralDoctor" class="col-sm-2 control-label">7-CA125</label>
+                                                            <div class="input-group col-sm-2">
+                                                                <input type="text" class="form-control input-sm" placeholder="" name="ca125" value="">
+                                                                <span class="input-group-addon">U/ml</span>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
+
+<!--                    超声-->
                     <div class="layui-tab-item">
                         <div class="layui-form">
                             <div class="layui-form-item">
@@ -819,6 +923,8 @@
                             </div>
                         </div>
                     </div>
+
+<!--                    肺功能-->
                     <div class="layui-tab-item">
                         <div class="layui-form">
                             <div class="layui-form-item">
@@ -959,6 +1065,8 @@
                             </div>
                         </div>
                     </div>
+
+<!--                    气管镜-->
                     <div class="layui-tab-item">
                         <div class="layui-form">
                             <div class="layui-form-item">
@@ -1101,6 +1209,8 @@
                             </div>
                         </div>
                     </div>
+
+<!--                    头颅MRI/CT-->
                     <div class="layui-tab-item">
                         <div class="layui-form">
                             <div class="layui-form-item">
@@ -1123,6 +1233,8 @@
                             </div>
                         </div>
                     </div>
+
+<!--                    骨扫描-->
                     <div class="layui-tab-item">
                         <div class="layui-form">
                             <div class="layui-form-item">
@@ -1145,6 +1257,8 @@
                             </div>
                         </div>
                     </div>
+
+<!--                    骨MRI/CT-->
                     <div class="layui-tab-item">
                         <div class="layui-form">
                             <div class="layui-form-item">
@@ -1167,6 +1281,8 @@
                             </div>
                         </div>
                     </div>
+
+<!--                    肝脏CT-->
                     <div class="layui-tab-item">
                         <div class="layui-form">
                             <div class="layui-form-item">
@@ -1189,6 +1305,8 @@
                             </div>
                         </div>
                     </div>
+
+<!--                    PET-->
                     <div class="layui-tab-item">
                         <div class="layui-form">
                             <div class="layui-form-item">
@@ -1274,12 +1392,51 @@
     </div>
 </div>
 
+<!--选项卡定位-->
+<script>
+    layui.use(['element','form'], function(){
+        var element = layui.element;
+        var form = layui.form;
 
+        //获取hash来切换选项卡，假设当前地址的hash为lay-id对应的值
+        var layid = location.hash.replace(/^#main=/, '');
+        element.tabChange('main', layid); //
 
-<!--新增CT模版-->
+        //监听Tab切换，以改变地址hash值
+        element.on('tab(main)', function(){
+            location.hash = 'main='+ this.getAttribute('lay-id');
+            // //获取相应选项卡名称
+            // let tab_name = this.getAttribute('lay-id');
+            // //获取患者id
+            // let patients_id = $('#patients_id').val();
+            // //获取相应选项卡数据信息
+            // $.ajax({
+            //     type:"post",
+            //     url:"/PreSave/getInfo",
+            //     dataType:'JSON',
+            //     async:false,
+            //     data: {
+            //         patients_id:patients_id,
+            //         tab_name:tab_name
+            //     },
+            //     success:function (data) {
+            //         console.log(data);
+            //         $('#xueChangGuiBadge').text(data.info.xuechanggui.length)
+            //         $('#xueShengHuaBadge').text(data.info.xueshenghua.length)
+            //         $('#xueLiuBiaoZhiWuBadge').text(data.info.xueliubiaozhiwu.length)
+            //
+            //         preAddress = data['img_address'];
+            //         preInfo = data['img_info'];
+            //     }
+            // });
+        });
+    });
+</script>
+
+<!--CT模版-->
 <script id="ctModel" type="text/html" >
     <form class="layui-tab-item layui-show" id="ctForm{{d.ctFormId}}">
-        <button class="btn btn-info save" id="ctSaveNew" type="button" onclick="save('ctSaveNew','#ctForm')">保存修改</button>
+        <button class="btn btn-info save" id="ctSaveNew" type="button" onclick="saveCT('ctSaveNew','#ctForm')">保存修改</button>
         <hr>
         <div class="form-group">
             <label class="col-sm-1 control-label" style="margin-left: 5.2%;">1-部位</label>
@@ -1485,6 +1642,61 @@
 
 </script>
 
+<!--新增血常规模版-->
+<script type="text/html">
+    <form id="xueChangGuiFormNew" style="margin-top: 15px">
+        <div class="form-group has-success">
+            <label for="checkdate" class="col-sm-2 control-label">1-检查时间：</label>
+            <div class="input-group col-sm-2">
+                <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" name="checkdatexuechanggui" placeholder="选择日期">
+                <span class="input-group-addon" style="cursor: pointer;">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                            </span>
+            </div>
+        </div>
+        <div class="form-group has-success">
+            <label for="referralDoctor" class="col-sm-2 control-label">2-白细胞计数：</label>
+            <div class="input-group col-sm-2">
+                <input type="text" class="form-control input-sm" placeholder="" name="baixibaojishu" value="">
+                <span class="input-group-addon">10^9/L</span>
+            </div>
+        </div>
+        <div class="form-group has-success">
+            <label for="referralDoctor" class="col-sm-2 control-label">3-中性粒细胞计数：</label>
+            <div class="input-group col-sm-2">
+                <input type="text" class="form-control input-sm" placeholder="" name="zhongxinglixibaojishu" value="">
+                <span class="input-group-addon">10^9/L</span>
+            </div>
+        </div>
+        <div class="form-group has-success">
+            <label for="referralDoctor" class="col-sm-2 control-label">4-血红蛋白：</label>
+            <div class="input-group col-sm-2">
+                <input type="text" class="form-control input-sm" placeholder="" name="xuehongdanbai" value="">
+                <span class="input-group-addon">g/L</span>
+            </div>
+        </div>
+        <div class="form-group has-success">
+            <label for="referralDoctor" class="col-sm-2 control-label">5-血小板：</label>
+            <div class="input-group col-sm-2">
+                <input type="text" class="form-control input-sm" placeholder="" name="xuexiaoban" value="">
+                <span class="input-group-addon">10^9/L</span>
+            </div>
+        </div>
+        <div class="form-group has-success">
+            <label class="col-sm-2 control-label">血型：</label>
+            <div class="input-group col-sm-2">
+                <select class="form-control input-sm" name="xuexing">
+                    <option value="a" />A</option>
+                    <option value="b"  />B</option>
+                    <option value="ab"  />AB</option>
+                    <option value="o"  />O</option>
+                    <option value="其他"  />其他</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</script>
+
 <!--左侧导航栏样式-->
 <script>
     window.onload = function(){
@@ -1538,7 +1750,7 @@
     })
 </script>
 
-<!--监听新增CT选项卡-->
+<!--CT监听新增选项卡-->
 <script>
     layui.use(['element','laytpl'], function(){
         let i = 0;
@@ -1605,13 +1817,13 @@
     });
 </script>
 
-<!--保存按钮函数-->
+<!--CT保存按钮-->
 <script>
-    function save(saveTo,formName){
+    function saveCT(saveTo,formName){
         let click_id = saveTo;
         let patients_id = $('#patients_id').val();
         let ct_id = parseInt($('.ct-id.layui-this').attr('lay-id'));
-        let ct_form_data = decodeURIComponent($(""+formName + ct_id +"").serialize());
+        let form_data = decodeURIComponent($(""+formName + ct_id +"").serialize());
 
 
         let DataDeal = {
@@ -1648,7 +1860,7 @@
             },
         };
 
-        let toData=DataDeal.formToJson(ct_form_data);//转化为json字符串
+        let toData=DataDeal.formToJson(form_data);//转化为json字符串
 
         let jsonData = DataDeal.jsonData(toData);//json字符串相同key合并value值并转化为json对象
 
@@ -1658,7 +1870,7 @@
             dataType:'JSON',
             data: {
                 patients_id:patients_id,
-                ct_form_data:jsonData,
+                form_data:jsonData,
                 ct_id:ct_id
             },
             success:function (data) {
@@ -1680,7 +1892,7 @@
     }
 </script>
 
-<!--删除按钮函数-->
+<!--CT删除按钮函数-->
 <script>
     function delBtn(delTo,ctId){
         layui.use('element', function(){
@@ -1851,6 +2063,82 @@
             });
         });
 
+    }
+</script>
+
+<!--血常规保存按钮-->
+<script>
+    function saveXCG(saveTo){
+        let click_id = saveTo;
+        let patients_id = $('#patients_id').val();
+        let xuechanggui_id = parseInt($('.xuechanggui-id.layui-this').attr('lay-id'));
+        console.log(xuechanggui_id);
+        let form_data = decodeURIComponent($("#xueChangGuiForm").serialize());
+
+        let DataDeal = {
+            //将从form中通过$('#form').serialize()获取的值转成json字符串
+            formToJson: function (data) {
+                data=data.replace(/&/g,"\",\"");
+                data=data.replace(/=/g,"\":\"");
+                data="{\""+data+"\"}";
+                return data;
+            },
+            //json对象相同key合并value值
+            jsonData: function (s) {
+                var kv = {}, m, reg = /"[^"]+":"[^"]+"/gi;
+                var m = s.match(reg);
+
+                var o={};
+                for(var i=0;i<m.length;i++){
+                    kv=m[i].match(/"[^"]+"/gi);
+                    var _arr1=[];;
+                    for(var j=0;j<kv.length; j++){
+                        _arr1.push(kv[j].replace(/"/g,''));
+                    }
+                    if(_arr1[0] in o){
+                        if(typeof(o[_arr1[0]])=='string')
+                        {
+                            o[_arr1[0]]=[o[_arr1[0]]]
+                        };
+                        o[_arr1[0]].push(_arr1[1])
+                    }else{
+                        o[_arr1[0]]=_arr1[1]
+                    }
+                }
+                return o;
+            },
+        };
+
+        let toData=DataDeal.formToJson(form_data);//转化为json字符串
+
+        let jsonData = DataDeal.jsonData(toData);//json字符串相同key合并value值并转化为json对象
+
+        $.ajax({
+            type:"POST",
+            url:"/PreSave/"+click_id,
+            dataType:'JSON',
+            data: {
+                patients_id:patients_id,
+                form_data:jsonData,
+                xuechanggui_id:xuechanggui_id
+            },
+            success:function (data) {
+                console.log(data);
+
+                layui.use('layer', function(){
+                    let layer = layui.layer;
+                    if(data.status == 1){
+                        layer.msg(data.msg, {icon: 1});
+                        if (data.msg =='保存成功'){
+                            setTimeout('location.reload()', 2000 )
+                        }
+                    }
+                    else {
+                        layer.msg(data.msg, {icon: 5});
+                    }
+                });
+            }
+        });
     }
 </script>
 

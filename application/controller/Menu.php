@@ -11,6 +11,9 @@ use app\model\History_family;
 use app\model\Preoperative_ct;
 use app\model\Tizheng;
 use app\model\Zhengzhuang;
+use app\model\Preoperative_xuechanggui;
+use app\model\Preoperative_xueshenghua;
+use app\model\Preoperative_xueliubiaozhiwu;
 use think\Db;
 use app\model\User;
 use think\Request;
@@ -162,19 +165,18 @@ class Menu extends Base
 
         //查询数据库-ct
         $res_ct = Preoperative_ct::where('patients_id',$patientsid)->order('ct_id','desc')->select();
+        $res_xuechanggui = Preoperative_xuechanggui::where('patients_id',$patientsid)->order('xuechanggui_id','desc')->select();
+        $res_xueshenghua = Preoperative_xueshenghua::where('patients_id',$patientsid)->order('xueshenghua_id','desc')->select();
+        $res_xueliubiaozhiwu = Preoperative_xueliubiaozhiwu::where('patients_id',$patientsid)->order('xueliubiaozhiwu_id','desc')->select();
 
-        if (count($res_ct)<1){
-            $this->assign([
-                'patientid'=>$patientsid,
-                'patients_name'=>$patientsname,
-                'ct_info'=> null
-            ]);
-            return $this->fetch();
-        }
         $this->assign([
             'patientid'=>$patientsid,
             'patients_name'=>$patientsname,
-            'ct_info'=>$res_ct
+            'ct_info'=>$res_ct,
+            'xuechanggui_info'=>$res_xuechanggui,
+            'xueshenghua_info'=>$res_xueshenghua,
+            'xueliubiaozhiwu_info'=>$res_xueliubiaozhiwu,
+
         ]);
         return $this->fetch();
     }
@@ -335,13 +337,9 @@ class Menu extends Base
 
     //测试
     public function ceshi(){
-        $patientsid = 1000081;
+        $patientsid = 1000106;
         //查询数据库-症状
-        $res_zhengzhuang = Zhengzhuang::where('patients_id',$patientsid)->find();
-
-        //查询数据库-体征
-        $res_tizheng = Tizheng::where('patients_id',$patientsid)->find();
-        dump($res_tizheng);
-        dump($res_zhengzhuang);
+        $res_ct = Preoperative_xuechanggui::where('patients_id',$patientsid)->order('xuechanggui_id','desc')->select();
+        dump($res_ct);
     }
 }
