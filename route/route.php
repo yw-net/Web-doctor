@@ -13,7 +13,7 @@ Route::get('think', function () {
     return 'hello,doctor!';
 });
 //图片路由
-Route::rule('file/:date/:name','PreSave/imgRoute')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
+Route::rule('file/:type/:date/:name','PreType/PreSave/imgRoute')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
 //文件下载路由
 Route::rule('download/:date/:name','PreSave/download')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
 //自动清理冗余图片
