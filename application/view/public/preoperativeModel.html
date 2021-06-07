@@ -839,7 +839,7 @@
         <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
             <label class="col-sm-2">TBLB</label>
 
-            <div class="input-group col-sm-4" style="margin-top: 5px">
+            <div class="input-group col-sm-4">
                 <input type="text" class="form-control input-sm layui-input-inline" name="tblb_other" value="">
             </div>
         </blockquote>
@@ -1014,6 +1014,105 @@
         </div>
         <div class="form-group">
             <input type="file" id="imgShowGanZhangCt{{d.formId}}"  name="imgShowGanZhangCt{{d.formId}}" multiple="multiple" class="file-loading">
+        </div>
+
+    </form>
+</script>
+
+<!--新增【PET模版】-->
+<script id="petModel" type="text/html" class="petForm">
+    <form class="layui-tab-item layui-show" id="petForm{{d.formId}}">
+        <button class="btn btn-info save" type="button" onclick="saveTab('petSaveNew','#petForm','.pet-id')">保存修改</button>
+
+        <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
+            <div class="layui-form-item" style="margin-bottom: 0">
+                <label class="layui-form-label" style="width: 180px!important;text-align: left">PET检查发现</label>
+                <label class="radio-inline" style="padding: 9px">
+                    <input type="radio" name="pet_find" value="正常" checked/>正常
+                </label>
+                <label class="radio-inline" style="padding: 9px">
+                    <input type="radio" name="pet_find" value="异常"/>异常
+                </label>
+            </div>
+        </blockquote>
+
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+            <label class="col-sm-2">本院检查</label>
+            <label class="radio-inline">
+                <input type="radio" name="benyuan_check" value="是" checked/>是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="benyuan_check" value="否"/>否
+            </label>
+        </blockquote>
+
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+            <label class="col-sm-2">PET号</label>
+
+            <div class="input-group col-sm-4">
+                <input type="text" class="form-control input-sm layui-input-inline" name="pet_num" value="">
+            </div>
+        </blockquote>
+
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+            <label class="col-sm-2">检查时间</label>
+
+            <div class="input-group col-sm-4">
+                <input size="16" type="date" value="" class="form-control input-sm" name="check_time">
+            </div>
+        </blockquote>
+
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+            <label class="col-sm-2">SUV</label>
+
+            <div class="input-group col-sm-4">
+                <input type="text" class="form-control input-sm layui-input-inline" name="suv" value="">
+            </div>
+        </blockquote>
+
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+            <label class="col-sm-2">PET分期</label>
+
+            <div class="row">
+                <div class="col-sm-2 flex-row">
+                    <label class="control-label" style="width: 35px;">T</label>
+                    <select class="form-control input-sm" name="pet_fenqi_t">
+                        <option value="请选择" selected>请选择</option>
+                        <option value="单发">单发</option>
+                        <option value="多发">多发</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 flex-row">
+                    <label class="control-label" style="width: 35px;">N</label>
+                    <select class="form-control input-sm" name="pet_fenqi_n">
+                        <option value="请选择" selected>请选择</option>
+                        <option value="单发">单发</option>
+                        <option value="多发">多发</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 flex-row">
+                    <label class="control-label" style="width: 35px;">M</label>
+                    <select class="form-control input-sm" name="pet_fenqi_m">
+                        <option value="请选择" selected>请选择</option>
+                        <option value="单发">单发</option>
+                        <option value="多发">多发</option>
+                    </select>
+                </div>
+            </div>
+        </blockquote>
+
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+            <label class="col-sm-2">意外发现</label>
+            <div class="layui-input-inline input-group col-sm-4">
+                <textarea class="layui-textarea" name="other_find"></textarea>
+            </div>
+        </blockquote>
+
+        <div class="form-group" style="margin-top: 5px">
+            <blockquote class="layui-elem-quote" style="padding: 10px;">PET文件、图像资料</blockquote>
+        </div>
+        <div class="form-group">
+            <input type="file" id="imgShowPET{{d.formId}}"  name="imgShowPET{{d.formId}}" multiple="multiple" class="file-loading">
         </div>
 
     </form>

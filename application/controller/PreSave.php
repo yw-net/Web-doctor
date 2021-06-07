@@ -16,6 +16,7 @@ use app\model\Preoperative_toulu;
 use app\model\Preoperative_gusaomiao;
 use app\model\Preoperative_guct;
 use app\model\Preoperative_ganzhangct;
+use app\model\Preoperative_pet;
 use think\Db;
 use app\model\User;
 use think\facade\Request;
@@ -26,18 +27,21 @@ use diversen\sendfile;
 
 class PreSave extends Base
 {
-    //Ct保存上传文件路径到数据库函数
-    private function saveFileUrlCt($newUrl,$fileId,$patients_id,$dbName)
+
+    //保存文件路径函数
+    private function saveFileUrl($newUrl,$fileId,$patients_id,$dbName,$idName,$findName)
     {
-        $get = Preoperative_ct::where(['ct_id'=>$fileId,'patients_id'=>$patients_id])->find();
+        $get = Db::name($dbName)->where([$idName=>$fileId,'patients_id'=>$patients_id])->find();
 
         //未保存则创建新数据
         if (!isset($get)){
-            $pre_ct = new Preoperative_ct();
-            $pre_ct->ct_id =$fileId;
-            $pre_ct->patients_id =$patients_id;
-            $pre_ct->create_date = date('Y-m-d');
-            $pre_ct->save();
+            Db::name($dbName)
+                ->insert([
+                    $idName=>$fileId,
+                    'patients_id'=>$patients_id,
+                    'created_time'=>date('Y-m-d'),
+                    $findName=>'正常'
+                ]);
         }
         //判断数据库文件地址是否为空
         if ($get['img_address'] == null){
@@ -45,7 +49,7 @@ class PreSave extends Base
             $newUrl = json_encode($newUrl);
             Db::name($dbName)
                 ->data('img_address',$newUrl)
-                ->where(['ct_id'=>$fileId,'patients_id'=>$patients_id])
+                ->where([$idName=>$fileId,'patients_id'=>$patients_id])
                 ->update();
         }
         else
@@ -63,226 +67,21 @@ class PreSave extends Base
 
             Db::name($dbName)
                 ->data('img_address',$array_img_address)
-                ->where(['ct_id'=>$fileId,'patients_id'=>$patients_id])
+                ->where([$idName=>$fileId,'patients_id'=>$patients_id])
                 ->update();
         }
 
     }
 
-    //更新、新增CT信息
-    public function ctSaveNew()
-    {
-        //数据处理-获取表单数据
-        $patients_id = $this->request->param('patients_id');
-        $ct_data = $this->request->param('form_data');
-        $ct_id = $this->request->param('form_id');
+    //删除文件路径函数
+    private function delFileUrl($form_id,$patients_id,$idName,$dbName,$folderName,$file_name){
+        $get = Db::name($dbName)
+            ->where([$idName=>$form_id,'patients_id'=>$patients_id])
+            ->find();
 
-        //判断数据库当前患者下ct_id是否存在
-        $ct_id_res = Preoperative_ct::where(['ct_id'=>$ct_id,'patients_id'=>$patients_id])->find();
-        //更新数据
-        if ($ct_id_res){
-
-            //解决多选框及输入框为空
-            if (isset($ct_data['buwei'])){
-                //判断多选框值是否为数组（当选择两个以下强制转换为数组）
-                if (!is_array($ct_data['buwei'])){
-                    $ct_data['buwei'] = json_encode($ct_data['buwei']);
-                }
-            }else{
-                $ct_data['buwei'] =null;
-            }
-            if (!isset($ct_data['daxiao1'])){
-                $ct_data['daxiao1'] =null;
-            }
-            if (!isset($ct_data['daxiao2'])){
-                $ct_data['daxiao2'] =null;
-            }
-            if (!isset($ct_data['daxiao3'])){
-                $ct_data['daxiao3'] =null;
-            }
-
-            $res_ct = Db::name('Preoperative_ct')
-                ->where(['ct_id'=>$ct_id,'patients_id'=>$patients_id])
-                ->data([
-                    'edit_date'=>date('Y-m-d H:i:s'),
-                    'ctFind'=>$ct_data['ctFind'],
-                    'ggo'=>$ct_data['ggo'],
-                    'buwei'=>$ct_data['buwei'],
-                    'daxiao1'=>$ct_data['daxiao1'],
-                    'daxiao2'=>$ct_data['daxiao2'],
-                    'daxiao3'=>$ct_data['daxiao3'],
-                    'gaihua'=>$ct_data['gaihua'],
-                    'fenyezheng'=>$ct_data['fenyezheng'],
-                    'maocizheng'=>$ct_data['maocizheng'],
-                    'xiongmozhousuo'=>$ct_data['xiongmozhousuo'],
-                    'jizhuangtuqi'=>$ct_data['jizhuangtuqi'],
-                    'kongdong'=>$ct_data['kongdong'],
-                    'zhiqiguanzheng'=>$ct_data['zhiqiguanzheng'],
-                    'zushaixingfeiyan'=>$ct_data['zushaixingfeiyan'],
-                    'zhongliuqingfanxueguan'=>$ct_data['zhongliuqingfanxueguan'],
-                    'qingfangeji'=>$ct_data['qingfangeji'],
-                    'qingfanzhuiti'=>$ct_data['qingfanzhuiti'],
-                    'qingfanxiongbi'=>$ct_data['qingfanxiongbi'],
-                    'xiongshui'=>$ct_data['xiongshui'],
-                    'tongyejiejie'=>$ct_data['tongyejiejie'],
-                    'butongyejiejie'=>$ct_data['butongyejiejie'],
-                    'spn'=>$ct_data['spn'],
-                    'linbajiezhongda'=>$ct_data['linbajiezhongda'],
-                ])
-                ->update();
-            if ($res_ct){
-                $res['status'] = 1;
-                $res['msg'] ='数据保存成功';
-                return $res;
-            }
-            $res['status'] =0;
-            $res['msg'] ='数据未更改';
-            return $res;
-        }
-
-
-        //新增数据
-        $pre_ct = new Preoperative_ct();
-        $pre_ct->ct_id =$ct_id;
-        $pre_ct->patients_id =$patients_id;
-        $pre_ct->create_date = date('Y-m-d');
-
-        //处理空值问题
-        if (isset($ct_data['buwei'])){
-            //判断多选框值是否为数组（当选择两个以下强制转换为数组）
-            if (!is_array($ct_data['buwei'])){
-                $ct_data['buwei'] = json_encode($ct_data['buwei']);
-            }
-            $pre_ct->buwei = $ct_data['buwei'];
-        }
-        if (isset($ct_data['daxiao1'])){
-            $pre_ct->daxiao1 = $ct_data['daxiao1'];
-        }
-        if (isset($ct_data['daxiao2'])){
-            $pre_ct->daxiao2 = $ct_data['daxiao2'];
-        }
-        if (isset($ct_data['daxiao3'])){
-            $pre_ct->daxiao3 = $ct_data['daxiao3'];
-        }
-
-        //单选框数据写入
-        $pre_ct->ctFind = $ct_data['ctFind'];
-        $pre_ct->ggo = $ct_data['ggo'];
-        $pre_ct->gaihua = $ct_data['gaihua'];
-        $pre_ct->fenyezheng = $ct_data['fenyezheng'];
-        $pre_ct->maocizheng = $ct_data['maocizheng'];
-        $pre_ct->xiongmozhousuo = $ct_data['xiongmozhousuo'];
-        $pre_ct->jizhuangtuqi = $ct_data['jizhuangtuqi'];
-        $pre_ct->kongdong = $ct_data['kongdong'];
-        $pre_ct->zhiqiguanzheng = $ct_data['zhiqiguanzheng'];
-        $pre_ct->zushaixingfeiyan = $ct_data['zushaixingfeiyan'];
-        $pre_ct->zhongliuqingfanxueguan = $ct_data['zhongliuqingfanxueguan'];
-        $pre_ct->qingfangeji = $ct_data['qingfangeji'];
-        $pre_ct->qingfanzhuiti = $ct_data['qingfanzhuiti'];
-        $pre_ct->qingfanxiongbi = $ct_data['qingfanxiongbi'];
-        $pre_ct->xiongshui = $ct_data['xiongshui'];
-        $pre_ct->tongyejiejie = $ct_data['tongyejiejie'];
-        $pre_ct->butongyejiejie = $ct_data['butongyejiejie'];
-        $pre_ct->spn = $ct_data['spn'];
-        $pre_ct->linbajiezhongda = $ct_data['linbajiezhongda'];
-        $pre_ct->save();
-
-        if ($pre_ct){
-            $res['status'] = 1;
-            $res['msg'] ='数据保存成功';
-            return $res;
-        }
-
-        $res['status'] = 0;
-        $res['msg'] ='新增数据失败';
-        return $res;
-    }
-
-    //删除CT信息
-    public function delCtInfo()
-    {
-        $patients_id = $this->request->param('patients_id');
-        $ct_id = $this->request->param('form_id');
-        $del = Preoperative_ct::where(['ct_id'=>$ct_id,'patients_id'=>$patients_id])->delete();
-        if ($del){
-            $res['msg'] = '删除成功';
-            $res['status'] = 1 ;
-            return $res;
-        }
-        $res['msg'] = '数据库连接失败';
-        $res['status'] = 0 ;
-        return $res;
-    }
-
-    //保存CT图像
-    public function imgCtSave()
-    {
-        $savePath = Env::get('root_path').'storge/preoperative/ct/'.date('Ymd');//CT图片保存根目录
-
-        $info = $this->request->param();//获取附加信息
-
-        $patients_id =$info['patients_id'];
-        $form_id =$info['form_id'];
-
-
-        $file = $this->request->file();//获取上传文件本体
-
-
-        //文件保存
-        if ($file){
-            $res = $file['imgShowCt'.$form_id]->move($savePath,'');
-        }
-        else{
-            return (['status'=>0,'error'=>'文件保存失败']);
-        }
-
-        //写入数据库
-        if($res)
-        {
-            $url = date('Ymd')."/".$res->getSaveName();
-
-            //数据库查重
-            $get = Preoperative_ct::where(['ct_id'=>$form_id,'patients_id'=>$patients_id])->find();
-
-            if ($get['img_address']!=null){
-                $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
-//                return  (['status'=>1,'message'=>is_array($get_address)]);
-                if (is_array($get_address)){
-                    foreach ($get_address as $key=>$value)
-                    {
-                        if ($value == $url)
-                            return  (['status'=>0,'error'=>'文件名重复！写入数据库失败！请更改文件名称后重试！']);
-                    }
-                }
-                if ($get_address == $url){
-                    return  (['status'=>0,'error'=>'文件名重复！写入数据库失败！请更改文件名称后重试！']);
-                }
-
-
-            }
-            //正式写入数据库
-            $this->saveFileUrlCt($url,$form_id,$patients_id,'Preoperative_ct');
-
-            return  (['status'=>1,'message'=>'文件上传成功','fileid'=>$url]);
-        }
-        else
-        {
-            return  (['status'=>0,'error'=>'写入数据库失败']);
-        }
-    }
-
-    //删除CT图像
-    public function imgCtDel()
-    {
-        $info = $this->request->param();//获取附加信息
-
-        $patients_id =$info['patients_id'];
-        $form_id =$info['form_id'];
-        $file_name = $info['key'];
-
-        $get = Preoperative_ct::where(['ct_id'=>$form_id,'patients_id'=>$patients_id])->find();
-        if ($get){
-            $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
+        $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
+        //判断是否为字符串(多条数据)
+        if (gettype($get_address)!='string'){
 
             foreach ($get_address as $key=>$value)
             {
@@ -291,64 +90,54 @@ class PreSave extends Base
             }
 
             //把删除后的数组重新写入数据库
-            $res = Db::name('Preoperative_ct')
+            $res = Db::name($dbName)
                 ->data('img_address',$get_address)
-                ->where(['ct_id'=>$form_id,'patients_id'=>$patients_id])
+                ->where([$idName=>$form_id,'patients_id'=>$patients_id])
                 ->update();
 
             if($res){
                 //删除对应文件
-                $savePath = Env::get('root_path').'storge/preoperative/ct/';//CT图片保存根目录
+                $savePath = Env::get('root_path').'storge/preoperative/'.$folderName.'/';//CT图片保存根目录
+                $filePath = $savePath.$file_name;
+                unlink($filePath);
+            }
+        }
+        //单条数据直接删除
+        if (gettype($get_address) == 'string'){
+            $res = Db::name($dbName)
+                ->where([$idName=>$form_id,'patients_id'=>$patients_id])
+                ->update(['img_address'=>[]]);
+            if($res){
+                //删除对应文件
+                $savePath = Env::get('root_path').'storge/preoperative/'.$folderName.'/';//CT图片保存根目录
                 $filePath = $savePath.$file_name;
                 unlink($filePath);
 
-                return ['status'=>1,'message'=>'删除成功'];
             }
-            return ['status'=>0,'error'=>'删除失败'];
         }
-        return ['status'=>0,'error'=>'未知错误'];
     }
 
-    //获取CT图像预览信息
-    public function getCTAddress()
-    {
-        $file_path = Env::get('root_path').'storge/preoperative/ct/';//CT图片保存根目录
-
-        $patients_id = $this->request->param('patients_id');
-        $ct_id = $this->request->param('ct_id');
-
-        $res = Preoperative_ct::where(['patients_id'=>$patients_id,'ct_id'=>$ct_id])->field('img_address')->find();
-        $res['img_address'] = json_decode($res['img_address']);
-
+    //获取文件信息函数
+    private function getFileInfoArr($file_path,$res){//数组
         $res_info = [];
-        //判断数据库字段是否为数组
-        if (is_array($res['img_address'])){
-            foreach ($res['img_address'] as $key=>$value)
-            {
-                $imgInfo = filesize($file_path.$value); //获取文件大小
+        foreach ($res['img_address'] as $key=>$value)
+        {
+            $imgInfo = filesize($file_path.$value); //获取文件大小
 
-                $ct_name = explode('/',$value);   //截取字符串
-                array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$value,'key'=>$value,'size'=>$imgInfo]);   //组合对象数组
-            }
-            $res['img_info'] = $res_info;
-            return $res;
+            $file_name = explode('/',$value);   //截取字符串
+            array_push($res_info,['caption'=>$file_name[1],'downloadUrl'=>'../download/'.$value,'key'=>$value,'size'=>$imgInfo]);   //组合对象数组
         }
-        //判断数据库字段是否有数据
-        if ($res['img_address']!=null){
-            $ct_name = explode('/',$res['img_address']);   //截取字符串
-
-            $imgInfo = filesize($file_path.$res['img_address']); //获取文件大小
-
-            array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$res['img_address'],'key'=>$res['img_address'],'size'=>$imgInfo]);   //组合对象数组
-            $res['img_info'] = $res_info;
-            return $res;
-        }
-        //数据库字段无数据则输出空数组
-        $res['img_address'] = [];
-        return $res;
-
+        $res['img_info'] = $res_info;
     }
+    private function getFileInfoStr($file_path,$res){//字符串
+        $res_info = [];
+        $file_name = explode('/',$res['img_address']);   //截取字符串
 
+        $imgInfo = filesize($file_path.$res['img_address']); //获取文件大小
+
+        array_push($res_info,['caption'=>$file_name[1],'downloadUrl'=>'../download/'.$res['img_address'],'key'=>$res['img_address'],'size'=>$imgInfo]);   //组合对象数组
+        $res['img_info'] = $res_info;
+    }
 
 
     //图片显示路由
@@ -490,7 +279,7 @@ class PreSave extends Base
         if (isset($form_data['xuexing'])){
             $pre_xuechanggui->xuexing = $form_data['xuexing'];
         }
-            $pre_xuechanggui->save();
+        $pre_xuechanggui->save();
         $res['status'] = 1;
         $res['msg'] ='数据保存成功';
         return $res;
@@ -514,7 +303,6 @@ class PreSave extends Base
         $res['status'] = 0 ;
         return $res;
     }
-
 
 
     //更新、新增血生化信息
@@ -630,7 +418,6 @@ class PreSave extends Base
     }
 
 
-
     //更新、新增血瘤标志物信息
     public function xueLiuBiaoZhiWuSaveNew(){
         //数据处理-获取表单数据
@@ -726,48 +513,254 @@ class PreSave extends Base
     }
 
 
-    //超声保存上传文件路径到数据库函数
-    private function saveFileUrlChaoSheng($newUrl,$fileId,$patients_id,$dbName)
-    {
-        $get = Preoperative_chaosheng::where(['chaosheng_id'=>$fileId,'patients_id'=>$patients_id])->find();
 
-        //未保存则创建新数据
-        if (!isset($get)){
-            $pre_ct = new Preoperative_chaosheng();
-            $pre_ct->chaosheng_id =$fileId;
-            $pre_ct->patients_id =$patients_id;
-            $pre_ct->created_time = date('Y-m-d');
-            $pre_ct->save();
-        }
-        //判断数据库文件地址是否为空
-        if ($get['img_address'] == null){
-            //转换为json格式写入数据库
-            $newUrl = json_encode($newUrl);
-            Db::name($dbName)
-                ->data('img_address',$newUrl)
-                ->where(['chaosheng_id'=>$fileId,'patients_id'=>$patients_id])
+    //更新、新增CT信息
+    public function ctSaveNew()
+    {
+        //数据处理-获取表单数据
+        $patients_id = $this->request->param('patients_id');
+        $ct_data = $this->request->param('form_data');
+        $ct_id = $this->request->param('form_id');
+
+        //判断数据库当前患者下ct_id是否存在
+        $ct_id_res = Preoperative_ct::where(['ct_id'=>$ct_id,'patients_id'=>$patients_id])->find();
+        //更新数据
+        if ($ct_id_res){
+
+            //解决多选框及输入框为空
+            if (isset($ct_data['buwei'])){
+                //判断多选框值是否为数组（当选择两个以下强制转换为数组）
+                if (!is_array($ct_data['buwei'])){
+                    $ct_data['buwei'] = json_encode($ct_data['buwei']);
+                }
+            }else{
+                $ct_data['buwei'] =null;
+            }
+            if (!isset($ct_data['daxiao1'])){
+                $ct_data['daxiao1'] =null;
+            }
+            if (!isset($ct_data['daxiao2'])){
+                $ct_data['daxiao2'] =null;
+            }
+            if (!isset($ct_data['daxiao3'])){
+                $ct_data['daxiao3'] =null;
+            }
+
+            $res_ct = Db::name('Preoperative_ct')
+                ->where(['ct_id'=>$ct_id,'patients_id'=>$patients_id])
+                ->data([
+                    'edit_time'=>date('Y-m-d H:i:s'),
+                    'ctFind'=>$ct_data['ctFind'],
+                    'ggo'=>$ct_data['ggo'],
+                    'buwei'=>$ct_data['buwei'],
+                    'daxiao1'=>$ct_data['daxiao1'],
+                    'daxiao2'=>$ct_data['daxiao2'],
+                    'daxiao3'=>$ct_data['daxiao3'],
+                    'gaihua'=>$ct_data['gaihua'],
+                    'fenyezheng'=>$ct_data['fenyezheng'],
+                    'maocizheng'=>$ct_data['maocizheng'],
+                    'xiongmozhousuo'=>$ct_data['xiongmozhousuo'],
+                    'jizhuangtuqi'=>$ct_data['jizhuangtuqi'],
+                    'kongdong'=>$ct_data['kongdong'],
+                    'zhiqiguanzheng'=>$ct_data['zhiqiguanzheng'],
+                    'zushaixingfeiyan'=>$ct_data['zushaixingfeiyan'],
+                    'zhongliuqingfanxueguan'=>$ct_data['zhongliuqingfanxueguan'],
+                    'qingfangeji'=>$ct_data['qingfangeji'],
+                    'qingfanzhuiti'=>$ct_data['qingfanzhuiti'],
+                    'qingfanxiongbi'=>$ct_data['qingfanxiongbi'],
+                    'xiongshui'=>$ct_data['xiongshui'],
+                    'tongyejiejie'=>$ct_data['tongyejiejie'],
+                    'butongyejiejie'=>$ct_data['butongyejiejie'],
+                    'spn'=>$ct_data['spn'],
+                    'linbajiezhongda'=>$ct_data['linbajiezhongda'],
+                ])
                 ->update();
+            if ($res_ct){
+                $res['status'] = 1;
+                $res['msg'] ='数据保存成功';
+                return $res;
+            }
+            $res['status'] =0;
+            $res['msg'] ='数据未更改';
+            return $res;
+        }
+
+
+        //新增数据
+        $pre_ct = new Preoperative_ct();
+        $pre_ct->ct_id =$ct_id;
+        $pre_ct->patients_id =$patients_id;
+        $pre_ct->created_time = date('Y-m-d');
+
+        //处理空值问题
+        if (isset($ct_data['buwei'])){
+            //判断多选框值是否为数组（当选择两个以下强制转换为数组）
+            if (!is_array($ct_data['buwei'])){
+                $ct_data['buwei'] = json_encode($ct_data['buwei']);
+            }
+            $pre_ct->buwei = $ct_data['buwei'];
+        }
+        if (isset($ct_data['daxiao1'])){
+            $pre_ct->daxiao1 = $ct_data['daxiao1'];
+        }
+        if (isset($ct_data['daxiao2'])){
+            $pre_ct->daxiao2 = $ct_data['daxiao2'];
+        }
+        if (isset($ct_data['daxiao3'])){
+            $pre_ct->daxiao3 = $ct_data['daxiao3'];
+        }
+
+        //单选框数据写入
+        $pre_ct->ctFind = $ct_data['ctFind'];
+        $pre_ct->ggo = $ct_data['ggo'];
+        $pre_ct->gaihua = $ct_data['gaihua'];
+        $pre_ct->fenyezheng = $ct_data['fenyezheng'];
+        $pre_ct->maocizheng = $ct_data['maocizheng'];
+        $pre_ct->xiongmozhousuo = $ct_data['xiongmozhousuo'];
+        $pre_ct->jizhuangtuqi = $ct_data['jizhuangtuqi'];
+        $pre_ct->kongdong = $ct_data['kongdong'];
+        $pre_ct->zhiqiguanzheng = $ct_data['zhiqiguanzheng'];
+        $pre_ct->zushaixingfeiyan = $ct_data['zushaixingfeiyan'];
+        $pre_ct->zhongliuqingfanxueguan = $ct_data['zhongliuqingfanxueguan'];
+        $pre_ct->qingfangeji = $ct_data['qingfangeji'];
+        $pre_ct->qingfanzhuiti = $ct_data['qingfanzhuiti'];
+        $pre_ct->qingfanxiongbi = $ct_data['qingfanxiongbi'];
+        $pre_ct->xiongshui = $ct_data['xiongshui'];
+        $pre_ct->tongyejiejie = $ct_data['tongyejiejie'];
+        $pre_ct->butongyejiejie = $ct_data['butongyejiejie'];
+        $pre_ct->spn = $ct_data['spn'];
+        $pre_ct->linbajiezhongda = $ct_data['linbajiezhongda'];
+        $pre_ct->save();
+
+        if ($pre_ct){
+            $res['status'] = 1;
+            $res['msg'] ='数据保存成功';
+            return $res;
+        }
+
+        $res['status'] = 0;
+        $res['msg'] ='新增数据失败';
+        return $res;
+    }
+
+    //删除CT信息
+    public function delCtInfo()
+    {
+        $patients_id = $this->request->param('patients_id');
+        $ct_id = $this->request->param('form_id');
+        $del = Preoperative_ct::where(['ct_id'=>$ct_id,'patients_id'=>$patients_id])->delete();
+        if ($del){
+            $res['msg'] = '删除成功';
+            $res['status'] = 1 ;
+            return $res;
+        }
+        $res['msg'] = '数据库连接失败';
+        $res['status'] = 0 ;
+        return $res;
+    }
+
+    //保存CT图像
+    public function imgCtSave()
+    {
+        $savePath = Env::get('root_path').'storge/preoperative/ct/'.date('Ymd');//CT图片保存根目录
+
+        $info = $this->request->param();//获取附加信息
+
+        $patients_id =$info['patients_id'];
+        $form_id =$info['form_id'];
+
+
+        $file = $this->request->file();//获取上传文件本体
+
+
+        //文件保存
+        if ($file){
+            $res = $file['imgShowCt'.$form_id]->move($savePath,'');
+        }
+        else{
+            return (['status'=>0,'error'=>'文件保存失败']);
+        }
+
+        //写入数据库
+        if($res)
+        {
+            $url = date('Ymd')."/".$res->getSaveName();
+
+            //数据库查重
+            $get = Preoperative_ct::where(['ct_id'=>$form_id,'patients_id'=>$patients_id])->find();
+
+            if ($get['img_address']!=null){
+                $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
+//                return  (['status'=>1,'message'=>is_array($get_address)]);
+                if (is_array($get_address)){
+                    foreach ($get_address as $key=>$value)
+                    {
+                        if ($value == $url)
+                            return  (['status'=>0,'error'=>'文件名重复！写入数据库失败！请更改文件名称后重试！']);
+                    }
+                }
+                if ($get_address == $url){
+                    return  (['status'=>0,'error'=>'文件名重复！写入数据库失败！请更改文件名称后重试！']);
+                }
+
+
+            }
+            //正式写入数据库
+            $this->saveFileUrl($url,$form_id,$patients_id,'Preoperative_ct','ct_id','ctFind');
+
+            return  (['status'=>1,'message'=>'文件上传成功','fileid'=>$url]);
         }
         else
         {
-            $array_img_address= json_decode($get['img_address']);//取出数据库原有json数据
-
-            //判断原有数据是否为数组(单个数据默认为字符串，需转换为数据)
-            if (is_array($array_img_address)){
-                array_push($array_img_address,$newUrl);//组合新数组（多条数据）
-            }
-            else{
-                $array_img_address = array($array_img_address);//把数据库原有数据转换为数组
-                array_push($array_img_address,$newUrl);//组合新数组（单条数据）
-            }
-
-            Db::name($dbName)
-                ->data('img_address',$array_img_address)
-                ->where(['chaosheng_id'=>$fileId,'patients_id'=>$patients_id])
-                ->update();
+            return  (['status'=>0,'error'=>'写入数据库失败']);
         }
+    }
+
+    //删除CT图像
+    public function imgCtDel()
+    {
+        $info = $this->request->param();//获取附加信息
+
+        $patients_id =$info['patients_id'];
+        $form_id =$info['form_id'];
+        $file_name = $info['key'];
+        $idName = 'ct_id';
+        $dbName = 'Preoperative_ct';
+        $folderName = 'ct';
+
+        $this->delFileUrl($form_id,$patients_id,$idName,$dbName,$folderName,$file_name);
+
+        return ['status'=>1,'message'=>'删除成功'];
 
     }
+
+    //获取CT图像预览信息
+    public function getCTAddress()
+    {
+        $file_path = Env::get('root_path').'storge/preoperative/ct/';//CT图片保存根目录
+
+        $patients_id = $this->request->param('patients_id');
+        $fileId = $this->request->param('ct_id');
+
+        $res = Preoperative_ct::where(['patients_id'=>$patients_id,'ct_id'=>$fileId])->field('img_address')->find();
+        $res['img_address'] = json_decode($res['img_address']);
+
+        //判断数据库字段是否为数组
+        if (is_array($res['img_address'])){
+            $this->getFileInfoArr($file_path,$res);
+            return $res;
+        }
+        //判断数据库字段是否有数据(字符串)
+        if ($res['img_address']!=null){
+            $this->getFileInfoStr($file_path,$res);
+            return $res;
+        }
+        //数据库字段无数据则输出空数组
+        $res['img_address'] = [];
+        return $res;
+    }
+
+
 
     //更新、新增超声信息
     public function chaoShengSaveNew(){
@@ -902,7 +895,7 @@ class PreSave extends Base
 
             }
             //正式写入数据库
-            $this->saveFileUrlChaoSheng($url,$form_id,$patients_id,'Preoperative_chaosheng');
+            $this->saveFileUrl($url,$form_id,$patients_id,'Preoperative_chaosheng','chaosheng_id','chaoShengFind');
 
             return  (['status'=>1,'message'=>'文件上传成功','fileid'=>$url]);
         }
@@ -920,34 +913,13 @@ class PreSave extends Base
         $patients_id =$info['patients_id'];
         $form_id =$info['form_id'];
         $file_name = $info['key'];
+        $idName = 'chaosheng_id';
+        $dbName = 'Preoperative_chaosheng';
+        $folderName = 'chaosheng';
 
-        $get = Preoperative_chaosheng::where(['chaosheng_id'=>$form_id,'patients_id'=>$patients_id])->find();
-        if ($get){
-            $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
+        $this->delFileUrl($form_id,$patients_id,$idName,$dbName,$folderName,$file_name);
 
-            foreach ($get_address as $key=>$value)
-            {
-                if ($value == $file_name)
-                    array_splice($get_address,$key,1);   //删除数组对应的值
-            }
-
-            //把删除后的数组重新写入数据库
-            $res = Db::name('Preoperative_chaosheng')
-                ->data('img_address',$get_address)
-                ->where(['chaosheng_id'=>$form_id,'patients_id'=>$patients_id])
-                ->update();
-
-            if($res){
-                //删除对应文件
-                $savePath = Env::get('root_path').'storge/preoperative/chaosheng/';//CT图片保存根目录
-                $filePath = $savePath.$file_name;
-                unlink($filePath);
-
-                return ['status'=>1,'message'=>'删除成功'];
-            }
-            return ['status'=>0,'error'=>'删除失败'];
-        }
-        return ['status'=>0,'error'=>'未知错误'];
+        return ['status'=>1,'message'=>'删除成功'];
     }
 
     //获取超声图像预览信息
@@ -955,32 +927,19 @@ class PreSave extends Base
         $file_path = Env::get('root_path').'storge/preoperative/chaosheng/';//超声图片保存根目录
 
         $patients_id = $this->request->param('patients_id');
-        $chaosheng_id = $this->request->param('form_id');
+        $fileId = $this->request->param('form_id');
 
-        $res = Preoperative_chaosheng::where(['patients_id'=>$patients_id,'chaosheng_id'=>$chaosheng_id])->field('img_address')->find();
+        $res = Preoperative_chaosheng::where(['patients_id'=>$patients_id,'chaosheng_id'=>$fileId])->field('img_address')->find();
         $res['img_address'] = json_decode($res['img_address']);
 
-        $res_info = [];
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            foreach ($res['img_address'] as $key=>$value)
-            {
-                $imgInfo = filesize($file_path.$value); //获取文件大小
-
-                $ct_name = explode('/',$value);   //截取字符串
-                array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$value,'key'=>$value,'size'=>$imgInfo]);   //组合对象数组
-            }
-            $res['img_info'] = $res_info;
+            $this->getFileInfoArr($file_path,$res);
             return $res;
         }
-        //判断数据库字段是否有数据
+        //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $ct_name = explode('/',$res['img_address']);   //截取字符串
-
-            $imgInfo = filesize($file_path.$res['img_address']); //获取文件大小
-
-            array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$res['img_address'],'key'=>$res['img_address'],'size'=>$imgInfo]);   //组合对象数组
-            $res['img_info'] = $res_info;
+            $this->getFileInfoStr($file_path,$res);
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -989,48 +948,6 @@ class PreSave extends Base
     }
 
 
-    //肺功能保存上传文件路径到数据库函数
-    private function saveFileUrlFeiGongNeng($newUrl,$fileId,$patients_id,$dbName)
-    {
-        $get = Preoperative_feigongneng::where(['feigongneng_id'=>$fileId,'patients_id'=>$patients_id])->find();
-
-        //未保存则创建新数据
-        if (!isset($get)){
-            $pre_ct = new Preoperative_feigongneng();
-            $pre_ct->feigongneng_id =$fileId;
-            $pre_ct->patients_id =$patients_id;
-            $pre_ct->created_time = date('Y-m-d');
-            $pre_ct->save();
-        }
-        //判断数据库文件地址是否为空
-        if ($get['img_address'] == null){
-            //转换为json格式写入数据库
-            $newUrl = json_encode($newUrl);
-            Db::name($dbName)
-                ->data('img_address',$newUrl)
-                ->where(['feigongneng_id'=>$fileId,'patients_id'=>$patients_id])
-                ->update();
-        }
-        else
-        {
-            $array_img_address= json_decode($get['img_address']);//取出数据库原有json数据
-
-            //判断原有数据是否为数组(单个数据默认为字符串，需转换为数据)
-            if (is_array($array_img_address)){
-                array_push($array_img_address,$newUrl);//组合新数组（多条数据）
-            }
-            else{
-                $array_img_address = array($array_img_address);//把数据库原有数据转换为数组
-                array_push($array_img_address,$newUrl);//组合新数组（单条数据）
-            }
-
-            Db::name($dbName)
-                ->data('img_address',$array_img_address)
-                ->where(['feigongneng_id'=>$fileId,'patients_id'=>$patients_id])
-                ->update();
-        }
-
-    }
 
     //更新、新增肺功能信息
     public function feiGongNengSaveNew(){
@@ -1203,7 +1120,7 @@ class PreSave extends Base
 
             }
             //正式写入数据库
-            $this->saveFileUrlFeiGongNeng($url,$form_id,$patients_id,'Preoperative_feigongneng');
+            $this->saveFileUrl($url,$form_id,$patients_id,'Preoperative_feigongneng','feigongneng_id','feiGongNengFind');
 
             return  (['status'=>1,'message'=>'文件上传成功','fileid'=>$url]);
         }
@@ -1214,41 +1131,20 @@ class PreSave extends Base
     }
 
     //删除肺功能图像
-    public function imgFeiGongNenggDel()
+    public function imgFeiGongNengDel()
     {
         $info = $this->request->param();//获取附加信息
 
         $patients_id =$info['patients_id'];
         $form_id =$info['form_id'];
         $file_name = $info['key'];
+        $idName = 'feigongneng_id';
+        $dbName = 'Preoperative_feigongneng';
+        $folderName = 'feigongneng';
 
-        $get = Preoperative_feigongneng::where(['feigongneng_id'=>$form_id,'patients_id'=>$patients_id])->find();
-        if ($get){
-            $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
+        $this->delFileUrl($form_id,$patients_id,$idName,$dbName,$folderName,$file_name);
 
-            foreach ($get_address as $key=>$value)
-            {
-                if ($value == $file_name)
-                    array_splice($get_address,$key,1);   //删除数组对应的值
-            }
-
-            //把删除后的数组重新写入数据库
-            $res = Db::name('Preoperative_feigongneng')
-                ->data('img_address',$get_address)
-                ->where(['feigongneng_id'=>$form_id,'patients_id'=>$patients_id])
-                ->update();
-
-            if($res){
-                //删除对应文件
-                $savePath = Env::get('root_path').'storge/preoperative/feigongneng/';//CT图片保存根目录
-                $filePath = $savePath.$file_name;
-                unlink($filePath);
-
-                return ['status'=>1,'message'=>'删除成功'];
-            }
-            return ['status'=>0,'error'=>'删除失败'];
-        }
-        return ['status'=>0,'error'=>'未知错误'];
+        return ['status'=>1,'message'=>'删除成功'];
     }
 
     //获取肺功能图像预览信息
@@ -1256,32 +1152,19 @@ class PreSave extends Base
         $file_path = Env::get('root_path').'storge/preoperative/feigongneng/';//超声图片保存根目录
 
         $patients_id = $this->request->param('patients_id');
-        $feigongneng_id = $this->request->param('form_id');
+        $fileId = $this->request->param('form_id');
 
-        $res = Preoperative_feigongneng::where(['patients_id'=>$patients_id,'feigongneng_id'=>$feigongneng_id])->field('img_address')->find();
+        $res = Preoperative_feigongneng::where(['patients_id'=>$patients_id,'feigongneng_id'=>$fileId])->field('img_address')->find();
         $res['img_address'] = json_decode($res['img_address']);
 
-        $res_info = [];
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            foreach ($res['img_address'] as $key=>$value)
-            {
-                $imgInfo = filesize($file_path.$value); //获取文件大小
-
-                $ct_name = explode('/',$value);   //截取字符串
-                array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$value,'key'=>$value,'size'=>$imgInfo]);   //组合对象数组
-            }
-            $res['img_info'] = $res_info;
+            $this->getFileInfoArr($file_path,$res);
             return $res;
         }
-        //判断数据库字段是否有数据
+        //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $ct_name = explode('/',$res['img_address']);   //截取字符串
-
-            $imgInfo = filesize($file_path.$res['img_address']); //获取文件大小
-
-            array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$res['img_address'],'key'=>$res['img_address'],'size'=>$imgInfo]);   //组合对象数组
-            $res['img_info'] = $res_info;
+            $this->getFileInfoStr($file_path,$res);
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -1290,48 +1173,6 @@ class PreSave extends Base
     }
 
 
-    //气管镜保存上传文件路径到数据库函数
-    private function saveFileUrlQiGuanJing($newUrl,$fileId,$patients_id,$dbName)
-    {
-        $get = Preoperative_qiguanjing::where(['qiguanjing_id'=>$fileId,'patients_id'=>$patients_id])->find();
-
-        //未保存则创建新数据
-        if (!isset($get)){
-            $pre_ct = new Preoperative_qiguanjing();
-            $pre_ct->qiguanjing_id =$fileId;
-            $pre_ct->patients_id =$patients_id;
-            $pre_ct->created_time = date('Y-m-d');
-            $pre_ct->save();
-        }
-        //判断数据库文件地址是否为空
-        if ($get['img_address'] == null){
-            //转换为json格式写入数据库
-            $newUrl = json_encode($newUrl);
-            Db::name($dbName)
-                ->data('img_address',$newUrl)
-                ->where(['qiguanjing_id'=>$fileId,'patients_id'=>$patients_id])
-                ->update();
-        }
-        else
-        {
-            $array_img_address= json_decode($get['img_address']);//取出数据库原有json数据
-
-            //判断原有数据是否为数组(单个数据默认为字符串，需转换为数据)
-            if (is_array($array_img_address)){
-                array_push($array_img_address,$newUrl);//组合新数组（多条数据）
-            }
-            else{
-                $array_img_address = array($array_img_address);//把数据库原有数据转换为数组
-                array_push($array_img_address,$newUrl);//组合新数组（单条数据）
-            }
-
-            Db::name($dbName)
-                ->data('img_address',$array_img_address)
-                ->where(['qiguanjing_id'=>$fileId,'patients_id'=>$patients_id])
-                ->update();
-        }
-
-    }
 
     //更新、新增气管镜信息
     public function qiGuanJingSaveNew(){
@@ -1586,7 +1427,7 @@ class PreSave extends Base
 
             }
             //正式写入数据库
-            $this->saveFileUrlQiGuanJing($url,$form_id,$patients_id,'Preoperative_qiguanjing');
+            $this->saveFileUrl($url,$form_id,$patients_id,'Preoperative_qiguanjing','qiguanjing_id','qiguanjing_find');
 
             return  (['status'=>1,'message'=>'文件上传成功','fileid'=>$url]);
         }
@@ -1597,41 +1438,20 @@ class PreSave extends Base
     }
 
     //删除气管镜图像
-    public function imgQiGuanJinggDel()
+    public function imgQiGuanJingDel()
     {
         $info = $this->request->param();//获取附加信息
 
         $patients_id =$info['patients_id'];
         $form_id =$info['form_id'];
         $file_name = $info['key'];
+        $idName = 'qiguanjing_id';
+        $dbName = 'Preoperative_qiguanjing';
+        $folderName = 'qiguanjing';
 
-        $get = Preoperative_qiguanjing::where(['qiguanjing_id'=>$form_id,'patients_id'=>$patients_id])->find();
-        if ($get){
-            $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
+        $this->delFileUrl($form_id,$patients_id,$idName,$dbName,$folderName,$file_name);
 
-            foreach ($get_address as $key=>$value)
-            {
-                if ($value == $file_name)
-                    array_splice($get_address,$key,1);   //删除数组对应的值
-            }
-
-            //把删除后的数组重新写入数据库
-            $res = Db::name('Preoperative_qiguanjing')
-                ->data('img_address',$get_address)
-                ->where(['qiguanjing_id'=>$form_id,'patients_id'=>$patients_id])
-                ->update();
-
-            if($res){
-                //删除对应文件
-                $savePath = Env::get('root_path').'storge/preoperative/qiguanjing/';//CT图片保存根目录
-                $filePath = $savePath.$file_name;
-                unlink($filePath);
-
-                return ['status'=>1,'message'=>'删除成功'];
-            }
-            return ['status'=>0,'error'=>'删除失败'];
-        }
-        return ['status'=>0,'error'=>'未知错误'];
+        return ['status'=>1,'message'=>'删除成功'];
     }
 
     //获取气管镜图像预览信息
@@ -1639,32 +1459,19 @@ class PreSave extends Base
         $file_path = Env::get('root_path').'storge/preoperative/qiguanjing/';//超声图片保存根目录
 
         $patients_id = $this->request->param('patients_id');
-        $qiguanjing_id = $this->request->param('form_id');
+        $fileId = $this->request->param('form_id');
 
-        $res = Preoperative_qiguanjing::where(['patients_id'=>$patients_id,'qiguanjing_id'=>$qiguanjing_id])->field('img_address')->find();
+        $res = Preoperative_qiguanjing::where(['patients_id'=>$patients_id,'qiguanjing_id'=>$fileId])->field('img_address')->find();
         $res['img_address'] = json_decode($res['img_address']);
 
-        $res_info = [];
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            foreach ($res['img_address'] as $key=>$value)
-            {
-                $imgInfo = filesize($file_path.$value); //获取文件大小
-
-                $ct_name = explode('/',$value);   //截取字符串
-                array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$value,'key'=>$value,'size'=>$imgInfo]);   //组合对象数组
-            }
-            $res['img_info'] = $res_info;
+            $this->getFileInfoArr($file_path,$res);
             return $res;
         }
-        //判断数据库字段是否有数据
+        //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $ct_name = explode('/',$res['img_address']);   //截取字符串
-
-            $imgInfo = filesize($file_path.$res['img_address']); //获取文件大小
-
-            array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$res['img_address'],'key'=>$res['img_address'],'size'=>$imgInfo]);   //组合对象数组
-            $res['img_info'] = $res_info;
+            $this->getFileInfoStr($file_path,$res);
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -1673,48 +1480,6 @@ class PreSave extends Base
     }
 
 
-    //头颅保存上传文件路径到数据库函数
-    private function saveFileUrlTouLu($newUrl,$fileId,$patients_id,$dbName)
-    {
-        $get = Preoperative_toulu::where(['toulu_id'=>$fileId,'patients_id'=>$patients_id])->find();
-
-        //未保存则创建新数据
-        if (!isset($get)){
-            $pre_ct = new Preoperative_toulu();
-            $pre_ct->toulu_id =$fileId;
-            $pre_ct->patients_id =$patients_id;
-            $pre_ct->created_time = date('Y-m-d');
-            $pre_ct->save();
-        }
-        //判断数据库文件地址是否为空
-        if ($get['img_address'] == null){
-            //转换为json格式写入数据库
-            $newUrl = json_encode($newUrl);
-            Db::name($dbName)
-                ->data('img_address',$newUrl)
-                ->where(['toulu_id'=>$fileId,'patients_id'=>$patients_id])
-                ->update();
-        }
-        else
-        {
-            $array_img_address= json_decode($get['img_address']);//取出数据库原有json数据
-
-            //判断原有数据是否为数组(单个数据默认为字符串，需转换为数据)
-            if (is_array($array_img_address)){
-                array_push($array_img_address,$newUrl);//组合新数组（多条数据）
-            }
-            else{
-                $array_img_address = array($array_img_address);//把数据库原有数据转换为数组
-                array_push($array_img_address,$newUrl);//组合新数组（单条数据）
-            }
-
-            Db::name($dbName)
-                ->data('img_address',$array_img_address)
-                ->where(['toulu_id'=>$fileId,'patients_id'=>$patients_id])
-                ->update();
-        }
-
-    }
 
     //更新、新增头颅信息
     public function touLuSaveNew(){
@@ -1817,7 +1582,6 @@ class PreSave extends Base
 
             if ($get['img_address']!=null){
                 $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
-//                return  (['status'=>1,'message'=>is_array($get_address)]);
                 if (is_array($get_address)){
                     foreach ($get_address as $key=>$value)
                     {
@@ -1832,7 +1596,7 @@ class PreSave extends Base
 
             }
             //正式写入数据库
-            $this->saveFileUrlTouLu($url,$form_id,$patients_id,'Preoperative_toulu');
+            $this->saveFileUrl($url,$form_id,$patients_id,'Preoperative_toulu','toulu_id','toulu_find');
 
             return  (['status'=>1,'message'=>'文件上传成功','fileid'=>$url]);
         }
@@ -1843,41 +1607,21 @@ class PreSave extends Base
     }
 
     //删除头颅图像
-    public function imgTouLugDel()
+    public function imgTouLuDel()
     {
         $info = $this->request->param();//获取附加信息
 
         $patients_id =$info['patients_id'];
         $form_id =$info['form_id'];
         $file_name = $info['key'];
+        $idName = 'toulu_id';
+        $dbName = 'Preoperative_toulu';
+        $folderName = 'toulu';
 
-        $get = Preoperative_toulu::where(['toulu_id'=>$form_id,'patients_id'=>$patients_id])->find();
-        if ($get){
-            $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
+        $this->delFileUrl($form_id,$patients_id,$idName,$dbName,$folderName,$file_name);
 
-            foreach ($get_address as $key=>$value)
-            {
-                if ($value == $file_name)
-                    array_splice($get_address,$key,1);   //删除数组对应的值
-            }
+        return ['status'=>1,'message'=>'删除成功'];
 
-            //把删除后的数组重新写入数据库
-            $res = Db::name('Preoperative_toulu')
-                ->data('img_address',$get_address)
-                ->where(['toulu_id'=>$form_id,'patients_id'=>$patients_id])
-                ->update();
-
-            if($res){
-                //删除对应文件
-                $savePath = Env::get('root_path').'storge/preoperative/toulu/';//CT图片保存根目录
-                $filePath = $savePath.$file_name;
-                unlink($filePath);
-
-                return ['status'=>1,'message'=>'删除成功'];
-            }
-            return ['status'=>0,'error'=>'删除失败'];
-        }
-        return ['status'=>0,'error'=>'未知错误'];
     }
 
     //获取头颅图像预览信息
@@ -1885,32 +1629,19 @@ class PreSave extends Base
         $file_path = Env::get('root_path').'storge/preoperative/toulu/';//超声图片保存根目录
 
         $patients_id = $this->request->param('patients_id');
-        $toulu_id = $this->request->param('form_id');
+        $fileId = $this->request->param('form_id');
 
-        $res = Preoperative_toulu::where(['patients_id'=>$patients_id,'toulu_id'=>$toulu_id])->field('img_address')->find();
+        $res = Preoperative_toulu::where(['patients_id'=>$patients_id,'toulu_id'=>$fileId])->field('img_address')->find();
         $res['img_address'] = json_decode($res['img_address']);
 
-        $res_info = [];
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            foreach ($res['img_address'] as $key=>$value)
-            {
-                $imgInfo = filesize($file_path.$value); //获取文件大小
-
-                $ct_name = explode('/',$value);   //截取字符串
-                array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$value,'key'=>$value,'size'=>$imgInfo]);   //组合对象数组
-            }
-            $res['img_info'] = $res_info;
+            $this->getFileInfoArr($file_path,$res);
             return $res;
         }
-        //判断数据库字段是否有数据
+        //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $ct_name = explode('/',$res['img_address']);   //截取字符串
-
-            $imgInfo = filesize($file_path.$res['img_address']); //获取文件大小
-
-            array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$res['img_address'],'key'=>$res['img_address'],'size'=>$imgInfo]);   //组合对象数组
-            $res['img_info'] = $res_info;
+            $this->getFileInfoStr($file_path,$res);
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -1919,48 +1650,6 @@ class PreSave extends Base
     }
 
 
-    //骨扫描保存上传文件路径到数据库函数
-    private function saveFileUrlGuSaoMiao($newUrl,$fileId,$patients_id,$dbName)
-    {
-        $get = Preoperative_gusaomiao::where(['gusaomiao_id'=>$fileId,'patients_id'=>$patients_id])->find();
-
-        //未保存则创建新数据
-        if (!isset($get)){
-            $pre_ct = new Preoperative_gusaomiao();
-            $pre_ct->gusaomiao_id =$fileId;
-            $pre_ct->patients_id =$patients_id;
-            $pre_ct->created_time = date('Y-m-d');
-            $pre_ct->save();
-        }
-        //判断数据库文件地址是否为空
-        if ($get['img_address'] == null){
-            //转换为json格式写入数据库
-            $newUrl = json_encode($newUrl);
-            Db::name($dbName)
-                ->data('img_address',$newUrl)
-                ->where(['gusaomiao_id'=>$fileId,'patients_id'=>$patients_id])
-                ->update();
-        }
-        else
-        {
-            $array_img_address= json_decode($get['img_address']);//取出数据库原有json数据
-
-            //判断原有数据是否为数组(单个数据默认为字符串，需转换为数据)
-            if (is_array($array_img_address)){
-                array_push($array_img_address,$newUrl);//组合新数组（多条数据）
-            }
-            else{
-                $array_img_address = array($array_img_address);//把数据库原有数据转换为数组
-                array_push($array_img_address,$newUrl);//组合新数组（单条数据）
-            }
-
-            Db::name($dbName)
-                ->data('img_address',$array_img_address)
-                ->where(['gusaomiao_id'=>$fileId,'patients_id'=>$patients_id])
-                ->update();
-        }
-
-    }
 
     //更新、新增骨扫描信息
     public function guSaoMiaoSaveNew(){
@@ -2078,7 +1767,7 @@ class PreSave extends Base
 
             }
             //正式写入数据库
-            $this->saveFileUrlGuSaoMiao($url,$form_id,$patients_id,'Preoperative_gusaomiao');
+            $this->saveFileUrl($url,$form_id,$patients_id,'Preoperative_gusaomiao','gusaomiao_id','gusaomiao_find');
 
             return  (['status'=>1,'message'=>'文件上传成功','fileid'=>$url]);
         }
@@ -2089,41 +1778,20 @@ class PreSave extends Base
     }
 
     //删除骨扫描图像
-    public function imgGuSaoMiaogDel()
+    public function imgGuSaoMiaoDel()
     {
         $info = $this->request->param();//获取附加信息
 
         $patients_id =$info['patients_id'];
         $form_id =$info['form_id'];
         $file_name = $info['key'];
+        $idName = 'gusaomiao_id';
+        $dbName = 'Preoperative_gusaomiao';
+        $folderName = 'gusaomiao';
 
-        $get = Preoperative_gusaomiao::where(['gusaomiao_id'=>$form_id,'patients_id'=>$patients_id])->find();
-        if ($get){
-            $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
+        $this->delFileUrl($form_id,$patients_id,$idName,$dbName,$folderName,$file_name);
 
-            foreach ($get_address as $key=>$value)
-            {
-                if ($value == $file_name)
-                    array_splice($get_address,$key,1);   //删除数组对应的值
-            }
-
-            //把删除后的数组重新写入数据库
-            $res = Db::name('Preoperative_gusaomiao')
-                ->data('img_address',$get_address)
-                ->where(['gusaomiao_id'=>$form_id,'patients_id'=>$patients_id])
-                ->update();
-
-            if($res){
-                //删除对应文件
-                $savePath = Env::get('root_path').'storge/preoperative/gusaomiao/';//CT图片保存根目录
-                $filePath = $savePath.$file_name;
-                unlink($filePath);
-
-                return ['status'=>1,'message'=>'删除成功'];
-            }
-            return ['status'=>0,'error'=>'删除失败'];
-        }
-        return ['status'=>0,'error'=>'未知错误'];
+        return ['status'=>1,'message'=>'删除成功'];
     }
 
     //获取骨扫描图像预览信息
@@ -2131,32 +1799,19 @@ class PreSave extends Base
         $file_path = Env::get('root_path').'storge/preoperative/gusaomiao/';//超声图片保存根目录
 
         $patients_id = $this->request->param('patients_id');
-        $gusaomiao_id = $this->request->param('form_id');
+        $fileId = $this->request->param('form_id');
 
-        $res = Preoperative_gusaomiao::where(['patients_id'=>$patients_id,'gusaomiao_id'=>$gusaomiao_id])->field('img_address')->find();
+        $res = Preoperative_gusaomiao::where(['patients_id'=>$patients_id,'gusaomiao_id'=>$fileId])->field('img_address')->find();
         $res['img_address'] = json_decode($res['img_address']);
 
-        $res_info = [];
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            foreach ($res['img_address'] as $key=>$value)
-            {
-                $imgInfo = filesize($file_path.$value); //获取文件大小
-
-                $ct_name = explode('/',$value);   //截取字符串
-                array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$value,'key'=>$value,'size'=>$imgInfo]);   //组合对象数组
-            }
-            $res['img_info'] = $res_info;
+            $this->getFileInfoArr($file_path,$res);
             return $res;
         }
-        //判断数据库字段是否有数据
+        //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $ct_name = explode('/',$res['img_address']);   //截取字符串
-
-            $imgInfo = filesize($file_path.$res['img_address']); //获取文件大小
-
-            array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$res['img_address'],'key'=>$res['img_address'],'size'=>$imgInfo]);   //组合对象数组
-            $res['img_info'] = $res_info;
+            $this->getFileInfoStr($file_path,$res);
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -2165,48 +1820,6 @@ class PreSave extends Base
     }
 
 
-    //骨CT保存上传文件路径到数据库函数
-    private function saveFileUrlGuCt($newUrl,$fileId,$patients_id,$dbName)
-    {
-        $get = Preoperative_guct::where(['guct_id'=>$fileId,'patients_id'=>$patients_id])->find();
-
-        //未保存则创建新数据
-        if (!isset($get)){
-            $pre_ct = new Preoperative_guct();
-            $pre_ct->guct_id =$fileId;
-            $pre_ct->patients_id =$patients_id;
-            $pre_ct->created_time = date('Y-m-d');
-            $pre_ct->save();
-        }
-        //判断数据库文件地址是否为空
-        if ($get['img_address'] == null){
-            //转换为json格式写入数据库
-            $newUrl = json_encode($newUrl);
-            Db::name($dbName)
-                ->data('img_address',$newUrl)
-                ->where(['guct_id'=>$fileId,'patients_id'=>$patients_id])
-                ->update();
-        }
-        else
-        {
-            $array_img_address= json_decode($get['img_address']);//取出数据库原有json数据
-
-            //判断原有数据是否为数组(单个数据默认为字符串，需转换为数据)
-            if (is_array($array_img_address)){
-                array_push($array_img_address,$newUrl);//组合新数组（多条数据）
-            }
-            else{
-                $array_img_address = array($array_img_address);//把数据库原有数据转换为数组
-                array_push($array_img_address,$newUrl);//组合新数组（单条数据）
-            }
-
-            Db::name($dbName)
-                ->data('img_address',$array_img_address)
-                ->where(['guct_id'=>$fileId,'patients_id'=>$patients_id])
-                ->update();
-        }
-
-    }
 
     //更新、新增骨CT信息
     public function guCtSaveNew(){
@@ -2324,7 +1937,7 @@ class PreSave extends Base
 
             }
             //正式写入数据库
-            $this->saveFileUrlGuCt($url,$form_id,$patients_id,'Preoperative_guct');
+            $this->saveFileUrl($url,$form_id,$patients_id,'Preoperative_guct','guct_id','guct_find');
 
             return  (['status'=>1,'message'=>'文件上传成功','fileid'=>$url]);
         }
@@ -2335,41 +1948,20 @@ class PreSave extends Base
     }
 
     //删除骨CT图像
-    public function imgGuCtgDel()
+    public function imgGuCtDel()
     {
         $info = $this->request->param();//获取附加信息
 
         $patients_id =$info['patients_id'];
         $form_id =$info['form_id'];
         $file_name = $info['key'];
+        $idName = 'guct_id';
+        $dbName = 'Preoperative_guct';
+        $folderName = 'guct';
 
-        $get = Preoperative_guct::where(['guct_id'=>$form_id,'patients_id'=>$patients_id])->find();
-        if ($get){
-            $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
+        $this->delFileUrl($form_id,$patients_id,$idName,$dbName,$folderName,$file_name);
 
-            foreach ($get_address as $key=>$value)
-            {
-                if ($value == $file_name)
-                    array_splice($get_address,$key,1);   //删除数组对应的值
-            }
-
-            //把删除后的数组重新写入数据库
-            $res = Db::name('Preoperative_guct')
-                ->data('img_address',$get_address)
-                ->where(['guct_id'=>$form_id,'patients_id'=>$patients_id])
-                ->update();
-
-            if($res){
-                //删除对应文件
-                $savePath = Env::get('root_path').'storge/preoperative/guct/';//CT图片保存根目录
-                $filePath = $savePath.$file_name;
-                unlink($filePath);
-
-                return ['status'=>1,'message'=>'删除成功'];
-            }
-            return ['status'=>0,'error'=>'删除失败'];
-        }
-        return ['status'=>0,'error'=>'未知错误'];
+        return ['status'=>1,'message'=>'删除成功'];
     }
 
     //获取骨CT图像预览信息
@@ -2377,32 +1969,19 @@ class PreSave extends Base
         $file_path = Env::get('root_path').'storge/preoperative/guct/';//超声图片保存根目录
 
         $patients_id = $this->request->param('patients_id');
-        $guct_id = $this->request->param('form_id');
+        $fileId = $this->request->param('form_id');
 
-        $res = Preoperative_guct::where(['patients_id'=>$patients_id,'guct_id'=>$guct_id])->field('img_address')->find();
+        $res = Preoperative_guct::where(['patients_id'=>$patients_id,'guct_id'=>$fileId])->field('img_address')->find();
         $res['img_address'] = json_decode($res['img_address']);
 
-        $res_info = [];
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            foreach ($res['img_address'] as $key=>$value)
-            {
-                $imgInfo = filesize($file_path.$value); //获取文件大小
-
-                $ct_name = explode('/',$value);   //截取字符串
-                array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$value,'key'=>$value,'size'=>$imgInfo]);   //组合对象数组
-            }
-            $res['img_info'] = $res_info;
+            $this->getFileInfoArr($file_path,$res);
             return $res;
         }
-        //判断数据库字段是否有数据
+        //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $ct_name = explode('/',$res['img_address']);   //截取字符串
-
-            $imgInfo = filesize($file_path.$res['img_address']); //获取文件大小
-
-            array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$res['img_address'],'key'=>$res['img_address'],'size'=>$imgInfo]);   //组合对象数组
-            $res['img_info'] = $res_info;
+            $this->getFileInfoStr($file_path,$res);
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -2411,48 +1990,6 @@ class PreSave extends Base
     }
 
 
-    //肝脏CT保存上传文件路径到数据库函数
-    private function saveFileUrlGanZhangCt($newUrl,$fileId,$patients_id,$dbName)
-    {
-        $get = Preoperative_ganzhangct::where(['ganzhangct_id'=>$fileId,'patients_id'=>$patients_id])->find();
-
-        //未保存则创建新数据
-        if (!isset($get)){
-            $pre_ct = new Preoperative_ganzhangct();
-            $pre_ct->ganzhangct_id =$fileId;
-            $pre_ct->patients_id =$patients_id;
-            $pre_ct->created_time = date('Y-m-d');
-            $pre_ct->save();
-        }
-        //判断数据库文件地址是否为空
-        if ($get['img_address'] == null){
-            //转换为json格式写入数据库
-            $newUrl = json_encode($newUrl);
-            Db::name($dbName)
-                ->data('img_address',$newUrl)
-                ->where(['ganzhangct_id'=>$fileId,'patients_id'=>$patients_id])
-                ->update();
-        }
-        else
-        {
-            $array_img_address= json_decode($get['img_address']);//取出数据库原有json数据
-
-            //判断原有数据是否为数组(单个数据默认为字符串，需转换为数据)
-            if (is_array($array_img_address)){
-                array_push($array_img_address,$newUrl);//组合新数组（多条数据）
-            }
-            else{
-                $array_img_address = array($array_img_address);//把数据库原有数据转换为数组
-                array_push($array_img_address,$newUrl);//组合新数组（单条数据）
-            }
-
-            Db::name($dbName)
-                ->data('img_address',$array_img_address)
-                ->where(['ganzhangct_id'=>$fileId,'patients_id'=>$patients_id])
-                ->update();
-        }
-
-    }
 
     //更新、新增肝脏CT信息
     public function ganZhangCtSaveNew(){
@@ -2570,7 +2107,7 @@ class PreSave extends Base
 
             }
             //正式写入数据库
-            $this->saveFileUrlGanZhangCt($url,$form_id,$patients_id,'Preoperative_ganzhangct');
+            $this->saveFileUrl($url,$form_id,$patients_id,'Preoperative_ganzhangct','ganzhangct_id','ganzhangct_find');
 
             return  (['status'=>1,'message'=>'文件上传成功','fileid'=>$url]);
         }
@@ -2581,41 +2118,20 @@ class PreSave extends Base
     }
 
     //删除肝脏CT图像
-    public function imgGanZhangCtgDel()
+    public function imgGanZhangCtDel()
     {
         $info = $this->request->param();//获取附加信息
 
         $patients_id =$info['patients_id'];
         $form_id =$info['form_id'];
         $file_name = $info['key'];
+        $idName = 'ganzhangct_id';
+        $dbName = 'Preoperative_ganzhangct';
+        $folderName = 'ganzhangct';
 
-        $get = Preoperative_ganzhangct::where(['ganzhangct_id'=>$form_id,'patients_id'=>$patients_id])->find();
-        if ($get){
-            $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
+        $this->delFileUrl($form_id,$patients_id,$idName,$dbName,$folderName,$file_name);
 
-            foreach ($get_address as $key=>$value)
-            {
-                if ($value == $file_name)
-                    array_splice($get_address,$key,1);   //删除数组对应的值
-            }
-
-            //把删除后的数组重新写入数据库
-            $res = Db::name('Preoperative_ganzhangct')
-                ->data('img_address',$get_address)
-                ->where(['ganzhangct_id'=>$form_id,'patients_id'=>$patients_id])
-                ->update();
-
-            if($res){
-                //删除对应文件
-                $savePath = Env::get('root_path').'storge/preoperative/ganzhangct/';//CT图片保存根目录
-                $filePath = $savePath.$file_name;
-                unlink($filePath);
-
-                return ['status'=>1,'message'=>'删除成功'];
-            }
-            return ['status'=>0,'error'=>'删除失败'];
-        }
-        return ['status'=>0,'error'=>'未知错误'];
+        return ['status'=>1,'message'=>'删除成功'];
     }
 
     //获取肝脏CT图像预览信息
@@ -2623,32 +2139,233 @@ class PreSave extends Base
         $file_path = Env::get('root_path').'storge/preoperative/ganzhangct/';//超声图片保存根目录
 
         $patients_id = $this->request->param('patients_id');
-        $ganzhangct_id = $this->request->param('form_id');
+        $fileId = $this->request->param('form_id');
 
-        $res = Preoperative_ganzhangct::where(['patients_id'=>$patients_id,'ganzhangct_id'=>$ganzhangct_id])->field('img_address')->find();
+        $res = Preoperative_ganzhangct::where(['patients_id'=>$patients_id,'ganzhangct_id'=>$fileId])->field('img_address')->find();
         $res['img_address'] = json_decode($res['img_address']);
 
-        $res_info = [];
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            foreach ($res['img_address'] as $key=>$value)
-            {
-                $imgInfo = filesize($file_path.$value); //获取文件大小
-
-                $ct_name = explode('/',$value);   //截取字符串
-                array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$value,'key'=>$value,'size'=>$imgInfo]);   //组合对象数组
-            }
-            $res['img_info'] = $res_info;
+            $this->getFileInfoArr($file_path,$res);
             return $res;
         }
-        //判断数据库字段是否有数据
+        //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $ct_name = explode('/',$res['img_address']);   //截取字符串
+            $this->getFileInfoStr($file_path,$res);
+            return $res;
+        }
+        //数据库字段无数据则输出空数组
+        $res['img_address'] = [];
+        return $res;
+    }
 
-            $imgInfo = filesize($file_path.$res['img_address']); //获取文件大小
 
-            array_push($res_info,['caption'=>$ct_name[1],'downloadUrl'=>'../download/'.$res['img_address'],'key'=>$res['img_address'],'size'=>$imgInfo]);   //组合对象数组
-            $res['img_info'] = $res_info;
+
+
+    //更新、新增PET信息
+    public function petSaveNew(){
+        //数据处理-获取表单数据
+        $patients_id = $this->request->param('patients_id');
+        $form_data = $this->request->param('form_data');
+        $pet_id = $this->request->param('form_id');
+
+        //判断数据库当前患者下form_id是否存在
+        $pre_pet_find = Preoperative_pet::where(['patients_id'=>$patients_id,'pet_id'=>$pet_id])->find();
+
+        //更新数据
+        if ($pre_pet_find){
+
+            //解决输入框为空
+            if (!isset($form_data['pet_num'])){
+                $form_data['pet_num'] =null;
+            }
+            if (!isset($form_data['suv'])){
+                $form_data['suv'] =null;
+            }
+            if (!isset($form_data['other_find'])){
+                $form_data['other_find'] =null;
+            }
+            if (!isset($form_data['check_time'])){
+                $form_data['check_time'] =null;
+            }
+
+            $res_pet = Db::name('Preoperative_pet')
+                ->where(['pet_id'=>$pet_id,'patients_id'=>$patients_id])
+                ->data([
+                    'edit_time'=>date('Y-m-d H:i:s'),
+                    'pet_find'=>$form_data['pet_find'],
+                    'benyuan_check'=>$form_data['benyuan_check'],
+                    'pet_num'=>$form_data['pet_num'],
+                    'check_time'=>$form_data['check_time'],
+                    'suv'=>$form_data['suv'],
+                    'pet_fenqi_t'=>$form_data['pet_fenqi_t'],
+                    'pet_fenqi_n'=>$form_data['pet_fenqi_n'],
+                    'pet_fenqi_m'=>$form_data['pet_fenqi_m'],
+                    'other_find'=>$form_data['other_find'],
+                ])
+                ->update();
+            if ($res_pet){
+                $res['status'] = 1;
+                $res['msg'] ='数据保存成功';
+                return $res;
+            }
+            $res['status'] =0;
+            $res['msg'] ='数据未更改';
+            return $res;
+        }
+
+        //新增数据
+        $pre_pet = new Preoperative_pet();
+        $pre_pet->pet_id =$pet_id;
+        $pre_pet->patients_id =$patients_id;
+        $pre_pet->created_time = date('Y-m-d');
+
+        //解决输入框为空
+        if (!isset($form_data['pet_num'])){
+            $form_data['pet_num'] =null;
+        }
+        if (!isset($form_data['suv'])){
+            $form_data['suv'] =null;
+        }
+        if (!isset($form_data['other_find'])){
+            $form_data['other_find'] =null;
+        }
+        if (!isset($form_data['check_time'])){
+            $form_data['check_time'] =null;
+        }
+
+        //数据写入
+        $pre_pet->pet_find = $form_data['pet_find'];
+        $pre_pet->benyuan_check = $form_data['benyuan_check'];
+        $pre_pet->pet_num = $form_data['pet_num'];
+        $pre_pet->check_time = $form_data['check_time'];
+        $pre_pet->suv = $form_data['suv'];
+        $pre_pet->pet_fenqi_t = $form_data['pet_fenqi_t'];
+        $pre_pet->pet_fenqi_n = $form_data['pet_fenqi_n'];
+        $pre_pet->pet_fenqi_m = $form_data['pet_fenqi_m'];
+        $pre_pet->other_find = $form_data['other_find'];
+        $pre_pet->save();
+
+        if ($pre_pet){
+            $res['status'] = 1;
+            $res['msg'] ='数据保存成功';
+            return $res;
+        }
+
+        $res['status'] = 0;
+        $res['msg'] ='新增数据失败';
+        return $res;
+
+    }
+
+    //删除PET信息
+    public function delPETInfo()
+    {
+        $patients_id = $this->request->param('patients_id');
+        $id = $this->request->param('form_id');
+        $del = Preoperative_pet::where(['pet_id'=>$id,'patients_id'=>$patients_id])->delete();
+        if ($del){
+            $res['msg'] = '删除成功';
+            $res['status'] = 1 ;
+            return $res;
+        }
+        $res['msg'] = '数据库连接失败';
+        $res['status'] = 0 ;
+        return $res;
+    }
+
+    //保存PET图像
+    public function imgPETSave()
+    {
+        $savePath = Env::get('root_path').'storge/preoperative/pet/'.date('Ymd');//CT图片保存根目录
+
+        $info = $this->request->param();//获取附加信息
+
+        $patients_id =$info['patients_id'];
+        $form_id =$info['form_id'];
+
+
+        $file = $this->request->file();//获取上传文件本体
+
+
+        //文件保存
+        if ($file){
+            $res = $file['imgShowPET'.$form_id]->move($savePath,'');
+        }
+        else{
+            return (['status'=>0,'error'=>'文件保存失败']);
+        }
+
+        //写入数据库
+        if($res)
+        {
+            $url = date('Ymd')."/".$res->getSaveName();
+
+            //数据库查重
+            $get = Preoperative_pet::where(['pet_id'=>$form_id,'patients_id'=>$patients_id])->find();
+
+            if ($get['img_address']!=null){
+                $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
+//                return  (['status'=>1,'message'=>is_array($get_address)]);
+                if (is_array($get_address)){
+                    foreach ($get_address as $key=>$value)
+                    {
+                        if ($value == $url)
+                            return  (['status'=>0,'error'=>'文件名重复！写入数据库失败！请更改文件名称后重试！']);
+                    }
+                }
+                if ($get_address == $url){
+                    return  (['status'=>0,'error'=>'文件名重复！写入数据库失败！请更改文件名称后重试！']);
+                }
+
+
+            }
+            //正式写入数据库
+            $this->saveFileUrl($url,$form_id,$patients_id,'Preoperative_pet','pet_id','pet_find');
+
+            return  (['status'=>1,'message'=>'文件上传成功','fileid'=>$url]);
+        }
+        else
+        {
+            return  (['status'=>0,'error'=>'写入数据库失败']);
+        }
+    }
+
+    //删除PET图像
+    public function imgPETDel()
+    {
+        $info = $this->request->param();//获取附加信息
+
+        $patients_id =$info['patients_id'];
+        $form_id =$info['form_id'];
+        $file_name = $info['key'];
+        $idName = 'pet_id';
+        $dbName = 'Preoperative_pet';
+        $folderName = 'pet';
+
+        $this->delFileUrl($form_id,$patients_id,$idName,$dbName,$folderName,$file_name);
+
+        return ['status'=>1,'message'=>'删除成功'];
+    }
+
+    //获取PET图像预览信息
+    public function getPETAddress(){
+        $file_path = Env::get('root_path').'storge/preoperative/pet/';//超声图片保存根目录
+
+        $patients_id = $this->request->param('patients_id');
+        $fileId = $this->request->param('form_id');
+
+        $res = Preoperative_pet::where(['patients_id'=>$patients_id,'pet_id'=>$fileId])->field('img_address')->find();
+        $res['img_address'] = json_decode($res['img_address']);
+
+        //判断数据库字段是否为数组
+        if (is_array($res['img_address'])){
+            $this->getFileInfoArr($file_path,$res);
+            return $res;
+        }
+        //判断数据库字段是否有数据(字符串)
+        if ($res['img_address']!=null){
+            $this->getFileInfoStr($file_path,$res);
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -2660,6 +2377,10 @@ class PreSave extends Base
     //测试
     public function ceshi()
     {
+        $res['img_address'] = (new \app\model\Preoperative_ct)->getImgAddress(1000088,1);
+        dump($res['img_address']);
+
+
 
 
     }
