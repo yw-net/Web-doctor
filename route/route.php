@@ -9,13 +9,14 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::get('think', function () {
-    return 'hello,doctor!';
-});
-//图片路由
-Route::rule('file/:type/:date/:name','PreType/PreSave/imgRoute')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
-//文件下载路由
-Route::rule('download/:date/:name','PreSave/download')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
+//图片路由（术前检查）
+Route::rule('prefile/:type/:date/:name','PreSave/imgRoute')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
+//文件下载路由（术前检查）
+//Route::rule('download/:/type/:date/:name','PreSave/download')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
+
+//图片路由（手术信息）
+Route::rule('surfile/:type/:date/:name','SurgicalInfoSave/imgRoute')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
+
 //自动清理冗余图片
 Route::rule('clean','app/command/AutoCleanPhoto');
 

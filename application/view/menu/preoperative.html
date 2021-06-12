@@ -14,12 +14,13 @@
 <!--术前检查页面-->
 <div class="content">
     <div class="panel panel-info">
+
         <div class="panel-heading yw-flex-row">
             <h4 class="panel-title">术前检查</h4>
             <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
         </div>
         <input type="text" id="patients_id" class="hidden" value="{$patientid}">
-        <input type="text" id="ct_info" class="hidden" value="{$ct_info}">
+<!--        <input type="text" id="ct_info" class="hidden" value="{$ct_info}">-->
         <div class="panel-body">
             <div class="layui-tab layui-tab-card" lay-filter="main">
 
@@ -215,7 +216,7 @@
                                         <div class="layui-tab-content" style="overflow: hidden" id="xueChangGuiShow">
                                             {empty name='xuechanggui_info'}
                                             <form id="xueChangGuiForm1" class="layui-tab-item xueChangGuiForm layui-show">
-                                                <button class="btn btn-info save" type="button" onclick="saveTab('xueChangGuiSaveNew','#xueChangGuiForm','.xuechanggui-id')">保存修改</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/xueChangGuiSaveNew','#xueChangGuiForm','.xuechanggui-id')">保存修改</button>
                                                 <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                                     <div class="layui-form-item" style="margin-bottom: 0">
                                                         <label class="layui-form-label" style="width: 140px!important;">血常规检查</label>
@@ -278,8 +279,8 @@
                                             {foreach $xuechanggui_info as $xuechanggui_info}
                                             <form id="xueChangGuiForm{$xuechanggui_info->xuechanggui_id}" class="layui-tab-item xueChangGuiForm">
                                                 <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$xuechanggui_info->edit_time}</span></div>
-                                                <button class="btn btn-danger del" type="button" onclick="delBtn('delXueChangGuiInfo','{$xuechanggui_info->xuechanggui_id}','addXueChangGui')">删除</button>
-                                                <button class="btn btn-info save" type="button" onclick="saveTab('xueChangGuiSaveNew','#xueChangGuiForm','.xuechanggui-id')">保存修改</button>
+                                                <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delXueChangGuiInfo','{$xuechanggui_info->xuechanggui_id}','addXueChangGui')">删除</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/xueChangGuiSaveNew','#xueChangGuiForm','.xuechanggui-id')">保存修改</button>
                                                 <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                                     <div class="layui-form-item" style="margin-bottom: 0">
                                                         <label class="layui-form-label" style="width: 140px!important;">血常规检查</label>
@@ -392,7 +393,7 @@
 
                                             {empty name='xueshenghua_info'}
                                             <form id="xueShengHuaForm1" class="layui-tab-item xueShengHuaForm layui-show">
-                                                <button class="btn btn-info save" type="button" onclick="saveTab('xueShengHuaSaveNew','#xueShengHuaForm','.xueshenghua-id')">保存修改</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/xueShengHuaSaveNew','#xueShengHuaForm','.xueshenghua-id')">保存修改</button>
                                                 <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                                     <div class="layui-form-item" style="margin-bottom: 0">
                                                         <label class="layui-form-label" style="width: 140px!important;">血生化检查</label>
@@ -478,8 +479,8 @@
                                             {foreach $xueshenghua_info as $xueshenghua_info}
                                             <form id="xueShengHuaForm{$xueshenghua_info->xueshenghua_id}" class="layui-tab-item xueShengHuaForm">
                                                 <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$xueshenghua_info->edit_time}</span></div>
-                                                <button class="btn btn-danger del" type="button" onclick="delBtn('delXueShengHuaInfo','{$xueshenghua_info->xueshenghua_id}','addXueShengHua')">删除</button>
-                                                <button class="btn btn-info save" type="button" onclick="saveTab('xueShengHuaSaveNew','#xueShengHuaForm','.xueshenghua-id')">保存修改</button>
+                                                <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delXueShengHuaInfo','{$xueshenghua_info->xueshenghua_id}','addXueShengHua')">删除</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/xueShengHuaSaveNew','#xueShengHuaForm','.xueshenghua-id')">保存修改</button>
                                                 <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                                     <div class="layui-form-item" style="margin-bottom: 0">
                                                         <label class="layui-form-label" style="width: 140px!important;">血常规检查</label>
@@ -616,7 +617,7 @@
 
                                             {empty name='xueliubiaozhiwu_info'}
                                             <form id="xueLiuBiaoZhiWuForm1" class="layui-tab-item xueLiuBiaoZhiWuForm layui-show">
-                                                <button class="btn btn-info save" type="button" onclick="saveTab('xueLiuBiaoZhiWuSaveNew','#xueLiuBiaoZhiWuForm','.xueliubiaozhiwu-id')">保存修改</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/xueLiuBiaoZhiWuSaveNew','#xueLiuBiaoZhiWuForm','.xueliubiaozhiwu-id')">保存修改</button>
                                                 <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                                     <div class="layui-form-item" style="margin-bottom: 0">
                                                         <label class="layui-form-label" style="width: 180px!important;text-align: left">血瘤标志物检查</label>
@@ -681,8 +682,8 @@
                                             {foreach $xueliubiaozhiwu_info as $xueliubiaozhiwu_info}
                                             <form id="xueLiuBiaoZhiWuForm{$xueliubiaozhiwu_info->xueliubiaozhiwu_id}" class="layui-tab-item xueLiuBiaoZhiWuForm">
                                                 <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$xueliubiaozhiwu_info->edit_time}</span></div>
-                                                <button class="btn btn-danger del" type="button" onclick="delBtn('delXueLiuBiaoZhiWuInfo','{$xueliubiaozhiwu_info->xueliubiaozhiwu_id}','addXueLiuBiaoZhiWu')">删除</button>
-                                                <button class="btn btn-info save" type="button" onclick="saveTab('xueLiuBiaoZhiWuSaveNew','#xueLiuBiaoZhiWuForm','.xueliubiaozhiwu-id')">保存修改</button>
+                                                <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delXueLiuBiaoZhiWuInfo','{$xueliubiaozhiwu_info->xueliubiaozhiwu_id}','addXueLiuBiaoZhiWu')">删除</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/xueLiuBiaoZhiWuSaveNew','#xueLiuBiaoZhiWuForm','.xueliubiaozhiwu-id')">保存修改</button>
                                                 <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                                     <div class="layui-form-item" style="margin-bottom: 0">
                                                         <label class="layui-form-label" style="width: 180px!important;text-align: left">血瘤标志物检查</label>
@@ -788,7 +789,7 @@
 
                                 {empty name = 'ct_info'}
                                 <form class="layui-tab-item layui-show" id="ctForm1">
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('ctSaveNew','#ctForm','.ct-id')">保存修改</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/ctSaveNew','#ctForm','.ct-id')">保存修改</button>
 
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
@@ -1006,8 +1007,8 @@
                                 {foreach $ct_info as $ct_info_item}
                                 <form class="layui-tab-item" id="ctForm{$ct_info_item->ct_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$ct_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('delCtInfo','{$ct_info_item->ct_id}','addCt')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('ctSaveNew','#ctForm','.ct-id')">保存修改</button>
+                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delCtInfo','{$ct_info_item->ct_id}','addCt')">删除</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/ctSaveNew','#ctForm','.ct-id')">保存修改</button>
 
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
@@ -1260,7 +1261,7 @@
                             <div class="layui-tab-content has-success" style="overflow: hidden" id="chaoShengShow">
                                 {empty name = 'chaosheng_info'}
                                 <form class="layui-tab-item layui-show" id="chaoShengForm1">
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('chaoShengSaveNew','#chaoShengForm','.chaosheng-id')">保存修改</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/chaoShengSaveNew','#chaoShengForm','.chaosheng-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 140px!important;">超声检查发现</label>
@@ -1387,8 +1388,8 @@
                                 {foreach $chaosheng_info as $chaosheng_info_item}
                                 <form class="layui-tab-item" id="chaoShengForm{$chaosheng_info_item->chaosheng_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$chaosheng_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('delChaoShengInfo','{$chaosheng_info_item->chaosheng_id}','addChaoSheng')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('chaoShengSaveNew','#chaoShengForm','.chaosheng-id')">保存修改</button>
+                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delChaoShengInfo','{$chaosheng_info_item->chaosheng_id}','addChaoSheng')">删除</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/chaoShengSaveNew','#chaoShengForm','.chaosheng-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 140px!important;">超声检查发现</label>
@@ -1551,7 +1552,7 @@
                                 {empty name = 'feigongneng_info'}
                                 <form class="layui-tab-item layui-show" id="feiGongNengForm1">
 
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('feiGongNengSaveNew','#feiGongNengForm','.feigongneng-id')">保存修改</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/feiGongNengSaveNew','#feiGongNengForm','.feigongneng-id')">保存修改</button>
 
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
@@ -1707,8 +1708,8 @@
                                 {foreach $feigongneng_info as $feigongneng_info_item}
                                 <form class="layui-tab-item" id="feiGongNengForm{$feigongneng_info_item->feigongneng_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$feigongneng_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('delFeiGongNengInfo','{$feigongneng_info_item->feigongneng_id}','addFeiGongNeng')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('feiGongNengSaveNew','#feiGongNengForm','.feigongneng-id')">保存修改</button>
+                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delFeiGongNengInfo','{$feigongneng_info_item->feigongneng_id}','addFeiGongNeng')">删除</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/feiGongNengSaveNew','#feiGongNengForm','.feigongneng-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 140px!important;">肺功能检查</label>
@@ -1895,7 +1896,7 @@
                             <div class="layui-tab-content has-success" style="overflow: hidden" id="qiGuanJingShow">
                                 {empty name = 'qiguanjing_info'}
                                 <form class="layui-tab-item layui-show" id="qiGuanJingForm1">
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('qiGuanJingSaveNew','#qiGuanJingForm','.qiguanjing-id')">保存修改</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/qiGuanJingSaveNew','#qiGuanJingForm','.qiguanjing-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 180px!important;text-align: left">气管镜检查</label>
@@ -2044,8 +2045,8 @@
                                 {foreach $qiguanjing_info as $qiguanjing_info_item}
                                 <form class="layui-tab-item" id="qiGuanJingForm{$qiguanjing_info_item->qiguanjing_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$qiguanjing_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('delQiGuanJingInfo','{$qiguanjing_info_item->qiguanjing_id}','addQiGuanJing')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('qiGuanJingSaveNew','#qiGuanJingForm','.qiguanjing-id')">保存修改</button>
+                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delQiGuanJingInfo','{$qiguanjing_info_item->qiguanjing_id}','addQiGuanJing')">删除</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/qiGuanJingSaveNew','#qiGuanJingForm','.qiguanjing-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 180px!important;text-align: left">气管镜检查</label>
@@ -2289,7 +2290,7 @@
                             <div class="layui-tab-content has-success" style="overflow: hidden" id="touLuShow">
                                 {empty name = 'toulu_info'}
                                 <form class="layui-tab-item layui-show" id="touLuForm1">
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('touLuSaveNew','#touLuForm','.toulu-id')">保存修改</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/touLuSaveNew','#touLuForm','.toulu-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 180px!important;text-align: left">头颅MRI/CT检查</label>
@@ -2325,8 +2326,8 @@
                                 {foreach $toulu_info as $toulu_info_item}
                                 <form class="layui-tab-item" id="touLuForm{$toulu_info_item->toulu_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$toulu_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('delTouLuInfo','{$toulu_info_item->toulu_id}','addTouLu')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('touLuSaveNew','#touLuForm','.toulu-id')">保存修改</button>
+                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delTouLuInfo','{$toulu_info_item->toulu_id}','addTouLu')">删除</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/touLuSaveNew','#touLuForm','.toulu-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 180px!important;text-align: left">头颅MRI/CT检查</label>
@@ -2394,7 +2395,7 @@
                             <div class="layui-tab-content has-success" style="overflow: hidden" id="guSaoMiaoShow">
                                 {empty name = 'gusaomiao_info'}
                                 <form class="layui-tab-item layui-show" id="guSaoMiaoForm1">
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('guSaoMiaoSaveNew','#guSaoMiaoForm','.gusaomiao-id')">保存修改</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/guSaoMiaoSaveNew','#guSaoMiaoForm','.gusaomiao-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 180px!important;text-align: left">骨扫描检查发现</label>
@@ -2430,8 +2431,8 @@
                                 {foreach $gusaomiao_info as $gusaomiao_info_item}
                                 <form class="layui-tab-item" id="guSaoMiaoForm{$gusaomiao_info_item->gusaomiao_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$gusaomiao_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('delGuSaoMiaoInfo','{$gusaomiao_info_item->gusaomiao_id}','addGuSaoMiao')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('guSaoMiaoSaveNew','#guSaoMiaoForm','.gusaomiao-id')">保存修改</button>
+                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delGuSaoMiaoInfo','{$gusaomiao_info_item->gusaomiao_id}','addGuSaoMiao')">删除</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/guSaoMiaoSaveNew','#guSaoMiaoForm','.gusaomiao-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 180px!important;text-align: left">骨扫描检查发现</label>
@@ -2499,7 +2500,7 @@
                             <div class="layui-tab-content has-success" style="overflow: hidden" id="guCtShow">
                                 {empty name = 'guct_info'}
                                 <form class="layui-tab-item layui-show" id="guCtForm1">
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('guCtSaveNew','#guCtForm','.guct-id')">保存修改</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/guCtSaveNew','#guCtForm','.guct-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 180px!important;text-align: left">骨MRI/CT检查</label>
@@ -2535,8 +2536,8 @@
                                 {foreach $guct_info as $guct_info_item}
                                 <form class="layui-tab-item" id="guCtForm{$guct_info_item->guct_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$guct_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('delGuCtInfo','{$guct_info_item->guct_id}','addGuCt')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('guCtSaveNew','#guCtForm','.guct-id')">保存修改</button>
+                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delGuCtInfo','{$guct_info_item->guct_id}','addGuCt')">删除</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/guCtSaveNew','#guCtForm','.guct-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 180px!important;text-align: left">骨MRI/CT检查</label>
@@ -2604,7 +2605,7 @@
                             <div class="layui-tab-content has-success" style="overflow: hidden" id="ganZhangCtShow">
                                 {empty name = 'ganzhangct_info'}
                                 <form class="layui-tab-item layui-show" id="ganZhangCtForm1">
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('ganZhangCtSaveNew','#ganZhangCtForm','.ganzhangct-id')">保存修改</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/ganZhangCtSaveNew','#ganZhangCtForm','.ganzhangct-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 180px!important;text-align: left">肝脏CT检查发现</label>
@@ -2640,8 +2641,8 @@
                                 {foreach $ganzhangct_info as $ganzhangct_info_item}
                                 <form class="layui-tab-item" id="ganZhangCtForm{$ganzhangct_info_item->ganzhangct_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$ganzhangct_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('delGanZhangCtInfo','{$ganzhangct_info_item->ganzhangct_id}','addGanZhangCt')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('ganZhangCtSaveNew','#ganZhangCtForm','.ganzhangct-id')">保存修改</button>
+                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delGanZhangCtInfo','{$ganzhangct_info_item->ganzhangct_id}','addGanZhangCt')">删除</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/ganZhangCtSaveNew','#ganZhangCtForm','.ganzhangct-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 180px!important;text-align: left">肝脏CT检查发现</label>
@@ -2709,7 +2710,7 @@
                             <div class="layui-tab-content has-success" style="overflow: hidden" id="petShow">
                                 {empty name = 'pet_info'}
                                 <form class="layui-tab-item layui-show" id="petForm1">
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('petSaveNew','#petForm','.pet-id')">保存修改</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/petSaveNew','#petForm','.pet-id')">保存修改</button>
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
                                             <label class="layui-form-label" style="width: 180px!important;text-align: left">PET检查发现</label>
@@ -2806,8 +2807,8 @@
                                 {foreach $pet_info as $pet_info_item}
                                 <form class="layui-tab-item" id="petForm{$pet_info_item->pet_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$pet_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('delPETInfo','{$pet_info_item->pet_id}','addPET')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('petSaveNew','#petForm','.pet-id')">保存修改</button>
+                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delPETInfo','{$pet_info_item->pet_id}','addPET')">删除</button>
+                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/petSaveNew','#petForm','.pet-id')">保存修改</button>
 
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
@@ -2912,8 +2913,10 @@
                     </div>
 
                 </div>
+
             </div>
         </div>
+
     </div>
 </div>
 
@@ -2957,13 +2960,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/chaosheng/' + preAddress[i])
+                    preAddressArr.push('../prefile/chaosheng/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/chaosheng/' + preAddress)
+                preAddressArr.push('../prefile/chaosheng/' + preAddress)
             }
 
             initFileInput("imgShowChaoSheng"+formId, "/PreSave/imgChaoShengSave", "/PreSave/imgChaoShengDel",patients_id,formId,preAddressArr,preInfo);
@@ -2993,13 +2996,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/feigongneng/' + preAddress[i])
+                    preAddressArr.push('../prefile/feigongneng/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/feigongneng/' + preAddress)
+                preAddressArr.push('../prefile/feigongneng/' + preAddress)
             }
 
             initFileInput("imgShowFeiGongNeng"+formId, "/PreSave/imgFeiGongNengSave", "/PreSave/imgFeiGongNengDel",patients_id,formId,preAddressArr,preInfo);
@@ -3029,13 +3032,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/qiguanjing/' + preAddress[i])
+                    preAddressArr.push('../prefile/qiguanjing/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/qiguanjing/' + preAddress)
+                preAddressArr.push('../prefile/qiguanjing/' + preAddress)
             }
 
             initFileInput("imgShowQiGuanJing"+formId, "/PreSave/imgQiGuanJingSave", "/PreSave/imgQiGuanJingDel",patients_id,formId,preAddressArr,preInfo);
@@ -3065,13 +3068,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/toulu/' + preAddress[i])
+                    preAddressArr.push('../prefile/toulu/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/toulu/' + preAddress)
+                preAddressArr.push('../prefile/toulu/' + preAddress)
             }
 
             initFileInput("imgShowTouLu"+formId, "/PreSave/imgTouLuSave", "/PreSave/imgTouLuDel",patients_id,formId,preAddressArr,preInfo);
@@ -3101,13 +3104,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/gusaomiao/' + preAddress[i])
+                    preAddressArr.push('../prefile/gusaomiao/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/gusaomiao/' + preAddress)
+                preAddressArr.push('../prefile/gusaomiao/' + preAddress)
             }
 
             initFileInput("imgShowGuSaoMiao"+formId, "/PreSave/imgGuSaoMiaoSave", "/PreSave/imgGuSaoMiaoDel",patients_id,formId,preAddressArr,preInfo);
@@ -3137,13 +3140,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/guct/' + preAddress[i])
+                    preAddressArr.push('../prefile/guct/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/guct/' + preAddress)
+                preAddressArr.push('../prefile/guct/' + preAddress)
             }
 
             initFileInput("imgShowGuCt"+formId, "/PreSave/imgGuCtSave", "/PreSave/imgGuCtDel",patients_id,formId,preAddressArr,preInfo);
@@ -3173,13 +3176,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/ganzhangct/' + preAddress[i])
+                    preAddressArr.push('../prefile/ganzhangct/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/ganzhangct/' + preAddress)
+                preAddressArr.push('../prefile/ganzhangct/' + preAddress)
             }
 
             initFileInput("imgShowGanZhangCt"+formId, "/PreSave/imgGanZhangCtSave", "/PreSave/imgGanZhangCtDel",patients_id,formId,preAddressArr,preInfo);
@@ -3209,13 +3212,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/pet/' + preAddress[i])
+                    preAddressArr.push('../prefile/pet/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/pet/' + preAddress)
+                preAddressArr.push('../prefile/pet/' + preAddress)
             }
 
             initFileInput("imgShowPET"+formId, "/PreSave/imgPETSave", "/PreSave/imgPETDel",patients_id,formId,preAddressArr,preInfo);
@@ -3343,13 +3346,13 @@
             //组合成图片显示路由地址数组
             var preAddressArr = [];
             for (i = 0;i<preAddress.length;i++){
-                preAddressArr.push('../file/ct/' + preAddress[i])
+                preAddressArr.push('../prefile/ct/' + preAddress[i])
             }
         }
         else {
 
             preAddressArr = [];
-            preAddressArr.push('../file/ct/' + preAddress)
+            preAddressArr.push('../prefile/ct/' + preAddress)
         }
 
         initFileInput("imgShowCt"+ctId, "/PreSave/imgCtSave", "/PreSave/imgCtDel",patients_id,ctId,preAddressArr,preInfo);
@@ -3358,7 +3361,7 @@
 </script>
 
 <!--新增选项卡模版-->
-{include file="public/preoperativeModel" /}
+{include file="public/template/preoperativeModel" /}
 
 <!--CT【新增选项卡】-->
 <script>
@@ -3401,13 +3404,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/ct/' + preAddress[i])
+                    preAddressArr.push('../prefile/ct/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/ct/' + preAddress)
+                preAddressArr.push('../prefile/ct/' + preAddress)
             }
 
             //渲染上传文件控件
@@ -3456,13 +3459,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/ct/' + preAddress[i])
+                    preAddressArr.push('../prefile/ct/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/ct/' + preAddress)
+                preAddressArr.push('../prefile/ct/' + preAddress)
             }
             //渲染上传文件控件
             initFileInput("imgShowCt"+ctId, "/PreSave/imgCtSave", "/PreSave/imgCtDel",patients_id,ctId,preAddressArr,preInfo);
@@ -3676,13 +3679,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/chaosheng/' + preAddress[i])
+                    preAddressArr.push('../prefile/chaosheng/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/chaosheng/' + preAddress)
+                preAddressArr.push('../prefile/chaosheng/' + preAddress)
             }
 
             //渲染上传文件控件
@@ -3733,13 +3736,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/chaosheng/' + preAddress[i])
+                    preAddressArr.push('../prefile/chaosheng/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/chaosheng/' + preAddress)
+                preAddressArr.push('../prefile/chaosheng/' + preAddress)
             }
             //渲染上传文件控件
             initFileInput("imgShowChaoSheng"+chaoShengId, "/PreSave/imgChaoShengSave", "/PreSave/imgChaoShengDel",patients_id,chaoShengId,preAddressArr,preInfo);
@@ -3790,13 +3793,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/feigongneng/' + preAddress[i])
+                    preAddressArr.push('../prefile/feigongneng/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/feigongneng/' + preAddress)
+                preAddressArr.push('../prefile/feigongneng/' + preAddress)
             }
 
             //渲染上传文件控件
@@ -3849,13 +3852,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/feigongneng/' + preAddress[i])
+                    preAddressArr.push('../prefile/feigongneng/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/feigongneng/' + preAddress)
+                preAddressArr.push('../prefile/feigongneng/' + preAddress)
             }
             //渲染上传文件控件
             initFileInput("imgShowFeiGongNeng"+feiGongNengId, "/PreSave/imgFeiGongNengSave", "/PreSave/imgFeiGongNengDel",patients_id,feiGongNengId,preAddressArr,preInfo);
@@ -3904,13 +3907,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/qiguanjing/' + preAddress[i])
+                    preAddressArr.push('../prefile/qiguanjing/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/qiguanjing/' + preAddress)
+                preAddressArr.push('../prefile/qiguanjing/' + preAddress)
             }
 
             //渲染上传文件控件
@@ -3963,13 +3966,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/qiguanjing/' + preAddress[i])
+                    preAddressArr.push('../prefile/qiguanjing/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/qiguanjing/' + preAddress)
+                preAddressArr.push('../prefile/qiguanjing/' + preAddress)
             }
             //渲染上传文件控件
             initFileInput("imgShowQiGuanJing"+qiGuanJingId, "/PreSave/imgQiGuanJingSave", "/PreSave/imgQiGuanJingDel",patients_id,qiGuanJingId,preAddressArr,preInfo);
@@ -4018,13 +4021,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/toulu/' + preAddress[i])
+                    preAddressArr.push('../prefile/toulu/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/toulu/' + preAddress)
+                preAddressArr.push('../prefile/toulu/' + preAddress)
             }
 
             //渲染上传文件控件
@@ -4077,13 +4080,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/toulu/' + preAddress[i])
+                    preAddressArr.push('../prefile/toulu/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/toulu/' + preAddress)
+                preAddressArr.push('../prefile/toulu/' + preAddress)
             }
             console.log(preAddressArr);
             //渲染上传文件控件
@@ -4133,13 +4136,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/gusaomiao/' + preAddress[i])
+                    preAddressArr.push('../prefile/gusaomiao/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/gusaomiao/' + preAddress)
+                preAddressArr.push('../prefile/gusaomiao/' + preAddress)
             }
 
             //渲染上传文件控件
@@ -4192,13 +4195,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/gusaomiao/' + preAddress[i])
+                    preAddressArr.push('../prefile/gusaomiao/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/gusaomiao/' + preAddress)
+                preAddressArr.push('../prefile/gusaomiao/' + preAddress)
             }
             //渲染上传文件控件
             initFileInput("imgShowGuSaoMiao"+guSaoMiaoId, "/PreSave/imgGuSaoMiaoSave", "/PreSave/imgGuSaoMiaoDel",patients_id,guSaoMiaoId,preAddressArr,preInfo);
@@ -4247,13 +4250,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/guct/' + preAddress[i])
+                    preAddressArr.push('../prefile/guct/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/guct/' + preAddress)
+                preAddressArr.push('../prefile/guct/' + preAddress)
             }
 
             //渲染上传文件控件
@@ -4306,13 +4309,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/guct/' + preAddress[i])
+                    preAddressArr.push('../prefile/guct/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/guct/' + preAddress)
+                preAddressArr.push('../prefile/guct/' + preAddress)
             }
             //渲染上传文件控件
             initFileInput("imgShowGuCt"+guCtId, "/PreSave/imgGuCtSave", "/PreSave/imgGuCtDel",patients_id,guCtId,preAddressArr,preInfo);
@@ -4361,13 +4364,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/ganzhangct/' + preAddress[i])
+                    preAddressArr.push('../prefile/ganzhangct/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/ganzhangct/' + preAddress)
+                preAddressArr.push('../prefile/ganzhangct/' + preAddress)
             }
 
             //渲染上传文件控件
@@ -4420,13 +4423,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/ganzhangct/' + preAddress[i])
+                    preAddressArr.push('../prefile/ganzhangct/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/ganzhangct/' + preAddress)
+                preAddressArr.push('../prefile/ganzhangct/' + preAddress)
             }
             //渲染上传文件控件
             initFileInput("imgShowGanZhangCt"+ganZhangCtId, "/PreSave/imgGanZhangCtSave", "/PreSave/imgGanZhangCtDel",patients_id,ganZhangCtId,preAddressArr,preInfo);
@@ -4475,13 +4478,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/pet/' + preAddress[i])
+                    preAddressArr.push('../prefile/pet/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/pet/' + preAddress)
+                preAddressArr.push('../prefile/pet/' + preAddress)
             }
 
             //渲染上传文件控件
@@ -4534,13 +4537,13 @@
                 //组合成图片显示路由地址数组
                 var preAddressArr = [];
                 for (i = 0;i<preAddress.length;i++){
-                    preAddressArr.push('../file/pet/' + preAddress[i])
+                    preAddressArr.push('../prefile/pet/' + preAddress[i])
                 }
             }
             else {
 
                 preAddressArr = [];
-                preAddressArr.push('../file/pet/' + preAddress)
+                preAddressArr.push('../prefile/pet/' + preAddress)
             }
             //渲染上传文件控件
             initFileInput("imgShowPET"+petId, "/PreSave/imgPETSave", "/PreSave/imgPETDel",patients_id,petId,preAddressArr,preInfo);

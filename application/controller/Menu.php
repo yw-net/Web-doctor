@@ -6,11 +6,24 @@ use app\controller\Base;
 use app\model\History_menstrual;
 use app\model\History_self;
 use app\model\History_surgical;
+use app\model\Induction_therapy_baxiang;
+use app\model\Induction_therapy_fangliao;
+use app\model\Induction_therapy_houct;
+use app\model\Induction_therapy_houfenqi;
+use app\model\Induction_therapy_houpet;
+use app\model\Induction_therapy_hualiao;
+use app\model\Induction_therapy_qianfenqi;
 use app\model\Patients;
 use app\model\History_family;
+use app\model\postoperative_complications_erci;
+use app\model\postoperative_complications_icu;
+use app\model\postoperative_complications_shuhou;
+use app\model\postoperative_complications_shuzhong;
 use app\model\Preoperative_chaosheng;
 use app\model\Preoperative_ct;
 use app\model\Preoperative_feigongneng;
+use app\model\Surgical_info_shoushu;
+use app\model\Surgical_info_zhongwu;
 use app\model\Tizheng;
 use app\model\Zhengzhuang;
 use app\model\Preoperative_xuechanggui;
@@ -411,9 +424,42 @@ class Menu extends Base
 
         Session::set('patientsname',$patientsname[0]['patients_name']);
         //公共部分-结束
+
+        //查询数据库-前分期
+        $res_qianfenqi = Induction_therapy_qianfenqi::where('patients_id',$patientsid)->find();
+        if ($res_qianfenqi == null){
+            $this->assign(['qianfenqi_info'=>null]);
+        }else{
+            $this->assign(['qianfenqi_info'=>$res_qianfenqi]);
+        }
+
+        //查询数据库-化疗
+        $res_hualiao = Induction_therapy_hualiao::where('patients_id',$patientsid)->order('hualiao_id','desc')->select();
+
+        //查询数据库-放疗
+        $res_fangliao = Induction_therapy_fangliao::where('patients_id',$patientsid)->order('fangliao_id','desc')->select();
+
+        //查询数据库-靶向
+        $res_baxiang = Induction_therapy_baxiang::where('patients_id',$patientsid)->order('baxiang_id','desc')->select();
+
+        //查询数据库-后分期
+        $res_houfenqi = Induction_therapy_houfenqi::where('patients_id',$patientsid)->order('houfenqi_id','desc')->select();
+
+        //查询数据库-后CT
+        $res_houct = Induction_therapy_houct::where('patients_id',$patientsid)->order('houct_id','desc')->select();
+
+        //查询数据库-后PET
+        $res_houpet = Induction_therapy_houpet::where('patients_id',$patientsid)->order('houpet_id','desc')->select();
+
         $this->assign([
             'patientid'=>$patientsid,
-            'patients_name'=>$patientsname
+            'patients_name'=>$patientsname,
+            'hualiao_info'=>$res_hualiao,
+            'fangliao_info'=>$res_fangliao,
+            'baxiang_info'=>$res_baxiang,
+            'houfenqi_info'=>$res_houfenqi,
+            'houct_info'=>$res_houct,
+            'houpet_info'=>$res_houpet,
         ]);
         return $this->fetch();
     }
@@ -433,9 +479,24 @@ class Menu extends Base
 
         Session::set('patientsname',$patientsname[0]['patients_name']);
         //公共部分-结束
+
+        //查询数据库-肿物
+        $res_zhongwu = Surgical_info_zhongwu::where('patients_id',$patientsid)->order('zhongwu_id','desc')->select();
+
+        //查询数据库-手术
+        $res_shoushu = Surgical_info_shoushu::where('patients_id',$patientsid)->order('shoushu_id','desc')->select();
+        //手术医生
+        $res_doctor = User::where('user_class','<>','麻醉科')->select();
+        //麻醉医生
+        $res_doctor_mazui = User::where('user_class','=','麻醉科')->select();
+
         $this->assign([
             'patientid'=>$patientsid,
-            'patients_name'=>$patientsname
+            'patients_name'=>$patientsname,
+            'zhongwu_info'=>$res_zhongwu,
+            'shoushu_info'=>$res_shoushu,
+            'doctor'=>$res_doctor,
+            'doctor_mazui'=>$res_doctor_mazui,
         ]);
         return $this->fetch();
     }
@@ -455,9 +516,25 @@ class Menu extends Base
 
         Session::set('patientsname',$patientsname[0]['patients_name']);
         //公共部分-结束
+
+        //查询数据库-术中
+        $res_shuzhong = postoperative_complications_shuzhong::where('patients_id',$patientsid)->find();
+
+        //查询数据库-术后
+        $res_shuhou = postoperative_complications_shuhou::where('patients_id',$patientsid)->find();
+
+        //查询数据库-二次手术
+        $res_erci = postoperative_complications_erci::where('patients_id',$patientsid)->find();
+
+        //查询数据库-SICU
+        $res_icu = postoperative_complications_icu::where('patients_id',$patientsid)->find();
         $this->assign([
             'patientid'=>$patientsid,
-            'patients_name'=>$patientsname
+            'patients_name'=>$patientsname,
+            'shuzhong_info'=>$res_shuzhong,
+            'shuhou_info'=>$res_shuhou,
+            'erci_info'=>$res_erci,
+            'icu_info'=>$res_icu,
         ]);
         return $this->fetch();
     }

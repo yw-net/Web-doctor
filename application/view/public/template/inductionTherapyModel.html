@@ -1,0 +1,288 @@
+<!--新增【化疗模版】-->
+<script id="huaLiaoModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="huaLiaoForm{{d.formId}}">
+        <button class="btn btn-info save" type="button" onclick="saveTab('../InductionTherapySave/huaLiaoSaveNew','#huaLiaoForm','.hualiao-id')">保存修改</button>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+            <label class="col-sm-2">化疗周期</label>
+
+            <div class="input-group col-sm-4">
+                <input type="text" class="form-control input-sm layui-input-inline" name="hualiao_cycle" value="">
+            </div>
+        </blockquote>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+            <label class="col-sm-2">化疗方案</label>
+
+            <div class="input-group col-sm-4">
+                <input type="text" class="form-control input-sm layui-input-inline" name="hualiao_plan" value="">
+            </div>
+        </blockquote>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+            <label class="col-sm-2">详情</label>
+            <div class="layui-input-inline input-group col-sm-4">
+                <textarea class="layui-textarea" name="hualiao_more"></textarea>
+            </div>
+        </blockquote>
+    </form>
+
+</script>
+
+<!--新增【放疗模版】-->
+<script id="fangLiaoModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="fangLiaoForm{{d.formId}}">
+        <button class="btn btn-info save" type="button" onclick="saveTab('../InductionTherapySave/fangLiaoSaveNew','#fangLiaoForm','.fangliao-id')">保存修改</button>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+            <label class="col-sm-2">放疗时间</label>
+
+            <div class="input-group col-sm-4">
+                <input size="16" type="date" value="" class="form-control input-sm" name="check_time">
+            </div>
+        </blockquote>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+            <label class="col-sm-2">放疗方式</label>
+
+            <div class="input-group col-sm-4">
+                <input type="text" class="form-control input-sm layui-input-inline" name="fangliao_plan" value="">
+            </div>
+        </blockquote>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+            <label class="col-sm-2">详情</label>
+            <div class="layui-input-inline input-group col-sm-4">
+                <textarea class="layui-textarea" name="fangliao_more"></textarea>
+            </div>
+        </blockquote>
+    </form>
+
+</script>
+
+<!--新增【靶向模版】-->
+<script id="baXiangModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="baXiangForm{{d.formId}}">
+        <button class="btn btn-info save" type="button" onclick="saveTab('../InductionTherapySave/baXiangSaveNew','#baXiangForm','.baxiang-id')">保存修改</button>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+            <label class="col-sm-2">靶向时间</label>
+
+            <div class="input-group col-sm-4">
+                <input size="16" type="date" value="" class="form-control input-sm" name="check_time">
+            </div>
+        </blockquote>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+            <label class="col-sm-2">药物名称</label>
+
+            <div class="input-group col-sm-4">
+                <input type="text" class="form-control input-sm layui-input-inline" name="baxiang_yaowu" value="">
+            </div>
+        </blockquote>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+            <label class="col-sm-2">详情</label>
+            <div class="layui-input-inline input-group col-sm-4">
+                <textarea class="layui-textarea" name="baxiang_more"></textarea>
+            </div>
+        </blockquote>
+    </form>
+
+</script>
+
+<!--新增【后分期模版】-->
+<script id="houFenQiModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="houFenQiForm{{d.formId}}">
+        <button class="btn btn-info save" type="button" onclick="saveTab('../InductionTherapySave/houFenQiSaveNew','#houFenQiForm','.houfenqi-id')">保存修改</button>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+            <label class="col-sm-2">后分期时间</label>
+
+            <div class="input-group col-sm-4">
+                <input size="16" type="date" value="" class="form-control input-sm" name="check_time">
+            </div>
+        </blockquote>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+            <label class="col-sm-2">Stage变化</label>
+
+            <div class="input-group col-sm-4">
+                <select class="form-control input-sm" name="stage">
+                    <option value="请选择" selected>请选择</option>
+                    <option value="单发">单发</option>
+                    <option value="多发">多发</option>
+                </select>
+            </div>
+        </blockquote>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+            <label class="col-sm-2">详情</label>
+            <div class="row">
+                <div class="col-sm-2 flex-row">
+                    <label class="control-label" style="width: 35px;">T</label>
+                    <select class="form-control input-sm" name="houfenqi_t">
+                        <option value="请选择" selected>请选择</option>
+                        <option value="单发">单发</option>
+                        <option value="多发">多发</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 flex-row">
+                    <label class="control-label" style="width: 35px;">N</label>
+                    <select class="form-control input-sm" name="houfenqi_n">
+                        <option value="请选择" selected>请选择</option>
+                        <option value="单发">单发</option>
+                        <option value="多发">多发</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 flex-row">
+                    <label class="control-label" style="width: 35px;">M</label>
+                    <select class="form-control input-sm" name="houfenqi_m">
+                        <option value="请选择" selected>请选择</option>
+                        <option value="单发">单发</option>
+                        <option value="多发">多发</option>
+                    </select>
+                </div>
+            </div>
+        </blockquote>
+    </form>
+
+</script>
+
+<!--新增【后CT模版】-->
+<script id="houctModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="houctForm{{d.formId}}">
+        <button class="btn btn-info save" type="button" onclick="saveTab('../InductionTherapySave/houctSaveNew','#houctForm','.houct-id')">保存修改</button>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+            <label class="col-sm-2">Resist</label>
+            <div class="input-group col-sm-4">
+                <select class="form-control input-sm" name="resist">
+                    <option value="请选择" selected>请选择</option>
+                    <option value="CR">CR</option>
+                    <option value="PR">PR</option>
+                    <option value="SD">SD</option>
+                    <option value="PD">PD</option>
+                </select>
+            </div>
+        </blockquote>
+        <blockquote class="layui-elem-quote" style="padding: 5px; margin-top: 15px;border-left: 5px solid #9a9a9a">
+            诱导后N变化
+        </blockquote>
+        <table  class="table table-bordered">
+            <thead>
+            <tr>
+                <th>1组</th>
+                <th>2组</th>
+                <th>3组</th>
+                <th>4组</th>
+                <th>5组</th>
+                <th>6组</th>
+                <th>7组</th>
+                <th>8组</th>
+                <th>9组</th>
+                <th>10组</th>
+                <th>11组</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <select class="form-control input-sm" name="n1">
+                        <option value="请选择"  />请选择</option>
+                        <option value="增大"  />增大</option>
+                        <option value="缩小"  />缩小</option>
+                        <option value="新增"  />新增</option>
+                        <option value="不变"  />不变</option>
+                    </select>
+                </td>
+                <td><select class="form-control input-sm" name="n2">
+                    <option value="请选择"  />请选择</option>
+                    <option value="增大"  />增大</option>
+                    <option value="缩小"  />缩小</option>
+                    <option value="新增"  />新增</option>
+                    <option value="不变"  />不变</option>
+                </select></td>
+                <td><select class="form-control input-sm" name="n3">
+                    <option value="请选择"  />请选择</option>
+                    <option value="增大"  />增大</option>
+                    <option value="缩小"  />缩小</option>
+                    <option value="新增"  />新增</option>
+                    <option value="不变"  />不变</option>
+                </select></td>
+                <td><select class="form-control input-sm" name="n4">
+                    <option value="请选择"  />请选择</option>
+                    <option value="增大"  />增大</option>
+                    <option value="缩小"  />缩小</option>
+                    <option value="新增"  />新增</option>
+                    <option value="不变"  />不变</option>
+                </select></td>
+                <td><select class="form-control input-sm" name="n5">
+                    <option value="请选择"  />请选择</option>
+                    <option value="增大"  />增大</option>
+                    <option value="缩小"  />缩小</option>
+                    <option value="新增"  />新增</option>
+                    <option value="不变"  />不变</option>
+                </select></td>
+                <td><select class="form-control input-sm" name="n6">
+                    <option value="请选择"  />请选择</option>
+                    <option value="增大"  />增大</option>
+                    <option value="缩小"  />缩小</option>
+                    <option value="新增"  />新增</option>
+                    <option value="不变"  />不变</option>
+                </select></td>
+                <td><select class="form-control input-sm" name="n7">
+                    <option value="请选择"  />请选择</option>
+                    <option value="增大"  />增大</option>
+                    <option value="缩小"  />缩小</option>
+                    <option value="新增"  />新增</option>
+                    <option value="不变"  />不变</option>
+                </select></td>
+                <td><select class="form-control input-sm" name="n8">
+                    <option value="请选择"  />请选择</option>
+                    <option value="增大"  />增大</option>
+                    <option value="缩小"  />缩小</option>
+                    <option value="新增"  />新增</option>
+                    <option value="不变"  />不变</option>
+                </select></td>
+                <td><select class="form-control input-sm" name="n9">
+                    <option value="请选择"  />请选择</option>
+                    <option value="增大"  />增大</option>
+                    <option value="缩小"  />缩小</option>
+                    <option value="新增"  />新增</option>
+                    <option value="不变"  />不变</option>
+                </select></td>
+                <td><select class="form-control input-sm" name="n10">
+                    <option value="请选择"  />请选择</option>
+                    <option value="增大"  />增大</option>
+                    <option value="缩小"  />缩小</option>
+                    <option value="新增"  />新增</option>
+                    <option value="不变"  />不变</option>
+                </select></td>
+                <td><select class="form-control input-sm" name="n11">
+                    <option value="请选择"  />请选择</option>
+                    <option value="增大"  />增大</option>
+                    <option value="缩小"  />缩小</option>
+                    <option value="新增"  />新增</option>
+                    <option value="不变"  />不变</option>
+                </select></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+
+</script>
+
+<!--新增【后PET模版】-->
+<script id="houpetModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="houpetForm{{d.formId}}">
+        <button class="btn btn-info save" type="button" onclick="saveTab('../InductionTherapySave/houpetSaveNew','#houpetForm','.houpet-id')">保存修改</button>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+            <label class="col-sm-2">PET号</label>
+
+            <div class="input-group col-sm-4">
+                <input type="text" class="form-control input-sm layui-input-inline" name="pet_num" value="">
+            </div>
+        </blockquote>
+        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+            <label class="col-sm-2">详情</label>
+            <div class="layui-input-inline input-group col-sm-4">
+                <textarea class="layui-textarea" name="pet_more"></textarea>
+            </div>
+        </blockquote>
+    </form>
+
+</script>

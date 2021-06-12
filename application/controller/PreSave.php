@@ -118,24 +118,24 @@ class PreSave extends Base
     }
 
     //获取文件信息函数
-    private function getFileInfoArr($file_path,$res){//数组
+    private function getFileInfoArr($file_path,$res,$type){//数组
         $res_info = [];
         foreach ($res['img_address'] as $key=>$value)
         {
             $imgInfo = filesize($file_path.$value); //获取文件大小
 
             $file_name = explode('/',$value);   //截取字符串
-            array_push($res_info,['caption'=>$file_name[1],'downloadUrl'=>'../download/'.$value,'key'=>$value,'size'=>$imgInfo]);   //组合对象数组
+            array_push($res_info,['caption'=>$file_name[1],'downloadUrl'=>'../prefile/'.$type.'/'.$value,'key'=>$value,'size'=>$imgInfo]);   //组合对象数组
         }
         $res['img_info'] = $res_info;
     }
-    private function getFileInfoStr($file_path,$res){//字符串
+    private function getFileInfoStr($file_path,$res,$type){//字符串
         $res_info = [];
         $file_name = explode('/',$res['img_address']);   //截取字符串
 
         $imgInfo = filesize($file_path.$res['img_address']); //获取文件大小
 
-        array_push($res_info,['caption'=>$file_name[1],'downloadUrl'=>'../download/'.$res['img_address'],'key'=>$res['img_address'],'size'=>$imgInfo]);   //组合对象数组
+        array_push($res_info,['caption'=>$file_name[1],'downloadUrl'=>'../prefile/'.$type.'/'.$res['img_address'],'key'=>$res['img_address'],'size'=>$imgInfo]);   //组合对象数组
         $res['img_info'] = $res_info;
     }
 
@@ -150,7 +150,7 @@ class PreSave extends Base
         $fileName = $this->request->param('name');
 
         $path = $fileDate."/".$fileName;
-        $savePath = Env::get('root_path').'storge/preoperative/'.$fileType.'/';//CT图片保存根目录
+        $savePath = Env::get('root_path').'storge/preoperative/'.$fileType.'/';//图片保存根目录
 
         $file_path = $savePath.$path; //图片地址
 
@@ -185,34 +185,37 @@ class PreSave extends Base
                 imagedestroy($im);
                 return response($content,200,['content-length'=>strlen($content)])->contentType('image/png');
                 break;
-            default:
-                exit('图片格式不支持！');
+            default://下载
+                $s = new sendfile();
+                try {
+                    $s->send($file_path);
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                }
         }
 
     }
 
-    //文件下载路由
-    public function download()
-    {
-        $this->isLogin();
-        $fileDate = $this->request->param('date');
-        $fileName = $this->request->param('name');
-
-        $path = $fileDate."/".$fileName;
-        $savePath = Env::get('root_path').'storge/preoperative/ct/';//CT图片保存根目录
-
-        $file_path = $savePath.$path; //图片地址
-        $s = new sendfile();
-
-        $file = $file_path;
-
-        try {
-            $s->send($file);
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-        }
-
-    }
+//    //文件下载路由
+//    public function download()
+//    {
+//        $this->isLogin();
+//        $fileType = $this->request->param('type');
+//        $fileDate = $this->request->param('date');
+//        $fileName = $this->request->param('name');
+//
+//        $path = $fileDate."/".$fileName;
+//        $savePath = Env::get('root_path').'storge/preoperative/'.$fileType.'/';//图片保存根目录
+//
+//        $file_path = $savePath.$path; //图片地址
+//        $s = new sendfile();
+//        try {
+//            $s->send($file_path);
+//        } catch (\Exception $e) {
+//            echo $e->getMessage();
+//        }
+//
+//    }
 
 
 
@@ -747,12 +750,12 @@ class PreSave extends Base
 
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            $this->getFileInfoArr($file_path,$res);
+            $this->getFileInfoArr($file_path,$res,'ct');
             return $res;
         }
         //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $this->getFileInfoStr($file_path,$res);
+            $this->getFileInfoStr($file_path,$res,'ct');
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -934,12 +937,12 @@ class PreSave extends Base
 
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            $this->getFileInfoArr($file_path,$res);
+            $this->getFileInfoArr($file_path,$res,'chaosheng');
             return $res;
         }
         //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $this->getFileInfoStr($file_path,$res);
+            $this->getFileInfoStr($file_path,$res,'chaosheng');
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -1159,12 +1162,12 @@ class PreSave extends Base
 
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            $this->getFileInfoArr($file_path,$res);
+            $this->getFileInfoArr($file_path,$res,'feigongneng');
             return $res;
         }
         //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $this->getFileInfoStr($file_path,$res);
+            $this->getFileInfoStr($file_path,$res,'feigongneng');
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -1466,12 +1469,12 @@ class PreSave extends Base
 
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            $this->getFileInfoArr($file_path,$res);
+            $this->getFileInfoArr($file_path,$res,'qiguanjing');
             return $res;
         }
         //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $this->getFileInfoStr($file_path,$res);
+            $this->getFileInfoStr($file_path,$res,'qiguanjing');
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -1636,12 +1639,12 @@ class PreSave extends Base
 
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            $this->getFileInfoArr($file_path,$res);
+            $this->getFileInfoArr($file_path,$res,'toulu');
             return $res;
         }
         //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $this->getFileInfoStr($file_path,$res);
+            $this->getFileInfoStr($file_path,$res,'toulu');
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -1806,12 +1809,12 @@ class PreSave extends Base
 
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            $this->getFileInfoArr($file_path,$res);
+            $this->getFileInfoArr($file_path,$res,'gusaomiao');
             return $res;
         }
         //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $this->getFileInfoStr($file_path,$res);
+            $this->getFileInfoStr($file_path,$res,'gusaomiao');
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -1922,7 +1925,6 @@ class PreSave extends Base
 
             if ($get['img_address']!=null){
                 $get_address = json_decode($get['img_address']); //取出json数据并转换为数组
-//                return  (['status'=>1,'message'=>is_array($get_address)]);
                 if (is_array($get_address)){
                     foreach ($get_address as $key=>$value)
                     {
@@ -1933,8 +1935,6 @@ class PreSave extends Base
                 if ($get_address == $url){
                     return  (['status'=>0,'error'=>'文件名重复！写入数据库失败！请更改文件名称后重试！']);
                 }
-
-
             }
             //正式写入数据库
             $this->saveFileUrl($url,$form_id,$patients_id,'Preoperative_guct','guct_id','guct_find');
@@ -1976,12 +1976,12 @@ class PreSave extends Base
 
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            $this->getFileInfoArr($file_path,$res);
+            $this->getFileInfoArr($file_path,$res,'guct');
             return $res;
         }
         //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $this->getFileInfoStr($file_path,$res);
+            $this->getFileInfoStr($file_path,$res,'guct');
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -2146,12 +2146,12 @@ class PreSave extends Base
 
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            $this->getFileInfoArr($file_path,$res);
+            $this->getFileInfoArr($file_path,$res,'ganzhangct');
             return $res;
         }
         //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $this->getFileInfoStr($file_path,$res);
+            $this->getFileInfoStr($file_path,$res,'ganzhangct');
             return $res;
         }
         //数据库字段无数据则输出空数组
@@ -2360,12 +2360,12 @@ class PreSave extends Base
 
         //判断数据库字段是否为数组
         if (is_array($res['img_address'])){
-            $this->getFileInfoArr($file_path,$res);
+            $this->getFileInfoArr($file_path,$res,'pet');
             return $res;
         }
         //判断数据库字段是否有数据(字符串)
         if ($res['img_address']!=null){
-            $this->getFileInfoStr($file_path,$res);
+            $this->getFileInfoStr($file_path,$res,'pet');
             return $res;
         }
         //数据库字段无数据则输出空数组
