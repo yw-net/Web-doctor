@@ -4,259 +4,694 @@
 {include file="public/nav" /}
 <style>
     .img-ico{width: 20px;margin-bottom: 3px;margin-left: 20px;}
+     .control-label{text-align: left !important;}
+    input[type="checkbox"]{margin-right: 5px;}
+    .flex-row{display: flex;justify-content: space-around;flex-direction: row;}
+    .flex-row-start{display: flex;justify-content: flex-start;flex-direction: row;}
+    .input-group-addon{line-height: 18px;}
 </style>
 <!--末次随访页面-->
 <div class="content">
-    <form class="form-horizontal" action="{:url('Save/history')}" method="post">
-        <div class="panel panel-info">
-            <div class="panel-heading yw-flex-row">
-                <h4 class="panel-title">末次随访</h4>
-                <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
-            </div>
-            <div class="panel-body">
-                <div class="layui-tab layui-tab-card">
-                    <ul class="layui-tab-title" style="background-color: #dff0d8">
-                        <li class="layui-this">联系方式</li>
-                        <li>复发转移</li>
-                        <li>复发后治疗</li>
-                    </ul>
-                    <div class="layui-tab-content">
 
-                        <div class="layui-tab-item layui-show">
-                            <div class="row">
-                                <div class="form-group has-success col-sm-6">
-                                    <label for="inputName" class="col-sm-4 control-label">联系人姓名：</label>
-                                    <div class="input-group col-sm-6">
-                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group has-success col-sm-6">
-                                    <label for="inputName" class="col-sm-4 control-label">与患者关系：</label>
-                                    <div class="input-group col-sm-6">
-                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group has-success col-sm-6">
-                                    <label for="inputName" class="col-sm-4 control-label">移动电话：</label>
-                                    <div class="input-group col-sm-6">
-                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group has-success col-sm-6">
-                                    <label for="inputName" class="col-sm-4 control-label">宅电：</label>
-                                    <div class="input-group col-sm-6">
-                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group has-success col-sm-6">
-                                    <label for="inputName" class="col-sm-4 control-label">即时通讯：</label>
-                                    <div class="input-group col-sm-6">
-                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group has-success col-sm-6">
-                                    <label for="inputName" class="col-sm-4 control-label">单位电话：</label>
-                                    <div class="input-group col-sm-6">
-                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group has-success col-sm-6">
-                                    <label for="inputName" class="col-sm-4 control-label">联系人Email：</label>
-                                    <div class="input-group col-sm-6">
-                                        <input type="text" class="form-control input-sm" id="inputName" name="name" value="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div><button class="btn btn-success" style="margin-left: 30px;">添加新的联系人信息</button></div>
-                        </div>
+    <div class="panel panel-info">
 
-                        <div class="layui-tab-item">
-                            <div class="layui-form">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label" style="width: 130px;font-weight: 600;">复发转移</label>
-                                    <div class="layui-input-block">
-                                        <input type="checkbox" lay-skin="switch" lay-text="是|否">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="show">
-                                <div class="form-group has-success">
-                                    <label for="inputDateInHospital" class="col-sm-2 control-label">1、时间</label>
-                                    <div class="input-group col-sm-2">
-                                        <input size="16" type="text" readonly class="form-control input-sm form_datetime datetimepicker-days" id="inputDateInHospital" name="inhospital" value="">
-                                        <span class="input-group-addon" onclick="clearFormIn();" style="cursor: pointer;">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                        </span>
-                                        </div>
-                                </div>
+        <div class="panel-heading yw-flex-row">
+            <h4 class="panel-title">末次随访</h4>
+            <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
+        </div>
+        <input type="text" id="patients_id" class="hidden" value="{$patientid}">
+        <div class="panel-body">
+            <div class="layui-tab layui-tab-card" lay-filter="main">
 
-                                <div class="has-success">
-                                    <div class="show form-group">
-                                        <label for="" class="control-label col-sm-2 col-sm-offset-1" style="text-align: left;">
-                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 局部复发
-                                        </label>
-                                        <label for="" class="control-label col-sm-2" style="text-align: left;">
-                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 纵隔淋巴结转移
-                                        </label>
-                                        <label for="" class="control-label col-sm-2" style="text-align: left;">
-                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 脑转移
-                                        </label>
-                                        <label for="" class="control-label col-sm-2" style="text-align: left;">
-                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 肺转移
-                                        </label>
-                                    </div>
-                                    <div class="show form-group">
-                                        <label for="" class="control-label col-sm-2 col-sm-offset-1" style="text-align: left;">
-                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 骨转移
-                                        </label>
-                                        <label for="" class="control-label col-sm-2" style="text-align: left;">
-                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 肝转移
-                                        </label>
-                                        <label for="" class="control-label col-sm-2" style="text-align: left;">
-                                            <input class="" name="xiongneifei1" type="checkbox" id="xiongneifei1" value="1"> 其他
-                                        </label>
-                                        <label for="" class="control-label col-sm-2" style="text-align: left;">
-                                            <input class="input-sm form-control" name="xiongneifei1" type="text" id="xiongneifei1" value="1">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <ul class="layui-tab-title" style="background-color: #dff0d8">
+                    <li class="layui-this" lay-id="lianxiren">
+                        联系人
+                        {notempty name = 'lianxiren_info'}
+                        <span class="layui-badge layui-bg-green">{$lianxiren_info|count}</span>
+                        {/notempty}
+                    </li>
+                    <li lay-id="fufazhuanyi">
+                        复发转移
+                        {notempty name = 'fufazhuanyi_info'}
+                        <span class="layui-badge-dot layui-bg-green"></span>
+                        {/notempty}
+                    </li>
+                    <li lay-id="fufahouzhiliao">
+                        复发后治疗(数据缺失)
+                    </li>
+                </ul>
 
-                        <div class="layui-tab-item has-success">
-                            <div class="layui-form">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label" style="width: 130px;font-weight: 600;">复发后治疗</label>
-                                    <div class="layui-input-block">
-                                        <input type="checkbox" lay-skin="switch" lay-text="是|否">
+                <div class="layui-tab-content has-success">
+
+                    <!--                        联系人-->
+                    <div class="layui-tab-item layui-show">
+                        <button class="btn btn-success" id="tabAddLianXiRen">添加新的联系人信息</button>
+
+                        <div class="layui-tab layui-tab-card" lay-filter="addLianXiRen">
+
+                            <ul class="layui-tab-title" id="lianxiren-tab-title">
+                                {empty name='lianxiren_info'}
+                                <li class="layui-this lianxiren-id" lay-id="1">
+                                    新联系人
+                                </li>
+                                {else}
+                                {foreach $lianxiren_info as $lianxiren_info_li}
+                                <li class="lianxiren-id" lay-id="{$lianxiren_info_li->lianxiren_id}">
+                                    【{$lianxiren_info_li->lianxiren_name}】
+                                </li>
+                                {/foreach}
+                                {/empty}
+                            </ul>
+
+                            <div class="layui-tab-content has-success" style="overflow: hidden" id="lianXiRenShow">
+                                {empty name = 'lianxiren_info'}
+                                <form class="layui-tab-item layui-show" id="lianXiRenForm1">
+                                    <div style="margin-bottom: 10px">
+                                        <button class="btn btn-info save" type="button" onclick="saveTab('../FollowSave/lianXiRenSaveNew','#lianXiRenForm','.lianxiren-id')">保存修改</button>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingOne">
-                                        <h4 class="panel-title">
-                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                <span class="col-sm-1" style="line-height: 23px;">化疗</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                        <div class="panel-body">
-                                            <button class="btn btn-success">添加新的化疗记录</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingTwo">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                <span class="col-sm-1" style="line-height: 23px;">放疗</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                        <div class="panel-body">
-                                            <button class="btn btn-success">添加新的放疗记录</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingThree">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                <span class="col-sm-1" style="line-height: 23px;">伽玛刀</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                        <div class="panel-body">
-                                            <button class="btn btn-success">添加新的记录</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingFour">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
-                                                <span class="col-sm-1" style="line-height: 23px;">靶向</span><img src="/static/image/sys/24gf-ejectDownSquare.png" class="img-ico">
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                                        <div class="panel-body">
-                                            <div class="form-group has-success">
-                                                <label for="referralDoctor" class="col-sm-2 control-label">药物名称：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                                                </div>
+
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">联系人姓名</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" name="lianxiren_name" value="">
                                             </div>
-                                            <div class="form-group has-success">
-                                                <label for="checkdate" class="col-sm-2 control-label">开始时间：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
-                                                    <span class="input-group-addon" style="cursor: pointer;">
-                                                    <span class="glyphicon glyphicon-remove"></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="checkdate" class="col-sm-2 control-label">结束时间：</label>
-                                                <div class="input-group col-sm-2">
-                                                    <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime datetimepicker-days" id="checkdate" name="checkdate" placeholder="选择日期">
-                                                    <span class="input-group-addon" style="cursor: pointer;">
-                                                    <span class="glyphicon glyphicon-remove"></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <button class="btn btn-success">添加新的靶向记录</button>
-                                        </div>
+                                        </blockquote>
                                     </div>
-                                </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">与患者关系</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" name="lianxiren_guanxi" value="">
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">移动电话</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" name="lianxiren_mobile" value="">
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">宅电</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" name="lianxiren_zaidian" value="">
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">即时通讯</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" name="im" value="">
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">Email</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" name="email" value="">
+                                            </div>
+                                        </blockquote>
+                                    </div>
+
+                                </form>
+                                {else}
+                                {foreach $lianxiren_info as $lianxiren_info_item}
+                                <form class="layui-tab-item" id="lianXiRenForm{$lianxiren_info_item->lianxiren_id}">
+                                    <div style="margin-bottom: 10px">
+                                        <button class="btn btn-danger del" type="button" onclick="delBtn('../FollowSave/delLianXiRenInfo','{$lianxiren_info_item->lianxiren_id}','addLianXiRen')">删除</button>
+                                        <button class="btn btn-info save" type="button" onclick="saveTab('../FollowSave/lianXiRenSaveNew','#lianXiRenForm','.lianxiren-id')">保存修改</button>
+                                    </div>
+
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">联系人姓名</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" name="lianxiren_name" value="{$lianxiren_info_item->lianxiren_name}">
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">与患者关系</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" name="lianxiren_guanxi" value="{$lianxiren_info_item->lianxiren_guanxi}">
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">移动电话</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" name="lianxiren_mobile" value="{$lianxiren_info_item->lianxiren_mobile}">
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">宅电</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" name="lianxiren_zaidian" value="{$lianxiren_info_item->lianxiren_zaidian}">
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">即时通讯</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" name="im" value="{$lianxiren_info_item->im}">
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">Email</label>
+                                            <div class="input-group col-sm-6">
+                                                <input type="text" class="form-control input-sm" name="email" value="{$lianxiren_info_item->email}">
+                                            </div>
+                                        </blockquote>
+                                    </div>
+
+                                </form>
+                                {/foreach}
+                                {/empty}
+                                <div id="addLianXiRenView" class="layui-tab-item"></div>
                             </div>
+
                         </div>
                     </div>
+
+                    <!--                        复发转移-->
+                    <div class="layui-tab-item">
+                        <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
+                            创建时间：
+                            <span style="color: #ff0000;margin-right: 20px;">
+                                {empty name = 'fufazhuanyi_info'}
+                                未保存
+                                {else}
+                                {$fufazhuanyi_info->created_time}
+                                {/empty}
+                                </span>
+                            上次修改时间：
+                            <span style="color: #ff0000">
+                                {empty name = 'fufazhuanyi_info'}
+                                未修改
+                                {else}
+                                {$fufazhuanyi_info->edit_time}
+                                {/empty}
+                            </span>
+                        </div>
+                        <form class="layui-form-item" id="fuFaZhuanYiForm">
+                            <button class="btn btn-info save" type="button" onclick="saveForm('../FollowSave/fuFaZhuanYiSaveNew','#fuFaZhuanYiForm')">保存修改</button>
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+                                <label class="col-sm-2">复发转移</label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="fufazhuanyi_check" value="是"
+                                           {notempty name ='fufazhuanyi_info'}
+                                           {if($fufazhuanyi_info->fufazhuanyi_check =='是')} checked {/if}
+                                    {/notempty}
+                                    /> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="fufazhuanyi_check" value="否"
+                                           {notempty name ='fufazhuanyi_info'}
+                                           {if($fufazhuanyi_info->fufazhuanyi_check =='否')} checked {/if}
+                                    {else}
+                                    checked
+                                    {/notempty}
+                                    /> 否
+                                </label>
+                            </blockquote>
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <div class="input-group col-sm-12">
+                                    <label class="col-sm-2">时间</label>
+                                    <div class="col-sm-4">
+                                        <input type="date" class="form-control input-sm" name="fufazhuanyi_time" value="{$fufazhuanyi_info =='' ? null:$fufazhuanyi_info->fufazhuanyi_time}">
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;">
+                                <div class="input-group col-sm-12">
+                                    <label class="control-label col-sm-2" style="text-align: left;">
+                                        <input name="fufazhuanyi_checkbox" type="checkbox" value="局部复发" {notempty name = 'fufazhuanyi_info'}{if(strstr($fufazhuanyi_info->fufazhuanyi_checkbox , '局部复发'))} checked {/if}{/notempty}> 局部复发
+                                    </label>
+                                    <label class="control-label col-sm-2" style="text-align: left;">
+                                        <input name="fufazhuanyi_checkbox" type="checkbox" value="纵隔淋巴结转移" {notempty name = 'fufazhuanyi_info'}{if(strstr($fufazhuanyi_info->fufazhuanyi_checkbox , '纵隔淋巴结转移'))} checked {/if}{/notempty}> 纵隔淋巴结转移
+                                    </label>
+                                    <label class="control-label col-sm-2" style="text-align: left;">
+                                        <input name="fufazhuanyi_checkbox" type="checkbox" value="脑转移" {notempty name = 'fufazhuanyi_info'}{if(strstr($fufazhuanyi_info->fufazhuanyi_checkbox , '脑转移'))} checked {/if}{/notempty}> 脑转移
+                                    </label>
+                                    <label class="control-label col-sm-2" style="text-align: left;">
+                                        <input name="fufazhuanyi_checkbox" type="checkbox" value="肺转移" {notempty name = 'fufazhuanyi_info'}{if(strstr($fufazhuanyi_info->fufazhuanyi_checkbox , '肺转移'))} checked {/if}{/notempty}> 肺转移
+                                    </label>
+                                    <label class="control-label col-sm-2" style="text-align: left;">
+                                        <input name="fufazhuanyi_checkbox" type="checkbox" value="骨转移" {notempty name = 'fufazhuanyi_info'}{if(strstr($fufazhuanyi_info->fufazhuanyi_checkbox , '骨转移'))} checked {/if}{/notempty}> 骨转移
+                                    </label>
+                                    <label class="control-label col-sm-2" style="text-align: left;">
+                                        <input name="fufazhuanyi_checkbox" type="checkbox" value="肝转移" {notempty name = 'fufazhuanyi_info'}{if(strstr($fufazhuanyi_info->fufazhuanyi_checkbox , '肝转移'))} checked {/if}{/notempty}> 肝转移
+                                    </label>
+                                    <label class="control-label col-sm-4" style="text-align: left;">
+                                        <div class="input-group flex-row-start">
+                                            <span class="input-group-addon layui-col-md4 input-sm">其他</span>
+                                            <input type="text" class="form-control input-sm" name="fufazhuanyi_other" value="{$fufazhuanyi_info =='' ? null:$fufazhuanyi_info->fufazhuanyi_other}">
+                                        </div>
+                                    </label>
+                                </div>
+                            </blockquote>
+
+                        </form>
+
+                    </div>
+
+                    <!--                        复发后治疗(数据缺失)-->
+                    <div class="layui-tab-item">
+                        <div class="layui-collapse" lay-filter="coll" lay-accordion>
+
+                            <!--                                化疗-->
+                            <div class="layui-colla-item">
+
+                                <div class="layui-colla-title">
+                                    <span>化疗</span>
+                                </div>
+
+                                <div class="layui-colla-content">
+
+                                    <button class="btn btn-success" id="tabAddFuFaHouHuaLiao">添加新的化疗记录</button>
+                                    <div class="layui-tab layui-tab-card" lay-filter="addFuFaHouHuaLiao">
+
+                                        <ul class="layui-tab-title" id="fufahouhualiao-tab-title">
+                                            {empty name ='fufahouhualiao_info'}
+                                            <li class="layui-this fufahouhualiao-id" lay-id="1">
+                                                新记录
+                                            </li>
+                                            {else}
+                                            {foreach $fufahouhualiao_info as $fufahouhualiao_info_li}
+                                            <li class="fufahouhualiao-id" lay-id="{$fufahouhualiao_info_li->fufahouhualiao_id}">
+                                                【{$fufahouhualiao_info_li->created_time}】
+                                                {eq name = '$fufahouhualiao_info_li->fufahouhualiao_find' value = '正常'}
+                                                <span class="layui-badge-dot layui-bg-green"></span>
+                                                {else/}
+                                                <span class="layui-badge-dot"></span>
+                                                {/eq}
+                                            </li>
+                                            {/foreach}
+                                            {/empty}
+                                        </ul>
+
+                                        <div class="layui-tab-content" style="overflow: hidden" id="fuFaHouHuaLiaoShow">
+                                            {empty name='fufahouhualiao_info'}
+                                            <form id="fuFaHouHuaLiaoForm1" class="layui-tab-item fuFaHouHuaLiaoForm layui-show">
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouHuaLiaoSaveNew','#fuFaHouHuaLiaoForm','.fufahouhualiao-id')">保存修改</button>
+
+                                            </form>
+                                            {else}
+                                            {foreach $fufahouhualiao_info as $fufahouhualiao_info}
+                                            <form id="fuFaHouHuaLiaoForm{$fufahouhualiao_info->fufahouhualiao_id}" class="layui-tab-item fuFaHouHuaLiaoForm">
+                                                <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$fufahouhualiao_info->edit_time}</span></div>
+                                                <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delFuFaHouHuaLiaoInfo','{$fufahouhualiao_info->fufahouhualiao_id}','addFuFaHouHuaLiao')">删除</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouHuaLiaoSaveNew','#fuFaHouHuaLiaoForm','.fufahouhualiao-id')">保存修改</button>
+
+                                            </form>
+                                            {/foreach}
+                                            {/empty}
+                                            <div id="addFuFaHouHuaLiaoView" class="layui-tab-item fuFaHouHuaLiaoForm"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!--                                放疗-->
+                            <div class="layui-colla-item">
+
+                                <div class="layui-colla-title">
+                                    <span>放疗</span>
+                                </div>
+
+                                <div class="layui-colla-content">
+
+                                    <button class="btn btn-success" id="tabAddFuFaHouFangLiao">添加新的放疗记录</button>
+                                    <div class="layui-tab layui-tab-card" lay-filter="addFuFaHouFangLiao">
+
+                                        <ul class="layui-tab-title" id="fufahoufangliao-tab-title">
+                                            {empty name ='fufahoufangliao_info'}
+                                            <li class="layui-this fufahoufangliao-id" lay-id="1">
+                                                新记录
+                                            </li>
+                                            {else}
+                                            {foreach $fufahoufangliao_info as $fufahoufangliao_info_li}
+                                            <li class="fufahoufangliao-id" lay-id="{$fufahoufangliao_info_li->fufahoufangliao_id}">
+                                                【{$fufahoufangliao_info_li->created_time}】
+                                                {eq name = '$fufahoufangliao_info_li->fufahoufangliao_find' value = '正常'}
+                                                <span class="layui-badge-dot layui-bg-green"></span>
+                                                {else/}
+                                                <span class="layui-badge-dot"></span>
+                                                {/eq}
+                                            </li>
+                                            {/foreach}
+                                            {/empty}
+                                        </ul>
+
+                                        <div class="layui-tab-content" style="overflow: hidden" id="fuFaHouFangLiaoShow">
+                                            {empty name='fufahoufangliao_info'}
+                                            <form id="fuFaHouFangLiaoForm1" class="layui-tab-item fuFaHouFangLiaoForm layui-show">
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouFangLiaoSaveNew','#fuFaHouFangLiaoForm','.fufahoufangliao-id')">保存修改</button>
+
+                                            </form>
+                                            {else}
+                                            {foreach $fufahoufangliao_info as $fufahoufangliao_info}
+                                            <form id="fuFaHouFangLiaoForm{$fufahoufangliao_info->fufahoufangliao_id}" class="layui-tab-item fuFaHouFangLiaoForm">
+                                                <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$fufahoufangliao_info->edit_time}</span></div>
+                                                <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delFuFaHouFangLiaoInfo','{$fufahoufangliao_info->fufahoufangliao_id}','addFuFaHouFangLiao')">删除</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouFangLiaoSaveNew','#fuFaHouFangLiaoForm','.fufahoufangliao-id')">保存修改</button>
+
+                                            </form>
+                                            {/foreach}
+                                            {/empty}
+                                            <div id="addFuFaHouFangLiaoView" class="layui-tab-item fuFaHouFangLiaoForm"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!--                                伽玛刀-->
+                            <div class="layui-colla-item">
+
+                                <div class="layui-colla-title">
+                                    <span>伽玛刀</span>
+                                </div>
+
+                                <div class="layui-colla-content">
+
+                                    <button class="btn btn-success" id="tabAddFuFaHouGaMaDao">添加新的伽玛刀记录</button>
+                                    <div class="layui-tab layui-tab-card" lay-filter="addFuFaHouGaMaDao">
+
+                                        <ul class="layui-tab-title" id="fufahougamadao-tab-title">
+                                            {empty name ='fufahougamadao_info'}
+                                            <li class="layui-this fufahougamadao-id" lay-id="1">
+                                                新记录
+                                            </li>
+                                            {else}
+                                            {foreach $fufahougamadao_info as $fufahougamadao_info_li}
+                                            <li class="fufahougamadao-id" lay-id="{$fufahougamadao_info_li->fufahougamadao_id}">
+                                                【{$fufahougamadao_info_li->created_time}】
+                                                {eq name = '$fufahougamadao_info_li->fufahougamadao_find' value = '正常'}
+                                                <span class="layui-badge-dot layui-bg-green"></span>
+                                                {else/}
+                                                <span class="layui-badge-dot"></span>
+                                                {/eq}
+                                            </li>
+                                            {/foreach}
+                                            {/empty}
+                                        </ul>
+
+                                        <div class="layui-tab-content" style="overflow: hidden" id="fuFaHouGaMaDaoShow">
+                                            {empty name='fufahougamadao_info'}
+                                            <form id="fuFaHouGaMaDaoForm1" class="layui-tab-item fuFaHouGaMaDaoForm layui-show">
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouGaMaDaoSaveNew','#fuFaHouGaMaDaoForm','.fufahougamadao-id')">保存修改</button>
+
+                                            </form>
+                                            {else}
+                                            {foreach $fufahougamadao_info as $fufahougamadao_info}
+                                            <form id="fuFaHouGaMaDaoForm{$fufahougamadao_info->fufahougamadao_id}" class="layui-tab-item fuFaHouGaMaDaoForm">
+                                                <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$fufahougamadao_info->edit_time}</span></div>
+                                                <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delFuFaHouGaMaDaoInfo','{$fufahougamadao_info->fufahougamadao_id}','addFuFaHouGaMaDao')">删除</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouGaMaDaoSaveNew','#fuFaHouGaMaDaoForm','.fufahougamadao-id')">保存修改</button>
+
+                                            </form>
+                                            {/foreach}
+                                            {/empty}
+                                            <div id="addFuFaHouGaMaDaoView" class="layui-tab-item fuFaHouGaMaDaoForm"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!--                                靶向-->
+                            <div class="layui-colla-item">
+
+                                <div class="layui-colla-title">
+                                    <span>靶向</span>
+                                </div>
+
+                                <div class="layui-colla-content">
+
+                                    <button class="btn btn-success" id="tabAddFuFaHouBaXiang">添加新的靶向记录</button>
+                                    <div class="layui-tab layui-tab-card" lay-filter="addFuFaHouBaXiang">
+
+                                        <ul class="layui-tab-title" id="fufahoubaxiang-tab-title">
+                                            {empty name ='fufahoubaxiang_info'}
+                                            <li class="layui-this fufahoubaxiang-id" lay-id="1">
+                                                新记录
+                                            </li>
+                                            {else}
+                                            {foreach $fufahoubaxiang_info as $fufahoubaxiang_info_li}
+                                            <li class="fufahoubaxiang-id" lay-id="{$fufahoubaxiang_info_li->fufahoubaxiang_id}">
+                                                【{$fufahoubaxiang_info_li->created_time}】
+                                                {eq name = '$fufahoubaxiang_info_li->fufahoubaxiang_find' value = '正常'}
+                                                <span class="layui-badge-dot layui-bg-green"></span>
+                                                {else/}
+                                                <span class="layui-badge-dot"></span>
+                                                {/eq}
+                                            </li>
+                                            {/foreach}
+                                            {/empty}
+                                        </ul>
+
+                                        <div class="layui-tab-content" style="overflow: hidden" id="fuFaHouBaXiangShow">
+                                            {empty name='fufahoubaxiang_info'}
+                                            <form id="fuFaHouBaXiangForm1" class="layui-tab-item fuFaHouBaXiangForm layui-show">
+                                                <div style="margin-bottom: 10px">
+                                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouBaXiangSaveNew','#fuFaHouBaXiangForm','.fufahoubaxiang-id')">保存修改</button>
+                                                </div>
+                                                <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-2">药物名称</label>
+                                                        <div class="input-group col-sm-4">
+                                                            <input type="text" class="form-control input-sm" name="baxiang_yaowu" value="">
+                                                        </div>
+                                                    </blockquote>
+                                                </div>
+
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">开始时间</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="date" class="form-control input-sm" name="baxiang_start_time" value="">
+                                                        </div>
+                                                    </blockquote>
+                                                </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">结束时间</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="date" class="form-control input-sm" name="baxiang_end_time" value="">
+                                                        </div>
+                                                    </blockquote>
+                                                </div>
+
+                                            </form>
+                                            {else}
+                                            {foreach $fufahoubaxiang_info as $fufahoubaxiang_info}
+                                            <form id="fuFaHouBaXiangForm{$fufahoubaxiang_info->fufahoubaxiang_id}" class="layui-tab-item fuFaHouBaXiangForm">
+                                                <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$fufahoubaxiang_info->edit_time}</span></div>
+                                                <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delFuFaHouBaXiangInfo','{$fufahoubaxiang_info->fufahoubaxiang_id}','addFuFaHouBaXiang')">删除</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouBaXiangSaveNew','#fuFaHouBaXiangForm','.fufahoubaxiang-id')">保存修改</button>
+
+                                            </form>
+                                            {/foreach}
+                                            {/empty}
+                                            <div id="addFuFaHouBaXiangView" class="layui-tab-item fuFaHouBaXiangForm"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
                 </div>
+
             </div>
         </div>
-    </form>
+
+    </div>
+
 </div>
+
+<!--按钮操作-->
+<script src="/static/js/btnControl.js"></script>
+
+<!--单条记录保存按钮-->
 <script>
-    //Demo
-    layui.use('form', function(){
+    function saveForm(saveTo,formName){
+        let patients_id = $('#patients_id').val();
+        let form_data = decodeURIComponent($(formName).serialize());
+
+        let DataDeal = {
+            //将从form中通过$('#form').serialize()获取的值转成json字符串
+            formToJson: function (data) {
+                data=data.replace(/&/g,"\",\"");
+                data=data.replace(/=/g,"\":\"");
+                data="{\""+data+"\"}";
+                return data;
+            },
+            //json对象相同key合并value值
+            jsonData: function (s) {
+                var kv = {}, m, reg = /"[^"]+":"[^"]+"/gi;
+                var m = s.match(reg);
+                if (m == null){
+                    return false;
+                }
+
+                var o={};
+                for(var i=0;i<m.length;i++){
+                    kv=m[i].match(/"[^"]+"/gi);
+                    var _arr1=[];;
+                    for(var j=0;j<kv.length; j++){
+                        _arr1.push(kv[j].replace(/"/g,''));
+                    }
+                    if(_arr1[0] in o){
+                        if(typeof(o[_arr1[0]])=='string')
+                        {
+                            o[_arr1[0]]=[o[_arr1[0]]]
+                        };
+                        o[_arr1[0]].push(_arr1[1])
+                    }else{
+                        o[_arr1[0]]=_arr1[1]
+                    }
+                }
+                return o;
+            },
+        };
+
+        let toData=DataDeal.formToJson(form_data);//转化为json字符串
+
+        let jsonData = DataDeal.jsonData(toData);//json字符串相同key合并value值并转化为json对象
+
+        $.ajax({
+            type:"POST",
+            url:saveTo,
+            dataType:'JSON',
+            data: {
+                patients_id:patients_id,
+                form_data:jsonData
+            },
+            success:function (data) {
+                layui.use('layer', function(){
+                    let layer = layui.layer;
+                    if(data.status == 1){
+                        layer.msg(data.msg, {icon: 1});
+                        setTimeout('location.reload()', 1500 )
+                    }
+                    else {
+                        layer.msg(data.msg, {icon: 5});
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+<!--新增选项卡模版-->
+{include file="public/template/followLianxirenModel" /}
+
+<!--页面加载-->
+<script>
+    $(document).ready(function () {
+        //默认显示选项卡
+        $("#lianxiren-tab-title li:first").addClass('layui-this');
+
+        $("#lianXiRenShow form:first").addClass('layui-show');
+
+    })
+</script>
+
+<!--主选项卡定位-->
+<script>
+    layui.use(['element','form'], function(){
+        var element = layui.element;
         var form = layui.form;
 
-        //监听提交
-        form.on('submit(formDemo)', function(data){
-            layer.msg(JSON.stringify(data.field));
-            return false;
-        });
-    });
-</script>
-<!--layui模块加载-->
-<script>
-    layui.use('element', function(){
-        var element = layui.element;
+        //获取hash来切换选项卡，假设当前地址的hash为lay-id对应的值
+        var layid = location.hash.replace(/^#main=/, '');
+        element.tabChange('main', layid);
 
-        //一些事件监听
-        element.on('tab(demo)', function(data){
-            console.log(data);
+        //监听Tab切换
+        element.on('tab(main)', function(){
+            //改变地址hash值
+            location.hash = 'main='+ this.getAttribute('lay-id');
+
         });
+
     });
 </script>
+
+<!--左侧导航栏样式-->
 <script>
     window.onload = function(){
         $('.nav-left').css('display','block');
         $('#follow-left').addClass('active');
     }
 </script>
-<!--点击显示输入框-->
-<script>
 
-    var options=$(".inputhide");
-    for (var i = 0; i < options.length; i++) {
-        console.log($(options[i]).val());
-    }
+<!--联系人【新增选项卡】-->
+<script>
+    layui.use(['element','laytpl'], function(){
+        let i = 0;
+        let element = layui.element;
+        let laytpl = layui.laytpl;
+        let $ = layui.jquery;
+        let newId = parseInt($('.lianxiren-id:first').attr('lay-id'));
+
+        $('#tabAddLianXiRen').on('click', function(){
+            $(this).attr('disabled',true);//设置新增按钮为不可用
+            newId+=1;
+            i+=1;
+            //给新增表单动态添加ID
+            var getModel = document.getElementById('lianXiRenModel').innerHTML
+                ,view = document.getElementById('addLianXiRenView');
+            var data = { //数据
+                "formId":newId
+            }
+
+            //新增选项卡
+            element.tabAdd('addLianXiRen', {
+                title: '新联系人'
+                ,content: laytpl(getModel).render(data, function(html){view.innerHTML = html}) //取得模版
+                ,id: newId
+            })
+
+            //自动切换至新建选项卡
+            element.tabChange('addLianXiRen', newId);
+
+
+        });
+
+    });
+</script>
+<!--联系人【选项卡切换】-->
+<script>
+    layui.use('element', function(){
+        let element = layui.element;
+        //切换至新选项卡后添加class
+        element.on('tab(addLianXiRen)', function(){
+            $(this).addClass("lianxiren-id");
+        });
+    })
 </script>
 
 {include file="public/footer" /}

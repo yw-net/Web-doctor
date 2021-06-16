@@ -10,6 +10,7 @@
     input[type="checkbox"]{margin-right: 5px;}
     .flex-row{display: flex;justify-content: space-around;flex-direction: row;}
     .flex-col{display: flex;flex-direction: column;}
+    .layui-form-label{text-align: left}
 </style>
 <!--术前检查页面-->
 <div class="content">
@@ -176,7 +177,7 @@
                             <!--                                血常规-->
                             <div class="layui-colla-item">
 
-                                <div class="layui-colla-title">
+                                <div class="layui-colla-title" style="color: blue">
                                     <span>血常规</span>
                                     {notempty name = 'xuechanggui_info'}
                                     {if $xuechanggui_find == "不相同"/}
@@ -228,52 +229,64 @@
                                                         </label>
                                                     </div>
                                                 </blockquote>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">1-检查时间：</label>
-                                                    <div class="input-group col-sm-2">
+                                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+                                                    <label class="col-sm-2">检查时间</label>
+
+                                                    <div class="input-group col-sm-4">
                                                         <input size="16" type="date" value="" class="form-control input-sm" name="checkdatexuechanggui">
                                                     </div>
+                                                </blockquote>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">白细胞计数</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="baixibaojishu" value="">
+                                                            <span class="input-group-addon">10^9/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">2-白细胞计数：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="baixibaojishu" value="">
-                                                        <span class="input-group-addon">10^9/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">中性粒细胞计数</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="zhongxinglixibaojishu" value="">
+                                                            <span class="input-group-addon">10^9/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">3-中性粒细胞计数：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="zhongxinglixibaojishu" value="">
-                                                        <span class="input-group-addon">10^9/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">血红蛋白</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="xuehongdanbai" value="">
+                                                            <span class="input-group-addon">g/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">4-血红蛋白：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="xuehongdanbai" value="">
-                                                        <span class="input-group-addon">g/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">血小板</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="xuexiaoban" value="">
+                                                            <span class="input-group-addon">10^9/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">5-血小板：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="xuexiaoban" value="">
-                                                        <span class="input-group-addon">10^9/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">血型</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <select class="form-control input-sm" name="xuexing">
+                                                                <option value="a" selected>A</option>
+                                                                <option value="b">B</option>
+                                                                <option value="ab">AB</option>
+                                                                <option value="o">O</option>
+                                                                <option value="其他">其他</option>
+                                                            </select>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">血型：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <select class="form-control input-sm" name="xuexing">
-                                                            <option value="a">A</option>
-                                                            <option value="b">B</option>
-                                                            <option value="ab">AB</option>
-                                                            <option value="o">O</option>
-                                                            <option value="其他">其他</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+
                                             </form>
                                             {else}
                                             {foreach $xuechanggui_info as $xuechanggui_info}
@@ -294,51 +307,62 @@
                                                         </label>
                                                     </div>
                                                 </blockquote>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">1-检查时间：</label>
-                                                    <div class="input-group col-sm-2">
+                                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+                                                    <label class="col-sm-2">检查时间</label>
+
+                                                    <div class="input-group col-sm-4">
                                                         <input size="16" type="date" value="{$xuechanggui_info->checkdatexuechanggui}" class="form-control input-sm" name="checkdatexuechanggui">
                                                     </div>
+                                                </blockquote>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">白细胞计数</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="baixibaojishu" value="{$xuechanggui_info->baixibaojishu}">
+                                                            <span class="input-group-addon">10^9/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">2-白细胞计数：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="baixibaojishu" value="{$xuechanggui_info->baixibaojishu}">
-                                                        <span class="input-group-addon">10^9/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">中性粒细胞计数</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="zhongxinglixibaojishu" value="{$xuechanggui_info->zhongxinglixibaojishu}">
+                                                            <span class="input-group-addon">10^9/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">3-中性粒细胞计数：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="zhongxinglixibaojishu" value="{$xuechanggui_info->zhongxinglixibaojishu}">
-                                                        <span class="input-group-addon">10^9/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">血红蛋白</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="xuehongdanbai" value="{$xuechanggui_info->xuehongdanbai}">
+                                                            <span class="input-group-addon">g/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">4-血红蛋白：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="xuehongdanbai" value="{$xuechanggui_info->xuehongdanbai}">
-                                                        <span class="input-group-addon">g/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">血小板</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="xuexiaoban" value="{$xuechanggui_info->xuexiaoban}">
+                                                            <span class="input-group-addon">10^9/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">5-血小板：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="xuexiaoban" value="{$xuechanggui_info->xuexiaoban}">
-                                                        <span class="input-group-addon">10^9/L</span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">血型：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <select class="form-control input-sm" name="xuexing">
-                                                            <option value="a"{if $xuechanggui_info->xuexing =='a'}selected{/if}>A</option>
-                                                            <option value="b"{if $xuechanggui_info->xuexing =='b'}selected{/if}>B</option>
-                                                            <option value="ab"{if $xuechanggui_info->xuexing =='ab'}selected{/if}>AB</option>
-                                                            <option value="o"{if $xuechanggui_info->xuexing =='o'}selected{/if}>O</option>
-                                                            <option value="其他"{if $xuechanggui_info->xuexing =='其他'}selected{/if}>其他</option>
-                                                        </select>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">血型</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <select class="form-control input-sm" name="xuexing">
+                                                                <option value="a"{if $xuechanggui_info->xuexing =='a'}selected{/if}>A</option>
+                                                                <option value="b"{if $xuechanggui_info->xuexing =='b'}selected{/if}>B</option>
+                                                                <option value="ab"{if $xuechanggui_info->xuexing =='ab'}selected{/if}>AB</option>
+                                                                <option value="o"{if $xuechanggui_info->xuexing =='o'}selected{/if}>O</option>
+                                                                <option value="其他"{if $xuechanggui_info->xuexing =='其他'}selected{/if}>其他</option>
+                                                            </select>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
                                             </form>
                                             {/foreach}
@@ -353,7 +377,7 @@
                             <!--                                血生化-->
                             <div class="layui-colla-item">
 
-                                <div class="layui-colla-title">
+                                <div class="layui-colla-title" style="color: blue">
                                     <span>血生化</span>
                                     {notempty name = 'xueshenghua_info'}
                                     {if $xueshenghua_find == "不相同"/}
@@ -405,75 +429,95 @@
                                                         </label>
                                                     </div>
                                                 </blockquote>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">1-检查时间：</label>
-                                                    <div class="input-group col-sm-2">
+                                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+                                                    <label class="col-sm-2">检查时间</label>
+
+                                                    <div class="input-group col-sm-4">
                                                         <input size="16" type="date" value="" class="form-control input-sm" name="checkdate">
                                                     </div>
+                                                </blockquote>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">谷丙转氨酶</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="gubinzhuananmei" value="">
+                                                            <span class="input-group-addon">IU/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">2-谷丙转氨酶：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="gubinzhuananmei" value="">
-                                                        <span class="input-group-addon">IU/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">谷草转氨酶</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="gucaozhuananmei" value="">
+                                                            <span class="input-group-addon">IU/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">3-谷草转氨酶：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="gucaozhuananmei" value="">
-                                                        <span class="input-group-addon">IU/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">总胆红素</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="zongdanhongsu" value="">
+                                                            <span class="input-group-addon">umol/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">4-总胆红素：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="zongdanhongsu" value="">
-                                                        <span class="input-group-addon">umol/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">尿素氨</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="niaosuan" value="">
+                                                            <span class="input-group-addon">mmol/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">5-尿素氨：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="niaosuan" value="">
-                                                        <span class="input-group-addon">mmol/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">肌酐</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="jigan" value="">
+                                                            <span class="input-group-addon">umol/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">6-肌酐：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="jigan" value="">
-                                                        <span class="input-group-addon">umol/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">血蛋白</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="xuedanbai" value="">
+                                                            <span class="input-group-addon">g/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">7-血蛋白：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="xuedanbai" value="">
-                                                        <span class="input-group-addon">g/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">总蛋白</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="zongdanbai" value="">
+                                                            <span class="input-group-addon">g/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">8-总蛋白：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="zongdanbai" value="">
-                                                        <span class="input-group-addon">g/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">碱性磷酸酶</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="jianxinglingsuanmei" value="">
+                                                            <span class="input-group-addon">UL/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">9-碱性磷酸酶：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="jianxinglingsuanmei" value="">
-                                                        <span class="input-group-addon">UL/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">血糖</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="xuetang" value="">
+                                                            <span class="input-group-addon">mmol/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">10-血糖：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="xuetang" value="">
-                                                        <span class="input-group-addon">mmol/L</span>
-                                                    </div>
-                                                </div>
+
                                             </form>
                                             {else}
                                             {foreach $xueshenghua_info as $xueshenghua_info}
@@ -494,74 +538,93 @@
                                                         </label>
                                                     </div>
                                                 </blockquote>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">1-检查时间：</label>
-                                                    <div class="input-group col-sm-2">
+                                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+                                                    <label class="col-sm-2">检查时间</label>
+
+                                                    <div class="input-group col-sm-4">
                                                         <input size="16" type="date" value="{$xueshenghua_info->checkdate}" class="form-control input-sm" name="checkdate">
                                                     </div>
+                                                </blockquote>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">谷丙转氨酶</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="gubinzhuananmei" value="{$xueshenghua_info->gubinzhuananmei}">
+                                                            <span class="input-group-addon">IU/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">2-谷丙转氨酶：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="gubinzhuananmei" value="{$xueshenghua_info->gubinzhuananmei}">
-                                                        <span class="input-group-addon">IU/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">谷草转氨酶</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="gucaozhuananmei" value="{$xueshenghua_info->gucaozhuananmei}">
+                                                            <span class="input-group-addon">IU/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">3-谷草转氨酶：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="gucaozhuananmei" value="{$xueshenghua_info->gucaozhuananmei}">
-                                                        <span class="input-group-addon">IU/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">总胆红素</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="zongdanhongsu" value="{$xueshenghua_info->zongdanhongsu}">
+                                                            <span class="input-group-addon">umol/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">4-总胆红素：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="zongdanhongsu" value="{$xueshenghua_info->zongdanhongsu}">
-                                                        <span class="input-group-addon">umol/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">尿素氨</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="niaosuan" value="{$xueshenghua_info->niaosuan}">
+                                                            <span class="input-group-addon">mmol/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">5-尿素氨：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="niaosuan" value="{$xueshenghua_info->niaosuan}">
-                                                        <span class="input-group-addon">mmol/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">肌酐</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="jigan" value="{$xueshenghua_info->jigan}">
+                                                            <span class="input-group-addon">umol/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">6-肌酐：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="jigan" value="{$xueshenghua_info->jigan}">
-                                                        <span class="input-group-addon">umol/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">血蛋白</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="xuedanbai" value="{$xueshenghua_info->xuedanbai}">
+                                                            <span class="input-group-addon">g/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">7-血蛋白：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="xuedanbai" value="{$xueshenghua_info->xuedanbai}">
-                                                        <span class="input-group-addon">g/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">总蛋白</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="zongdanbai" value="{$xueshenghua_info->zongdanbai}">
+                                                            <span class="input-group-addon">g/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">8-总蛋白：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="zongdanbai" value="{$xueshenghua_info->zongdanbai}">
-                                                        <span class="input-group-addon">g/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">碱性磷酸酶</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="jianxinglingsuanmei" value="{$xueshenghua_info->jianxinglingsuanmei}">
+                                                            <span class="input-group-addon">UL/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">9-碱性磷酸酶：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="jianxinglingsuanmei" value="{$xueshenghua_info->jianxinglingsuanmei}">
-                                                        <span class="input-group-addon">UL/L</span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">10-血糖：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="xuetang" value="{$xueshenghua_info->xuetang}">
-                                                        <span class="input-group-addon">mmol/L</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">血糖</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="xuetang" value="{$xueshenghua_info->xuetang}">
+                                                            <span class="input-group-addon">mmol/L</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
                                             </form>
                                             {/foreach}
@@ -577,7 +640,7 @@
                             <!--                                血瘤标志物-->
                             <div class="layui-colla-item">
 
-                                <div class="layui-colla-title">
+                                <div class="layui-colla-title" style="color:blue">
                                     <span>血瘤标志物</span>
                                     {notempty name = 'xueliubiaozhiwu_info'}
                                     {if $xueliubiaozhiwu_find == "不相同"/}
@@ -629,54 +692,68 @@
                                                         </label>
                                                     </div>
                                                 </blockquote>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">1-检查时间：</label>
-                                                    <div class="input-group col-sm-2">
+                                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+                                                    <label class="col-sm-2">检查时间</label>
+
+                                                    <div class="input-group col-sm-4">
                                                         <input size="16" type="date" value="" class="form-control input-sm" name="checkdate">
                                                     </div>
+                                                </blockquote>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">CEA</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="cea" value="">
+                                                            <span class="input-group-addon">ng/ml</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">2-CEA</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="cea" value="">
-                                                        <span class="input-group-addon">ng/ml</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">CYFRA211</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="cyfra211" value="">
+                                                            <span class="input-group-addon">ng/ml</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">3-CYFRA211</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="cyfra211" value="">
-                                                        <span class="input-group-addon">ng/ml</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">CA199</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="ca199" value="">
+                                                            <span class="input-group-addon">U/ml</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">4-CA199</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="ca199" value="">
-                                                        <span class="input-group-addon">U/ml</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">NSE</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="nse" value="">
+                                                            <span class="input-group-addon">ng/ml</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">5-NSE</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="nse" value="">
-                                                        <span class="input-group-addon">ng/ml</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">SCC</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="scc" value="">
+                                                            <span class="input-group-addon">ng/ml</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">6-SCC</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="scc" value="">
-                                                        <span class="input-group-addon">ng/ml</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">CA125</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="ca125" value="">
+                                                            <span class="input-group-addon">U/ml</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">7-CA125</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="ca125" value="">
-                                                        <span class="input-group-addon">U/ml</span>
-                                                    </div>
-                                                </div>
+
                                             </form>
                                             {else}
                                             {foreach $xueliubiaozhiwu_info as $xueliubiaozhiwu_info}
@@ -695,54 +772,68 @@
                                                         </label>
                                                     </div>
                                                 </blockquote>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">1-检查时间：</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input size="16" type="date" value="{$xueliubiaozhiwu_info->checkdate}" class="form-control input-sm" name="checkdate">
+                                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+                                                    <label class="col-sm-2">检查时间</label>
+
+                                                    <div class="input-group col-sm-4">
+                                                        <input size="16" type="date" value="" class="form-control input-sm" name="checkdate">
                                                     </div>
+                                                </blockquote>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">CEA</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="cea" value="{$xueliubiaozhiwu_info->cea}">
+                                                            <span class="input-group-addon">ng/ml</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">2-CEA</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="cea" value="{$xueliubiaozhiwu_info->cea}">
-                                                        <span class="input-group-addon">ng/ml</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">CYFRA211</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="cyfra211" value="{$xueliubiaozhiwu_info->cyfra211}">
+                                                            <span class="input-group-addon">ng/ml</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">3-CYFRA211</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="cyfra211" value="{$xueliubiaozhiwu_info->cyfra211}">
-                                                        <span class="input-group-addon">ng/ml</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">CA199</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="ca199" value="{$xueliubiaozhiwu_info->ca199}">
+                                                            <span class="input-group-addon">U/ml</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">4-CA199</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="ca199" value="{$xueliubiaozhiwu_info->ca199}">
-                                                        <span class="input-group-addon">U/ml</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">NSE</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="nse" value="{$xueliubiaozhiwu_info->nse}">
+                                                            <span class="input-group-addon">ng/ml</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">5-NSE</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="nse" value="{$xueliubiaozhiwu_info->nse}">
-                                                        <span class="input-group-addon">ng/ml</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">SCC</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="scc" value="{$xueliubiaozhiwu_info->scc}">
+                                                            <span class="input-group-addon">ng/ml</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">6-SCC</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="scc" value="{$xueliubiaozhiwu_info->scc}">
-                                                        <span class="input-group-addon">ng/ml</span>
-                                                    </div>
+                                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                                        <label class="col-sm-4">CA125</label>
+                                                        <div class="input-group col-sm-6">
+                                                            <input type="text" class="form-control input-sm" placeholder="" name="ca125" value="{$xueliubiaozhiwu_info->ca125}">
+                                                            <span class="input-group-addon">U/ml</span>
+                                                        </div>
+                                                    </blockquote>
                                                 </div>
-                                                <div class="form-group has-success">
-                                                    <label class="col-sm-2 control-label">7-CA125</label>
-                                                    <div class="input-group col-sm-2">
-                                                        <input type="text" class="form-control input-sm" placeholder="" name="ca125" value="{$xueliubiaozhiwu_info->ca125}">
-                                                        <span class="input-group-addon">U/ml</span>
-                                                    </div>
-                                                </div>
+
                                             </form>
                                             {/foreach}
                                             {/empty}
@@ -756,6 +847,7 @@
                             </div>
 
                         </div>
+
                     </div>
 
 <!--                    CT-->
@@ -793,7 +885,7 @@
 
                                     <blockquote class="layui-elem-quote" style="padding: 0;margin-top: 5px">
                                         <div class="layui-form-item" style="margin-bottom: 0">
-                                            <label class="layui-form-label" style="width: 140px!important;">CT检查发现</label>
+                                            <label class="layui-form-label" style="width: 140px!important;">CT检查</label>
                                             <label class="radio-inline" style="padding: 9px">
                                                 <input type="radio" name="ctFind" value="正常" class="ctFind" checked/>正常
                                             </label>
@@ -802,21 +894,19 @@
                                             </label>
                                         </div>
                                     </blockquote>
-                                    <div class="form-group">
-                                        <label class="col-sm-1 control-label" style="margin-left: 5.2%;">1-部位</label>
-                                        <div class="checkbox flex-row">
-                                            <label><input name="buwei" type="checkbox" value="右肺上叶"> 右肺上叶</label>
-                                            <label><input name="buwei" type="checkbox" value="右肺中叶"> 右肺中叶</label>
-                                            <label><input name="buwei" type="checkbox" value="右肺下叶"> 右肺下叶</label>
-                                            <label><input name="buwei" type="checkbox" value="左肺上叶"> 左肺上叶</label>
-                                            <label><input name="buwei" type="checkbox" value="左肺下叶"> 左肺下叶</label>
-                                            <label><input name="buwei" type="checkbox" value="中心型"> 中心型</label>
-                                            <label><input name="buwei" type="checkbox" value="外周型"> 外周型</label>
-                                            <label><input name="buwei" type="checkbox" value="跨列"> 跨列</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="overflow: hidden">
-                                        <label class="col-sm-1 control-label" style="margin-left: 5.2%;">2-大小</label>
+                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-2">部位</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="右肺上叶"> 右肺上叶</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="右肺中叶"> 右肺中叶</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="右肺下叶"> 右肺下叶</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="左肺上叶"> 左肺上叶</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="左肺下叶"> 左肺下叶</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="中心型"> 中心型</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="外周型"> 外周型</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="跨列"> 跨列</label>
+                                    </blockquote>
+                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;overflow: hidden">
+                                        <label class="col-sm-2">大小</label>
                                         <div class="col-sm-5 row flex-row">
                                             <div class="input-group col-sm-3">
                                                 <input type="text" class="form-control input-sm" name="daxiao1" value="">
@@ -833,173 +923,209 @@
                                                 <span class="input-group-addon" for="daxiao3">cm</span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">3-GGO</label>
+                                    </blockquote>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">GGO</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="ggo" value="1"/> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="ggo" value="0" checked /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">4-钙化</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">钙化</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="gaihua" value="1"/> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="gaihua" value="0" checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">5-分叶症</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">分叶症</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="fenyezheng" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="fenyezheng" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">6-毛刺症</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">毛刺症</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="maocizheng" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="maocizheng" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">7-胸膜皱缩</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">胸膜皱缩</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="xiongmozhousuo" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="xiongmozhousuo" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">8-棘状突起</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">棘状突起</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="jizhuangtuqi" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="jizhuangtuqi" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">9-空洞</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">空洞</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="kongdong" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="kongdong" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">10-支气管征</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">支气管征</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="zhiqiguanzheng" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="zhiqiguanzheng" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">11-阻塞性肺炎</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">阻塞性肺炎</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="zushaixingfeiyan" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="zushaixingfeiyan" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">12-肿瘤侵犯血管</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">肿瘤侵犯血管</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="zhongliuqingfanxueguan" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="zhongliuqingfanxueguan" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">13-侵犯膈肌</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">侵犯膈肌</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="qingfangeji" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="qingfangeji" value="0" checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">14-侵犯椎体</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">侵犯椎体</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="qingfanzhuiti" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="qingfanzhuiti" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">15-侵犯胸壁</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">侵犯胸壁</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="qingfanxiongbi" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="qingfanxiongbi" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">16-胸水</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">胸水</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="xiongshui" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="xiongshui" value="0" checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">17-同叶结节</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">同叶结节</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="tongyejiejie" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="tongyejiejie" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">18-不同叶结节</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">不同叶结节</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="butongyejiejie" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="butongyejiejie" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">19-SPN</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">SPN</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="spn" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="spn" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">20-淋巴结肿大</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">淋巴结肿大</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="linbajiezhongda" value="1" /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="linbajiezhongda" value="0"  checked/> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-12">
+                                    <div class="form-group layui-col-md12">
                                         <blockquote class="layui-elem-quote" style="padding: 10px;">CT文件、图像资料</blockquote>
                                     </div>
-                                    <div class="form-group col-sm-12">
+                                    <div class="form-group layui-col-md12">
                                         <input type="file" id="imgShowCt1"  name="imgShowCt1" multiple="multiple" class="file-loading">
                                     </div>
                                 </form>
@@ -1023,21 +1149,21 @@
                                             </label>
                                         </div>
                                     </blockquote>
-                                    <div class="form-group">
-                                        <label class="col-sm-1 control-label" style="margin-left: 5.2%;">1-部位</label>
-                                        <div class="checkbox flex-row">
-                                            <label><input name="buwei" type="checkbox" value="右肺上叶" <?php if(strstr($ct_info_item->buwei,'右肺上叶')) echo 'checked="checked"'; ?> > 右肺上叶</label>
-                                            <label><input name="buwei" type="checkbox" value="右肺中叶" <?php if(strstr($ct_info_item->buwei,'右肺中叶')) echo 'checked="checked"'; ?> > 右肺中叶</label>
-                                            <label><input name="buwei" type="checkbox" value="右肺下叶" <?php if(strstr($ct_info_item->buwei,'右肺下叶')) echo 'checked="checked"'; ?> > 右肺下叶</label>
-                                            <label><input name="buwei" type="checkbox" value="左肺上叶" <?php if(strstr($ct_info_item->buwei,'左肺上叶')) echo 'checked="checked"'; ?> > 左肺上叶</label>
-                                            <label><input name="buwei" type="checkbox" value="左肺下叶" <?php if(strstr($ct_info_item->buwei,'左肺下叶')) echo 'checked="checked"'; ?> > 左肺下叶</label>
-                                            <label><input name="buwei" type="checkbox" value="中心型" <?php if(strstr($ct_info_item->buwei,'中心型')) echo 'checked="checked"'; ?> > 中心型</label>
-                                            <label><input name="buwei" type="checkbox" value="外周型" <?php if(strstr($ct_info_item->buwei,'外周型')) echo 'checked="checked"'; ?> > 外周型</label>
-                                            <label><input name="buwei" type="checkbox" value="跨列" <?php if(strstr($ct_info_item->buwei,'跨列')) echo 'checked="checked"'; ?> > 跨列</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="overflow: hidden">
-                                        <label class="col-sm-1 control-label" style="margin-left: 5.2%;">2-大小</label>
+
+                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-2">部位</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="右肺上叶" <?php if(strstr($ct_info_item->buwei,'右肺上叶')) echo 'checked="checked"'; ?> > 右肺上叶</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="右肺中叶" <?php if(strstr($ct_info_item->buwei,'右肺中叶')) echo 'checked="checked"'; ?> > 右肺中叶</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="右肺下叶" <?php if(strstr($ct_info_item->buwei,'右肺下叶')) echo 'checked="checked"'; ?> > 右肺下叶</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="左肺上叶" <?php if(strstr($ct_info_item->buwei,'左肺上叶')) echo 'checked="checked"'; ?> > 左肺上叶</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="左肺下叶" <?php if(strstr($ct_info_item->buwei,'左肺下叶')) echo 'checked="checked"'; ?> > 左肺下叶</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="中心型" <?php if(strstr($ct_info_item->buwei,'中心型')) echo 'checked="checked"'; ?> > 中心型</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="外周型" <?php if(strstr($ct_info_item->buwei,'外周型')) echo 'checked="checked"'; ?> > 外周型</label>
+                                        <label class="checkbox-inline"><input name="buwei" type="checkbox" value="跨列" <?php if(strstr($ct_info_item->buwei,'跨列')) echo 'checked="checked"'; ?> > 跨列</label>
+                                    </blockquote>
+
+                                    <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;overflow: hidden">
+                                        <label class="col-sm-2">大小</label>
                                         <div class="col-sm-5 row flex-row">
                                             <div class="input-group col-sm-3">
                                                 <input type="text" class="form-control input-sm" name="daxiao1" value="{$ct_info_item->daxiao1}">
@@ -1054,173 +1180,211 @@
                                                 <span class="input-group-addon" for="daxiao3">cm</span>
                                             </div>
                                         </div>
+                                    </blockquote>
+
+
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">GGO</label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="ggo" value="1" <?php if($ct_info_item->ggo =='1') echo 'checked="checked"'; ?> /> 是
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="ggo" value="0"  <?php if($ct_info_item->ggo =='0') echo 'checked="checked"'; ?> /> 否
+                                            </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">3-GGO</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="ggo" value="1" <?php if($ct_info_item->ggo =='1') echo 'checked="checked"'; ?> /> 是
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="ggo" value="0"  <?php if($ct_info_item->ggo =='0') echo 'checked="checked"'; ?> /> 否
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">4-钙化</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">钙化</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="gaihua" value="1" <?php if($ct_info_item->gaihua =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="gaihua" value="0" <?php if($ct_info_item->gaihua =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">5-分叶症</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">分叶症</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="fenyezheng" value="1" <?php if($ct_info_item->fenyezheng =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="fenyezheng" value="0"  <?php if($ct_info_item->fenyezheng =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">6-毛刺症</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">毛刺症</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="maocizheng" value="1"  <?php if($ct_info_item->maocizheng =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="maocizheng" value="0"  <?php if($ct_info_item->maocizheng =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">7-胸膜皱缩</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">胸膜皱缩</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="xiongmozhousuo" value="1" <?php if($ct_info_item->xiongmozhousuo =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="xiongmozhousuo" value="0"  <?php if($ct_info_item->xiongmozhousuo =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">8-棘状突起</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">棘状突起</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="jizhuangtuqi" value="1" <?php if($ct_info_item->jizhuangtuqi =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="jizhuangtuqi" value="0"  <?php if($ct_info_item->jizhuangtuqi =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">9-空洞</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">空洞</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="kongdong" value="1" <?php if($ct_info_item->kongdong =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="kongdong" value="0"  <?php if($ct_info_item->kongdong =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">10-支气管征</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">支气管征</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="zhiqiguanzheng" value="1" <?php if($ct_info_item->zhiqiguanzheng =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="zhiqiguanzheng" value="0"  <?php if($ct_info_item->zhiqiguanzheng =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">11-阻塞性肺炎</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">阻塞性肺炎</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="zushaixingfeiyan" value="1" <?php if($ct_info_item->zushaixingfeiyan =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="zushaixingfeiyan" value="0"  <?php if($ct_info_item->zushaixingfeiyan =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">12-肿瘤侵犯血管</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">肿瘤侵犯血管</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="zhongliuqingfanxueguan" value="1" <?php if($ct_info_item->zhongliuqingfanxueguan =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="zhongliuqingfanxueguan" value="0"  <?php if($ct_info_item->zhongliuqingfanxueguan =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">13-侵犯膈肌</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">侵犯膈肌</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="qingfangeji" value="1" <?php if($ct_info_item->qingfangeji =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="qingfangeji" value="0"  <?php if($ct_info_item->qingfangeji =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">14-侵犯椎体</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">侵犯椎体</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="qingfanzhuiti" value="1" <?php if($ct_info_item->qingfanzhuiti =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="qingfanzhuiti" value="0"  <?php if($ct_info_item->qingfanzhuiti =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">15-侵犯胸壁</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">侵犯胸壁</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="qingfanxiongbi" value="1" <?php if($ct_info_item->qingfanxiongbi =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="qingfanxiongbi" value="0"  <?php if($ct_info_item->qingfanxiongbi =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">16-胸水</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">胸水</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="xiongshui" value="1" <?php if($ct_info_item->xiongshui =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="xiongshui" value="0" <?php if($ct_info_item->xiongshui =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">17-同叶结节</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">同叶结节</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="tongyejiejie" value="1" <?php if($ct_info_item->tongyejiejie =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="tongyejiejie" value="0"  <?php if($ct_info_item->tongyejiejie =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">18-不同叶结节</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">不同叶结节</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="butongyejiejie" value="1" <?php if($ct_info_item->butongyejiejie =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="butongyejiejie" value="0"  <?php if($ct_info_item->butongyejiejie =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">19-SPN</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">SPN</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="spn" value="1"  <?php if($ct_info_item->spn =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="spn" value="0"  <?php if($ct_info_item->spn =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label class="col-sm-4 control-label col-sm-offset-1">20-淋巴结肿大</label>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0px!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                        <label class="col-sm-4">淋巴结肿大</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="linbajiezhongda" value="1"  <?php if($ct_info_item->linbajiezhongda =='1') echo 'checked="checked"'; ?> /> 是
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="linbajiezhongda" value="0"  <?php if($ct_info_item->linbajiezhongda =='0') echo 'checked="checked"'; ?> /> 否
                                         </label>
+                                        </blockquote>
                                     </div>
-                                    <div class="form-group col-sm-12">
+                                    <div class="form-group layui-col-md12">
                                         <blockquote class="layui-elem-quote" style="padding: 10px;">CT文件、图像资料</blockquote>
                                     </div>
-                                    <div class="form-group col-sm-12">
+                                    <div class="form-group layui-col-md12">
                                         <input type="file" id="imgShowCt{$ct_info_item->ct_id}"  name="imgShowCt{$ct_info_item->ct_id}" multiple="multiple" class="file-loading">
                                     </div>
                                 </form>
@@ -1566,89 +1730,93 @@
                                         </div>
                                     </blockquote>
 
-                                    <blockquote class="layui-elem-quote" style="padding: 5px; margin-top: 15px;border-left: 5px solid #9a9a9a">
-                                        FVC
+                                    <blockquote class="layui-elem-quote layui-quote-nm" style="padding: 5px; margin-top: 15px;">
+                                        <label class="col-sm-2" style="line-height: 35px">FVC</label>
+                                        <div class="layui-input-block" style="margin-left: 0!important;">
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">预测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="pre_fvc" value="">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">实测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="act_fvc" value="">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </blockquote>
-                                    <div class="layui-input-block" style="margin-left: 0!important;">
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">预测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="pre_fvc" value="">
-                                                <span class="input-group-addon">/L</span>
-                                            </div>
 
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">实测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="act_fvc" value="">
-                                                <span class="input-group-addon">/L</span>
+
+                                    <blockquote class="layui-elem-quote layui-quote-nm" style="padding: 5px; margin-top: 20px;">
+                                        <label class="col-sm-2" style="line-height: 35px">FEV1</label>
+                                        <div class="layui-input-block" style="margin-left: 0!important;">
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">预测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="pre_fev1" value="">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">实测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="act_fev1" value="">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <blockquote class="layui-elem-quote" style="padding: 5px; margin-top: 20px;border-left: 5px solid #9a9a9a">
-                                        FEV1
                                     </blockquote>
-                                    <div class="layui-input-block" style="margin-left: 0!important;">
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">预测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="pre_fev1" value="">
-                                                <span class="input-group-addon">/L</span>
-                                            </div>
 
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">实测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="act_fev1" value="">
-                                                <span class="input-group-addon">/L</span>
+
+                                    <blockquote class="layui-elem-quote layui-quote-nm" style="padding: 5px; margin-top: 20px;">
+                                        <label class="col-sm-2" style="line-height: 35px">DLCO</label>
+                                        <div class="layui-input-block" style="margin-left: 0!important;">
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">预测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="pre_dlco" value="">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">实测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="act_dlco" value="">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <blockquote class="layui-elem-quote" style="padding: 5px; margin-top: 20px;border-left: 5px solid #9a9a9a">
-                                        DLCO
                                     </blockquote>
-                                    <div class="layui-input-block" style="margin-left: 0!important;">
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">预测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="pre_dlco" value="">
-                                                <span class="input-group-addon">/L</span>
-                                            </div>
 
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">实测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="act_dlco" value="">
-                                                <span class="input-group-addon">/L</span>
+
+                                    <blockquote class="layui-elem-quote layui-quote-nm" style="padding: 5px; margin-top: 20px;">
+                                        <label class="col-sm-2" style="line-height: 35px">VC</label>
+                                        <div class="layui-input-block" style="margin-left: 0!important;">
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">预测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="pre_vc" value="">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">实测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="act_vc" value="">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <blockquote class="layui-elem-quote" style="padding: 5px; margin-top: 20px;border-left: 5px solid #9a9a9a">
-                                        VC
                                     </blockquote>
-                                    <div class="layui-input-block" style="margin-left: 0!important;">
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">预测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="pre_vc" value="">
-                                                <span class="input-group-addon">/L</span>
-                                            </div>
 
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">实测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="act_vc" value="">
-                                                <span class="input-group-addon">/L</span>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <blockquote class="layui-elem-quote" style="padding: 5px; margin-top: 20px;border-left: 5px solid #9a9a9a">
                                         血气分析
@@ -1722,89 +1890,93 @@
                                         </div>
                                     </blockquote>
 
-                                    <blockquote class="layui-elem-quote" style="padding: 5px; margin-top: 15px;border-left: 5px solid #9a9a9a">
-                                        FVC
+                                    <blockquote class="layui-elem-quote layui-quote-nm" style="padding: 5px; margin-top: 15px;">
+                                        <label class="col-sm-2" style="line-height: 35px">FVC</label>
+                                        <div class="layui-input-block" style="margin-left: 0!important;">
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">预测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="pre_fvc" value="{$feigongneng_info_item->pre_fvc}">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">实测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="act_fvc" value="{$feigongneng_info_item->act_fvc}">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </blockquote>
-                                    <div class="layui-input-block" style="margin-left: 0!important;">
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">预测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="pre_fvc" value="{$feigongneng_info_item->pre_fvc}">
-                                                <span class="input-group-addon">/L</span>
-                                            </div>
 
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">实测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="act_fvc" value="{$feigongneng_info_item->act_fvc}">
-                                                <span class="input-group-addon">/L</span>
+
+                                    <blockquote class="layui-elem-quote layui-quote-nm" style="padding: 5px; margin-top: 20px;">
+                                        <label class="col-sm-2" style="line-height: 35px">FEV1</label>
+                                        <div class="layui-input-block" style="margin-left: 0!important;">
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">预测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="pre_fev1" value="{$feigongneng_info_item->pre_fev1}">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">实测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="act_fev1" value="{$feigongneng_info_item->act_fev1}">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <blockquote class="layui-elem-quote" style="padding: 5px; margin-top: 20px;border-left: 5px solid #9a9a9a">
-                                        FEV1
                                     </blockquote>
-                                    <div class="layui-input-block" style="margin-left: 0!important;">
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">预测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="pre_fev1" value="{$feigongneng_info_item->pre_fev1}">
-                                                <span class="input-group-addon">/L</span>
-                                            </div>
 
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">实测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="act_fev1" value="{$feigongneng_info_item->act_fev1}">
-                                                <span class="input-group-addon">/L</span>
+
+                                    <blockquote class="layui-elem-quote layui-quote-nm" style="padding: 5px; margin-top: 20px;">
+                                        <label class="col-sm-2" style="line-height: 35px">DLCO</label>
+                                        <div class="layui-input-block" style="margin-left: 0!important;">
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">预测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="pre_dlco" value="{$feigongneng_info_item->pre_dlco}">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">实测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="act_dlco" value="{$feigongneng_info_item->act_dlco}">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <blockquote class="layui-elem-quote" style="padding: 5px; margin-top: 20px;border-left: 5px solid #9a9a9a">
-                                        DLCO
                                     </blockquote>
-                                    <div class="layui-input-block" style="margin-left: 0!important;">
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">预测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="pre_dlco" value="{$feigongneng_info_item->pre_dlco}">
-                                                <span class="input-group-addon">/L</span>
-                                            </div>
 
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">实测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="act_dlco" value="{$feigongneng_info_item->act_dlco}">
-                                                <span class="input-group-addon">/L</span>
+
+                                    <blockquote class="layui-elem-quote layui-quote-nm" style="padding: 5px; margin-top: 20px;">
+                                        <label class="col-sm-2" style="line-height: 35px">VC</label>
+                                        <div class="layui-input-block" style="margin-left: 0!important;">
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">预测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="pre_vc" value="{$feigongneng_info_item->pre_vc}">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">实测值</span>
+                                                    <input type="text" class="form-control input-sm layui-input-inline" name="act_vc" value="{$feigongneng_info_item->act_vc}">
+                                                    <span class="input-group-addon">/L</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <blockquote class="layui-elem-quote" style="padding: 5px; margin-top: 20px;border-left: 5px solid #9a9a9a">
-                                        VC
                                     </blockquote>
-                                    <div class="layui-input-block" style="margin-left: 0!important;">
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">预测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="pre_vc" value="{$feigongneng_info_item->pre_vc}">
-                                                <span class="input-group-addon">/L</span>
-                                            </div>
 
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">实测值</span>
-                                                <input type="text" class="form-control input-sm layui-input-inline" name="act_vc" value="{$feigongneng_info_item->act_vc}">
-                                                <span class="input-group-addon">/L</span>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <blockquote class="layui-elem-quote" style="padding: 5px; margin-top: 20px;border-left: 5px solid #9a9a9a">
                                         血气分析
@@ -3619,18 +3791,25 @@
         let element = layui.element;
         element.on('collapse(coll)', function(data){
             let clicked = $(data.title.children()[1]).attr('id');
+            console.log(clicked)
             switch (clicked){
                 case 'xueChangGuiBadge' :
-                    $("#xuechanggui-tab-title li:first").addClass('layui-this');
-                    $("#xueChangGuiShow form:first").addClass('layui-show');
+                    if ($("#xuechanggui-tab-title li:contains('新记录')").length == 0){
+                        $("#xuechanggui-tab-title li:first").addClass('layui-this');
+                        $("#xueChangGuiShow form:first").addClass('layui-show');
+                    }
                     break;
                 case 'xueShengHuaBadge':
-                    $("#xueshenghua-tab-title li:first").addClass('layui-this');
-                    $("#xueShengHuaShow form:first").addClass('layui-show');
+                    if ($("#xueshenghua-tab-title li:contains('新记录')").length == 0){
+                        $("#xueshenghua-tab-title li:first").addClass('layui-this');
+                        $("#xueShengHuaShow form:first").addClass('layui-show');
+                    }
                     break;
                 case 'xueLiuBiaoZhiWuBadge':
-                    $("#xueliubiaozhiwu-tab-title li:first").addClass('layui-this');
-                    $("#xueLiuBiaoZhiWuShow form:first").addClass('layui-show');
+                    if ($("#xueliubiaozhiwu-tab-title li:contains('新记录')").length == 0){
+                        $("#xueliubiaozhiwu-tab-title li:first").addClass('layui-this');
+                        $("#xueLiuBiaoZhiWuShow form:first").addClass('layui-show');
+                    }
                     break;
             }
         })

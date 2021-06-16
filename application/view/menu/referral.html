@@ -2,6 +2,9 @@
 {include file="public/header" /}
 {include file="public/left" /}
 {include file="public/nav" /}
+<link rel="stylesheet" href="/static/bootstrap-fileinput/css/fileinput.min.css">
+<script src="/static/bootstrap-fileinput/js/fileinput.js"></script>
+<script src="/static/bootstrap-fileinput/js/locales/zh.js"></script>
 <style>
     .xueliubiao-content{display: flex;flex-direction: column;}
     .xuliubiao-input{display: flex;flex-direction: row;margin-top: 10px;}
@@ -9,284 +12,678 @@
     .radio-inline{margin-left: 0 !important;}
     .radio-inline2{margin-left: 15px !important;}
     .update-img{margin-top: 10px;}
+    .flex-row-start{display: flex;justify-content: flex-start;flex-direction: row;}
+    .control-label{text-align: left!important;}
 </style>
 <!--复诊信息页面-->
 <div class="content">
-    <form class="form-horizontal" action="{:url('Save/history')}" method="post">
-        <div class="panel panel-info">
-            <div class="panel-heading yw-flex-row">
-                <h4 class="panel-title">复诊信息</h4>
-                <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
-            </div>
-            <div class="panel-body">
-                <div class="form-group has-success">
-                    <label for="referralDate" class="col-sm-2 control-label">复诊日期：</label>
-                    <div class="input-group col-sm-2">
-                        <input size="16" type="text" value="" readonly class="form-control input-sm form_datetime" id="referralDate" name="referraldate" placeholder="选择日期">
-                        <span class="input-group-addon" onclick="clearFormBir();" style="cursor: pointer;">
-                             <span class="glyphicon glyphicon-remove"></span>
-                         </span>
-                    </div>
-                </div>
-                <div class="form-group has-success">
-                    <label for="referralDoctor" class="col-sm-2 control-label">复诊医生：</label>
-                    <div class="input-group col-sm-2">
-                        <input type="text" class="form-control input-sm" id="referralDoctor" placeholder="" name="referraldoctor" value="">
-                        <span class="input-group-addon">医生</span>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-heading">
-                <h4 class="panel-title">复诊内容</h4>
-            </div>
-            <div class="panel-body">
-                <div class="form-group has-success">
-                    <label for="zhengzhuang" class="col-sm-1 control-label">症状：</label>
-                    <div class="input-group col-sm-3">
-                        <input type="text" class="form-control input-sm" id="zhengzhuang" placeholder="" name="zhengzhuang" value="">
-                    </div>
-                </div>
+    <div class="panel panel-info">
+        <div class="panel-heading yw-flex-row">
+            <h4 class="panel-title">复诊信息</h4>
+            <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
+        </div>
+        <input type="text" id="patients_id" class="hidden" value="{$patientid}">
+        <div class="panel-body">
+            <button class="btn btn-success" id="tabAddFuZhen">添加新的复诊信息</button>
+            <div class="layui-tab layui-tab-card" lay-filter="addFuZhen">
 
-                <div class="form-group has-success">
-                    <label for="tizheng" class="col-sm-1 control-label">体征：</label>
-                    <div class="input-group col-sm-3">
-                        <input type="text" class="form-control input-sm" id="tizheng" placeholder="" name="tizheng" value="">
-                    </div>
-                </div>
+                <ul class="layui-tab-title" id="fuzhen-tab-title">
 
-                <div class="form-group has-success xueliubiao-content">
-                    <div>
-                        <label class="col-sm-1 control-label">血瘤标：</label>
-                    </div>
-                    <div class="xuliubiao-input col-sm-offset-1">
-                        <label for="cea" class="col-sm-1 control-label">CEA</label>
-                        <div class="input-group col-sm-2">
-                            <input type="text" class="form-control input-sm" id="cea" placeholder="" name="cea" value="">
-                            <span class="input-group-addon">ng/ml</span>
+                    {empty name='fuzhen_info'}
+                    <li class="layui-this fuzhen-id" lay-id="1">
+                        新记录
+                    </li>
+                    {else}
+                    {foreach $fuzhen_info as $fuzhen_info_li}
+                    <li class="fuzhen-id" lay-id="{$fuzhen_info_li->fuzhen_id}">
+                        【{$fuzhen_info_li->created_time}】
+                    </li>
+                    {/foreach}
+                    {/empty}
+                </ul>
+
+                <div class="layui-tab-content has-success" style="overflow: hidden" id="fuZhenShow">
+                    {empty name = 'fuzhen_info'}
+                    <form class="layui-tab-item layui-show" id="fuZhenForm1">
+                        <div style="margin-bottom: 10px">
+                            <button class="btn btn-info save" type="button" onclick="saveTab('../ReferralSave/fuZhenSaveNew','#fuZhenForm','.fuzhen-id')">保存修改</button>
                         </div>
-                        <label for="cyfra" class="col-sm-1 control-label">CYFRA211</label>
-                        <div class="input-group col-sm-2">
-                            <input type="text" class="form-control input-sm" id="cyfra" placeholder="" name="cyfra" value="">
-                            <span class="input-group-addon">ng/ml</span>
+                        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-4">复诊日期</label>
+                                <div class="input-group col-sm-6">
+                                    <input size="16" type="date" value=""class="form-control input-sm" name="referral_time">
+                                </div>
+                            </blockquote>
                         </div>
-                        <label for="ca199" class="col-sm-1 control-label">CA199</label>
-                        <div class="input-group col-sm-2">
-                            <input type="text" class="form-control input-sm" id="ca199" placeholder="" name="ca199" value="">
-                            <span class="input-group-addon">U/ml</span>
+                        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-4">复诊医生</label>
+                                <div class="input-group col-sm-6">
+                                    <select class="form-control input-sm" name="referral_doctor">
+                                        <option value="请选择" selected>请选择</option>
+                                        {foreach $doctor as $key=>$vo }
+                                        <option value="{$vo.neckname}">{$vo.neckname}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </blockquote>
                         </div>
-                    </div>
-                    <div class="xuliubiao-input col-sm-offset-1">
-                        <label for="nse" class="col-sm-1 control-label">NSE</label>
-                        <div class="input-group col-sm-2">
-                            <input type="text" class="form-control input-sm" id="nse" placeholder="" name="nse" value="">
-                            <span class="input-group-addon">ng/ml</span>
+                        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-4">症状</label>
+                                <div class="input-group col-sm-6">
+                                    <input size="16" type="text" value=""class="form-control input-sm" name="referral_zhengzhuang">
+                                </div>
+                            </blockquote>
                         </div>
-                        <label for="scc" class="col-sm-1 control-label">SCC</label>
-                        <div class="input-group col-sm-2">
-                            <input type="text" class="form-control input-sm" id="scc" placeholder="" name="scc" value="">
-                            <span class="input-group-addon">ng/ml</span>
+                        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-4">体征</label>
+                                <div class="input-group col-sm-6">
+                                    <input size="16" type="text" value=""class="form-control input-sm" name="referral_tizheng">
+                                </div>
+                            </blockquote>
                         </div>
-                        <label for="ca125" class="col-sm-1 control-label">CA125</label>
-                        <div class="input-group col-sm-2">
-                            <input type="text" class="form-control input-sm" id="ca125" placeholder="" name="ca125" value="">
-                            <span class="input-group-addon">U/ml</span>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">血瘤标</label>
+                                <div class="flex-row-start">
+
+                                    <div class="input-group col-sm-4">
+                                        <span class="input-group-addon" style="width: 95px">CEA</span>
+                                        <input type="text" class="form-control input-sm" name="xueliubiao_cea" value="">
+                                        <span class="input-group-addon">ng/ml</span>
+                                    </div>
+                                    <div class="input-group col-sm-4" style="margin-left: 12px">
+                                        <span class="input-group-addon" style="width: 95px">CYFRA211</span>
+                                        <input type="text" class="form-control input-sm" name="xueliubiao_cyfra211" value="">
+                                        <span class="input-group-addon">ng/ml</span>
+                                    </div>
+                                    <div class="input-group col-sm-4" style="margin-left: 12px">
+                                        <span class="input-group-addon" style="width: 95px">CA199</span>
+                                        <input type="text" class="form-control input-sm" name="xueliubiao_ca199" value="">
+                                        <span class="input-group-addon">U/ml</span>
+                                    </div>
+                                </div>
+                                <div class="flex-row-start col-sm-offset-2" style="margin-top: 5px">
+                                    <div class="input-group col-sm-4">
+                                        <span class="input-group-addon" style="width: 95px">NSE</span>
+                                        <input type="text" class="form-control input-sm" name="xueliubiao_nse" value="">
+                                        <span class="input-group-addon">ng/ml</span>
+                                    </div>
+                                    <div class="input-group col-sm-4" style="margin-left: 12px">
+                                        <span class="input-group-addon bg-info" style="width: 95px">SCC</span>
+                                        <input type="text" class="form-control input-sm" name="xueliubiao_scc" value="">
+                                        <span class="input-group-addon">ng/ml</span>
+                                    </div>
+                                    <div class="input-group col-sm-4" style="margin-left: 12px">
+                                        <span class="input-group-addon" style="width: 95px">CA125</span>
+                                        <input type="text" class="form-control input-sm" name="xueliubiao_ca125" value="">
+                                        <span class="input-group-addon">U/ml</span>
+                                    </div>
+                                </div>
+                            </blockquote>
                         </div>
-                    </div>
-                </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">超声</label>
+                                <div class="input-group">
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="chaosheng_zhuanyi" type="checkbox" value="淋巴结转移"> 淋巴结转移</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="chaosheng_zhuanyi" type="checkbox" value="肝转移"> 肝转移</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="chaosheng_zhuanyi" type="checkbox" value="肾上腺转移"> 肾上腺转移</label>
+                                </div>
+                                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                    <span class="input-group-addon">其他</span>
+                                    <input type="text" class="form-control input-sm layui-input-inline" name="chaosheng_zhuanyi_other" value="">
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+                            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">超声文件、影像资料</blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12">
+                            <input type="file" id="imgShowChaoShen1"  name="imgShowChaoShen1" multiple="multiple" class="file-loading">
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">CT</label>
+                                <div class="input-group">
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ct_zhuanyi" type="checkbox" value="局部复发"> 局部复发</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ct_zhuanyi" type="checkbox" value="纵隔淋巴转移"> 纵隔淋巴转移</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ct_zhuanyi" type="checkbox" value="肺转移"> 肺转移</label>
+                                </div>
+                                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                    <span class="input-group-addon">其他</span>
+                                    <input type="text" class="form-control input-sm layui-input-inline" name="ct_zhuanyi_other" value="">
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+                            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">CT文件、影像资料</blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12">
+                            <input type="file" id="imgShowCT1"  name="imgShowCT1" multiple="multiple" class="file-loading">
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">ECT</label>
+                                <div class="input-group">
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ect_zhuanyi" type="checkbox" value="局部复发"> 局部复发</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ect_zhuanyi" type="checkbox" value="纵隔淋巴转移"> 纵隔淋巴转移</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ect_zhuanyi" type="checkbox" value="肺转移"> 肺转移</label>
+                                </div>
+                                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                    <span class="input-group-addon">其他</span>
+                                    <input type="text" class="form-control input-sm layui-input-inline" name="ect_zhuanyi_other" value="">
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+                            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">ECT文件、影像资料</blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12">
+                            <input type="file" id="imgShowECT1"  name="imgShowECT1" multiple="multiple" class="file-loading">
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">头颅MRI</label>
+                                <div class="input-group">
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="toulu_zhuanyi" type="checkbox" value="局部复发"> 局部复发</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="toulu_zhuanyi" type="checkbox" value="纵隔淋巴转移"> 纵隔淋巴转移</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="toulu_zhuanyi" type="checkbox" value="肺转移"> 肺转移</label>
+                                </div>
+                                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                    <span class="input-group-addon">其他</span>
+                                    <input type="text" class="form-control input-sm layui-input-inline" name="toulu_zhuanyi_other" value="">
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+                            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">头颅MRI文件、影像资料</blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12">
+                            <input type="file" id="imgShowTouLu1"  name="imgShowTouLu1" multiple="multiple" class="file-loading">
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">PET</label>
+                                <div class="input-group">
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="pet_zhuanyi" type="checkbox" value="局部复发"> 局部复发</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="pet_zhuanyi" type="checkbox" value="纵隔淋巴转移"> 纵隔淋巴转移</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="pet_zhuanyi" type="checkbox" value="肺转移"> 肺转移</label>
+                                </div>
+                                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                    <span class="input-group-addon">其他</span>
+                                    <input type="text" class="form-control input-sm layui-input-inline" name="pet_zhuanyi_other" value="">
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+                            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">PET文件、影像资料</blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12">
+                            <input type="file" id="imgShowPET1"  name="imgShowPET1" multiple="multiple" class="file-loading">
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">其他</label>
+                                <div class="input-group col-sm-6">
+                                    <input size="16" type="text" value=""class="form-control input-sm" name="referral_other">
+                                </div>
+                            </blockquote>
+                        </div>
 
-                <div class="form-group has-success ct-content">
-                    <div class="ct-label">
-                        <label class="col-sm-1 control-label">超声：</label>
-                        <label class="radio-inline">
-                            <input class="" type="radio" name="radiochaoshen" value="1" id="chaoshen1" /> 是
-                        </label>
-                        <label class="radio-inline radio-inline2">
-                            <input class="" type="radio" name="radiochaoshen" value="0" id="chaoshen2" checked /> 否
-                        </label>
-                    </div>
-                    <div class="has-success row ct-checkbox col-sm-offset-1" id="chaoshencheckbox">
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 淋巴结转移
-                        </label>
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck2" type="checkbox" id="chaoshenCheckbox2" value="1"> 肝转移
-                        </label>
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck3" type="checkbox" id="chaoshenCheckbox3" value="1"> 肾上腺转移
-                        </label>
-                    </div>
-                    <div class="ct-checkbox-other col-sm-offset-1">
-                        <label class="checkbox-inline">
-                            <input name="chaoshencheckother" type="checkbox" id="chaoshencheckother" value="1"> 其他
-                        </label>
-                    </div>
-                    <div class="has-success row">
-                        <input type="text" class="form-control input-sm col-md-offset-1" id="chaoshenotherinput" placeholder="请输入..." name="chaoshenotherinput" value="" style="margin-top: 5px;width: 300px;">
-                    </div>
-                    <div class="update-img col-sm-offset-1">
-                        <button class="btn btn-success">上传图片</button><button class="btn btn-success" style="margin-left: 15px;">展示图片</button>
-                    </div>
-                </div>
+                    </form>
+                    {else}
+                    {foreach $fuzhen_info as $fuzhen_info_item}
+                    <form class="layui-tab-item" id="fuZhenForm{$fuzhen_info_item->fuzhen_id}">
+                        <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$fuzhen_info_item->edit_time}</span></div>
+                        <div style="margin-bottom: 10px">
+                            <button class="btn btn-danger del" type="button" onclick="delBtn('../ReferralSave/delFuZhenInfo','{$fuzhen_info_item->fuzhen_id}','addFuZhen')">删除</button>
+                            <button class="btn btn-info save" type="button" onclick="saveTab('../ReferralSave/fuZhenSaveNew','#fuZhenForm','.fuzhen-id')">保存修改</button>
+                        </div>
 
-                <div class="form-group has-success ct-content">
-                    <div class="ct-label">
-                        <label class="col-sm-1 control-label">CT：</label>
-                        <label class="radio-inline">
-                            <input class="" type="radio" name="radiochaoshen" value="1" id="chaoshen1" /> 是
-                        </label>
-                        <label class="radio-inline radio-inline2">
-                            <input class="" type="radio" name="radiochaoshen" value="0" id="chaoshen2" checked /> 否
-                        </label>
-                    </div>
-                    <div class="has-success row ct-checkbox col-sm-offset-1" id="chaoshencheckbox">
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 局部复发
-                        </label>
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck2" type="checkbox" id="chaoshenCheckbox2" value="1"> 纵隔淋巴转移
-                        </label>
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck3" type="checkbox" id="chaoshenCheckbox3" value="1"> 肺转移
-                        </label>
-                    </div>
-                    <div class="ct-checkbox-other col-sm-offset-1">
-                        <label class="checkbox-inline">
-                            <input name="chaoshencheckother" type="checkbox" id="chaoshencheckother" value="1"> 其他
-                        </label>
-                    </div>
-                    <div class="has-success row">
-                        <input type="text" class="form-control input-sm col-md-offset-1" id="chaoshenotherinput" placeholder="请输入..." name="chaoshenotherinput" value="" style="margin-top: 5px;width: 300px;">
-                    </div>
-                    <div class="update-img col-sm-offset-1">
-                        <button class="btn btn-success">上传图片</button><button class="btn btn-success" style="margin-left: 15px;">展示图片</button>
-                    </div>
-                </div>
+                        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-4">复诊日期</label>
+                                <div class="input-group col-sm-6">
+                                    <input size="16" type="date" value="{$fuzhen_info_item->referral_time}" class="form-control input-sm" name="referral_time">
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-4">复诊医生</label>
+                                <div class="input-group col-sm-6">
+                                    <select class="form-control input-sm" name="referral_doctor">
+                                        <option value="请选择" selected>请选择</option>
+                                        {foreach $doctor as $key=>$vo }
+                                        <option value="{$vo.neckname}" {if ($fuzhen_info_item->referral_doctor ==$vo.neckname)}selected{/if}>
+                                            {$vo.neckname}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-4">症状</label>
+                                <div class="input-group col-sm-6">
+                                    <input size="16" type="text" value="{$fuzhen_info_item->referral_zhengzhuang}" class="form-control input-sm" name="referral_zhengzhuang">
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-4">体征</label>
+                                <div class="input-group col-sm-6">
+                                    <input size="16" type="text" value="{$fuzhen_info_item->referral_tizheng}" class="form-control input-sm" name="referral_tizheng">
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">血瘤标</label>
+                                <div class="flex-row-start">
 
-                <div class="form-group has-success ct-content">
-                    <div class="ct-label">
-                        <label class="col-sm-1 control-label">ECT：</label>
-                        <label class="radio-inline">
-                            <input class="" type="radio" name="radiochaoshen" value="1" id="chaoshen1" /> 是
-                        </label>
-                        <label class="radio-inline radio-inline2">
-                            <input class="" type="radio" name="radiochaoshen" value="0" id="chaoshen2" checked /> 否
-                        </label>
-                    </div>
-                    <div class="has-success row ct-checkbox col-sm-offset-1" id="chaoshencheckbox">
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 局部复发
-                        </label>
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck2" type="checkbox" id="chaoshenCheckbox2" value="1"> 纵隔淋巴转移
-                        </label>
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck3" type="checkbox" id="chaoshenCheckbox3" value="1"> 肺转移
-                        </label>
-                    </div>
-                    <div class="ct-checkbox-other col-sm-offset-1">
-                        <label class="checkbox-inline">
-                            <input name="chaoshencheckother" type="checkbox" id="chaoshencheckother" value="1"> 其他
-                        </label>
-                    </div>
-                    <div class="has-success row">
-                        <input type="text" class="form-control input-sm col-md-offset-1" id="chaoshenotherinput" placeholder="请输入..." name="chaoshenotherinput" value="" style="margin-top: 5px;width: 300px;">
-                    </div>
-                    <div class="update-img col-sm-offset-1">
-                        <button class="btn btn-success">上传图片</button><button class="btn btn-success" style="margin-left: 15px;">展示图片</button>
-                    </div>
-                </div>
+                                    <div class="input-group col-sm-4">
+                                        <span class="input-group-addon" style="width: 95px">CEA</span>
+                                        <input type="text" class="form-control input-sm" name="xueliubiao_cea" value="{$fuzhen_info_item->xueliubiao_cea}">
+                                        <span class="input-group-addon">ng/ml</span>
+                                    </div>
+                                    <div class="input-group col-sm-4" style="margin-left: 12px">
+                                        <span class="input-group-addon" style="width: 95px">CYFRA211</span>
+                                        <input type="text" class="form-control input-sm" name="xueliubiao_cyfra211" value="{$fuzhen_info_item->xueliubiao_cyfra211}">
+                                        <span class="input-group-addon">ng/ml</span>
+                                    </div>
+                                    <div class="input-group col-sm-4" style="margin-left: 12px">
+                                        <span class="input-group-addon" style="width: 95px">CA199</span>
+                                        <input type="text" class="form-control input-sm" name="xueliubiao_ca199" value="{$fuzhen_info_item->xueliubiao_ca199}">
+                                        <span class="input-group-addon">U/ml</span>
+                                    </div>
+                                </div>
+                                <div class="flex-row-start col-sm-offset-2" style="margin-top: 5px">
+                                    <div class="input-group col-sm-4">
+                                        <span class="input-group-addon" style="width: 95px">NSE</span>
+                                        <input type="text" class="form-control input-sm" name="xueliubiao_nse" value="{$fuzhen_info_item->xueliubiao_nse}">
+                                        <span class="input-group-addon">ng/ml</span>
+                                    </div>
+                                    <div class="input-group col-sm-4" style="margin-left: 12px">
+                                        <span class="input-group-addon bg-info" style="width: 95px">SCC</span>
+                                        <input type="text" class="form-control input-sm" name="xueliubiao_scc" value="{$fuzhen_info_item->xueliubiao_scc}">
+                                        <span class="input-group-addon">ng/ml</span>
+                                    </div>
+                                    <div class="input-group col-sm-4" style="margin-left: 12px">
+                                        <span class="input-group-addon" style="width: 95px">CA125</span>
+                                        <input type="text" class="form-control input-sm" name="xueliubiao_ca125" value="{$fuzhen_info_item->xueliubiao_ca125}">
+                                        <span class="input-group-addon">U/ml</span>
+                                    </div>
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">超声</label>
+                                <div class="input-group">
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="chaosheng_zhuanyi" type="checkbox" value="淋巴结转移" {if(strstr($fuzhen_info_item->chaosheng_zhuanyi , '淋巴结转移'))} checked {/if}> 淋巴结转移</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="chaosheng_zhuanyi" type="checkbox" value="肝转移" {if(strstr($fuzhen_info_item->chaosheng_zhuanyi , '肝转移'))} checked {/if}> 肝转移</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="chaosheng_zhuanyi" type="checkbox" value="肾上腺转移" {if(strstr($fuzhen_info_item->chaosheng_zhuanyi , '肾上腺转移'))} checked {/if}> 肾上腺转移</label>
+                                </div>
+                                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                    <span class="input-group-addon">其他</span>
+                                    <input type="text" class="form-control input-sm layui-input-inline" name="chaosheng_zhuanyi_other" value="{$fuzhen_info_item->chaosheng_zhuanyi_other}">
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+                            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">超声文件、影像资料</blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12">
+                            <input type="file" id="imgShowChaoShen{$fuzhen_info_item->fuzhen_id}"  name="imgShowChaoShen{$fuzhen_info_item->fuzhen_id}" multiple="multiple" class="file-loading">
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">CT</label>
+                                <div class="input-group">
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ct_zhuanyi" type="checkbox" value="局部复发" {if(strstr($fuzhen_info_item->ct_zhuanyi , '局部复发'))} checked {/if}> 局部复发</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ct_zhuanyi" type="checkbox" value="纵隔淋巴转移" {if(strstr($fuzhen_info_item->ct_zhuanyi , '纵隔淋巴转移'))} checked {/if}> 纵隔淋巴转移</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ct_zhuanyi" type="checkbox" value="肺转移" {if(strstr($fuzhen_info_item->ct_zhuanyi , '肺转移'))} checked {/if}> 肺转移</label>
+                                </div>
+                                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                    <span class="input-group-addon">其他</span>
+                                    <input type="text" class="form-control input-sm layui-input-inline" name="ct_zhuanyi_other" value="{$fuzhen_info_item->ct_zhuanyi_other}">
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+                            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">CT文件、影像资料</blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12">
+                            <input type="file" id="imgShowCT{$fuzhen_info_item->fuzhen_id}"  name="imgShowCT{$fuzhen_info_item->fuzhen_id}" multiple="multiple" class="file-loading">
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">ECT</label>
+                                <div class="input-group">
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ect_zhuanyi" type="checkbox" value="局部复发" {if(strstr($fuzhen_info_item->ect_zhuanyi , '局部复发'))} checked {/if}> 局部复发</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ect_zhuanyi" type="checkbox" value="纵隔淋巴转移" {if(strstr($fuzhen_info_item->ect_zhuanyi , '纵隔淋巴转移'))} checked {/if}> 纵隔淋巴转移</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ect_zhuanyi" type="checkbox" value="肺转移" {if(strstr($fuzhen_info_item->ect_zhuanyi , '肺转移'))} checked {/if}> 肺转移</label>
+                                </div>
+                                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                    <span class="input-group-addon">其他</span>
+                                    <input type="text" class="form-control input-sm layui-input-inline" name="ect_zhuanyi_other" value="{$fuzhen_info_item->ect_zhuanyi_other}">
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+                            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">ECT文件、影像资料</blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12">
+                            <input type="file" id="imgShowECT{$fuzhen_info_item->fuzhen_id}"  name="imgShowECT{$fuzhen_info_item->fuzhen_id}" multiple="multiple" class="file-loading">
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">头颅MRI</label>
+                                <div class="input-group">
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="toulu_zhuanyi" type="checkbox" value="局部复发" {if(strstr($fuzhen_info_item->toulu_zhuanyi , '局部复发'))} checked {/if}> 局部复发</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="toulu_zhuanyi" type="checkbox" value="纵隔淋巴转移" {if(strstr($fuzhen_info_item->toulu_zhuanyi , '纵隔淋巴转移'))} checked {/if}> 纵隔淋巴转移</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="toulu_zhuanyi" type="checkbox" value="肺转移" {if(strstr($fuzhen_info_item->toulu_zhuanyi , '肺转移'))} checked {/if}> 肺转移</label>
+                                </div>
+                                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                    <span class="input-group-addon">其他</span>
+                                    <input type="text" class="form-control input-sm layui-input-inline" name="toulu_zhuanyi_other" value="{$fuzhen_info_item->toulu_zhuanyi_other}">
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+                            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">头颅MRI文件、影像资料</blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12">
+                            <input type="file" id="imgShowTouLu{$fuzhen_info_item->fuzhen_id}"  name="imgShowTouLu{$fuzhen_info_item->fuzhen_id}" multiple="multiple" class="file-loading">
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">PET</label>
+                                <div class="input-group">
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="pet_zhuanyi" type="checkbox" value="局部复发" {if(strstr($fuzhen_info_item->pet_zhuanyi , '局部复发'))} checked {/if}> 局部复发</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="pet_zhuanyi" type="checkbox" value="纵隔淋巴转移" {if(strstr($fuzhen_info_item->pet_zhuanyi , '纵隔淋巴转移'))} checked {/if}> 纵隔淋巴转移</label>
+                                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="pet_zhuanyi" type="checkbox" value="肺转移" {if(strstr($fuzhen_info_item->pet_zhuanyi , '肺转移'))} checked {/if}> 肺转移</label>
+                                </div>
+                                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                    <span class="input-group-addon">其他</span>
+                                    <input type="text" class="form-control input-sm layui-input-inline" name="pet_zhuanyi_other" value="{$fuzhen_info_item->pet_zhuanyi_other}">
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+                            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">PET文件、影像资料</blockquote>
+                        </div>
+                        <div class="form-group layui-col-md12">
+                            <input type="file" id="imgShowPET{$fuzhen_info_item->fuzhen_id}"  name="imgShowPET{$fuzhen_info_item->fuzhen_id}" multiple="multiple" class="file-loading">
+                        </div>
+                        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                <label class="col-sm-2">其他</label>
+                                <div class="input-group col-sm-6">
+                                    <input size="16" type="text" value="{$fuzhen_info_item->referral_other}" class="form-control input-sm" name="referral_other">
+                                </div>
+                            </blockquote>
+                        </div>
 
-                <div class="form-group has-success ct-content">
-                    <div class="ct-label">
-                        <label class="col-sm-1 control-label">头颅MRI</label>
-                        <label class="radio-inline">
-                            <input class="" type="radio" name="radiochaoshen" value="1" id="chaoshen1" /> 是
-                        </label>
-                        <label class="radio-inline radio-inline2">
-                            <input class="" type="radio" name="radiochaoshen" value="0" id="chaoshen2" checked /> 否
-                        </label>
-                    </div>
-                    <div class="has-success row ct-checkbox col-sm-offset-1" id="chaoshencheckbox">
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 局部复发
-                        </label>
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck2" type="checkbox" id="chaoshenCheckbox2" value="1"> 纵隔淋巴转移
-                        </label>
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck3" type="checkbox" id="chaoshenCheckbox3" value="1"> 肺转移
-                        </label>
-                    </div>
-                    <div class="ct-checkbox-other col-sm-offset-1">
-                        <label class="checkbox-inline">
-                            <input name="chaoshencheckother" type="checkbox" id="chaoshencheckother" value="1"> 其他
-                        </label>
-                    </div>
-                    <div class="has-success row">
-                        <input type="text" class="form-control input-sm col-md-offset-1" id="chaoshenotherinput" placeholder="请输入..." name="chaoshenotherinput" value="" style="margin-top: 5px;width: 300px;">
-                    </div>
-                    <div class="update-img col-sm-offset-1">
-                        <button class="btn btn-success">上传图片</button><button class="btn btn-success" style="margin-left: 15px;">展示图片</button>
-                    </div>
-                </div>
 
-                <div class="form-group has-success ct-content">
-                    <div class="ct-label">
-                        <label class="col-sm-1 control-label">PET：</label>
-                        <label class="radio-inline">
-                            <input class="" type="radio" name="radiochaoshen" value="1" id="chaoshen1" /> 是
-                        </label>
-                        <label class="radio-inline radio-inline2">
-                            <input class="" type="radio" name="radiochaoshen" value="0" id="chaoshen2" checked /> 否
-                        </label>
-                    </div>
-                    <div class="has-success row ct-checkbox col-sm-offset-1" id="chaoshencheckbox">
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck1" type="checkbox" id="chaoshenCheckbox1" value="1"> 局部复发
-                        </label>
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck2" type="checkbox" id="chaoshenCheckbox2" value="1"> 纵隔淋巴转移
-                        </label>
-                        <label class="checkbox-inline col-sm-3">
-                            <input name="chaoshencheck3" type="checkbox" id="chaoshenCheckbox3" value="1"> 肺转移
-                        </label>
-                    </div>
-                    <div class="ct-checkbox-other col-sm-offset-1">
-                        <label class="checkbox-inline">
-                            <input name="chaoshencheckother" type="checkbox" id="chaoshencheckother" value="1"> 其他
-                        </label>
-                    </div>
-                    <div class="has-success row">
-                        <input type="text" class="form-control input-sm col-md-offset-1" id="chaoshenotherinput" placeholder="请输入..." name="chaoshenotherinput" value="" style="margin-top: 5px;width: 300px;">
-                    </div>
-                    <div class="update-img col-sm-offset-1">
-                        <button class="btn btn-success">上传图片</button><button class="btn btn-success" style="margin-left: 15px;">展示图片</button>
-                    </div>
-                </div>
-
-                <div class="form-group has-success">
-                    <label for="tizheng" class="col-sm-1 control-label">其他：</label>
-                    <div class="input-group col-sm-5">
-                        <input type="text" class="form-control input-sm" id="tizheng" placeholder="" name="tizheng" value="">
-                    </div>
+                    </form>
+                    {/foreach}
+                    {/empty}
+                    <div id="addFuZhenView" class="layui-tab-item"></div>
                 </div>
             </div>
         </div>
-    </form>
+
+
+    </div>
+
 </div>
+
+
+<!--左侧导航栏样式-->
 <script>
     window.onload = function(){
         $('.nav-left').css('display','block');
         $('#referral-left').addClass('active');
     }
 </script>
-<!--点击显示输入框-->
-<script>
 
-    var options=$(".inputhide");
-    for (var i = 0; i < options.length; i++) {
-        console.log($(options[i]).val());
-    }
+<!--文件渲染函数-->
+<script src="/static/js/fileRander.js"></script>
+
+<!--按钮操作-->
+<script src="/static/js/btnControl.js"></script>
+
+<!--新增选项卡模版-->
+{include file="public/template/referralModel" /}
+
+<!--页面加载-->
+<script>
+    $(document).ready(function () {
+        $("#fuzhen-tab-title li:first").addClass('layui-this');
+        $("#fuZhenShow form:first").addClass('layui-show');
+
+        let referralId = $("#fuzhen-tab-title li:first").attr('lay-id');
+        let patients_id = $('#patients_id').val();
+
+        //获取超声图片文件信息预览地址
+        $.ajax({
+            type:"post",
+            url:"/ReferralSave/getChaoShenAddress",
+            async:false,
+            dataType:'JSON',
+            data: {
+                patients_id:patients_id,
+                fuzhen_id:referralId
+            },
+            success:function (data) {
+                preAddressChaoShen = data['img_address'];
+                preInfoChaoShen = data['img_info'];
+            }
+        });
+        if(preAddressChaoShen!=null && Array.isArray(preAddressChaoShen)){
+            //组合成图片显示路由地址数组
+            var preAddressArrChaoShen = [];
+            for (i = 0;i<preAddressChaoShen.length;i++){
+                preAddressArrChaoShen.push('../reffile/chaoshen/' + preAddressChaoShen[i])
+            }
+        }
+        else {
+            preAddressArrChaoShen = [];
+            preAddressArrChaoShen.push('../reffile/chaoshen/' + preAddressChaoShen)
+        }
+
+        initFileInput("imgShowChaoShen"+referralId, "/ReferralSave/imgChaoShenSave", "/ReferralSave/imgChaoShenDel",patients_id,referralId,preAddressArrChaoShen,preInfoChaoShen);
+
+
+        //获取CT图片文件信息预览地址
+        $.ajax({
+            type:"post",
+            url:"/ReferralSave/getCTAddress",
+            async:false,
+            dataType:'JSON',
+            data: {
+                patients_id:patients_id,
+                fuzhen_id:referralId
+            },
+            success:function (data) {
+                preAddressCT = data['img_address'];
+                preInfoCT = data['img_info'];
+            }
+        });
+        if(preAddressCT!=null && Array.isArray(preAddressCT)){
+            //组合成图片显示路由地址数组
+            var preAddressArrCT = [];
+            for (i = 0;i<preAddressCT.length;i++){
+                preAddressArrCT.push('../reffile/ct/' + preAddressCT[i])
+            }
+        }
+        else {
+            preAddressArrCT = [];
+            preAddressArrCT.push('../reffile/ct/' + preAddressCT)
+        }
+
+        initFileInput("imgShowCT"+referralId, "/ReferralSave/imgCTSave", "/ReferralSave/imgCTDel",patients_id,referralId,preAddressArrCT,preInfoCT);
+
+
+        //获取ECT图片文件信息预览地址
+        $.ajax({
+            type:"post",
+            url:"/ReferralSave/getECTAddress",
+            async:false,
+            dataType:'JSON',
+            data: {
+                patients_id:patients_id,
+                fuzhen_id:referralId
+            },
+            success:function (data) {
+                preAddressECT = data['img_address'];
+                preInfoECT = data['img_info'];
+            }
+        });
+        if(preAddressECT!=null && Array.isArray(preAddressECT)){
+            //组合成图片显示路由地址数组
+            var preAddressArrECT = [];
+            for (i = 0;i<preAddressECT.length;i++){
+                preAddressArrECT.push('../reffile/ect/' + preAddressECT[i])
+            }
+        }
+        else {
+            preAddressArrECT = [];
+            preAddressArrECT.push('../reffile/ect/' + preAddressECT)
+        }
+
+        initFileInput("imgShowECT"+referralId, "/ReferralSave/imgECTSave", "/ReferralSave/imgECTDel",patients_id,referralId,preAddressArrECT,preInfoECT);
+
+
+        //获取头颅图片文件信息预览地址
+        $.ajax({
+            type:"post",
+            url:"/ReferralSave/getTouLuAddress",
+            async:false,
+            dataType:'JSON',
+            data: {
+                patients_id:patients_id,
+                fuzhen_id:referralId
+            },
+            success:function (data) {
+                preAddressTouLu = data['img_address'];
+                preInfoTouLu = data['img_info'];
+            }
+        });
+        if(preAddressTouLu!=null && Array.isArray(preAddressTouLu)){
+            //组合成图片显示路由地址数组
+            var preAddressArrTouLu = [];
+            for (i = 0;i<preAddressTouLu.length;i++){
+                preAddressArrTouLu.push('../reffile/toulu/' + preAddressTouLu[i])
+            }
+        }
+        else {
+            preAddressArrTouLu = [];
+            preAddressArrTouLu.push('../reffile/toulu/' + preAddressTouLu)
+        }
+
+        initFileInput("imgShowTouLu"+referralId, "/ReferralSave/imgTouLuSave", "/ReferralSave/imgTouLuDel",patients_id,referralId,preAddressArrTouLu,preInfoTouLu);
+
+
+        //获取PET图片文件信息预览地址
+        $.ajax({
+            type:"post",
+            url:"/ReferralSave/getPETAddress",
+            async:false,
+            dataType:'JSON',
+            data: {
+                patients_id:patients_id,
+                fuzhen_id:referralId
+            },
+            success:function (data) {
+                preAddressPET = data['img_address'];
+                preInfoPET = data['img_info'];
+            }
+        });
+        if(preAddressPET!=null && Array.isArray(preAddressPET)){
+            //组合成图片显示路由地址数组
+            var preAddressArrPET = [];
+            for (i = 0;i<preAddressPET.length;i++){
+                preAddressArrPET.push('../reffile/pet/' + preAddressPET[i])
+            }
+        }
+        else {
+            preAddressArrPET = [];
+            preAddressArrPET.push('../reffile/pet/' + preAddressPET)
+        }
+
+        initFileInput("imgShowPET"+referralId, "/ReferralSave/imgPETSave", "/ReferralSave/imgPETDel",patients_id,referralId,preAddressArrPET,preInfoPET);
+
+    })
 </script>
+
+<!--复诊信息【新增选项卡】-->
+<script>
+    layui.use(['element','laytpl'], function(){
+        let i = 0;
+        let element = layui.element;
+        let laytpl = layui.laytpl;
+        let $ = layui.jquery;
+        let newId = parseInt($('.fuzhen-id:first').attr('lay-id'));
+        let patients_id = $('#patients_id').val();
+
+        $('#tabAddFuZhen').on('click', function(){
+            $(this).attr('disabled',true);//设置新增按钮为不可用
+            newId+=1;
+            i+=1;
+            //给新增表单动态添加ID
+            var getModel = document.getElementById('fuZhenModel').innerHTML
+                ,view = document.getElementById('addFuZhenView');
+            var data = { //数据
+                "formId":newId
+            }
+            preAddressArrChaoShen = [];
+            preAddressArrCT = [];
+            preAddressArrECT = [];
+            preAddressArrTouLu = [];
+            preAddressArrPET = [];
+
+            //新增选项卡
+            element.tabAdd('addFuZhen', {
+                title: '新记录'
+                ,content: laytpl(getModel).render(data, function(html){view.innerHTML = html}) //取得模版
+                ,id: newId
+            })
+
+            //自动切换至新建选项卡
+            element.tabChange('addFuZhen', newId);
+            initFileInput("imgShowChaoShen"+newId, "/ReferralSave/imgChaoShenSave", "/ReferralSave/imgChaoShenDel",patients_id,newId,preAddressArrChaoShen,preInfoChaoShen);
+            initFileInput("imgShowCT"+newId, "/ReferralSave/imgCTSave", "/ReferralSave/imgCTDel",patients_id,newId,preAddressArrCT,preInfoCT);
+            initFileInput("imgShowECT"+newId, "/ReferralSave/imgECTSave", "/ReferralSave/imgECTDel",patients_id,newId,preAddressArrECT,preInfoECT);
+            initFileInput("imgShowTouLu"+newId, "/ReferralSave/imgTouLuSave", "/ReferralSave/imgTouLuDel",patients_id,newId,preAddressArrTouLu,preInfoTouLu);
+            initFileInput("imgShowPET"+newId, "/ReferralSave/imgPETSave", "/ReferralSave/imgPETDel",patients_id,newId,preAddressArrPET,preInfoPET);
+
+
+        });
+
+    });
+</script>
+<!--复诊信息【选项卡切换】-->
+<script>
+    layui.use('element', function(){
+        let element = layui.element;
+        //切换至新选项卡后添加class
+        element.on('tab(addFuZhen)', function(){
+            $(this).addClass("fuzhen-id");
+        });
+    })
+</script>
+
+
+
+
+
 
 {include file="public/footer" /}

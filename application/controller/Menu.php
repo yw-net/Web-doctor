@@ -3,6 +3,12 @@
 
 namespace app\controller;
 use app\controller\Base;
+use app\model\Complementary_treatment_baxiang;
+use app\model\Complementary_treatment_fangliao;
+use app\model\Complementary_treatment_gamadao;
+use app\model\Complementary_treatment_hualiao;
+use app\model\Follow_fufazhuanyi;
+use app\model\Follow_lianxiren;
 use app\model\History_menstrual;
 use app\model\History_self;
 use app\model\History_surgical;
@@ -22,6 +28,7 @@ use app\model\postoperative_complications_shuzhong;
 use app\model\Preoperative_chaosheng;
 use app\model\Preoperative_ct;
 use app\model\Preoperative_feigongneng;
+use app\model\Referral;
 use app\model\Surgical_info_shoushu;
 use app\model\Surgical_info_zhongwu;
 use app\model\Tizheng;
@@ -576,9 +583,22 @@ class Menu extends Base
 
         Session::set('patientsname',$patientsname[0]['patients_name']);
         //公共部分-结束
+
+        //查询数据库-化疗
+        $res_hualiao = Complementary_treatment_hualiao::where('patients_id',$patientsid)->order('hualiao_id','desc')->select();
+        //查询数据库-放疗
+        $res_fangliao = Complementary_treatment_fangliao::where('patients_id',$patientsid)->order('fangliao_id','desc')->select();
+        //查询数据库-伽玛刀
+        $res_gamadao = Complementary_treatment_gamadao::where('patients_id',$patientsid)->order('gamadao_id','desc')->select();
+        //查询数据库-靶向
+        $res_baxiang = Complementary_treatment_baxiang::where('patients_id',$patientsid)->order('baxiang_id','desc')->select();
         $this->assign([
             'patientid'=>$patientsid,
-            'patients_name'=>$patientsname
+            'patients_name'=>$patientsname,
+            'hualiao_info'=>$res_hualiao,
+            'fangliao_info'=>$res_fangliao,
+            'gamadao_info'=>$res_gamadao,
+            'baxiang_info'=>$res_baxiang,
         ]);
         return $this->fetch();
     }
@@ -598,9 +618,16 @@ class Menu extends Base
 
         Session::set('patientsname',$patientsname[0]['patients_name']);
         //公共部分-结束
+
+        //查询数据库-联系人
+        $res_lianxiren = Follow_lianxiren::where('patients_id',$patientsid)->order('lianxiren_id','desc')->select();
+        //查询数据库-联系人
+        $res_fufazhuanyi = Follow_fufazhuanyi::where('patients_id',$patientsid)->find();
         $this->assign([
             'patientid'=>$patientsid,
-            'patients_name'=>$patientsname
+            'patients_name'=>$patientsname,
+            'lianxiren_info'=>$res_lianxiren,
+            'fufazhuanyi_info'=>$res_fufazhuanyi,
         ]);
         return $this->fetch();
     }
@@ -619,10 +646,17 @@ class Menu extends Base
         $patientsname = Patients::all($where);
 
         Session::set('patientsname',$patientsname[0]['patients_name']);
+
         //公共部分-结束
+        //查询数据库-复诊信息
+        $res_ref = Referral::where('patients_id',$patientsid)->order('fuzhen_id','desc')->select();
+        //手术医生
+        $res_doctor = User::where('user_class','<>','麻醉科')->select();
         $this->assign([
             'patientid'=>$patientsid,
-            'patients_name'=>$patientsname
+            'patients_name'=>$patientsname,
+            'doctor'=>$res_doctor,
+            'fuzhen_info'=>$res_ref,
         ]);
         return $this->fetch();
     }

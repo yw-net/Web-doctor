@@ -1,0 +1,196 @@
+<!--新增【复诊信息模版】-->
+<script id="fuZhenModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="fuZhenForm{{d.formId}}">
+        <div style="margin-bottom: 10px">
+            <button class="btn btn-info save" type="button" onclick="saveTab('../ReferralSave/fuZhenSaveNew','#fuZhenForm','.fuzhen-id')">保存修改</button>
+        </div>
+
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">复诊日期</label>
+                <div class="input-group col-sm-6">
+                    <input size="16" type="date" value=""class="form-control input-sm" name="referral_time">
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">复诊医生</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="referral_doctor">
+                        <option value="请选择" selected>请选择</option>
+                        {foreach $doctor as $key=>$vo }
+                        <option value="{$vo.neckname}">{$vo.neckname}</option>
+                        {/foreach}
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">症状</label>
+                <div class="input-group col-sm-6">
+                    <input size="16" type="text" value=""class="form-control input-sm" name="referral_zhengzhuang">
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">体征</label>
+                <div class="input-group col-sm-6">
+                    <input size="16" type="text" value=""class="form-control input-sm" name="referral_tizheng">
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">血瘤标</label>
+                <div class="flex-row-start">
+
+                    <div class="input-group col-sm-4">
+                        <span class="input-group-addon" style="width: 95px">CEA</span>
+                        <input type="text" class="form-control input-sm" name="xueliubiao_cea" value="">
+                        <span class="input-group-addon">ng/ml</span>
+                    </div>
+                    <div class="input-group col-sm-4" style="margin-left: 12px">
+                        <span class="input-group-addon" style="width: 95px">CYFRA211</span>
+                        <input type="text" class="form-control input-sm" name="xueliubiao_cyfra211" value="">
+                        <span class="input-group-addon">ng/ml</span>
+                    </div>
+                    <div class="input-group col-sm-4" style="margin-left: 12px">
+                        <span class="input-group-addon" style="width: 95px">CA199</span>
+                        <input type="text" class="form-control input-sm" name="xueliubiao_ca199" value="">
+                        <span class="input-group-addon">U/ml</span>
+                    </div>
+                </div>
+                <div class="flex-row-start col-sm-offset-2" style="margin-top: 5px">
+                    <div class="input-group col-sm-4">
+                        <span class="input-group-addon" style="width: 95px">NSE</span>
+                        <input type="text" class="form-control input-sm" name="xueliubiao_nse" value="">
+                        <span class="input-group-addon">ng/ml</span>
+                    </div>
+                    <div class="input-group col-sm-4" style="margin-left: 12px">
+                        <span class="input-group-addon bg-info" style="width: 95px">SCC</span>
+                        <input type="text" class="form-control input-sm" name="xueliubiao_scc" value="">
+                        <span class="input-group-addon">ng/ml</span>
+                    </div>
+                    <div class="input-group col-sm-4" style="margin-left: 12px">
+                        <span class="input-group-addon" style="width: 95px">CA125</span>
+                        <input type="text" class="form-control input-sm" name="xueliubiao_ca125" value="">
+                        <span class="input-group-addon">U/ml</span>
+                    </div>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">超声</label>
+                <div class="input-group">
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="chaosheng_zhuanyi" type="checkbox" value="淋巴结转移"> 淋巴结转移</label>
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="chaosheng_zhuanyi" type="checkbox" value="肝转移"> 肝转移</label>
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="chaosheng_zhuanyi" type="checkbox" value="肾上腺转移"> 肾上腺转移</label>
+                </div>
+                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                    <span class="input-group-addon">其他</span>
+                    <input type="text" class="form-control input-sm layui-input-inline" name="chaosheng_zhuanyi_other" value="">
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">超声文件、影像资料</blockquote>
+        </div>
+        <div class="form-group layui-col-md12">
+            <input type="file" id="imgShowChaoShen{{d.formId}}"  name="imgShowChaoShen{{d.formId}}" multiple="multiple" class="file-loading">
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">CT</label>
+                <div class="input-group">
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ct_zhuanyi" type="checkbox" value="局部复发"> 局部复发</label>
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ct_zhuanyi" type="checkbox" value="纵隔淋巴转移"> 纵隔淋巴转移</label>
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ct_zhuanyi" type="checkbox" value="肺转移"> 肺转移</label>
+                </div>
+                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                    <span class="input-group-addon">其他</span>
+                    <input type="text" class="form-control input-sm layui-input-inline" name="ct_zhuanyi_other" value="">
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">CT文件、影像资料</blockquote>
+        </div>
+        <div class="form-group layui-col-md12">
+            <input type="file" id="imgShowCT{{d.formId}}"  name="imgShowCT{{d.formId}}" multiple="multiple" class="file-loading">
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">ECT</label>
+                <div class="input-group">
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ect_zhuanyi" type="checkbox" value="局部复发"> 局部复发</label>
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ect_zhuanyi" type="checkbox" value="纵隔淋巴转移"> 纵隔淋巴转移</label>
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="ect_zhuanyi" type="checkbox" value="肺转移"> 肺转移</label>
+                </div>
+                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                    <span class="input-group-addon">其他</span>
+                    <input type="text" class="form-control input-sm layui-input-inline" name="ect_zhuanyi_other" value="">
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">ECT文件、影像资料</blockquote>
+        </div>
+        <div class="form-group layui-col-md12">
+            <input type="file" id="imgShowECT{{d.formId}}"  name="imgShowECT{{d.formId}}" multiple="multiple" class="file-loading">
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">头颅MRI</label>
+                <div class="input-group">
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="toulu_zhuanyi" type="checkbox" value="局部复发"> 局部复发</label>
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="toulu_zhuanyi" type="checkbox" value="纵隔淋巴转移"> 纵隔淋巴转移</label>
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="toulu_zhuanyi" type="checkbox" value="肺转移"> 肺转移</label>
+                </div>
+                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                    <span class="input-group-addon">其他</span>
+                    <input type="text" class="form-control input-sm layui-input-inline" name="toulu_zhuanyi_other" value="">
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">头颅MRI文件、影像资料</blockquote>
+        </div>
+        <div class="form-group layui-col-md12">
+            <input type="file" id="imgShowTouLu{{d.formId}}"  name="imgShowTouLu{{d.formId}}" multiple="multiple" class="file-loading">
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">PET</label>
+                <div class="input-group">
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="pet_zhuanyi" type="checkbox" value="局部复发"> 局部复发</label>
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="pet_zhuanyi" type="checkbox" value="纵隔淋巴转移"> 纵隔淋巴转移</label>
+                    <label class="checkbox-inline" style="margin-left: 6px;min-width: 118px"><input name="pet_zhuanyi" type="checkbox" value="肺转移"> 肺转移</label>
+                </div>
+                <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                    <span class="input-group-addon">其他</span>
+                    <input type="text" class="form-control input-sm layui-input-inline" name="pet_zhuanyi_other" value="">
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0">
+            <blockquote class="layui-elem-quote" style="padding: 10px;border-left: 0">PET文件、影像资料</blockquote>
+        </div>
+        <div class="form-group layui-col-md12">
+            <input type="file" id="imgShowPET{{d.formId}}"  name="imgShowPET{{d.formId}}" multiple="multiple" class="file-loading">
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">其他</label>
+                <div class="input-group col-sm-6">
+                    <input size="16" type="text" value=""class="form-control input-sm" name="referral_other">
+                </div>
+            </blockquote>
+        </div>
+    </form>
+
+</script>

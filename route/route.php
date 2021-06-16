@@ -16,6 +16,8 @@ Route::rule('prefile/:type/:date/:name','PreSave/imgRoute')->pattern(['name'=>'[
 
 //图片路由（手术信息）
 Route::rule('surfile/:type/:date/:name','SurgicalInfoSave/imgRoute')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
+//图片路由（复诊信息）
+Route::rule('reffile/:type/:date/:name','ReferralSave/imgRoute')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
 
 //自动清理冗余图片
 Route::rule('clean','app/command/AutoCleanPhoto');
