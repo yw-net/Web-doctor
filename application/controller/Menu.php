@@ -25,6 +25,11 @@ use app\model\postoperative_complications_erci;
 use app\model\postoperative_complications_icu;
 use app\model\postoperative_complications_shuhou;
 use app\model\postoperative_complications_shuzhong;
+use app\model\Postoperative_pathology_bingli;
+use app\model\Postoperative_pathology_jiyin;
+use app\model\Postoperative_pathology_linba;
+use app\model\Postoperative_pathology_mianyi;
+use app\model\Postoperative_pathology_zhongwu;
 use app\model\Preoperative_chaosheng;
 use app\model\Preoperative_ct;
 use app\model\Preoperative_feigongneng;
@@ -561,9 +566,26 @@ class Menu extends Base
 
         Session::set('patientsname',$patientsname[0]['patients_name']);
         //公共部分-结束
+
+        //查询数据库-肿物
+        $res_zhongwu = Postoperative_pathology_zhongwu::where('patients_id',$patientsid)->order('zhongwu_id','desc')->select();
+        //查询数据库-淋巴结清扫
+        $res_linba= Postoperative_pathology_linba::where('patients_id',$patientsid)->order('linba_id','desc')->select();
+        //查询数据库-病理分期
+        $res_bingli = Postoperative_pathology_bingli::where('patients_id',$patientsid)->order('bingli_id','desc')->select();
+        //查询数据库-免疫组化
+        $res_mianyi = Postoperative_pathology_mianyi::where('patients_id',$patientsid)->order('mianyi_id','desc')->select();
+        //查询数据库-基因检查
+        $res_jiyin = Postoperative_pathology_jiyin::where('patients_id',$patientsid)->order('jiyin_id','desc')->select();
+
         $this->assign([
             'patientid'=>$patientsid,
-            'patients_name'=>$patientsname
+            'patients_name'=>$patientsname,
+            'zhongwu_info'=>$res_zhongwu,
+            'linba_info'=>$res_linba,
+            'bingli_info'=>$res_bingli,
+            'mianyi_info'=>$res_mianyi,
+            'jiyin_info'=>$res_jiyin,
         ]);
         return $this->fetch();
     }
@@ -664,22 +686,12 @@ class Menu extends Base
     //测试
     public function ceshi(){
         $patientsid = 1000088;
-        $res_ct = Preoperative_ct::where('patients_id',$patientsid)->order('ct_id','desc')->select();
-        $res_ct_arr = array();
-        //查询检查结果组合成数组
-        foreach ($res_ct as $value){
-            array_push($res_ct_arr,$value['ctFind']);
-        }
-        //判断数组相同个数，全部相同则为1，再进行判断类型
-        if (count(array_unique($res_ct_arr)) != 1){
-            echo '不相同';
-        }
-        elseif ($res_ct[0]['ctFind'] =='正常'){
-            echo '正常';
-        }
-        else{
-            echo '异常';
-        }
+        //查询数据库-化疗
+        $res_hualiao = Complementary_treatment_hualiao::where('patients_id',$patientsid)->order('hualiao_id','desc')->select();
+        //查询数据库-放疗
+        $res_fangliao = Complementary_treatment_fangliao::where('patients_id',$patientsid)->order('fangliao_id','desc')->select();
+        dump($res_hualiao);
+        dump($res_fangliao);
 
 
 

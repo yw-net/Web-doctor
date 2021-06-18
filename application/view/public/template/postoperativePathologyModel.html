@@ -1,0 +1,581 @@
+<!--新增【肿物模版】-->
+<script id="zhongWuModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="zhongWuForm{{d.formId}}">
+        <div style="margin-bottom: 10px">
+            <button class="btn btn-info save" type="button" onclick="saveTab('../PostoperativePathologySave/zhongWuSaveNew','#zhongWuForm','.zhongwu-id')">保存修改</button>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote" style="padding: 10px;overflow: hidden;border-left: 5px solid #9a9a9a;">
+                <label class="col-sm-2">病理号</label>
+                <div class="input-group col-sm-4" style="margin-top: 0!important;">
+                    <input type="text" class="form-control input-sm" name="zhongwu_binglihao" value="">
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote" style="padding: 10px;overflow: hidden">
+                <label class="col-sm-2">大体标本</label>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">肺叶体积大小</label>
+                <div class="input-group col-sm-8">
+                    <div class="flex-row-start">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" name="zhongwu_dati_feiye_1" value="">
+                            <span class="input-group-addon">cm</span>
+                        </div>
+                        <span class="glyphicon glyphicon-remove col-sm-1" style="line-height: 30px;"></span>
+                        <div class="input-group" style="margin-left: 10px">
+                            <input type="text" class="form-control input-sm" name="zhongwu_dati_feiye_2" value="">
+                            <span class="input-group-addon">cm</span>
+                        </div>
+                        <span class="glyphicon glyphicon-remove col-sm-1" style="line-height: 30px;"></span>
+                        <div class="input-group" style="margin-left: 10px">
+                            <input type="text" class="form-control input-sm" name="zhongwu_dati_feiye_3" value="">
+                            <span class="input-group-addon">cm</span>
+                        </div>
+                    </div>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px">
+                <label class="col-sm-4">胸膜皱缩</label>
+                <label class="radio-inline">
+                    <input type="radio" name="zhongwu_dati_xiongmo" value="是" /> 是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="zhongwu_dati_xiongmo" value="否" checked/> 否
+                </label>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">肿物位置</label>
+                <div class="input-group col-sm-8" style="margin-top: 0!important;">
+                    <select class="form-control input-sm" name="zhongwu_weizhi">
+                        <option value="请选择" selected/>请选择
+                        <option value="右肺上叶"  />右肺上叶
+                        <option value="右肺中叶"  />右肺中叶
+                        <option value="右肺下叶"  />右肺下叶
+                        <option value="左肺上叶"  />左肺上叶
+                        <option value="左肺下叶"  />左肺下叶
+                        <option value="左肺门"  />左肺门
+                        <option value="右肺门"  />右肺门
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">肿物大小</label>
+                <div class="input-group col-sm-8">
+                    <div class="flex-row-start">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" name="zhongwu_daxiao_1" value="">
+                            <span class="input-group-addon">cm</span>
+                        </div>
+                        <span class="glyphicon glyphicon-remove col-sm-1" style="line-height: 30px;"></span>
+                        <div class="input-group" style="margin-left: 10px">
+                            <input type="text" class="form-control input-sm" name="zhongwu_daxiao_2" value="">
+                            <span class="input-group-addon">cm</span>
+                        </div>
+                        <span class="glyphicon glyphicon-remove col-sm-1" style="line-height: 30px;"></span>
+                        <div class="input-group" style="margin-left: 10px">
+                            <input type="text" class="form-control input-sm" name="zhongwu_daxiao_3" value="">
+                            <span class="input-group-addon">cm</span>
+                        </div>
+                    </div>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px">
+                <label class="col-sm-4">界限清楚</label>
+                <label class="radio-inline">
+                    <input type="radio" name="zhongwu_jiexian" value="是" /> 是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="zhongwu_jiexian" value="否" checked/> 否
+                </label>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">硬度</label>
+                <div class="input-group col-sm-8" style="margin-top: 0!important;">
+                    <select class="form-control input-sm" name="zhongwu_yindu">
+                        <option value="请选择" selected/>请选择
+                        <option value="软"  />软
+                        <option value="韧"  />韧
+                        <option value="硬"  />硬
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">切面</label>
+                <div class="input-group col-sm-8" style="margin-top: 0!important;">
+                    <select class="form-control input-sm" name="zhongwu_qiemian">
+                        <option value="请选择" selected/>请选择
+                        <option value="灰白"  />灰白
+                        <option value="灰红"  />灰红
+                        <option value="灰黄"  />灰黄
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">质地</label>
+                <div class="input-group col-sm-8" style="margin-top: 0!important;">
+                    <select class="form-control input-sm" name="zhongwu_zhidi">
+                        <option value="请选择" selected/>请选择
+                        <option value="粗颗粒"  />粗颗粒
+                        <option value="细腻"  />细腻
+                        <option value="鱼肉样"  />鱼肉样
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">瘤体内部</label>
+                <div class="input-group col-sm-8" style="margin-top: 0!important;">
+                    <select class="form-control input-sm" name="zhongwu_liuti">
+                        <option value="请选择" selected/>请选择
+                        <option value="出血"  />出血
+                        <option value="坏死"  />坏死
+                        <option value="空洞"  />空洞
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">累及部位</label>
+                <div class="flex-row-start">
+                    <div class="input-group layui-col-md4" style="margin-top: 0!important;">
+                        <select class="form-control input-sm" name="zhongwu_leiji">
+                            <option value="请选择" selected/>请选择
+                            <option value="叶支气管"  />叶支气管
+                            <option value="段支气管"  />段支气管
+                            <option value="肺血管"  />肺血管
+                            <option value="脏层胸膜"  />脏层胸膜
+                            <option value="肺外组织"  />肺外组织
+                        </select>
+                    </div>
+                    <div class="input-group layui-col-md8">
+                        <div class="flex-row-start">
+                            <span class="input-group-addon layui-col-md4">其他</span>
+                            <input type="text" class="form-control input-sm" name="zhongwu_leiji_other" value="">
+                        </div>
+
+                    </div>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">肿物距支气管端距离</label>
+                <div class="flex-row-start col-sm-8 input-group">
+                    <input type="text" class="form-control input-sm" name="zhongwu_zhiqiguanjuli" value="">
+                    <span class="input-group-addon" style="width: 70px">cm</span>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">生长方式</label>
+                <div class="input-group col-sm-8" style="margin-top: 0!important;">
+                    <select class="form-control input-sm" name="zhongwu_shengzhang">
+                        <option value="请选择" selected/>请选择
+                        <option value="腔内型"  />腔内型
+                        <option value="腔外型"  />腔外型
+                        <option value="混合型"  />混合型
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px">
+                <label class="col-sm-4">余肺结节</label>
+                <label class="radio-inline">
+                    <input type="radio" name="zhongwu_yufeijiejie" value="是" /> 是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="zhongwu_yufeijiejie" value="否" checked/> 否
+                </label>
+            </blockquote>
+        </div>
+
+        <div class="form-group layui-col-md12">
+            <blockquote class="layui-elem-quote" style="padding: 10px;overflow: hidden;margin-bottom: 0">
+                <label class="col-sm-2">镜下标本</label>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                <label class="col-sm-4">残端阳性</label>
+                <label class="radio-inline">
+                    <input type="radio" name="zhongwu_canduanyangxing" value="是" /> 是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="zhongwu_canduanyangxing" value="否" checked/> 否
+                </label>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                <label class="col-sm-4">脉管癌拴</label>
+                <label class="radio-inline">
+                    <input type="radio" name="zhongwu_maiguanaisuan" value="是" /> 是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="zhongwu_maiguanaisuan" value="否" checked/> 否
+                </label>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">WHO分类标准</label>
+                <div class="input-group col-sm-8" style="margin-top: 0!important;">
+                    <select class="form-control input-sm" name="zhongwu_who">
+                        <option value="请选择" selected/>请选择
+                        <option value="WHO肺部肿瘤组织学分类"  />WHO肺部肿瘤组织学分类
+                        <option value="WHO胸膜肿瘤组织学分类"  />WHO胸膜肿瘤组织学分类
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">分化程度</label>
+                <div class="flex-row-start">
+                    <div class="input-group layui-col-md4" style="margin-top: 0!important;">
+                        <select class="form-control input-sm" name="zhongwu_fenhuachengdu">
+                            <option value="请选择" selected/>请选择
+                            <option value="高分化"  />高分化
+                            <option value="高中分化"  />高中分化
+                            <option value="中分化"  />中分化
+                            <option value="中低分化"  />中低分化
+                            <option value="低分化"  />低分化
+                            <option value="未分化"  />未分化
+                        </select>
+                    </div>
+                    <div class="input-group layui-col-md8">
+                        <div class="flex-row-start">
+                            <span class="input-group-addon layui-col-md4">其他</span>
+                            <input type="text" class="form-control input-sm" name="zhongwu_fenhuachengdu_other" value="">
+                        </div>
+
+                    </div>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                <label class="col-sm-4">胸膜侵犯</label>
+                <label class="radio-inline">
+                    <input type="radio" name="zhongwu_xiongmoqinfan" value="是" /> 是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="zhongwu_xiongmoqinfan" value="否" checked/> 否
+                </label>
+            </blockquote>
+        </div>
+
+    </form>
+
+</script>
+
+
+<!--新增【淋巴结清扫模版】-->
+<script id="linBaModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="linBaForm{{d.formId}}">
+        <div style="margin-bottom: 10px">
+            <button class="btn btn-info save" type="button" onclick="saveTab('../PostoperativePathologySave/linBaSaveNew','#linBaForm','.linba-id')">保存修改</button>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote" style="padding: 10px;overflow: hidden;border-left: 5px solid #9a9a9a;">
+                <label class="col-sm-2">病理号</label>
+                <div class="input-group col-sm-4" style="margin-top: 0!important;">
+                    <input type="text" class="form-control input-sm" name="zhongwu_binglihao" value="">
+                </div>
+            </blockquote>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th></th>
+                <th>1组</th>
+                <th>2组</th>
+                <th>3组</th>
+                <th>4组</th>
+                <th>5组</th>
+                <th>6组</th>
+                <th>7组</th>
+                <th>8组</th>
+                <th>9组</th>
+                <th>10组</th>
+                <th>11组</th>
+                <th>总数</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>清扫</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>转移</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </form>
+
+</script>
+
+
+<!--新增【病理分期模版】-->
+<script id="bingLiModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="bingLiForm{{d.formId}}">
+        <div style="margin-bottom: 10px">
+            <button class="btn btn-info save" type="button" onclick="saveTab('../PostoperativePathologySave/bingLiSaveNew','#bingLiForm','.bingli-id')">保存修改</button>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote" style="padding: 10px;overflow: hidden;border-left: 5px solid #9a9a9a;">
+                <label class="col-sm-2">病理号</label>
+                <div class="input-group col-sm-4" style="margin-top: 0!important;">
+                    <input type="text" class="form-control input-sm" name="zhongwu_binglihao" value="">
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">Stage</label>
+                <div class="input-group col-sm-8">
+                    <div class="flex-row-start">
+                        <div class="input-group col-sm-6" style="margin-top: 0">
+                            <span class="input-group-addon" style="width: 50px">T</span>
+                            <select class="form-control input-sm" name="zhongwu_stage_t">
+                                <option value="请选择" />请选择
+                                <option value="T0"  />T0
+                                <option value="Tis"  />Tis
+                                <option value="T1a"  />T1a
+                                <option value="T1b"  />T1b
+                                <option value="T2a"  />T2a
+                                <option value="T2b"  />T2b
+                                <option value="T3"  />T3>7
+                                <option value="T3inv"  />T3inv
+                                <option value="T3satell"  />T3satell
+                                <option value="T3c"  />T3c
+                                <option value="T3p"  />T3p
+                                <option value="T4inv"  />T4inv
+                                <option value="T4lpsi"  />T4lpsi Nod
+                            </select>
+                        </div>
+                        <span class="glyphicon glyphicon-remove col-sm-1" style="line-height: 30px;"></span>
+                        <div class="input-group col-sm-6" style="margin-top: 0">
+                            <span class="input-group-addon" style="width: 50px">N</span>
+                            <select class="form-control input-sm" name="zhongwu_stage_n">
+                                <option value="请选择" />请选择
+                            </select>
+                        </div>
+                        <span class="glyphicon glyphicon-remove col-sm-1" style="line-height: 30px;"></span>
+                        <div class="input-group col-sm-6" style="margin-top: 0">
+                            <span class="input-group-addon" style="width: 50px">M</span>
+                            <select class="form-control input-sm" name="zhongwu_stage_m">
+                                <option value="请选择" />请选择
+                                <option value="M0"  />M0
+                                <option value="Contra"  />M1a Contra Nod
+                                <option value="Pl"  />M1a Pl Disem
+                                <option value="M1b"  />M1b
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </blockquote>
+        </div>
+
+    </form>
+
+</script>
+
+
+<!--新增【免疫组化模版】-->
+<script id="mianYiModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="mianYiForm{{d.formId}}">
+        <div style="margin-bottom: 10px">
+            <button class="btn btn-info save" type="button" onclick="saveTab('../PostoperativePathologySave/mianYiSaveNew','#mianYiForm','.mianyi-id')">保存修改</button>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote" style="padding: 10px;overflow: hidden;border-left: 5px solid #9a9a9a;">
+                <label class="col-sm-2">病理号</label>
+                <div class="input-group col-sm-4" style="margin-top: 0!important;">
+                    <input type="text" class="form-control input-sm" name="zhongwu_binglihao" value="">
+                </div>
+            </blockquote>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="form-group">
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="CEA"> CEA
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="CgA"> CgA
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="Syn"> Syn
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="CD56"> CD56
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="CD15"> CD15
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="CK20"> CK20
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="CK7"> CK7
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="CK5"> CK5/6
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="EMA"> EMA
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="Napsin"> Napsin-A
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="TTF"> TTF-1
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="Vim"> Vim
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="Desmin"> Desmin
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="CDX"> CDX-2
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="P170"> P170
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="P63"> P63
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="Nm23"> Nm23
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="ERCC"> ERCC-1
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="RRM"> RRM-1
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="Tubulin"> Tubulin-b
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="TS"> TS
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="PDGFR"> PDGFR
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="MRP"> MRP-1
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="TOPO"> TOPO-II
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="VEGFR"> VEGFR
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="Ki"> Ki-67
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="mianyizuhua_checkbox" type="checkbox" value="COX"> COX-2
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</script>
+
+
+<!--新增【基因检查模版】-->
+<script id="jiYinModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="jiYinForm{{d.formId}}">
+        <div style="margin-bottom: 10px">
+            <button class="btn btn-info save" type="button" onclick="saveTab('../PostoperativePathologySave/jiYinSaveNew','#jiYinForm','.jiyin-id')">保存修改</button>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote" style="padding: 10px;overflow: hidden;border-left: 5px solid #9a9a9a;">
+                <label class="col-sm-2">病理号</label>
+                <div class="input-group col-sm-4" style="margin-top: 0!important;">
+                    <input type="text" class="form-control input-sm" name="zhongwu_binglihao" value="">
+                </div>
+            </blockquote>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="form-group">
+                    <label class="control-label col-sm-2">
+                        <input name="jiyin_checkbox" type="checkbox" value="EGFR"> EGFR
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="jiyin_checkbox" type="checkbox" value="ras"> K-ras
+                    </label>
+                    <label class="control-label col-sm-2">
+                        <input name="jiyin_checkbox" type="checkbox" value="EML4"> EML4-ALK
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</script>

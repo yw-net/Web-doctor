@@ -2,34 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6cc34fa4-e766-408e-968d-6289f4a5b782" name="Default Changelist" comment="Initial commit">
-      <change afterPath="$PROJECT_DIR$/application/controller/ComplementaryTreatmentSave.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/controller/FollowSave.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/controller/ReferralSave.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/model/Complementary_treatment_baxiang.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/model/Complementary_treatment_fangliao.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/model/Complementary_treatment_gamadao.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/model/Complementary_treatment_hualiao.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/model/Follow_fufahouzhiliao_baxiang.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/model/Follow_fufahouzhiliao_fangliao.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/model/Follow_fufahouzhiliao_gamadao.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/model/Follow_fufahouzhiliao_hualiao.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/model/Follow_fufazhuanyi.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/model/Follow_lianxiren.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/model/Referral.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/view/public/template/followLianxirenModel.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/view/public/template/referralModel.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/controller/PostoperativePathologySave.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/model/Postoperative_pathology_bingli.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/model/Postoperative_pathology_jiyin.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/model/Postoperative_pathology_linba.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/model/Postoperative_pathology_mianyi.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/model/Postoperative_pathology_zhongwu.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/view/public/template/complementaryTreatmentModel.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/view/public/template/postoperativePathologyModel.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controller/ComplementaryTreatmentSave.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controller/ComplementaryTreatmentSave.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/controller/Menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controller/Menu.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/view/menu/complementary_treatment.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/complementary_treatment.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/follow.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/follow.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/postoperative_complications.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/postoperative_complications.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/preoperative.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/preoperative.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/referral.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/referral.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/surgical_information.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/surgical_information.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/public/template/preoperativeModel.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/public/template/preoperativeModel.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/public/template/surgicalInfoModel.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/public/template/surgicalInfoModel.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/js/btnControl.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/btnControl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/route/route.php" beforeDir="false" afterPath="$PROJECT_DIR$/route/route.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/view/menu/postoperative_pathology.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/postoperative_pathology.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +142,7 @@
       <workItem from="1621857553895" duration="25022000" />
       <workItem from="1622080838809" duration="40800000" />
       <workItem from="1622291878349" duration="216880000" />
-      <workItem from="1623515986497" duration="52252000" />
+      <workItem from="1623515986497" duration="86243000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1620300178435</created>
@@ -236,7 +221,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623483203329</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Initial commit">
+      <created>1623865950610</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1623865950610</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

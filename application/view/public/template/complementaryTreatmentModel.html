@@ -1,0 +1,772 @@
+<!--新增【化疗模版】-->
+<script id="huaLiaoModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="huaLiaoForm{{d.formId}}">
+        <div style="margin-bottom: 10px">
+            <button class="btn btn-info save" type="button" onclick="saveTab('../ComplementaryTreatmentSave/huaLiaoSaveNew','#huaLiaoForm','.hualiao-id')">保存修改</button>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">化疗时间</label>
+                <div class="flex-row-start">
+                    <div class="input-group col-sm-4 flex-row-start">
+                        <span class="input-group-addon layui-col-md3 input-sm">开始时间</span>
+                        <input type="date" class="form-control input-sm" name="hualiao_start_time" value="">
+                    </div>
+                    <div class="input-group col-sm-4 flex-row-start col-sm-offset-1">
+                        <span class="input-group-addon layui-col-md3 input-sm">结束时间</span>
+                        <input type="date" class="form-control input-sm" name="hualiao_end_time" value="">
+                    </div>
+                </div>
+
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">化疗周期</label>
+                <div class="input-group col-sm-6">
+                    <input type="text" class="form-control input-sm" name="hualiao_zhouqi" value="">
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">化疗方案</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_fangan">
+                        <option value="请选择"  />请选择
+                        <option value="DP"  />DP
+                        <option value="TP"  />TP
+                        <option value="PC"  />PC
+                        <option value="PP"  />PP
+                        <option value="NP"  />NP
+                        <option value="MVP"  />MVP
+                        <option value="GP"  />GP
+                        <option value="MIP"  />MIP
+                        <option value="EP"  />EP
+                        <option value="EC"  />EC
+                        <option value="T1"  />T1
+                        <option value="CAO"  />CAO
+                        <option value="CEV"  />CEV
+                        <option value="CEA"  />CEA
+                        <option value="VIP"  />VIP
+                        <option value="NVB"  />NVB
+                        <option value="Docetaxel"  />Docetaxel
+                        <option value="Gemcitabine"  />Gemcitabine
+                        <option value="Others"  />Others
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote" style="padding: 5px;overflow: hidden">
+                <label class="col-sm-2" style="font-size: 15px">毒性</label>
+            </blockquote>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote" style="padding: 5px;border-left: 5px solid #9a9a9a;overflow: hidden;margin-bottom: 0">
+                <label class="col-sm-2" style="font-size: 15px;font-weight: normal">血液系统<code>级</code></label>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">血红蛋白（g/L）</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_xuehongdanbai">
+                        <option value="请选择"  />请选择
+                        <option value="110"  />>=110
+                        <option value="109"  />95~109
+                        <option value="94"  />80~94
+                        <option value="79"  />65~79
+                        <option value="65"  /><65
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">粒细胞（10g/L）</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_lixibao">
+                        <option value="请选择"  />请选择
+                        <option value="2.0"  />>=2.0
+                        <option value="1.9"  />1.5~1.9
+                        <option value="1.4"  />1.0~1.4
+                        <option value="0.9"  />0.5~0.9
+                        <option value="0.5"  /><0.5
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">白细胞（10g/L）</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_baixibao">
+                        <option value="请选择"  />请选择
+                        <option value="4.0"  />>=4.0
+                        <option value="3.9"  />3.0~3.9
+                        <option value="2.9"  />2.0~2.9
+                        <option value="1.9"  />1.0~1.9
+                        <option value="1.0"  /><1.0
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">血小板（10g/L）</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_xuexiaoban">
+                        <option value="请选择"  />请选择
+                        <option value="100"  />>=100
+                        <option value="99"  />75~99
+                        <option value="74"  />50~74
+                        <option value="49"  />25~49
+                        <option value="25"  /><25
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">出血（10g/L）</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_chuxue">
+                        <option value="请选择"  />请选择
+                        <option value="无"  />无
+                        <option value="瘀点"  />瘀点
+                        <option value="轻度失血"  />轻度失血
+                        <option value="明显失血"  />明显失血
+                        <option value="大量失血"  />大量失血
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;margin-top: 10px">
+            <blockquote class="layui-elem-quote" style="padding: 5px;border-left: 5px solid #9a9a9a;overflow: hidden;margin-bottom: 0">
+                <label class="col-sm-2" style="font-size: 15px;font-weight: normal">胃肠道<code>级</code></label>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">胆红素（xN）</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_danhongsu">
+                        <option value="请选择"  />请选择
+                        <option value="1.25"  /><=1.25
+                        <option value="2.5"  />1.26~2.5
+                        <option value="5"  />2.6~5
+                        <option value="5.1"  />5.1~10
+                        <option value="10"  />>10
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">转氨酶（xN）</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_zhuananmei">
+                        <option value="请选择"  />请选择
+                        <option value="1.25"  /><=1.25
+                        <option value="2.5"  />1.26~2.5
+                        <option value="5"  />2.6~5
+                        <option value="5.1"  />5.1~10
+                        <option value="10"  />>10
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">碱性磷酸酶（xN）</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_jianxinlinsuan">
+                        <option value="请选择"  />请选择
+                        <option value="1.25"  /><=1.25
+                        <option value="2.5"  />1.26~2.5
+                        <option value="5"  />2.6~5
+                        <option value="5.1"  />5.1~10
+                        <option value="10"  />>10
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">口腔</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_kouqiang">
+                        <option value="请选择"  />请选择
+                        <option value="无"  />无
+                        <option value="疼痛、红斑"  />疼痛、红斑
+                        <option value="红斑、溃疡能进食"  />红斑、溃疡能进食
+                        <option value="溃疡、只能进流食"  />溃疡、只能进流食
+                        <option value="不能进食"  />不能进食
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">恶心呕吐</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiaog_exin">
+                        <option value="请选择"  />请选择
+                        <option value="无"  />无
+                        <option value="恶心"  />恶心
+                        <option value="间有呕吐"  />间有呕吐
+                        <option value="呕吐需要治疗"  />呕吐需要治疗
+                        <option value="难以控制的呕吐"  />难以控制的呕吐
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">腹泻</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_fuxie">
+                        <option value="请选择"  />请选择
+                        <option value="无"  />无
+                        <option value="短暂"  />短暂<2天
+                        <option value="能耐受"  />能耐受，但>2天
+                        <option value="不能耐受需治疗"  />不能耐受需治疗
+                        <option value="血性腹泻"  />血性腹泻
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;margin-top: 10px">
+            <blockquote class="layui-elem-quote" style="padding: 5px;border-left: 5px solid #9a9a9a;overflow: hidden;margin-bottom: 0">
+                <label class="col-sm-2" style="font-size: 15px;font-weight: normal">肾、膀胱<code>级</code></label>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">BUN（xN）</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_bun">
+                        <option value="请选择"  />请选择
+                        <option value="1.25"  /><=1.25
+                        <option value="2.5"  />1.26~2.5
+                        <option value="5"  />2.6~5
+                        <option value="5.1"  />5.1~10
+                        <option value="10"  />>10
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">肌酐（xN）</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_jigan">
+                        <option value="请选择"  />请选择
+                        <option value="1.25"  /><=1.25
+                        <option value="2.5"  />1.26~2.5
+                        <option value="5"  />2.6~5
+                        <option value="5.1"  />5.1~10
+                        <option value="10"  />>10
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">蛋白尿</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_danbailiao">
+                        <option value="请选择"  />请选择
+                        <option value="无"  />无
+                        <option value="+"  />+,<3q/L
+                        <option value="++"  />++,+++.<3~10q/L
+                        <option value="++++"  />++++,<3~10q/L
+                        <option value="肾病综合征"  />肾病综合征
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">血尿</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_xueniao">
+                        <option value="请选择"  />请选择
+                        <option value="无"  />无
+                        <option value="镜下血尿"  />镜下血尿
+                        <option value="严重血尿"  />严重血尿
+                        <option value="带血块"  />严重血尿，带血块
+                        <option value="泌尿道梗阻"  />泌尿道梗阻
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">肺</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_fei">
+                        <option value="请选择"  />请选择
+                        <option value="正常"  />正常
+                        <option value="轻微症状"  />轻微症状
+                        <option value="活动后呼吸困难"  />活动后呼吸困难
+                        <option value="休息时呼吸困难"  />休息时呼吸困难
+                        <option value="需完全卧床"  />需完全卧床
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">发热</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_fare">
+                        <option value="请选择"  />请选择
+                        <option value="无"  />无
+                        <option value="发烧"  />发烧<38度
+                        <option value="38度"  />38度～40度
+                        <option value="40度"  />>40度
+                        <option value="发烧伴低血压"  />发烧伴低血压
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">过敏</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_guomin">
+                        <option value="请选择"  />请选择
+                        <option value="无"  />无
+                        <option value="水肿"  />水肿
+                        <option value="支气管痉挛不需治疗"  />支气管痉挛不需治疗
+                        <option value="支气管痉挛需治疗"  />支气管痉挛需治疗
+                        <option value="过敏反应"  />过敏反应
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;margin-top: 10px">
+            <blockquote class="layui-elem-quote" style="padding: 5px;border-left: 5px solid #9a9a9a;overflow: hidden;margin-bottom: 0">
+                <label class="col-sm-2" style="font-size: 15px;font-weight: normal">皮肤损害<code>级</code></label>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">皮肤</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_pifu">
+                        <option value="请选择"  />请选择
+                        <option value="正常"  />正常
+                        <option value="红斑"  />红斑
+                        <option value="干性脱皮"  />干性脱皮、水疱、瘙痒
+                        <option value="皮炎"  />皮炎、溃疡
+                        <option value="剥脱性皮炎"  />剥脱性皮炎、坏死、需手术
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">头发</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_toufa">
+                        <option value="请选择"  />请选择
+                        <option value="无"  />无
+                        <option value="轻微脱发"  />轻微脱发
+                        <option value="斑秃"  />斑秃
+                        <option value="完全脱发可再生"  />完全脱发可再生
+                        <option value="不能再生之脱发"  />不能再生之脱发
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">感染（特殊部位）</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_ganran">
+                        <option value="请选择"  />请选择
+                        <option value="无"  />无
+                        <option value="轻度感染"  />轻度感染
+                        <option value="中度感染"  />中度感染
+                        <option value="重复感染"  />重复感染
+                        <option value="重复感染伴低血压"  />重复感染伴低血压
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;margin-top: 10px">
+            <blockquote class="layui-elem-quote" style="padding: 5px;border-left: 5px solid #9a9a9a;overflow: hidden;margin-bottom: 0">
+                <label class="col-sm-2" style="font-size: 15px;font-weight: normal">神经系统<code>级</code></label>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">神志</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_shenzhi">
+                        <option value="请选择"  />请选择
+                        <option value="清醒"  />清醒
+                        <option value="短暂时间嗜睡"  />短暂时间嗜睡
+                        <option value="嗜睡时间不及清醒时间的50"  />嗜睡时间不及清醒时间的50%
+                        <option value="嗜睡时间超过清醒时间的50"  />嗜睡时间超过清醒时间的50%
+                        <option value="昏迷"  />昏迷
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">周围神经</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_zhouweishenjing">
+                        <option value="请选择"  />请选择
+                        <option value="正常"  />正常
+                        <option value="感觉异常或腱反射减退"  />感觉异常或腱反射减退
+                        <option value="严重感觉异常或轻度无力"  />严重感觉异常或轻度无力
+                        <option value="不能忍受的感觉异常或显著运动障碍"  />不能忍受的感觉异常或显著运动障碍
+                        <option value="瘫痪"  />瘫痪
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">便秘</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_bianmi">
+                        <option value="请选择"  />请选择
+                        <option value="无"  />无
+                        <option value="轻度"  />轻度
+                        <option value="中度"  />中度
+                        <option value="腹胀"  />腹胀
+                        <option value="腹胀呕吐"  />腹胀呕吐
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">疼痛（非肿瘤引起）</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_tengtong">
+                        <option value="请选择"  />请选择
+                        <option value="无"  />无
+                        <option value="轻度"  />轻度
+                        <option value="中度"  />中度
+                        <option value="严重"  />严重
+                        <option value="难控制"  />难控制
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;margin-top: 10px">
+            <blockquote class="layui-elem-quote" style="padding: 5px;border-left: 5px solid #9a9a9a;overflow: hidden;margin-bottom: 0">
+                <label class="col-sm-2" style="font-size: 15px;font-weight: normal">心脏<code>级</code></label>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">心率</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_xinlv">
+                        <option value="请选择"  />请选择
+                        <option value="正常"  />正常
+                        <option value="窦性心动过速"  />窦性心动过速，休息心率>110
+                        <option value="房性心率失常"  />单灶性早搏，房性心率失常
+                        <option value="多造性早搏"  />多造性早搏
+                        <option value="室性心律不齐"  />室性心律不齐
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">心功能</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_xingongneng">
+                        <option value="请选择"  />请选择
+                        <option value="正常"  />正常
+                        <option value="无症状"  />无症状，有异常心脏体征
+                        <option value="短暂心功不全"  />短暂心功不全，不需治疗
+                        <option value="心功不全症状"  />心功不全症状，治疗有效
+                        <option value="心功不全"  />心功不全，治疗无效
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-bottom: 0">
+                <label class="col-sm-4">心包炎</label>
+                <div class="input-group col-sm-6">
+                    <select class="form-control input-sm" name="hualiao_xinbaoyan">
+                        <option value="请选择"  />请选择
+                        <option value="正常"  />正常
+                        <option value="有心包积液"  />有心包积液，无症状
+                        <option value="有症状"  />有症状，但不需抽积液
+                        <option value="需抽积液"  />心包填塞，需抽积液
+                        <option value="需治疗"  />心包填塞，需治疗
+                    </select>
+                </div>
+            </blockquote>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;margin-top: 10px">
+            <blockquote class="layui-elem-quote" style="padding: 5px;overflow: hidden">
+                <label class="col-sm-2" style="font-size: 15px">辅助化疗后瘤标</label>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">检查时间</label>
+                <div class="input-group col-sm-4">
+                    <input type="date" class="form-control input-sm" name="hualiao_liubiao_check_time" value="">
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <div class="flex-row-start layui-col-md-offset2">
+
+                    <div class="input-group col-sm-4">
+                        <span class="input-group-addon" style="width: 95px">CEA</span>
+                        <input type="text" class="form-control input-sm" name="hualiao_cea" value="">
+                        <span class="input-group-addon">ng/ml</span>
+                    </div>
+                    <div class="input-group col-sm-4" style="margin-left: 8px">
+                        <span class="input-group-addon" style="width: 95px">CYFRA211</span>
+                        <input type="text" class="form-control input-sm" name="hualiao_cyfra211" value="">
+                        <span class="input-group-addon">ng/ml</span>
+                    </div>
+                    <div class="input-group col-sm-4" style="margin-left: 8px">
+                        <span class="input-group-addon" style="width: 95px">CA199</span>
+                        <input type="text" class="form-control input-sm" name="hualiao_ca199" value="">
+                        <span class="input-group-addon">U/ml</span>
+                    </div>
+                </div>
+                <div class="flex-row-start layui-col-md-offset2" style="margin-top: 5px">
+                    <div class="input-group col-sm-4">
+                        <span class="input-group-addon" style="width: 95px">CEA</span>
+                        <input type="text" class="form-control input-sm" name="hualiao_cea1" value="">
+                        <span class="input-group-addon">ng/ml</span>
+                    </div>
+                    <div class="input-group col-sm-4" style="margin-left: 8px">
+                        <span class="input-group-addon bg-info" style="width: 95px">NSE</span>
+                        <input type="text" class="form-control input-sm" name="hualiao_nse" value="">
+                        <span class="input-group-addon">ng/ml</span>
+                    </div>
+                    <div class="input-group col-sm-4" style="margin-left: 8px">
+                        <span class="input-group-addon" style="width: 95px">CA125</span>
+                        <input type="text" class="form-control input-sm" name="hualiao_ca125" value="">
+                        <span class="input-group-addon">U/ml</span>
+                    </div>
+                </div>
+            </blockquote>
+        </div>
+
+    </form>
+
+</script>
+
+
+<!--新增【放疗模版】-->
+<script id="fangLiaoModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="fangLiaoForm{{d.formId}}">
+        <div style="margin-bottom: 10px">
+            <button class="btn btn-info save" type="button" onclick="saveTab('../ComplementaryTreatmentSave/fangLiaoSaveNew','#fangLiaoForm','.fangliao-id')">保存修改</button>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">放疗时间</label>
+                <div class="input-group col-sm-4">
+                    <input type="date" class="form-control input-sm" name="fangliao_time" value="">
+                </div>
+
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">肺部</label>
+                <div class="input-group col-sm-6 flex-row-start">
+
+                    <input type="text" class="form-control input-sm" name="fangliao_feibu1" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm" style="border-left: 0;border-right: 0">GY</span>
+                    <input type="text" class="form-control input-sm" name="fangliao_feibu2" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm">f</span>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">脑部</label>
+                <div class="input-group col-sm-6 flex-row-start">
+
+                    <input type="text" class="form-control input-sm" name="fangliao_naobu1" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm" style="border-left: 0;border-right: 0">GY</span>
+                    <input type="text" class="form-control input-sm" name="fangliao_naobu2" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm">f</span>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">骨骼</label>
+                <div class="input-group col-sm-6 flex-row-start">
+
+                    <input type="text" class="form-control input-sm" name="fangliao_guge1" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm" style="border-left: 0;border-right: 0">GY</span>
+                    <input type="text" class="form-control input-sm" name="fangliao_guge2" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm">f</span>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">其他</label>
+                <div class="input-group col-sm-6 flex-row-start">
+
+                    <input type="text" class="form-control input-sm" name="fangliao_other1" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm" style="border-left: 0;border-right: 0">GY</span>
+                    <input type="text" class="form-control input-sm" name="fangliao_other2" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm">f</span>
+                </div>
+            </blockquote>
+        </div>
+
+    </form>
+
+</script>
+
+
+<!--新增【伽玛刀模版】-->
+<script id="gaMaDaoModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="gaMaDaoForm{{d.formId}}">
+        <div style="margin-bottom: 10px">
+            <button class="btn btn-info save" type="button" onclick="saveTab('../ComplementaryTreatmentSave/gaMaDaoSaveNew','#gaMaDaoForm','.gamadao-id')">保存修改</button>
+        </div>
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">伽玛刀时间</label>
+                <div class="input-group col-sm-4">
+                    <input type="date" class="form-control input-sm" name="gamadao_time" value="">
+                </div>
+
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">肺部</label>
+                <div class="input-group col-sm-6 flex-row-start">
+
+                    <input type="text" class="form-control input-sm" name="gamadao_feibu1" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm" style="border-left: 0;border-right: 0">GY</span>
+                    <input type="text" class="form-control input-sm" name="gamadao_feibu2" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm">f</span>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">脑部</label>
+                <div class="input-group col-sm-6 flex-row-start">
+
+                    <input type="text" class="form-control input-sm" name="gamadao_naobu1" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm" style="border-left: 0;border-right: 0">GY</span>
+                    <input type="text" class="form-control input-sm" name="gamadao_naobu2" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm">f</span>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">骨骼</label>
+                <div class="input-group col-sm-6 flex-row-start">
+
+                    <input type="text" class="form-control input-sm" name="gamadao_guge1" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm" style="border-left: 0;border-right: 0">GY</span>
+                    <input type="text" class="form-control input-sm" name="gamadao_guge2" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm">f</span>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">肝部</label>
+                <div class="input-group col-sm-6 flex-row-start">
+
+                    <input type="text" class="form-control input-sm" name="gamadao_ganbu1" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm" style="border-left: 0;border-right: 0">GY</span>
+                    <input type="text" class="form-control input-sm" name="gamadao_ganbu2" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm">f</span>
+                </div>
+            </blockquote>
+        </div>
+        <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-4">其他</label>
+                <div class="input-group col-sm-6 flex-row-start">
+
+                    <input type="text" class="form-control input-sm" name="gamadao_other1" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm" style="border-left: 0;border-right: 0">GY</span>
+                    <input type="text" class="form-control input-sm" name="gamadao_other2" value="">
+                    <span class="input-group-addon layui-col-md3 input-sm">f</span>
+                </div>
+            </blockquote>
+        </div>
+
+    </form>
+
+</script>
+
+
+<!--新增【靶向模版】-->
+<script id="baXiangModel" type="text/html" >
+
+    <form class="layui-tab-item layui-show" id="baXiangForm{{d.formId}}">
+        <div style="margin-bottom: 10px">
+            <button class="btn btn-info save" type="button" onclick="saveTab('../ComplementaryTreatmentSave/baXiangSaveNew','#baXiangForm','.baxiang-id')">保存修改</button>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">药物名称</label>
+                <div class="input-group col-sm-4">
+                    <input type="text" class="form-control input-sm" name="baxiang_yaowu" value="">
+                </div>
+
+            </blockquote>
+        </div>
+
+        <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
+            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                <label class="col-sm-2">靶向时间</label>
+                <div class="flex-row-start">
+                    <div class="input-group col-sm-4 flex-row-start">
+                        <span class="input-group-addon layui-col-md3 input-sm">开始时间</span>
+                        <input type="date" class="form-control input-sm" name="baxiang_start_time" value="">
+                    </div>
+                    <div class="input-group col-sm-4 flex-row-start col-sm-offset-1">
+                        <span class="input-group-addon layui-col-md3 input-sm">结束时间</span>
+                        <input type="date" class="form-control input-sm" name="baxiang_end_time" value="">
+                    </div>
+                </div>
+
+            </blockquote>
+        </div>
+
+    </form>
+
+</script>
