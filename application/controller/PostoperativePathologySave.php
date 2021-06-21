@@ -33,33 +33,43 @@ class PostoperativePathologySave extends Base
             if (isset($form_data['zhongwu_binglihao'])){
                 $zhongwu_find->zhongwu_binglihao = $form_data['zhongwu_binglihao'];
             }
+            else{$zhongwu_find->zhongwu_binglihao = null;}
             if (isset($form_data['zhongwu_dati_feiye_1'])){
                 $zhongwu_find->zhongwu_dati_feiye_1 = $form_data['zhongwu_dati_feiye_1'];
             }
+            else{$zhongwu_find->zhongwu_dati_feiye_1 = null;}
             if (isset($form_data['zhongwu_dati_feiye_2'])){
                 $zhongwu_find->zhongwu_dati_feiye_2 = $form_data['zhongwu_dati_feiye_2'];
             }
+            else{$zhongwu_find->zhongwu_dati_feiye_2 = null;}
             if (isset($form_data['zhongwu_dati_feiye_3'])){
                 $zhongwu_find->zhongwu_dati_feiye_3 = $form_data['zhongwu_dati_feiye_3'];
             }
+            else{$zhongwu_find->zhongwu_dati_feiye_3 = null;}
             if (isset($form_data['zhongwu_daxiao_1'])){
                 $zhongwu_find->zhongwu_daxiao_1 = $form_data['zhongwu_daxiao_1'];
             }
+            else{$zhongwu_find->zhongwu_daxiao_1 = null;}
             if (isset($form_data['zhongwu_daxiao_2'])){
                 $zhongwu_find->zhongwu_daxiao_2 = $form_data['zhongwu_daxiao_2'];
             }
+            else{$zhongwu_find->zhongwu_daxiao_2 = null;}
             if (isset($form_data['zhongwu_daxiao_3'])){
                 $zhongwu_find->zhongwu_daxiao_3 = $form_data['zhongwu_daxiao_3'];
             }
+            else{$zhongwu_find->zhongwu_daxiao_3 = null;}
             if (isset($form_data['zhongwu_leiji_other'])){
                 $zhongwu_find->zhongwu_leiji_other = $form_data['zhongwu_leiji_other'];
             }
+            else{$zhongwu_find->zhongwu_leiji_other = null;}
             if (isset($form_data['zhongwu_zhiqiguanjuli'])){
                 $zhongwu_find->zhongwu_zhiqiguanjuli = $form_data['zhongwu_zhiqiguanjuli'];
             }
+            else{$zhongwu_find->zhongwu_zhiqiguanjuli = null;}
             if (isset($form_data['zhongwu_fenhuachengdu_other'])){
                 $zhongwu_find->zhongwu_fenhuachengdu_other = $form_data['zhongwu_fenhuachengdu_other'];
             }
+            else{$zhongwu_find->zhongwu_fenhuachengdu_other = null;}
             $zhongwu_find->zhongwu_dati_xiongmo = $form_data['zhongwu_dati_xiongmo'];
             $zhongwu_find->zhongwu_weizhi = $form_data['zhongwu_weizhi'];
             $zhongwu_find->zhongwu_jiexian = $form_data['zhongwu_jiexian'];
@@ -171,6 +181,7 @@ class PostoperativePathologySave extends Base
             if (isset($form_data['zhongwu_binglihao'])){
                 $bingli_find->zhongwu_binglihao = $form_data['zhongwu_binglihao'];
             }
+            else{$bingli_find->zhongwu_binglihao = null;}
             $bingli_find->zhongwu_stage_t = $form_data['zhongwu_stage_t'];
             $bingli_find->zhongwu_stage_n = $form_data['zhongwu_stage_n'];
             $bingli_find->zhongwu_stage_m = $form_data['zhongwu_stage_m'];
@@ -231,6 +242,7 @@ class PostoperativePathologySave extends Base
             if (isset($form_data['zhongwu_binglihao'])){
                 $mianyi_find->zhongwu_binglihao = $form_data['zhongwu_binglihao'];
             }
+            else{$mianyi_find->zhongwu_binglihao = null;}
             if (isset($form_data['mianyizuhua_checkbox'])) {
                 //判断多选框值是否为数组（当选择两个以下强制转换为数组）
                 if (!is_array($form_data['mianyizuhua_checkbox'])) {
@@ -238,6 +250,7 @@ class PostoperativePathologySave extends Base
                 }
                 $mianyi_find->mianyizuhua_checkbox = $form_data['mianyizuhua_checkbox'];
             }
+            else{$mianyi_find->mianyizuhua_checkbox = null;}
             $mianyi_find->save();
             $res['status'] = 1;
             $res['msg'] ='数据更新成功';
@@ -299,6 +312,7 @@ class PostoperativePathologySave extends Base
             if (isset($form_data['zhongwu_binglihao'])){
                 $jiyin_find->zhongwu_binglihao = $form_data['zhongwu_binglihao'];
             }
+            else{$jiyin_find->zhongwu_binglihao = null;}
             if (isset($form_data['jiyin_checkbox'])) {
                 //判断多选框值是否为数组（当选择两个以下强制转换为数组）
                 if (!is_array($form_data['jiyin_checkbox'])) {
@@ -306,6 +320,7 @@ class PostoperativePathologySave extends Base
                 }
                 $jiyin_find->jiyin_checkbox = $form_data['jiyin_checkbox'];
             }
+            else{$jiyin_find->jiyin_checkbox = null;}
             $jiyin_find->save();
             $res['status'] = 1;
             $res['msg'] ='数据更新成功';

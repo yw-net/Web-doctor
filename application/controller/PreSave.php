@@ -196,27 +196,6 @@ class PreSave extends Base
 
     }
 
-//    //文件下载路由
-//    public function download()
-//    {
-//        $this->isLogin();
-//        $fileType = $this->request->param('type');
-//        $fileDate = $this->request->param('date');
-//        $fileName = $this->request->param('name');
-//
-//        $path = $fileDate."/".$fileName;
-//        $savePath = Env::get('root_path').'storge/preoperative/'.$fileType.'/';//图片保存根目录
-//
-//        $file_path = $savePath.$path; //图片地址
-//        $s = new sendfile();
-//        try {
-//            $s->send($file_path);
-//        } catch (\Exception $e) {
-//            echo $e->getMessage();
-//        }
-//
-//    }
-
 
 
     //更新、新增血常规信息

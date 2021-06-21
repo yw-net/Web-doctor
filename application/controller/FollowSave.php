@@ -29,21 +29,27 @@ class FollowSave extends Base
             if (isset($form_data['lianxiren_name'])) {
                 $lianxiren_find->lianxiren_name = $form_data['lianxiren_name'];
             }
+            else{$lianxiren_find->lianxiren_name = null;}
             if (isset($form_data['lianxiren_guanxi'])){
                 $lianxiren_find->lianxiren_guanxi = $form_data['lianxiren_guanxi'];
             }
+            else{$lianxiren_find->lianxiren_guanxi = null;}
             if (isset($form_data['lianxiren_mobile'])){
                 $lianxiren_find->lianxiren_mobile = $form_data['lianxiren_mobile'];
             }
+            else{$lianxiren_find->lianxiren_mobile = null;}
             if (isset($form_data['lianxiren_zaidian'])){
                 $lianxiren_find->lianxiren_zaidian = $form_data['lianxiren_zaidian'];
             }
+            else{$lianxiren_find->lianxiren_zaidian = null;}
             if (isset($form_data['im'])){
                 $lianxiren_find->im = $form_data['im'];
             }
+            else{$lianxiren_find->im = null;}
             if (isset($form_data['email'])){
                 $lianxiren_find->email = $form_data['email'];
             }
+            else{$lianxiren_find->email = null;}
             $lianxiren_find->save();
             $res['status'] = 1;
             $res['msg'] ='数据更新成功';
@@ -117,12 +123,15 @@ class FollowSave extends Base
                 }
                 $fufazhuanyi_find->fufazhuanyi_checkbox = $form_data['fufazhuanyi_checkbox'];
             }
+            else{$fufazhuanyi_find->fufazhuanyi_checkbox = null;}
             if (isset($form_data['fufazhuanyi_time'])) {
                 $fufazhuanyi_find->fufazhuanyi_time = $form_data['fufazhuanyi_time'];
             }
+            else{$fufazhuanyi_find->fufazhuanyi_time = null;}
             if (isset($form_data['fufazhuanyi_other'])){
                 $fufazhuanyi_find->fufazhuanyi_other = $form_data['fufazhuanyi_other'];
             }
+            else{$fufazhuanyi_find->fufazhuanyi_other = null;}
             $fufazhuanyi_find->fufazhuanyi_check = $form_data['fufazhuanyi_check'];
             $fufazhuanyi_find->save();
             $res['status'] = 1;

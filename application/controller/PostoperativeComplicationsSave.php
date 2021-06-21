@@ -30,27 +30,35 @@ class PostoperativeComplicationsSave extends Base
             if (isset($form_data['shuzhongdachuxue_chuxueliang'])){
                 $shuzhong_find->shuzhongdachuxue_chuxueliang = $form_data['shuzhongdachuxue_chuxueliang'];
             }
+            else{$shuzhong_find->shuzhongdachuxue_chuxueliang = null;}
             if (isset($form_data['shuzhongdachuxue_yuanyin'])){
                 $shuzhong_find->shuzhongdachuxue_yuanyin = $form_data['shuzhongdachuxue_yuanyin'];
             }
+            else{$shuzhong_find->shuzhongdachuxue_yuanyin = null;}
             if (isset($form_data['shuzhonggaoxueya_input1'])){
                 $shuzhong_find->shuzhonggaoxueya_input1 = $form_data['shuzhonggaoxueya_input1'];
             }
+            else{$shuzhong_find->shuzhonggaoxueya_input1 = null;}
             if (isset($form_data['shuzhonggaoxueya_input2'])){
                 $shuzhong_find->shuzhonggaoxueya_input2 = $form_data['shuzhonggaoxueya_input2'];
             }
+            else{$shuzhong_find->shuzhonggaoxueya_input2 = null;}
             if (isset($form_data['shuzhonggaoxueya_chixushijian'])){
                 $shuzhong_find->shuzhonggaoxueya_chixushijian = $form_data['shuzhonggaoxueya_chixushijian'];
             }
+            else{$shuzhong_find->shuzhonggaoxueya_chixushijian = null;}
             if (isset($form_data['shuzhongdixueya_input1'])){
                 $shuzhong_find->shuzhongdixueya_input1 = $form_data['shuzhongdixueya_input1'];
             }
+            else{$shuzhong_find->shuzhongdixueya_input1 = null;}
             if (isset($form_data['shuzhongdixueya_input2'])){
                 $shuzhong_find->shuzhongdixueya_input2 = $form_data['shuzhongdixueya_input2'];
             }
+            else{$shuzhong_find->shuzhongdixueya_input2 = null;}
             if (isset($form_data['shuzhongdixueya_chixushijian'])){
                 $shuzhong_find->shuzhongdixueya_chixushijian = $form_data['shuzhongdixueya_chixushijian'];
             }
+            else{$shuzhong_find->shuzhongdixueya_chixushijian = null;}
             $shuzhong_find->jixinghuxidaogenzu = $form_data['jixinghuxidaogenzu'];
             $shuzhong_find->diyangxuezheng = $form_data['diyangxuezheng'];
             $shuzhong_find->shuzhongdachuxue_check = $form_data['shuzhongdachuxue_check'];
@@ -127,9 +135,11 @@ class PostoperativeComplicationsSave extends Base
             if (isset($form_data['xinlvshichang_other'])){
                 $shuhou_find->xinlvshichang_other = $form_data['xinlvshichang_other'];
             }
+            else{$shuhou_find->xinlvshichang_other = null;}
             if (isset($form_data['shuhoubinfazheng_other'])){
                 $shuhou_find->shuhoubinfazheng_other = $form_data['shuhoubinfazheng_other'];
             }
+            else{$shuhou_find->shuhoubinfazheng_other = null;}
             $shuhou_find->weishoushuqisiwang = $form_data['weishoushuqisiwang'];
             $shuhou_find->weishoushuqisiwang_select = $form_data['weishoushuqisiwang_select'];
             $shuhou_find->xinxueguanyiwai = $form_data['xinxueguanyiwai'];
@@ -216,9 +226,11 @@ class PostoperativeComplicationsSave extends Base
             if (isset($form_data['yuanyin_other'])){
                 $erci_find->yuanyin_other = $form_data['yuanyin_other'];
             }
+            else{$erci_find->yuanyin_other = null;}
             if (isset($form_data['erci_time'])){
                 $erci_find->erci_time = $form_data['erci_time'];
             }
+            else{$erci_find->erci_time = null;}
             $erci_find->ercishoushu_check = $form_data['ercishoushu_check'];
             $erci_find->yuanyin_select = $form_data['yuanyin_select'];
             $erci_find->save();
@@ -261,15 +273,19 @@ class PostoperativeComplicationsSave extends Base
             if (isset($form_data['in_time'])){
                 $icu_find->in_time = $form_data['in_time'];
             }
+            else{$icu_find->in_time = null;}
             if (isset($form_data['icu_yuanyin_other'])){
                 $icu_find->icu_yuanyin_other = $form_data['icu_yuanyin_other'];
             }
+            else{$icu_find->icu_yuanyin_other = null;}
             if (isset($form_data['huxiji'])){
                 $icu_find->huxiji = $form_data['huxiji'];
             }
+            else{$icu_find->huxiji = null;}
             if (isset($form_data['out_time'])){
                 $icu_find->out_time = $form_data['out_time'];
             }
+            else{$icu_find->out_time = null;}
             $icu_find->icu_check = $form_data['icu_check'];
             $icu_find->icu_yuanyin_select = $form_data['icu_yuanyin_select'];
             $icu_find->ercichaguan_check = $form_data['ercichaguan_check'];

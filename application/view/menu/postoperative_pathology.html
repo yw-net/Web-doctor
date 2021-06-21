@@ -16,7 +16,7 @@
     <div class="panel panel-info">
 
         <div class="panel-heading yw-flex-row">
-            <h4 class="panel-title">术后病理</h4>
+            <h4 class="panel-title" style="line-height: 28px">术后病理</h4>
             <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
         </div>
         <input type="text" id="patients_id" class="hidden" value="{$patientid}">
@@ -374,8 +374,11 @@
                                 {foreach $zhongwu_info as $zhongwu_info_item}
                                 <form class="layui-tab-item" id="zhongWuForm{$zhongwu_info_item->zhongwu_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$zhongwu_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../PostoperativePathologySave/delZhongWuInfo','{$zhongwu_info_item->zhongwu_id}','addZhongWu')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PostoperativePathologySave/zhongWuSaveNew','#zhongWuForm','.zhongwu-id')">保存修改</button>
+                                    <div style="margin-bottom: 10px">
+                                        <button class="btn btn-danger del" type="button" onclick="delBtn('../PostoperativePathologySave/delZhongWuInfo','{$zhongwu_info_item->zhongwu_id}','addZhongWu')">删除</button>
+                                        <button class="btn btn-info save" type="button" onclick="saveTab('../PostoperativePathologySave/zhongWuSaveNew','#zhongWuForm','.zhongwu-id')">保存修改</button>
+                                    </div>
+
 
                                     <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
                                         <blockquote class="layui-elem-quote" style="padding: 10px;overflow: hidden;border-left: 5px solid #9a9a9a;">
@@ -865,8 +868,11 @@
                                 {foreach $bingli_info as $bingli_info_item}
                                 <form class="layui-tab-item" id="bingLiForm{$bingli_info_item->bingli_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$bingli_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../PostoperativePathologySave/delBingLiInfo','{$bingli_info_item->bingli_id}','addBingLi')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PostoperativePathologySave/bingLiSaveNew','#bingLiForm','.bingli-id')">保存修改</button>
+                                    <div style="margin-bottom: 10px">
+                                        <button class="btn btn-danger del" type="button" onclick="delBtn('../PostoperativePathologySave/delBingLiInfo','{$bingli_info_item->bingli_id}','addBingLi')">删除</button>
+                                        <button class="btn btn-info save" type="button" onclick="saveTab('../PostoperativePathologySave/bingLiSaveNew','#bingLiForm','.bingli-id')">保存修改</button>
+                                    </div>
+
 
                                     <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
                                         <blockquote class="layui-elem-quote" style="padding: 10px;overflow: hidden;border-left: 5px solid #9a9a9a;">
@@ -1062,8 +1068,11 @@
                                 {foreach $mianyi_info as $mianyi_info_item}
                                 <form class="layui-tab-item" id="mianYiForm{$mianyi_info_item->mianyi_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$mianyi_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../PostoperativePathologySave/delMianYiInfo','{$mianyi_info_item->mianyi_id}','addMianYi')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PostoperativePathologySave/mianYiSaveNew','#mianYiForm','.mianyi-id')">保存修改</button>
+                                    <div style="margin-bottom: 10px">
+                                        <button class="btn btn-danger del" type="button" onclick="delBtn('../PostoperativePathologySave/delMianYiInfo','{$mianyi_info_item->mianyi_id}','addMianYi')">删除</button>
+                                        <button class="btn btn-info save" type="button" onclick="saveTab('../PostoperativePathologySave/mianYiSaveNew','#mianYiForm','.mianyi-id')">保存修改</button>
+                                    </div>
+
 
                                     <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
                                         <blockquote class="layui-elem-quote" style="padding: 10px;overflow: hidden;border-left: 5px solid #9a9a9a;">
@@ -1228,8 +1237,11 @@
                                 {foreach $jiyin_info as $jiyin_info_item}
                                 <form class="layui-tab-item" id="jiYinForm{$jiyin_info_item->jiyin_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$jiyin_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../PostoperativePathologySave/delJiYinInfo','{$jiyin_info_item->jiyin_id}','addJiYin')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PostoperativePathologySave/jiYinSaveNew','#jiYinForm','.jiyin-id')">保存修改</button>
+                                    <div style="margin-bottom: 10px">
+                                        <button class="btn btn-danger del" type="button" onclick="delBtn('../PostoperativePathologySave/delJiYinInfo','{$jiyin_info_item->jiyin_id}','addJiYin')">删除</button>
+                                        <button class="btn btn-info save" type="button" onclick="saveTab('../PostoperativePathologySave/jiYinSaveNew','#jiYinForm','.jiyin-id')">保存修改</button>
+                                    </div>
+
 
                                     <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
                                         <blockquote class="layui-elem-quote" style="padding: 10px;overflow: hidden;border-left: 5px solid #9a9a9a;">

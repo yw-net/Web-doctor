@@ -431,30 +431,18 @@ class Save extends Base
             $data['tijianfaxian'] =null;
         }
 
-        if (!isset($data['xiongneifeibiaoxian'])){   //胸内肺表现
-            $data['xiongneifeibiaoxian'] =null;
-        }
         if (!isset($data['other_xiongneifeibiaoxian'])){
             $data['other_xiongneifeibiaoxian'] =null;
         }
 
-        if (!isset($data['xiongneifeiwaibiaoxian'])){   //胸内肺外表现
-            $data['xiongneifeiwaibiaoxian'] =null;
-        }
         if (!isset($data['other_xiongneifeiwaibiaoxian'])){
             $data['other_xiongneifeiwaibiaoxian'] =null;
         }
 
-        if (!isset($data['xiongwaifeizhuanyibiaoxian'])){   //胸外非转移表现
-            $data['xiongwaifeizhuanyibiaoxian'] =null;
-        }
         if (!isset($data['other_xiongwaifeizhuanyibiaoxian'])){
             $data['other_xiongwaifeizhuanyibiaoxian'] =null;
         }
 
-        if (!isset($data['xiongwaizhuanyibiaoxian'])){   //胸外转移表现
-            $data['xiongwaizhuanyibiaoxian'] =null;
-        }
         if (!isset($data['other_xiongwaizhuanyibiaoxian'])){
             $data['other_xiongwaizhuanyibiaoxian'] =null;
         }
@@ -504,10 +492,6 @@ class Save extends Base
                 ->data([
                     'edit_time'=>date('Y-m-d H:i:s'),
                     'tijianfaxian'=>$data['tijianfaxian'],
-                    'xiongneifeibiaoxian'=>$data['xiongneifeibiaoxian'],
-                    'xiongneifeiwaibiaoxian'=>$data['xiongneifeiwaibiaoxian'],
-                    'xiongwaifeizhuanyibiaoxian'=>$data['xiongwaifeizhuanyibiaoxian'],
-                    'xiongwaizhuanyibiaoxian'=>$data['xiongwaizhuanyibiaoxian'],
                     'check_xiongneifeibiaoxian'=>$data['check_xiongneifeibiaoxian'],
                     'check_xiongneifeiwaibiaoxian'=>$data['check_xiongneifeiwaibiaoxian'],
                     'check_xiongwaifeizhuanyibiaoxian'=>$data['check_xiongwaifeizhuanyibiaoxian'],
@@ -534,10 +518,6 @@ class Save extends Base
             'created_time'=>date('Y-m-d H:i:s'),
             'patients_id'=>$patients_id,
             'tijianfaxian'=>$data['tijianfaxian'],
-            'xiongneifeibiaoxian'=>$data['xiongneifeibiaoxian'],
-            'xiongneifeiwaibiaoxian'=>$data['xiongneifeiwaibiaoxian'],
-            'xiongwaifeizhuanyibiaoxian'=>$data['xiongwaifeizhuanyibiaoxian'],
-            'xiongwaizhuanyibiaoxian'=>$data['xiongwaizhuanyibiaoxian'],
             'check_xiongneifeibiaoxian'=>$data['check_xiongneifeibiaoxian'],
             'check_xiongneifeiwaibiaoxian'=>$data['check_xiongneifeiwaibiaoxian'],
             'check_xiongwaifeizhuanyibiaoxian'=>$data['check_xiongwaifeizhuanyibiaoxian'],

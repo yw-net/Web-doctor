@@ -211,6 +211,7 @@ class ReferralSave extends Base
                 }
                 $fuzhen_id_res->chaosheng_zhuanyi = $form_data['chaosheng_zhuanyi'];
             }
+            else{$fuzhen_id_res->chaosheng_zhuanyi = null;}
             if (isset($form_data['ct_zhuanyi'])) {
                 //判断多选框值是否为数组（当选择两个以下强制转换为数组）
                 if (!is_array($form_data['ct_zhuanyi'])) {
@@ -218,6 +219,7 @@ class ReferralSave extends Base
                 }
                 $fuzhen_id_res->ct_zhuanyi = $form_data['ct_zhuanyi'];
             }
+            else{$fuzhen_id_res->ct_zhuanyi = null;}
             if (isset($form_data['ect_zhuanyi'])) {
                 //判断多选框值是否为数组（当选择两个以下强制转换为数组）
                 if (!is_array($form_data['ect_zhuanyi'])) {
@@ -225,6 +227,7 @@ class ReferralSave extends Base
                 }
                 $fuzhen_id_res->ect_zhuanyi = $form_data['ect_zhuanyi'];
             }
+            else{$fuzhen_id_res->ect_zhuanyi = null;}
             if (isset($form_data['toulu_zhuanyi'])) {
                 //判断多选框值是否为数组（当选择两个以下强制转换为数组）
                 if (!is_array($form_data['toulu_zhuanyi'])) {
@@ -232,6 +235,7 @@ class ReferralSave extends Base
                 }
                 $fuzhen_id_res->toulu_zhuanyi = $form_data['toulu_zhuanyi'];
             }
+            else{$fuzhen_id_res->toulu_zhuanyi = null;}
             if (isset($form_data['pet_zhuanyi'])) {
                 //判断多选框值是否为数组（当选择两个以下强制转换为数组）
                 if (!is_array($form_data['pet_zhuanyi'])) {
@@ -239,51 +243,67 @@ class ReferralSave extends Base
                 }
                 $fuzhen_id_res->pet_zhuanyi = $form_data['pet_zhuanyi'];
             }
+            else{$fuzhen_id_res->pet_zhuanyi = null;}
             if (isset($form_data['referral_time'])){
                 $fuzhen_id_res->referral_time = $form_data['referral_time'];
             }
+            else{$fuzhen_id_res->referral_time = null;}
             if (isset($form_data['referral_zhengzhuang'])){
                 $fuzhen_id_res->referral_zhengzhuang = $form_data['referral_zhengzhuang'];
             }
+            else{$fuzhen_id_res->referral_zhengzhuang = null;}
             if (isset($form_data['referral_tizheng'])){
                 $fuzhen_id_res->referral_tizheng = $form_data['referral_tizheng'];
             }
+            else{$fuzhen_id_res->referral_tizheng = null;}
             if (isset($form_data['xueliubiao_cea'])){
                 $fuzhen_id_res->xueliubiao_cea = $form_data['xueliubiao_cea'];
             }
+            else{$fuzhen_id_res->xueliubiao_cea = null;}
             if (isset($form_data['xueliubiao_cyfra211'])){
                 $fuzhen_id_res->xueliubiao_cyfra211 = $form_data['xueliubiao_cyfra211'];
             }
+            else{$fuzhen_id_res->xueliubiao_cyfra211 = null;}
             if (isset($form_data['xueliubiao_ca199'])){
                 $fuzhen_id_res->xueliubiao_ca199 = $form_data['xueliubiao_ca199'];
             }
+            else{$fuzhen_id_res->xueliubiao_ca199 = null;}
             if (isset($form_data['xueliubiao_nse'])){
                 $fuzhen_id_res->xueliubiao_nse = $form_data['xueliubiao_nse'];
             }
+            else{$fuzhen_id_res->xueliubiao_nse = null;}
             if (isset($form_data['xueliubiao_scc'])){
                 $fuzhen_id_res->xueliubiao_scc = $form_data['xueliubiao_scc'];
             }
+            else{$fuzhen_id_res->xueliubiao_scc = null;}
             if (isset($form_data['xueliubiao_ca125'])){
                 $fuzhen_id_res->xueliubiao_ca125 = $form_data['xueliubiao_ca125'];
             }
+            else{$fuzhen_id_res->xueliubiao_ca125 = null;}
             if (isset($form_data['chaosheng_zhuanyi_other'])){
                 $fuzhen_id_res->chaosheng_zhuanyi_other = $form_data['chaosheng_zhuanyi_other'];
             }
+            else{$fuzhen_id_res->chaosheng_zhuanyi_other = null;}
             if (isset($form_data['ct_zhuanyi_other'])){
                 $fuzhen_id_res->ct_zhuanyi_other = $form_data['ct_zhuanyi_other'];
             }
+            else{$fuzhen_id_res->ct_zhuanyi_other = null;}
             if (isset($form_data['ect_zhuanyi_other'])){
                 $fuzhen_id_res->ect_zhuanyi_other = $form_data['ect_zhuanyi_other'];
             }
+            else{$fuzhen_id_res->ect_zhuanyi_other = null;}
             if (isset($form_data['toulu_zhuanyi_other'])){
                 $fuzhen_id_res->toulu_zhuanyi_other = $form_data['toulu_zhuanyi_other'];
             }
+            else{$fuzhen_id_res->toulu_zhuanyi_other = null;}
             if (isset($form_data['pet_zhuanyi_other'])){
                 $fuzhen_id_res->pet_zhuanyi_other = $form_data['pet_zhuanyi_other'];
             }
+            else{$fuzhen_id_res->pet_zhuanyi_other = null;}
             if (isset($form_data['referral_other'])){
                 $fuzhen_id_res->referral_other = $form_data['referral_other'];
             }
+            else{$fuzhen_id_res->referral_other = null;}
             $fuzhen_id_res->referral_doctor = $form_data['referral_doctor'];
             $fuzhen_id_res->save();
             $res['status'] = 1;

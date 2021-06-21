@@ -32,33 +32,43 @@ class ComplementaryTreatmentSave extends Base
             if (isset($form_data['hualiao_start_time'])){
                 $hualiao_find->hualiao_start_time = $form_data['hualiao_start_time'];
             }
+            else{$hualiao_find->hualiao_start_time = null;}
             if (isset($form_data['hualiao_end_time'])){
                 $hualiao_find->hualiao_end_time = $form_data['hualiao_end_time'];
             }
+            else{$hualiao_find->hualiao_end_time = null;}
             if (isset($form_data['hualiao_zhouqi'])){
                 $hualiao_find->hualiao_zhouqi = $form_data['hualiao_zhouqi'];
             }
+            else{$hualiao_find->hualiao_zhouqi = null;}
             if (isset($form_data['hualiao_liubiao_check_time'])){
                 $hualiao_find->hualiao_liubiao_check_time = $form_data['hualiao_liubiao_check_time'];
             }
+            else{$hualiao_find->hualiao_liubiao_check_time = null;}
             if (isset($form_data['hualiao_cea'])){
                 $hualiao_find->hualiao_cea = $form_data['hualiao_cea'];
             }
+            else{$hualiao_find->hualiao_cea = null;}
             if (isset($form_data['hualiao_cyfra211'])){
                 $hualiao_find->hualiao_cyfra211 = $form_data['hualiao_cyfra211'];
             }
+            else{$hualiao_find->hualiao_cyfra211 = null;}
             if (isset($form_data['hualiao_ca199'])){
                 $hualiao_find->hualiao_ca199 = $form_data['hualiao_ca199'];
             }
+            else{$hualiao_find->hualiao_ca199 = null;}
             if (isset($form_data['hualiao_cea1'])){
                 $hualiao_find->hualiao_cea1 = $form_data['hualiao_cea1'];
             }
+            else{$hualiao_find->hualiao_cea1 = null;}
             if (isset($form_data['hualiao_nse'])){
                 $hualiao_find->hualiao_nse = $form_data['hualiao_nse'];
             }
+            else{$hualiao_find->hualiao_nse = null;}
             if (isset($form_data['hualiao_ca125'])){
                 $hualiao_find->hualiao_ca125 = $form_data['hualiao_ca125'];
             }
+            else{$hualiao_find->hualiao_ca125 = null;}
             $hualiao_find->hualiao_fangan = $form_data['hualiao_fangan'];
             $hualiao_find->hualiao_xuehongdanbai = $form_data['hualiao_xuehongdanbai'];
             $hualiao_find->hualiao_lixibao = $form_data['hualiao_lixibao'];
@@ -198,30 +208,39 @@ class ComplementaryTreatmentSave extends Base
             if (isset($form_data['fangliao_time'])){
                 $fangliao_find->fangliao_time = $form_data['fangliao_time'];
             }
+            else{$fangliao_find->fangliao_time = null;}
             if (isset($form_data['fangliao_feibu1'])){
                 $fangliao_find->fangliao_feibu1 = $form_data['fangliao_feibu1'];
             }
+            else{$fangliao_find->fangliao_feibu1 = null;}
             if (isset($form_data['fangliao_feibu2'])){
                 $fangliao_find->fangliao_feibu2 = $form_data['fangliao_feibu2'];
             }
+            else{$fangliao_find->fangliao_feibu2 = null;}
             if (isset($form_data['fangliao_naobu1'])){
                 $fangliao_find->fangliao_naobu1 = $form_data['fangliao_naobu1'];
             }
+            else{$fangliao_find->fangliao_naobu1 = null;}
             if (isset($form_data['fangliao_naobu2'])){
                 $fangliao_find->fangliao_naobu2 = $form_data['fangliao_naobu2'];
             }
+            else{$fangliao_find->fangliao_naobu2 = null;}
             if (isset($form_data['fangliao_guge1'])){
                 $fangliao_find->fangliao_guge1 = $form_data['fangliao_guge1'];
             }
+            else{$fangliao_find->fangliao_guge1 = null;}
             if (isset($form_data['fangliao_guge2'])){
                 $fangliao_find->fangliao_guge2 = $form_data['fangliao_guge2'];
             }
+            else{$fangliao_find->fangliao_guge2 = null;}
             if (isset($form_data['fangliao_other1'])){
                 $fangliao_find->fangliao_other1 = $form_data['fangliao_other1'];
             }
+            else{$fangliao_find->fangliao_other1 = null;}
             if (isset($form_data['fangliao_other2'])){
                 $fangliao_find->fangliao_other2 = $form_data['fangliao_other2'];
             }
+            else{$fangliao_find->fangliao_other2 = null;}
             $fangliao_find->save();
             $res['status'] = 1;
             $res['msg'] ='数据更新成功';
@@ -300,36 +319,47 @@ class ComplementaryTreatmentSave extends Base
             if (isset($form_data['gamadao_time'])){
                 $gamadao_find->gamadao_time = $form_data['gamadao_time'];
             }
+            else{$gamadao_find->gamadao_time = null;}
             if (isset($form_data['gamadao_feibu1'])){
                 $gamadao_find->gamadao_feibu1 = $form_data['gamadao_feibu1'];
             }
+            else{$gamadao_find->gamadao_feibu1 = null;}
             if (isset($form_data['gamadao_feibu2'])){
                 $gamadao_find->gamadao_feibu2 = $form_data['gamadao_feibu2'];
             }
+            else{$gamadao_find->gamadao_feibu2 = null;}
             if (isset($form_data['gamadao_naobu1'])){
                 $gamadao_find->gamadao_naobu1 = $form_data['gamadao_naobu1'];
             }
+            else{$gamadao_find->gamadao_naobu1 = null;}
             if (isset($form_data['gamadao_naobu2'])){
                 $gamadao_find->gamadao_naobu2 = $form_data['gamadao_naobu2'];
             }
+            else{$gamadao_find->gamadao_naobu2 = null;}
             if (isset($form_data['gamadao_guge1'])){
                 $gamadao_find->gamadao_guge1 = $form_data['gamadao_guge1'];
             }
+            else{$gamadao_find->gamadao_guge1 = null;}
             if (isset($form_data['gamadao_guge2'])){
                 $gamadao_find->gamadao_guge2 = $form_data['gamadao_guge2'];
             }
+            else{$gamadao_find->gamadao_guge2 = null;}
             if (isset($form_data['gamadao_ganbu1'])){
                 $gamadao_find->gamadao_ganbu1 = $form_data['gamadao_ganbu1'];
             }
+            else{$gamadao_find->gamadao_ganbu1 = null;}
             if (isset($form_data['gamadao_ganbu2'])){
                 $gamadao_find->gamadao_ganbu2 = $form_data['gamadao_ganbu2'];
             }
+            else{$gamadao_find->gamadao_ganbu2 = null;}
             if (isset($form_data['gamadao_other1'])){
                 $gamadao_find->gamadao_other1 = $form_data['gamadao_other1'];
             }
+            else{$gamadao_find->gamadao_other1 = null;}
             if (isset($form_data['gamadao_other2'])){
                 $gamadao_find->gamadao_other2 = $form_data['gamadao_other2'];
             }
+            else{$gamadao_find->gamadao_other2 = null;}
             $gamadao_find->save();
             $res['status'] = 1;
             $res['msg'] ='数据更新成功';
@@ -414,12 +444,15 @@ class ComplementaryTreatmentSave extends Base
             if (isset($form_data['baxiang_yaowu'])){
                 $baxiang_find->baxiang_yaowu = $form_data['baxiang_yaowu'];
             }
+            else{$baxiang_find->baxiang_yaowu = null;}
             if (isset($form_data['baxiang_start_time'])){
                 $baxiang_find->baxiang_start_time = $form_data['baxiang_start_time'];
             }
+            else{$baxiang_find->baxiang_start_time = null;}
             if (isset($form_data['baxiang_end_time'])){
                 $baxiang_find->baxiang_end_time = $form_data['baxiang_end_time'];
             }
+            else{$baxiang_find->baxiang_end_time = null;}
             $baxiang_find->save();
             $res['status'] = 1;
             $res['msg'] ='数据更新成功';

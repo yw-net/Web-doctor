@@ -206,14 +206,26 @@ class SurgicalInfoSave extends Base
             if (isset($form_data['zhongwu_name'])) {
                 $pre_zhongwu_find->zhongwu_name = $form_data['zhongwu_name'];
             }
+            else{
+                $pre_zhongwu_find->zhongwu_name = null;
+            }
             if (isset($form_data['zhongwu_daxiao_1'])){
                 $pre_zhongwu_find->zhongwu_daxiao_1 = $form_data['zhongwu_daxiao_1'];
+            }
+             else{
+                $pre_zhongwu_find->zhongwu_daxiao_1 = null;
             }
             if (isset($form_data['zhongwu_daxiao_2'])){
                 $pre_zhongwu_find->zhongwu_daxiao_2 = $form_data['zhongwu_daxiao_2'];
             }
+             else{
+                $pre_zhongwu_find->zhongwu_daxiao_2 = null;
+            }
             if (isset($form_data['zhongwu_daxiao_3'])){
                 $pre_zhongwu_find->zhongwu_daxiao_3 = $form_data['zhongwu_daxiao_3'];
+            }
+            else{
+                $pre_zhongwu_find->zhongwu_daxiao_3 = null;
             }
             $pre_zhongwu_find->zhongwu_buwei = $form_data['zhongwu_buwei'];
             $pre_zhongwu_find->zhongwu_kuaye = $form_data['zhongwu_kuaye'];
@@ -307,63 +319,64 @@ class SurgicalInfoSave extends Base
                 }
                 $shoushu_id_res->huojianzuzhi = $form_data['huojianzuzhi'];
             }
+            else {$shoushu_id_res->huojianzuzhi = null;}
             if (isset($form_data['tanchaguxi'])) {
                 //判断多选框值是否为数组（当选择两个以下强制转换为数组）
                 if (!is_array($form_data['tanchaguxi'])) {
                     $form_data['tanchaguxi'] = json_encode($form_data['tanchaguxi']);
                 }
                 $shoushu_id_res->tanchaguxi = $form_data['tanchaguxi'];
-            }
+            }else {$shoushu_id_res->tanchaguxi = null;}
             if (isset($form_data['qiekoufangshi'])) {
                 //判断多选框值是否为数组（当选择两个以下强制转换为数组）
                 if (!is_array($form_data['qiekoufangshi'])) {
                     $form_data['qiekoufangshi'] = json_encode($form_data['qiekoufangshi']);
                 }
                 $shoushu_id_res->qiekoufangshi = $form_data['qiekoufangshi'];
-            }
+            }else {$shoushu_id_res->qiekoufangshi = null;}
             if (isset($form_data['shoushufangshi'])) {
                 //判断多选框值是否为数组（当选择两个以下强制转换为数组）
                 if (!is_array($form_data['shoushufangshi'])) {
                     $form_data['shoushufangshi'] = json_encode($form_data['shoushufangshi']);
                 }
                 $shoushu_id_res->shoushufangshi = $form_data['shoushufangshi'];
-            }
+            }else {$shoushu_id_res->shoushufangshi = null;}
             if (isset($form_data['shoushu_date'])){
                 $shoushu_id_res->shoushu_date = $form_data['shoushu_date'];
-            }
+            }else {$shoushu_id_res->shoushu_date = null;}
             if (isset($form_data['huojianzuzhi_other'])){
                 $shoushu_id_res->huojianzuzhi_other = $form_data['huojianzuzhi_other'];
-            }
+            }else {$shoushu_id_res->huojianzuzhi_other = null;}
             if (isset($form_data['tanchaguxi_other'])){
                 $shoushu_id_res->tanchaguxi_other = $form_data['tanchaguxi_other'];
-            }
+            }else {$shoushu_id_res->tanchaguxi_other = null;}
             if (isset($form_data['shoushushichang'])){
                 $shoushu_id_res->shoushushichang = $form_data['shoushushichang'];
-            }
+            }else {$shoushu_id_res->shoushushichang = null;}
             if (isset($form_data['shuzhongchuxue'])){
                 $shoushu_id_res->shuzhongchuxue = $form_data['shuzhongchuxue'];
-            }
+            }else {$shoushu_id_res->shuzhongchuxue = null;}
             if (isset($form_data['shuzhong_shuye'])){
                 $shoushu_id_res->shuzhong_shuye = $form_data['shuzhong_shuye'];
-            }
+            }else {$shoushu_id_res->shuzhong_shuye = null;}
             if (isset($form_data['shuzhong_jingti'])){
                 $shoushu_id_res->shuzhong_jingti = $form_data['shuzhong_jingti'];
-            }
+            }else {$shoushu_id_res->shuzhong_jingti = null;}
             if (isset($form_data['shuzhong_jiaoti'])){
                 $shoushu_id_res->shuzhong_jiaoti = $form_data['shuzhong_jiaoti'];
-            }
+            }else {$shoushu_id_res->shuzhong_jiaoti = null;}
             if (isset($form_data['shuzhong_xuejiang'])){
                 $shoushu_id_res->shuzhong_xuejiang = $form_data['shuzhong_xuejiang'];
-            }
+            }else {$shoushu_id_res->shuzhong_xuejiang = null;}
             if (isset($form_data['shuzhong_hongxibao'])){
                 $shoushu_id_res->shuzhong_hongxibao = $form_data['shuzhong_hongxibao'];
-            }
+            }else {$shoushu_id_res->shuzhong_hongxibao = null;}
             if (isset($form_data['shuzhong_liaoliang'])){
                 $shoushu_id_res->shuzhong_liaoliang = $form_data['shuzhong_liaoliang'];
-            }
+            }else {$shoushu_id_res->shuzhong_liaoliang = null;}
             if (isset($form_data['shoushufangshi_other'])){
                 $shoushu_id_res->shoushufangshi_other = $form_data['shoushufangshi_other'];
-            }
+            }else {$shoushu_id_res->shoushufangshi_other = null;}
             $shoushu_id_res->zhudao = $form_data['zhudao'];
             $shoushu_id_res->mazui = $form_data['mazui'];
             $shoushu_id_res->zhushou1 = $form_data['zhushou1'];

@@ -12,7 +12,7 @@
 <div class="content">
     <div class="panel panel-info">
         <div class="panel-heading yw-flex-row">
-            <h4 class="panel-title">辅助治疗</h4>
+            <h4 class="panel-title" style="line-height: 28px">辅助治疗</h4>
             <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
         </div>
         <input type="text" id="patients_id" class="hidden" value="{$patientid}">
@@ -1323,8 +1323,11 @@
                                 {foreach $fangliao_info as $fangliao_info_item}
                                 <form class="layui-tab-item" id="fangLiaoForm{$fangliao_info_item->fangliao_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$fangliao_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../ComplementaryTreatmentSave/delFangLiaoInfo','{$fangliao_info_item->fangliao_id}','addFangLiao')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('../ComplementaryTreatmentSave/fangLiaoSaveNew','#fangLiaoForm','.fangliao-id')">保存修改</button>
+                                    <div style="margin-bottom: 10px">
+                                        <button class="btn btn-danger del" type="button" onclick="delBtn('../ComplementaryTreatmentSave/delFangLiaoInfo','{$fangliao_info_item->fangliao_id}','addFangLiao')">删除</button>
+                                        <button class="btn btn-info save" type="button" onclick="saveTab('../ComplementaryTreatmentSave/fangLiaoSaveNew','#fangLiaoForm','.fangliao-id')">保存修改</button>
+                                    </div>
+
 
                                     <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
                                         <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
@@ -1498,8 +1501,11 @@
                                 {foreach $gamadao_info as $gamadao_info_item}
                                 <form class="layui-tab-item" id="gaMaDaoForm{$gamadao_info_item->gamadao_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$gamadao_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../ComplementaryTreatmentSave/delGaMaDaoInfo','{$gamadao_info_item->gamadao_id}','addGaMaDao')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('../ComplementaryTreatmentSave/gaMaDaoSaveNew','#gaMaDaoForm','.gamadao-id')">保存修改</button>
+                                    <div style="margin-bottom: 10px">
+                                        <button class="btn btn-danger del" type="button" onclick="delBtn('../ComplementaryTreatmentSave/delGaMaDaoInfo','{$gamadao_info_item->gamadao_id}','addGaMaDao')">删除</button>
+                                        <button class="btn btn-info save" type="button" onclick="saveTab('../ComplementaryTreatmentSave/gaMaDaoSaveNew','#gaMaDaoForm','.gamadao-id')">保存修改</button>
+                                    </div>
+
                                     <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
                                         <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
                                             <label class="col-sm-2">伽玛刀时间</label>
@@ -1640,8 +1646,11 @@
                                 {foreach $baxiang_info as $baxiang_info_item}
                                 <form class="layui-tab-item" id="baXiangForm{$baxiang_info_item->baxiang_id}">
                                     <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$baxiang_info_item->edit_time}</span></div>
-                                    <button class="btn btn-danger del" type="button" onclick="delBtn('../ComplementaryTreatmentSave/delBaXiangInfo','{$baxiang_info_item->baxiang_id}','addBaXiang')">删除</button>
-                                    <button class="btn btn-info save" type="button" onclick="saveTab('../ComplementaryTreatmentSave/baXiangSaveNew','#baXiangForm','.baxiang-id')">保存修改</button>
+                                    <div style="margin-bottom: 10px">
+                                        <button class="btn btn-danger del" type="button" onclick="delBtn('../ComplementaryTreatmentSave/delBaXiangInfo','{$baxiang_info_item->baxiang_id}','addBaXiang')">删除</button>
+                                        <button class="btn btn-info save" type="button" onclick="saveTab('../ComplementaryTreatmentSave/baXiangSaveNew','#baXiangForm','.baxiang-id')">保存修改</button>
+                                    </div>
+
 
                                     <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
                                         <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
