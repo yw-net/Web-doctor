@@ -134,13 +134,13 @@
                                     <div class="flex-row-start dachuxueshow" style="display: none">
                                         <div class="input-group layui-col-md4 flex-row-start">
                                             <span class="input-group-addon layui-col-md4 input-sm">出血量</span>
-                                            <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhongdachuxue_chuxueliang" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhongdachuxue_chuxueliang}">
+                                            <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhongdachuxue_chuxueliang" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdachuxue_chuxueliang}">
                                             <span class="input-group-addon layui-col-md4 input-sm">ml</span>
                                         </div>
 
                                         <div class="input-group layui-col-md6 flex-row-start" style="margin-left: 10px">
                                             <span class="input-group-addon layui-col-md4 input-sm">原因</span>
-                                            <input type="text" class="form-control input-sm" name="shuzhongdachuxue_yuanyin" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhongdachuxue_yuanyin}">
+                                            <input type="text" class="form-control input-sm" name="shuzhongdachuxue_yuanyin" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdachuxue_yuanyin}">
                                         </div>
                                     </div>
                                 </div>
@@ -262,12 +262,12 @@
                                     <label class="col-sm-4">术中高血压</label>
                                     <div class=" flex-row-start">
                                         <div class="input-group layui-col-md5 flex-row-start">
-                                            <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhonggaoxueya_input1" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhonggaoxueya_input1}">
+                                            <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhonggaoxueya_input1" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhonggaoxueya_input1}">
                                             <span class="input-group-addon layui-col-md4 input-sm">mmHG</span>
                                         </div>
 
                                         <div class="input-group layui-col-md5 flex-row-start" style="margin-left: 10px">
-                                            <input type="text" class="form-control input-sm" name="shuzhonggaoxueya_input2" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhonggaoxueya_input2}">
+                                            <input type="text" class="form-control input-sm" name="shuzhonggaoxueya_input2" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhonggaoxueya_input2}">
                                             <span class="input-group-addon layui-col-md4 input-sm">mmHG</span>
                                         </div>
                                     </div>
@@ -275,7 +275,7 @@
                                 <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
                                     <div class="input-group layui-col-md6 flex-row-start">
                                         <span class="input-group-addon layui-col-md4 input-sm">持续时间</span>
-                                        <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhonggaoxueya_chixushijian" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhonggaoxueya_chixushijian}">
+                                        <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhonggaoxueya_chixushijian" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhonggaoxueya_chixushijian}">
                                         <span class="input-group-addon layui-col-md4 input-sm">分钟</span>
                                     </div>
                                 </div>
@@ -285,12 +285,12 @@
                                     <label class="col-sm-4">术中低血压</label>
                                     <div class=" flex-row-start">
                                         <div class="input-group layui-col-md5 flex-row-start">
-                                            <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhongdixueya_input1" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhongdixueya_input1}">
+                                            <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhongdixueya_input1" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdixueya_input1}">
                                             <span class="input-group-addon layui-col-md4 input-sm">mmHG</span>
                                         </div>
 
                                         <div class="input-group layui-col-md5 flex-row-start" style="margin-left: 10px">
-                                            <input type="text" class="form-control input-sm" name="shuzhongdixueya_input2" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhongdixueya_input2}">
+                                            <input type="text" class="form-control input-sm" name="shuzhongdixueya_input2" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdixueya_input2}">
                                             <span class="input-group-addon layui-col-md4 input-sm">mmHG</span>
                                         </div>
                                     </div>
@@ -298,7 +298,7 @@
                                 <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
                                     <div class="input-group layui-col-md6 flex-row-start">
                                         <span class="input-group-addon layui-col-md4 input-sm">持续时间</span>
-                                        <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhongdixueya_chixushijian" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhongdixueya_chixushijian}">
+                                        <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhongdixueya_chixushijian" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdixueya_chixushijian}">
                                         <span class="input-group-addon layui-col-md4 input-sm">分钟</span>
                                     </div>
                                 </div>

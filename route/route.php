@@ -11,8 +11,6 @@
 
 //图片路由（术前检查）
 Route::rule('prefile/:type/:date/:name','PreSave/imgRoute')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
-//文件下载路由（术前检查）
-//Route::rule('download/:/type/:date/:name','PreSave/download')->pattern(['name'=>'[^@]+.[\w]{0,4}']);
 
 //图片路由（手术信息）
 Route::rule('surfile/:type/:date/:name','SurgicalInfoSave/imgRoute')->pattern(['name'=>'[^@]+.[\w]{0,4}']);

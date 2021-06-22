@@ -164,29 +164,11 @@ class Api extends Base
             'ext'=>'bmp,jpg,png,tif,gif,pcx,tga,exif,fpx,svg,psd,cdr,pcd,dxf,ufo,eps,ai,raw,WMF,webp,jpeg'
         ])->move('static/upload/userhead/');
 
-        // 处理ajax上传并返回JSON响应的服务器代码。
-        // 你的服务器方法必须返回一个包含`initialPreview`、`initialPreviewConfig`和`append`的JSON对象。
-        // 一个PHP服务器代码示例如下：
-        // ...
-        $key = '<解析图像关键字的代码>';
-        $url = '<你删除这个文件的服务器方法URL>';
-        echo json_encode([
-            'initialPreview' => [
-                "http://path.to.uploaded.file/{$key}.jpg"
-            ],
-            'initialPreviewConfig' => [
-                ['caption' => "Sports-{$key}.jpg", 'size' => 627392, 'width' => '120px', 'url' => $url, 'key' => $key],
-            ],
-            'append' => true // 是否把这些配置加入`initialPreview`。
-            // 如果设置为`false`，它会重载初始预览。
-            // 如果设置为`true`，它会加入初始预览之中。
-            // 如果这个属性没有被设置或者没有传出，它会默认为`true`。
-        ]);
 
         if($info)
         {
             $url = "../static/upload/userhead/".$info->getSaveName();
-            return  json_encode(['status'=>100,'message'=>'上传成功','url'=>$url]);
+            return  json_encode(['status'=>100,'message'=>'上传成功,点击提交后保存','url'=>$url]);
         }
         else
         {

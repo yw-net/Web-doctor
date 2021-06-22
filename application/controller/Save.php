@@ -163,7 +163,7 @@ class Save extends Base
 
         //【术前合并症】 数据表
         //根据病人id查询数据库
-        $result = Db::table('History_surgical')
+        $result = Db::name('History_surgical')
             ->field('patients_id')
             ->where('patients_id','=',$patientsid)
             ->find();
@@ -223,7 +223,7 @@ class Save extends Base
 
         //【个人史】 数据表
         //根据病人id查询数据库
-        $result = Db::table('History_self')
+        $result = Db::name('History_self')
             ->field('patients_id')
             ->where('patients_id','=',$patientsid)
             ->find();
@@ -272,7 +272,7 @@ class Save extends Base
 
         //【月经史】 数据表
         //根据病人id查询数据库
-        $result = Db::table('History_menstrual')
+        $result = Db::name('History_menstrual')
             ->field('patients_id')
             ->where('patients_id','=',$patientsid)
             ->find();
@@ -304,7 +304,7 @@ class Save extends Base
 
         //【家族史】 数据表
         //根据病人id查询数据库
-        $result = Db::table('History_family')
+        $result = Db::name('History_family')
             ->field('patients_id')
             ->where('patients_id','=',$patientsid)
             ->find();
