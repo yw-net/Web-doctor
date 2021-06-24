@@ -2356,8 +2356,7 @@ class PreSave extends Base
     //测试
     public function ceshi()
     {
-        $res['img_address'] = (new \app\model\Preoperative_ct)->getImgAddress(1000088,1);
-        dump($res['img_address']);
+        dump('ddddd');
 
 
 
