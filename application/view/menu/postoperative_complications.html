@@ -1,6 +1,4 @@
 {include file="public/meta" /}
-{include file="public/header" /}
-{include file="public/left" /}
 {include file="public/nav" /}
 <style>
     .control-label{text-align: left !important;}
@@ -11,1126 +9,1131 @@
 </style>
 <!--术后并发症页面-->
 
-<div class="content">
-    <div class="panel panel-info">
-        <div class="panel-heading yw-flex-row">
-            <h4 class="panel-title" style="line-height: 28px">术后并发症</h4>
-            <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
-        </div>
-        <input type="text" id="patients_id" class="hidden" value="{$patientid}">
-        <div class="panel-body">
-            <div class="layui-tab layui-tab-card" lay-filter="main">
+<div class="layui-fluid">
+    <div class="layui-row">
+        {include file="public/left/menu_left" /}
+        <div class="content col-sm-10" style="padding-top: 15px">
+            <div class="panel panel-info">
+            <div class="panel-heading yw-flex-row">
+                <h4 class="panel-title" style="line-height: 28px">术后并发症</h4>
+                <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
+            </div>
+            <input type="text" id="patients_id" class="hidden" value="{$patientid}">
+            <div class="panel-body">
+                <div class="layui-tab layui-tab-card" lay-filter="main">
 
-                <ul class="layui-tab-title" style="background-color: #dff0d8">
-                    <li class="layui-this" lay-id="shuzhong">
-                        术中并发症
-                        {notempty name = 'shuzhong_info'}
-                        <span class="layui-badge-dot layui-bg-green"></span>
-                        {/notempty}
-                    </li>
-                    <li lay-id="shuhou">
-                        术后并发症
-                        {notempty name = 'shuhou_info'}
-                        <span class="layui-badge-dot layui-bg-green"></span>
-                        {/notempty}
-                    </li>
-                    <li lay-id="erci">
-                        二次手术
-                        {notempty name = 'erci_info'}
-                        <span class="layui-badge-dot layui-bg-green"></span>
-                        {/notempty}
-                    </li>
-                    <li lay-id="icu">
-                        SICU
-                        {notempty name = 'icu_info'}
-                        <span class="layui-badge-dot layui-bg-green"></span>
-                        {/notempty}
-                    </li>
-                </ul>
+                    <ul class="layui-tab-title" style="background-color: #dff0d8">
+                        <li class="layui-this" lay-id="shuzhong">
+                            术中并发症
+                            {notempty name = 'shuzhong_info'}
+                            <span class="layui-badge-dot layui-bg-green"></span>
+                            {/notempty}
+                        </li>
+                        <li lay-id="shuhou">
+                            术后并发症
+                            {notempty name = 'shuhou_info'}
+                            <span class="layui-badge-dot layui-bg-green"></span>
+                            {/notempty}
+                        </li>
+                        <li lay-id="erci">
+                            二次手术
+                            {notempty name = 'erci_info'}
+                            <span class="layui-badge-dot layui-bg-green"></span>
+                            {/notempty}
+                        </li>
+                        <li lay-id="icu">
+                            SICU
+                            {notempty name = 'icu_info'}
+                            <span class="layui-badge-dot layui-bg-green"></span>
+                            {/notempty}
+                        </li>
+                    </ul>
 
-                <div class="layui-tab-content has-success">
+                    <div class="layui-tab-content has-success">
 
-<!--                    术中并发症-->
-                    <div class="layui-tab-item layui-show">
-                        <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
-                            创建时间：
-                            <span style="color: #ff0000;margin-right: 20px;">
-                                {empty name = 'shuzhong_info'}
-                                未保存
-                                {else}
-                                {$shuzhong_info->created_time}
-                                {/empty}
+    <!--                    术中并发症-->
+                        <div class="layui-tab-item layui-show">
+                            <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
+                                创建时间：
+                                <span style="color: #ff0000;margin-right: 20px;">
+                                    {empty name = 'shuzhong_info'}
+                                    未保存
+                                    {else}
+                                    {$shuzhong_info->created_time}
+                                    {/empty}
+                                    </span>
+                                上次修改时间：
+                                <span style="color: #ff0000">
+                                    {empty name = 'shuzhong_info'}
+                                    未修改
+                                    {else}
+                                    {$shuzhong_info->edit_time}
+                                    {/empty}
                                 </span>
-                            上次修改时间：
-                            <span style="color: #ff0000">
-                                {empty name = 'shuzhong_info'}
-                                未修改
-                                {else}
-                                {$shuzhong_info->edit_time}
-                                {/empty}
-                            </span>
-                        </div>
-                        <form class="layui-form-item" id="shuZhongForm">
-                            <button class="btn btn-info save" type="button" onclick="saveForm('../PostoperativeComplicationsSave/shuZhongSaveNew','#shuZhongForm')">保存修改</button>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
-                                <label class="col-sm-2">急性呼吸道梗阻</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="jixinghuxidaogenzu" value="是"
-                                    {notempty name ='shuzhong_info'}
-                                    {if($shuzhong_info->jixinghuxidaogenzu =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="jixinghuxidaogenzu" value="否"
-                                    {notempty name ='shuzhong_info'}
-                                    {if($shuzhong_info->jixinghuxidaogenzu =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">低氧血症</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="diyangxuezheng" value="是"
-                                    {notempty name ='shuzhong_info'}
-                                    {if($shuzhong_info->diyangxuezheng =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="diyangxuezheng" value="否"
-                                    {notempty name ='shuzhong_info'}
-                                    {if($shuzhong_info->diyangxuezheng =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
-                                    <label class="col-sm-4">术中大出血</label>
+                            </div>
+                            <form class="layui-form-item" id="shuZhongForm">
+                                <button class="btn btn-info save" type="button" onclick="saveForm('../PostoperativeComplicationsSave/shuZhongSaveNew','#shuZhongForm')">保存修改</button>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+                                    <label class="col-sm-2">急性呼吸道梗阻</label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="shuzhongdachuxue_check" value="是"
+                                        <input type="radio" name="jixinghuxidaogenzu" value="是"
                                         {notempty name ='shuzhong_info'}
-                                        {if($shuzhong_info->shuzhongdachuxue_check =='是')} checked {/if}
+                                        {if($shuzhong_info->jixinghuxidaogenzu =='是')} checked {/if}
                                         {/notempty}
                                         /> 是
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="shuzhongdachuxue_check" value="否"
+                                        <input type="radio" name="jixinghuxidaogenzu" value="否"
                                         {notempty name ='shuzhong_info'}
-                                        {if($shuzhong_info->shuzhongdachuxue_check =='否')} checked {/if}
+                                        {if($shuzhong_info->jixinghuxidaogenzu =='否')} checked {/if}
                                         {else}
                                         checked
                                         {/notempty}
                                         /> 否
                                     </label>
-                                </div>
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                    <div class="flex-row-start dachuxueshow" style="display: none">
-                                        <div class="input-group layui-col-md4 flex-row-start">
-                                            <span class="input-group-addon layui-col-md4 input-sm">出血量</span>
-                                            <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhongdachuxue_chuxueliang" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhongdachuxue_chuxueliang}">
-                                            <span class="input-group-addon layui-col-md4 input-sm">ml</span>
-                                        </div>
-
-                                        <div class="input-group layui-col-md6 flex-row-start" style="margin-left: 10px">
-                                            <span class="input-group-addon layui-col-md4 input-sm">原因</span>
-                                            <input type="text" class="form-control input-sm" name="shuzhongdachuxue_yuanyin" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhongdachuxue_yuanyin}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">高碳酸血症</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="gaotansuanxuezheng" value="是"
-                                    {notempty name ='shuzhong_info'}
-                                    {if($shuzhong_info->gaotansuanxuezheng =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="gaotansuanxuezheng" value="否"
-                                    {notempty name ='shuzhong_info'}
-                                    {if($shuzhong_info->gaotansuanxuezheng =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">空气栓塞</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="kongqisuansai" value="是"
-                                    {notempty name ='shuzhong_info'}
-                                    {if($shuzhong_info->kongqisuansai =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="kongqisuansai" value="否"
-                                    {notempty name ='shuzhong_info'}
-                                    {if($shuzhong_info->kongqisuansai =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">术中休克</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="shuzhongxiuke" value="是"
-                                    {notempty name ='shuzhong_info'}
-                                    {if($shuzhong_info->shuzhongxiuke =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="shuzhongxiuke" value="否"
-                                    {notempty name ='shuzhong_info'}
-                                    {if($shuzhong_info->shuzhongxiuke =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
-                                    <label class="col-sm-4">心率失常</label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">低氧血症</label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="xinlvshichang_check" value="是"
+                                        <input type="radio" name="diyangxuezheng" value="是"
                                         {notempty name ='shuzhong_info'}
-                                        {if($shuzhong_info->xinlvshichang_check =='是')} checked {/if}
+                                        {if($shuzhong_info->diyangxuezheng =='是')} checked {/if}
                                         {/notempty}
                                         /> 是
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="xinlvshichang_check" value="否"
+                                        <input type="radio" name="diyangxuezheng" value="否"
                                         {notempty name ='shuzhong_info'}
-                                        {if($shuzhong_info->xinlvshichang_check =='否')} checked {/if}
+                                        {if($shuzhong_info->diyangxuezheng =='否')} checked {/if}
                                         {else}
                                         checked
                                         {/notempty}
                                         /> 否
                                     </label>
-                                </div>
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                    <div class="layui-col-md6">
-                                        <select class="form-control input-sm" name="xinlvshichang_select" style="display: none">
-                                            <option value="请选择" {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->xinlvshichang_select =='请选择')} selected {/if}
-                                                {else}selected
-                                                {/notempty}/>请选择
-                                            <option value="房颤"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->xinlvshichang_select =='房颤')} selected {/if}
-                                            {/notempty}/>房颤
-                                            <option value="室颤"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->xinlvshichang_select =='室颤')} selected {/if}
-                                                {/notempty}/>室颤
-                                            <option value="房扑"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->xinlvshichang_select =='房扑')} selected {/if}
-                                                {/notempty}/>房扑
-                                            <option value="室速"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->xinlvshichang_select =='室速')} selected {/if}
-                                                {/notempty}/>室速
-                                            <option value="室上速"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->xinlvshichang_select =='室上速')} selected {/if}
-                                                {/notempty}/>室上速
-                                            <option value="停搏"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->xinlvshichang_select =='停搏')} selected {/if}
-                                                {/notempty}/>停搏
-                                            <option value="窦缓"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->xinlvshichang_select =='窦缓')} selected {/if}
-                                                {/notempty}/>窦缓
-                                            <option value="其他"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->xinlvshichang_select =='其他')} selected {/if}
-                                                {/notempty}/>其他
-                                        </select>
-                                    </div>
-                                </div>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
-                                    <label class="col-sm-4">术中高血压</label>
-                                    <div class=" flex-row-start">
-                                        <div class="input-group layui-col-md5 flex-row-start">
-                                            <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhonggaoxueya_input1" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhonggaoxueya_input1}">
-                                            <span class="input-group-addon layui-col-md4 input-sm">mmHG</span>
-                                        </div>
-
-                                        <div class="input-group layui-col-md5 flex-row-start" style="margin-left: 10px">
-                                            <input type="text" class="form-control input-sm" name="shuzhonggaoxueya_input2" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhonggaoxueya_input2}">
-                                            <span class="input-group-addon layui-col-md4 input-sm">mmHG</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                    <div class="input-group layui-col-md6 flex-row-start">
-                                        <span class="input-group-addon layui-col-md4 input-sm">持续时间</span>
-                                        <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhonggaoxueya_chixushijian" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhonggaoxueya_chixushijian}">
-                                        <span class="input-group-addon layui-col-md4 input-sm">分钟</span>
-                                    </div>
-                                </div>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
-                                    <label class="col-sm-4">术中低血压</label>
-                                    <div class=" flex-row-start">
-                                        <div class="input-group layui-col-md5 flex-row-start">
-                                            <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhongdixueya_input1" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhongdixueya_input1}">
-                                            <span class="input-group-addon layui-col-md4 input-sm">mmHG</span>
-                                        </div>
-
-                                        <div class="input-group layui-col-md5 flex-row-start" style="margin-left: 10px">
-                                            <input type="text" class="form-control input-sm" name="shuzhongdixueya_input2" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhongdixueya_input2}">
-                                            <span class="input-group-addon layui-col-md4 input-sm">mmHG</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                    <div class="input-group layui-col-md6 flex-row-start">
-                                        <span class="input-group-addon layui-col-md4 input-sm">持续时间</span>
-                                        <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhongdixueya_chixushijian" value="{$shuzhong_info =='[]' ? null:$shuzhong_info->shuzhongdixueya_chixushijian}">
-                                        <span class="input-group-addon layui-col-md4 input-sm">分钟</span>
-                                    </div>
-                                </div>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
-                                    <label class="col-sm-4">术中损伤</label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="shuzhongsunshang_check" value="是"
-                                        {notempty name ='shuzhong_info'}
-                                        {if($shuzhong_info->shuzhongsunshang_check =='是')} checked {/if}
-                                        {/notempty}
-                                        /> 是
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="shuzhongsunshang_check" value="否"
-                                        {notempty name ='shuzhong_info'}
-                                        {if($shuzhong_info->shuzhongsunshang_check =='否')} checked {/if}
-                                        {else}
-                                        checked
-                                        {/notempty}
-                                        /> 否
-                                    </label>
-                                </div>
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                    <div class="layui-col-md6">
-                                        <select class="form-control input-sm" name="shuzhongsunshang_select" style="display: none">
-                                            <option value="请选择" {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='请选择')} selected {/if}
-                                                {else}selected
-                                                {/notempty}/>请选择
-                                            <option value="气管"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='气管')} selected {/if}
-                                                {/notempty}/>气管
-                                            <option value="主支气管"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='主支气管')} selected {/if}
-                                                {/notempty}/>主支气管
-                                            <option value="膈神经"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='膈神经')} selected {/if}
-                                                {/notempty}/>膈神经
-                                            <option value="迷走神经"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='迷走神经')} selected {/if}
-                                                {/notempty}/>迷走神经
-                                            <option value="肺动脉"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='肺动脉')} selected {/if}
-                                                {/notempty}/>肺动脉
-                                            <option value="肺静脉"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='肺静脉')} selected {/if}
-                                                {/notempty}/>肺静脉
-                                            <option value="奇静脉"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='奇静脉')} selected {/if}
-                                                {/notempty}/>奇静脉
-                                            <option value="腔静脉"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='腔静脉')} selected {/if}
-                                                {/notempty}/>腔静脉
-                                            <option value="肋间血管"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='肋间血管')} selected {/if}
-                                                {/notempty}/>肋间血管
-                                            <option value="肋间神经"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='肋间神经')} selected {/if}
-                                                {/notempty}/>肋间神经
-                                            <option value="食管"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='食管')} selected {/if}
-                                                {/notempty}/>食管
-                                            <option value="心包"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='心包')} selected {/if}
-                                                {/notempty}/>心包
-                                            <option value="其他"  {notempty name ='shuzhong_info'}
-                                                    {if($shuzhong_info->shuzhongsunshang_select =='其他')} selected {/if}
-                                                {/notempty}/>其他
-                                        </select>
-                                    </div>
-                                </div>
-                            </blockquote>
-                        </form>
-                    </div>
-
-<!--                    术后并发症-->
-                    <div class="layui-tab-item">
-                        <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
-                            创建时间：
-                            <span style="color: #ff0000;margin-right: 20px;">
-                                {empty name = 'shuhou_info'}
-                                未保存
-                                {else}
-                                {$shuhou_info->created_time}
-                                {/empty}
-                                </span>
-                            上次修改时间：
-                            <span style="color: #ff0000">
-                                {empty name = 'shuhou_info'}
-                                未修改
-                                {else}
-                                {$shuhou_info->edit_time}
-                                {/empty}
-                            </span>
-                        </div>
-                        <form class="layui-form-item" id="shuHouForm">
-                            <button class="btn btn-info save" type="button" onclick="saveForm('../PostoperativeComplicationsSave/shuHouSaveNew','#shuHouForm')">保存修改</button>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;margin-top: 10px">
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
-                                    <label class="col-sm-4">围手术期死亡</label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="weishoushuqisiwang" value="是"
-                                               {notempty name ='shuhou_info'}
-                                               {if($shuhou_info->weishoushuqisiwang =='是')} checked {/if}
-                                        {/notempty}
-                                        /> 是
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="weishoushuqisiwang" value="否"
-                                               {notempty name ='shuhou_info'}
-                                               {if($shuhou_info->weishoushuqisiwang =='否')} checked {/if}
-                                        {else}
-                                        checked
-                                        {/notempty}
-                                        /> 否
-                                    </label>
-                                </div>
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                    <div class="layui-col-md6">
-                                        <select class="form-control input-sm" name="weishoushuqisiwang_select">
-                                            <option value="请选择" {notempty name ='shuhou_info'}
-                                                    {if($shuhou_info->weishoushuqisiwang_select =='请选择')} selected {/if}
-                                                {else}selected
-                                                {/notempty}/>请选择
-                                            <option value="30天内"  {notempty name ='shuhou_info'}
-                                                    {if($shuhou_info->weishoushuqisiwang_select =='30天内')} selected {/if}
-                                                {/notempty}/>30天内
-                                            <option value="60天内"  {notempty name ='shuhou_info'}
-                                                    {if($shuhou_info->weishoushuqisiwang_select =='60天内')} selected {/if}
-                                                {/notempty}/>60天内
-                                            <option value="90天内"  {notempty name ='shuhou_info'}
-                                                    {if($shuhou_info->weishoushuqisiwang_select =='90天内')} selected {/if}
-                                                {/notempty}/>90天内
-                                        </select>
-                                    </div>
-                                </div>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
-                                    <label class="col-sm-4">心血管意外</label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="xinxueguanyiwai" value="是"
-                                               {notempty name ='shuhou_info'}
-                                               {if($shuhou_info->xinxueguanyiwai =='是')} checked {/if}
-                                        {/notempty}
-                                        /> 是
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="xinxueguanyiwai" value="否"
-                                               {notempty name ='shuhou_info'}
-                                               {if($shuhou_info->xinxueguanyiwai =='否')} checked {/if}
-                                        {else}
-                                        checked
-                                        {/notempty}
-                                        /> 否
-                                    </label>
-                                </div>
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                    <div class="layui-col-md6">
-                                        <select class="form-control input-sm" name="xinxueguanyiwai_select">
-                                            <option value="请选择" {notempty name ='shuhou_info'}
-                                                    {if($shuhou_info->xinxueguanyiwai_select =='请选择')} selected {/if}
-                                                {else}selected
-                                                {/notempty}/>请选择
-                                            <option value="心梗"  {notempty name ='shuhou_info'}
-                                                    {if($shuhou_info->xinxueguanyiwai_select =='心梗')} selected {/if}
-                                                {/notempty}/>心梗
-                                            <option value="心跳骤停"  {notempty name ='shuhou_info'}
-                                                    {if($shuhou_info->xinxueguanyiwai_select =='心跳骤停')} selected {/if}
-                                                {/notempty}/>心跳骤停
-                                            <option value="心衰"  {notempty name ='shuhou_info'}
-                                                    {if($shuhou_info->xinxueguanyiwai_select =='心衰')} selected {/if}
-                                                {/notempty}/>心衰
-                                        </select>
-                                    </div>
-                                </div>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
-                                    <label class="col-sm-4">心率失常</label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="xinlvshichang" value="是"
-                                               {notempty name ='shuhou_info'}
-                                               {if($shuhou_info->xinlvshichang =='是')} checked {/if}
-                                        {/notempty}
-                                        /> 是
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="xinlvshichang" value="否"
-                                               {notempty name ='shuhou_info'}
-                                               {if($shuhou_info->xinlvshichang =='否')} checked {/if}
-                                        {else}
-                                        checked
-                                        {/notempty}
-                                        /> 否
-                                    </label>
-                                </div>
-                                <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                    <div class="flex-row-start dachuxueshow" style="display: none">
-                                        <div class="input-group layui-col-md6 flex-row-start">
-                                            <select class="form-control input-sm" name="xinlvshichang_select" style="display: none">
-                                                <option value="请选择" {notempty name ='shuhou_info'}
-                                                        {if($shuhou_info->xinlvshichang_select =='请选择')} selected {/if}
-                                                    {else}selected
-                                                    {/notempty}/>请选择
-                                                <option value="房颤"  {notempty name ='shuhou_info'}
-                                                        {if($shuhou_info->xinlvshichang_select =='房颤')} selected {/if}
-                                                    {/notempty}/>房颤
-                                                <option value="室颤"  {notempty name ='shuhou_info'}
-                                                        {if($shuhou_info->xinlvshichang_select =='室颤')} selected {/if}
-                                                    {/notempty}/>室颤
-                                                <option value="房扑"  {notempty name ='shuhou_info'}
-                                                        {if($shuhou_info->xinlvshichang_select =='房扑')} selected {/if}
-                                                    {/notempty}/>房扑
-                                                <option value="室速"  {notempty name ='shuhou_info'}
-                                                        {if($shuhou_info->xinlvshichang_select =='室速')} selected {/if}
-                                                    {/notempty}/>室速
-                                                <option value="室上速"  {notempty name ='shuhou_info'}
-                                                        {if($shuhou_info->xinlvshichang_select =='室上速')} selected {/if}
-                                                    {/notempty}/>室上速
-                                                <option value="停搏"  {notempty name ='shuhou_info'}
-                                                        {if($shuhou_info->xinlvshichang_select =='停搏')} selected {/if}
-                                                    {/notempty}/>停搏
-                                                <option value="窦缓"  {notempty name ='shuhou_info'}
-                                                        {if($shuhou_info->xinlvshichang_select =='窦缓')} selected {/if}
-                                                    {/notempty}/>窦缓
-                                                <option value="其他"  {notempty name ='shuhou_info'}
-                                                        {if($shuhou_info->xinlvshichang_select =='其他')} selected {/if}
-                                                    {/notempty}/>其他
-                                            </select>
-                                        </div>
-
-                                        <div class="input-group layui-col-md6 flex-row-start" style="margin-left: 10px">
-                                            <span class="input-group-addon layui-col-md4 input-sm">其他</span>
-                                            <input type="text" class="form-control input-sm" name="xinlvshichang_other" value="{$shuhou_info =='' ? null:$shuhou_info->xinlvshichang_other}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">肺栓塞</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="feisuansai" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->feisuansai =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="feisuansai" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->feisuansai =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">心包疝</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="xinbaoshan" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->xinbaoshan =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="xinbaoshan" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->xinbaoshan =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">胸腔、纵隔活动性出血</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="xiongqiangchuxue" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->xiongqiangchuxue =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="xiongqiangchuxue" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->xiongqiangchuxue =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">肺不张</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="feibuzhang" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->feibuzhang =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="feibuzhang" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->feibuzhang =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">急性肺水肿</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="jixingfeishuizhong" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->jixingfeishuizhong =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="jixingfeishuizhong" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->jixingfeishuizhong =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">呼吸衰竭</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="huxisuaijie" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->huxisuaijie =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="huxisuaijie" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->huxisuaijie =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">肺叶扭转或坏疽</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="feiyeniuzhuan" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->feiyeniuzhuan =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="feiyeniuzhuan" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->feiyeniuzhuan =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">支气管胸膜瘘</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="zhiqiguanxiongmo" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->zhiqiguanxiongmo =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="zhiqiguanxiongmo" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->zhiqiguanxiongmo =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">脓胸</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="nongxiong" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->nongxiong =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="nongxiong" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->nongxiong =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">胸膜残腔</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="xiongmocanqiang" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->xiongmocanqiang =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="xiongmocanqiang" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->xiongmocanqiang =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">肺部感染</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="feibuganran" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->feibuganran =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="feibuganran" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->feibuganran =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">切口感染</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="qiekouganran" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->qiekouganran =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="qiekouganran" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->qiekouganran =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">漏气>5天</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="louqi" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->louqi =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="louqi" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->louqi =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">气管镜吸痰</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="qiguanjingxitan" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->qiguanjingxitan =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="qiguanjingxitan" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->qiguanjingxitan =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">皮瓣坏死</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="pibanhuaisi" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->pibanhuaisi =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="pibanhuaisi" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->pibanhuaisi =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">植入物感染</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="zhiruwuganran" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->zhiruwuganran =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="zhiruwuganran" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->zhiruwuganran =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">乳糜胸</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="rumixiong" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->rumixiong =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="rumixiong" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->rumixiong =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <label class="col-sm-2">重肌症无力</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="zhongjizhengwuli" value="是"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->zhongjizhengwuli =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="zhongjizhengwuli" value="否"
-                                           {notempty name ='shuhou_info'}
-                                           {if($shuhou_info->zhongjizhengwuli =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <div class="input-group col-sm-12">
-                                    <label class="col-sm-2">其他</label>
-                                    <div class="col-sm-4">
-                                        <textarea class="layui-textarea" name="shuhoubinfazheng_other">{notempty name = 'shuhou_info'}{$shuhou_info->shuhoubinfazheng_other}{/notempty}</textarea>
-                                    </div>
-                                </div>
-
-                            </blockquote>
-
-                        </form>
-                    </div>
-
-<!--                    二次手术-->
-                    <div class="layui-tab-item">
-                        <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
-                            创建时间：
-                            <span style="color: #ff0000;margin-right: 20px;">
-                                {empty name = 'erci_info'}
-                                未保存
-                                {else}
-                                {$erci_info->created_time}
-                                {/empty}
-                                </span>
-                            上次修改时间：
-                            <span style="color: #ff0000">
-                                {empty name = 'erci_info'}
-                                未修改
-                                {else}
-                                {$erci_info->edit_time}
-                                {/empty}
-                            </span>
-                        </div>
-                        <form class="layui-form-item" id="erCiForm">
-                            <button class="btn btn-info save" type="button" onclick="saveForm('../PostoperativeComplicationsSave/erCiSaveNew','#erCiForm')">保存修改</button>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
-                                <label class="col-sm-2">二次手术</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="ercishoushu_check" value="是"
-                                           {notempty name ='erci_info'}
-                                           {if($erci_info->ercishoushu_check =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="ercishoushu_check" value="否"
-                                           {notempty name ='erci_info'}
-                                           {if($erci_info->ercishoushu_check =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <div class="input-group col-sm-12">
-                                    <label class="col-sm-2">时间</label>
-                                    <div class="col-sm-4">
-                                        <input type="date" class="form-control input-sm" name="erci_time" value="{$erci_info =='' ? null:$erci_info->erci_time}">
-                                    </div>
-                                </div>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
-                                <div class="input-group col-sm-12">
-                                    <label class="col-sm-2">原因</label>
-                                    <div class="col-sm-4">
-                                        <select class="form-control input-sm" name="yuanyin_select">
-                                            <option value="请选择" {notempty name ='erci_info'}
-                                                    {if($erci_info->yuanyin_select =='请选择')} selected {/if}
-                                                {else}selected
-                                                {/notempty}/>请选择
-                                            <option value="支气管胸膜瘘"  {notempty name ='erci_info'}
-                                                    {if($erci_info->yuanyin_select =='支气管胸膜瘘')} selected {/if}
-                                                {/notempty}/>支气管胸膜瘘
-                                            <option value="胸腔活动性出血"  {notempty name ='erci_info'}
-                                                    {if($erci_info->yuanyin_select =='胸腔活动性出血')} selected {/if}
-                                                {/notempty}/>胸腔活动性出血
-                                            <option value="乳糜胸"  {notempty name ='erci_info'}
-                                                    {if($erci_info->yuanyin_select =='乳糜胸')} selected {/if}
-                                                {/notempty}/>乳糜胸
-                                            <option value="脓胸"  {notempty name ='erci_info'}
-                                                    {if($erci_info->yuanyin_select =='脓胸')} selected {/if}
-                                                {/notempty}/>脓胸
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="input-group flex-row-start" style="margin-left: 10px">
-                                            <span class="input-group-addon layui-col-md4 input-sm">其他</span>
-                                            <input type="text" class="form-control input-sm" name="yuanyin_other" value="{$erci_info =='' ? null:$erci_info->yuanyin_other}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </blockquote>
-
-                        </form>
-                    </div>
-
-<!--                    SICU-->
-                    <div class="layui-tab-item">
-                        <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
-                            创建时间：
-                            <span style="color: #ff0000;margin-right: 20px;">
-                                {empty name = 'icu_info'}
-                                未保存
-                                {else}
-                                {$icu_info->created_time}
-                                {/empty}
-                                </span>
-                            上次修改时间：
-                            <span style="color: #ff0000">
-                                {empty name = 'icu_info'}
-                                未修改
-                                {else}
-                                {$icu_info->edit_time}
-                                {/empty}
-                            </span>
-                        </div>
-                        <form class="layui-form-item" id="icuForm">
-                            <button class="btn btn-info save" type="button" onclick="saveForm('../PostoperativeComplicationsSave/icuSaveNew','#icuForm')">保存修改</button>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
-                                <label class="col-sm-2">SICU</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="icu_check" value="是"
-                                           {notempty name ='icu_info'}
-                                           {if($icu_info->icu_check =='是')} checked {/if}
-                                    {/notempty}
-                                    /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="icu_check" value="否"
-                                           {notempty name ='icu_info'}
-                                           {if($icu_info->icu_check =='否')} checked {/if}
-                                    {else}
-                                    checked
-                                    {/notempty}
-                                    /> 否
-                                </label>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <div class="input-group col-sm-12">
-                                    <label class="col-sm-2">入住时间</label>
-                                    <div class="col-sm-4">
-                                        <input type="date" class="form-control input-sm" name="in_time" value="{$icu_info =='' ? null:$icu_info->in_time}">
-                                    </div>
-                                </div>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
-                                <div class="input-group col-sm-12">
-                                    <label class="col-sm-2">原因</label>
-                                    <div class="col-sm-4">
-                                        <select class="form-control input-sm" name="icu_yuanyin_select">
-                                            <option value="请选择" {notempty name ='icu_info'}
-                                                    {if($icu_info->icu_yuanyin_select =='请选择')} selected {/if}
-                                                {else}selected
-                                                {/notempty}/>请选择
-                                            <option value="呼衰"  {notempty name ='icu_info'}
-                                                    {if($icu_info->icu_yuanyin_select =='呼衰')} selected {/if}
-                                                {/notempty}/>呼衰
-                                            <option value="心衰"  {notempty name ='icu_info'}
-                                                    {if($icu_info->icu_yuanyin_select =='心衰')} selected {/if}
-                                                {/notempty}/>心衰
-                                            <option value="心梗"  {notempty name ='icu_info'}
-                                                    {if($icu_info->icu_yuanyin_select =='心梗')} selected {/if}
-                                                {/notempty}/>心梗
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="input-group flex-row-start" style="margin-left: 10px">
-                                            <span class="input-group-addon layui-col-md4 input-sm">其他</span>
-                                            <input type="text" class="form-control input-sm" name="icu_yuanyin_other" value="{$icu_info =='' ? null:$icu_info->icu_yuanyin_other}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
-                                <div class="input-group col-sm-12">
-                                    <label class="col-sm-2">二次插管</label>
-                                    <div class="col-sm-4">
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
+                                        <label class="col-sm-4">术中大出血</label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="ercichaguan_check" value="是"
-                                                   {notempty name ='icu_info'}
-                                                   {if($icu_info->ercichaguan_check =='是')} checked {/if}
+                                            <input type="radio" name="shuzhongdachuxue_check" value="是"
+                                            {notempty name ='shuzhong_info'}
+                                            {if($shuzhong_info->shuzhongdachuxue_check =='是')} checked {/if}
                                             {/notempty}
                                             /> 是
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="ercichaguan_check" value="否"
-                                                   {notempty name ='icu_info'}
-                                                   {if($icu_info->ercichaguan_check =='否')} checked {/if}
+                                            <input type="radio" name="shuzhongdachuxue_check" value="否"
+                                            {notempty name ='shuzhong_info'}
+                                            {if($shuzhong_info->shuzhongdachuxue_check =='否')} checked {/if}
                                             {else}
                                             checked
                                             {/notempty}
                                             /> 否
                                         </label>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <div class="input-group flex-row-start" style="margin-left: 10px">
-                                            <span class="input-group-addon layui-col-md5 input-sm">呼吸机支持时间</span>
-                                            <input type="text" class="form-control input-sm" name="huxiji" value="{$icu_info =='' ? null:$icu_info->huxiji}">
-                                            <span class="input-group-addon layui-col-md2 input-sm">小时</span>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <div class="flex-row-start dachuxueshow" style="display: none">
+                                            <div class="input-group layui-col-md4 flex-row-start">
+                                                <span class="input-group-addon layui-col-md4 input-sm">出血量</span>
+                                                <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhongdachuxue_chuxueliang" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdachuxue_chuxueliang}">
+                                                <span class="input-group-addon layui-col-md4 input-sm">ml</span>
+                                            </div>
+
+                                            <div class="input-group layui-col-md6 flex-row-start" style="margin-left: 10px">
+                                                <span class="input-group-addon layui-col-md4 input-sm">原因</span>
+                                                <input type="text" class="form-control input-sm" name="shuzhongdachuxue_yuanyin" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdachuxue_yuanyin}">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <div class="input-group col-sm-12">
-                                    <label class="col-sm-2">离开时间</label>
-                                    <div class="col-sm-4">
-                                        <input type="date" class="form-control input-sm" name="out_time" value="{$icu_info =='' ? null:$icu_info->out_time}">
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">高碳酸血症</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="gaotansuanxuezheng" value="是"
+                                        {notempty name ='shuzhong_info'}
+                                        {if($shuzhong_info->gaotansuanxuezheng =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="gaotansuanxuezheng" value="否"
+                                        {notempty name ='shuzhong_info'}
+                                        {if($shuzhong_info->gaotansuanxuezheng =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">空气栓塞</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="kongqisuansai" value="是"
+                                        {notempty name ='shuzhong_info'}
+                                        {if($shuzhong_info->kongqisuansai =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="kongqisuansai" value="否"
+                                        {notempty name ='shuzhong_info'}
+                                        {if($shuzhong_info->kongqisuansai =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">术中休克</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="shuzhongxiuke" value="是"
+                                        {notempty name ='shuzhong_info'}
+                                        {if($shuzhong_info->shuzhongxiuke =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="shuzhongxiuke" value="否"
+                                        {notempty name ='shuzhong_info'}
+                                        {if($shuzhong_info->shuzhongxiuke =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
+                                        <label class="col-sm-4">心率失常</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xinlvshichang_check" value="是"
+                                            {notempty name ='shuzhong_info'}
+                                            {if($shuzhong_info->xinlvshichang_check =='是')} checked {/if}
+                                            {/notempty}
+                                            /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xinlvshichang_check" value="否"
+                                            {notempty name ='shuzhong_info'}
+                                            {if($shuzhong_info->xinlvshichang_check =='否')} checked {/if}
+                                            {else}
+                                            checked
+                                            {/notempty}
+                                            /> 否
+                                        </label>
                                     </div>
-                                </div>
-                            </blockquote>
-                            <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                <div class="input-group col-sm-12">
-                                    <label class="col-sm-2">转归</label>
-                                    <div class="col-sm-4">
-                                        <select class="form-control input-sm" name="zhuangui">
-                                            <option value="请选择" {notempty name ='icu_info'}
-                                                    {if($icu_info->zhuangui =='请选择')} selected {/if}
-                                                {else}selected
-                                                {/notempty}/>请选择
-                                            <option value="转回"  {notempty name ='icu_info'}
-                                                    {if($icu_info->zhuangui =='转回')} selected {/if}
-                                                {/notempty}/>转回
-                                            <option value="出院"  {notempty name ='icu_info'}
-                                                    {if($icu_info->zhuangui =='出院')} selected {/if}
-                                                {/notempty}/>出院
-                                            <option value="病危离院"  {notempty name ='icu_info'}
-                                                    {if($icu_info->zhuangui =='病危离院')} selected {/if}
-                                                {/notempty}/>病危离院
-                                            <option value="死亡"  {notempty name ='icu_info'}
-                                                    {if($icu_info->zhuangui =='死亡')} selected {/if}
-                                                {/notempty}/>死亡
-                                        </select>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <div class="layui-col-md6">
+                                            <select class="form-control input-sm" name="xinlvshichang_select" style="display: none">
+                                                <option value="请选择" {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->xinlvshichang_select =='请选择')} selected {/if}
+                                                    {else}selected
+                                                    {/notempty}/>请选择
+                                                <option value="房颤"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->xinlvshichang_select =='房颤')} selected {/if}
+                                                {/notempty}/>房颤
+                                                <option value="室颤"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->xinlvshichang_select =='室颤')} selected {/if}
+                                                    {/notempty}/>室颤
+                                                <option value="房扑"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->xinlvshichang_select =='房扑')} selected {/if}
+                                                    {/notempty}/>房扑
+                                                <option value="室速"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->xinlvshichang_select =='室速')} selected {/if}
+                                                    {/notempty}/>室速
+                                                <option value="室上速"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->xinlvshichang_select =='室上速')} selected {/if}
+                                                    {/notempty}/>室上速
+                                                <option value="停搏"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->xinlvshichang_select =='停搏')} selected {/if}
+                                                    {/notempty}/>停搏
+                                                <option value="窦缓"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->xinlvshichang_select =='窦缓')} selected {/if}
+                                                    {/notempty}/>窦缓
+                                                <option value="其他"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->xinlvshichang_select =='其他')} selected {/if}
+                                                    {/notempty}/>其他
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                            </blockquote>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
+                                        <label class="col-sm-4">术中高血压</label>
+                                        <div class=" flex-row-start">
+                                            <div class="input-group layui-col-md5 flex-row-start">
+                                                <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhonggaoxueya_input1" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhonggaoxueya_input1}">
+                                                <span class="input-group-addon layui-col-md4 input-sm">mmHG</span>
+                                            </div>
 
-                        </form>
+                                            <div class="input-group layui-col-md5 flex-row-start" style="margin-left: 10px">
+                                                <input type="text" class="form-control input-sm" name="shuzhonggaoxueya_input2" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhonggaoxueya_input2}">
+                                                <span class="input-group-addon layui-col-md4 input-sm">mmHG</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <div class="input-group layui-col-md6 flex-row-start">
+                                            <span class="input-group-addon layui-col-md4 input-sm">持续时间</span>
+                                            <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhonggaoxueya_chixushijian" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhonggaoxueya_chixushijian}">
+                                            <span class="input-group-addon layui-col-md4 input-sm">分钟</span>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
+                                        <label class="col-sm-4">术中低血压</label>
+                                        <div class=" flex-row-start">
+                                            <div class="input-group layui-col-md5 flex-row-start">
+                                                <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhongdixueya_input1" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdixueya_input1}">
+                                                <span class="input-group-addon layui-col-md4 input-sm">mmHG</span>
+                                            </div>
+
+                                            <div class="input-group layui-col-md5 flex-row-start" style="margin-left: 10px">
+                                                <input type="text" class="form-control input-sm" name="shuzhongdixueya_input2" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdixueya_input2}">
+                                                <span class="input-group-addon layui-col-md4 input-sm">mmHG</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <div class="input-group layui-col-md6 flex-row-start">
+                                            <span class="input-group-addon layui-col-md4 input-sm">持续时间</span>
+                                            <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhongdixueya_chixushijian" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdixueya_chixushijian}">
+                                            <span class="input-group-addon layui-col-md4 input-sm">分钟</span>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
+                                        <label class="col-sm-4">术中损伤</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="shuzhongsunshang_check" value="是"
+                                            {notempty name ='shuzhong_info'}
+                                            {if($shuzhong_info->shuzhongsunshang_check =='是')} checked {/if}
+                                            {/notempty}
+                                            /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="shuzhongsunshang_check" value="否"
+                                            {notempty name ='shuzhong_info'}
+                                            {if($shuzhong_info->shuzhongsunshang_check =='否')} checked {/if}
+                                            {else}
+                                            checked
+                                            {/notempty}
+                                            /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <div class="layui-col-md6">
+                                            <select class="form-control input-sm" name="shuzhongsunshang_select" style="display: none">
+                                                <option value="请选择" {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='请选择')} selected {/if}
+                                                    {else}selected
+                                                    {/notempty}/>请选择
+                                                <option value="气管"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='气管')} selected {/if}
+                                                    {/notempty}/>气管
+                                                <option value="主支气管"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='主支气管')} selected {/if}
+                                                    {/notempty}/>主支气管
+                                                <option value="膈神经"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='膈神经')} selected {/if}
+                                                    {/notempty}/>膈神经
+                                                <option value="迷走神经"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='迷走神经')} selected {/if}
+                                                    {/notempty}/>迷走神经
+                                                <option value="肺动脉"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='肺动脉')} selected {/if}
+                                                    {/notempty}/>肺动脉
+                                                <option value="肺静脉"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='肺静脉')} selected {/if}
+                                                    {/notempty}/>肺静脉
+                                                <option value="奇静脉"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='奇静脉')} selected {/if}
+                                                    {/notempty}/>奇静脉
+                                                <option value="腔静脉"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='腔静脉')} selected {/if}
+                                                    {/notempty}/>腔静脉
+                                                <option value="肋间血管"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='肋间血管')} selected {/if}
+                                                    {/notempty}/>肋间血管
+                                                <option value="肋间神经"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='肋间神经')} selected {/if}
+                                                    {/notempty}/>肋间神经
+                                                <option value="食管"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='食管')} selected {/if}
+                                                    {/notempty}/>食管
+                                                <option value="心包"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='心包')} selected {/if}
+                                                    {/notempty}/>心包
+                                                <option value="其他"  {notempty name ='shuzhong_info'}
+                                                        {if($shuzhong_info->shuzhongsunshang_select =='其他')} selected {/if}
+                                                    {/notempty}/>其他
+                                            </select>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                            </form>
+                        </div>
+
+    <!--                    术后并发症-->
+                        <div class="layui-tab-item">
+                            <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
+                                创建时间：
+                                <span style="color: #ff0000;margin-right: 20px;">
+                                    {empty name = 'shuhou_info'}
+                                    未保存
+                                    {else}
+                                    {$shuhou_info->created_time}
+                                    {/empty}
+                                    </span>
+                                上次修改时间：
+                                <span style="color: #ff0000">
+                                    {empty name = 'shuhou_info'}
+                                    未修改
+                                    {else}
+                                    {$shuhou_info->edit_time}
+                                    {/empty}
+                                </span>
+                            </div>
+                            <form class="layui-form-item" id="shuHouForm">
+                                <button class="btn btn-info save" type="button" onclick="saveForm('../PostoperativeComplicationsSave/shuHouSaveNew','#shuHouForm')">保存修改</button>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;margin-top: 10px">
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
+                                        <label class="col-sm-4">围手术期死亡</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="weishoushuqisiwang" value="是"
+                                                   {notempty name ='shuhou_info'}
+                                                   {if($shuhou_info->weishoushuqisiwang =='是')} checked {/if}
+                                            {/notempty}
+                                            /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="weishoushuqisiwang" value="否"
+                                                   {notempty name ='shuhou_info'}
+                                                   {if($shuhou_info->weishoushuqisiwang =='否')} checked {/if}
+                                            {else}
+                                            checked
+                                            {/notempty}
+                                            /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <div class="layui-col-md6">
+                                            <select class="form-control input-sm" name="weishoushuqisiwang_select">
+                                                <option value="请选择" {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->weishoushuqisiwang_select =='请选择')} selected {/if}
+                                                    {else}selected
+                                                    {/notempty}/>请选择
+                                                <option value="30天内"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->weishoushuqisiwang_select =='30天内')} selected {/if}
+                                                    {/notempty}/>30天内
+                                                <option value="60天内"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->weishoushuqisiwang_select =='60天内')} selected {/if}
+                                                    {/notempty}/>60天内
+                                                <option value="90天内"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->weishoushuqisiwang_select =='90天内')} selected {/if}
+                                                    {/notempty}/>90天内
+                                            </select>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
+                                        <label class="col-sm-4">心血管意外</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xinxueguanyiwai" value="是"
+                                                   {notempty name ='shuhou_info'}
+                                                   {if($shuhou_info->xinxueguanyiwai =='是')} checked {/if}
+                                            {/notempty}
+                                            /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xinxueguanyiwai" value="否"
+                                                   {notempty name ='shuhou_info'}
+                                                   {if($shuhou_info->xinxueguanyiwai =='否')} checked {/if}
+                                            {else}
+                                            checked
+                                            {/notempty}
+                                            /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <div class="layui-col-md6">
+                                            <select class="form-control input-sm" name="xinxueguanyiwai_select">
+                                                <option value="请选择" {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->xinxueguanyiwai_select =='请选择')} selected {/if}
+                                                    {else}selected
+                                                    {/notempty}/>请选择
+                                                <option value="心梗"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->xinxueguanyiwai_select =='心梗')} selected {/if}
+                                                    {/notempty}/>心梗
+                                                <option value="心跳骤停"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->xinxueguanyiwai_select =='心跳骤停')} selected {/if}
+                                                    {/notempty}/>心跳骤停
+                                                <option value="心衰"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->xinxueguanyiwai_select =='心衰')} selected {/if}
+                                                    {/notempty}/>心衰
+                                            </select>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
+                                        <label class="col-sm-4">心率失常</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xinlvshichang" value="是"
+                                                   {notempty name ='shuhou_info'}
+                                                   {if($shuhou_info->xinlvshichang =='是')} checked {/if}
+                                            {/notempty}
+                                            /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="xinlvshichang" value="否"
+                                                   {notempty name ='shuhou_info'}
+                                                   {if($shuhou_info->xinlvshichang =='否')} checked {/if}
+                                            {else}
+                                            checked
+                                            {/notempty}
+                                            /> 否
+                                        </label>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <div class="flex-row-start dachuxueshow" style="display: none">
+                                            <div class="input-group layui-col-md6 flex-row-start">
+                                                <select class="form-control input-sm" name="xinlvshichang_select" style="display: none">
+                                                    <option value="请选择" {notempty name ='shuhou_info'}
+                                                            {if($shuhou_info->xinlvshichang_select =='请选择')} selected {/if}
+                                                        {else}selected
+                                                        {/notempty}/>请选择
+                                                    <option value="房颤"  {notempty name ='shuhou_info'}
+                                                            {if($shuhou_info->xinlvshichang_select =='房颤')} selected {/if}
+                                                        {/notempty}/>房颤
+                                                    <option value="室颤"  {notempty name ='shuhou_info'}
+                                                            {if($shuhou_info->xinlvshichang_select =='室颤')} selected {/if}
+                                                        {/notempty}/>室颤
+                                                    <option value="房扑"  {notempty name ='shuhou_info'}
+                                                            {if($shuhou_info->xinlvshichang_select =='房扑')} selected {/if}
+                                                        {/notempty}/>房扑
+                                                    <option value="室速"  {notempty name ='shuhou_info'}
+                                                            {if($shuhou_info->xinlvshichang_select =='室速')} selected {/if}
+                                                        {/notempty}/>室速
+                                                    <option value="室上速"  {notempty name ='shuhou_info'}
+                                                            {if($shuhou_info->xinlvshichang_select =='室上速')} selected {/if}
+                                                        {/notempty}/>室上速
+                                                    <option value="停搏"  {notempty name ='shuhou_info'}
+                                                            {if($shuhou_info->xinlvshichang_select =='停搏')} selected {/if}
+                                                        {/notempty}/>停搏
+                                                    <option value="窦缓"  {notempty name ='shuhou_info'}
+                                                            {if($shuhou_info->xinlvshichang_select =='窦缓')} selected {/if}
+                                                        {/notempty}/>窦缓
+                                                    <option value="其他"  {notempty name ='shuhou_info'}
+                                                            {if($shuhou_info->xinlvshichang_select =='其他')} selected {/if}
+                                                        {/notempty}/>其他
+                                                </select>
+                                            </div>
+
+                                            <div class="input-group layui-col-md6 flex-row-start" style="margin-left: 10px">
+                                                <span class="input-group-addon layui-col-md4 input-sm">其他</span>
+                                                <input type="text" class="form-control input-sm" name="xinlvshichang_other" value="{$shuhou_info =='' ? null:$shuhou_info->xinlvshichang_other}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">肺栓塞</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="feisuansai" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->feisuansai =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="feisuansai" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->feisuansai =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">心包疝</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="xinbaoshan" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->xinbaoshan =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="xinbaoshan" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->xinbaoshan =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">胸腔、纵隔活动性出血</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="xiongqiangchuxue" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->xiongqiangchuxue =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="xiongqiangchuxue" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->xiongqiangchuxue =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">肺不张</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="feibuzhang" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->feibuzhang =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="feibuzhang" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->feibuzhang =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">急性肺水肿</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="jixingfeishuizhong" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->jixingfeishuizhong =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="jixingfeishuizhong" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->jixingfeishuizhong =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">呼吸衰竭</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="huxisuaijie" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->huxisuaijie =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="huxisuaijie" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->huxisuaijie =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">肺叶扭转或坏疽</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="feiyeniuzhuan" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->feiyeniuzhuan =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="feiyeniuzhuan" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->feiyeniuzhuan =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">支气管胸膜瘘</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="zhiqiguanxiongmo" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->zhiqiguanxiongmo =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="zhiqiguanxiongmo" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->zhiqiguanxiongmo =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">脓胸</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="nongxiong" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->nongxiong =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="nongxiong" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->nongxiong =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">胸膜残腔</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="xiongmocanqiang" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->xiongmocanqiang =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="xiongmocanqiang" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->xiongmocanqiang =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">肺部感染</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="feibuganran" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->feibuganran =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="feibuganran" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->feibuganran =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">切口感染</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="qiekouganran" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->qiekouganran =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="qiekouganran" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->qiekouganran =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">漏气>5天</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="louqi" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->louqi =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="louqi" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->louqi =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">气管镜吸痰</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="qiguanjingxitan" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->qiguanjingxitan =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="qiguanjingxitan" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->qiguanjingxitan =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">皮瓣坏死</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="pibanhuaisi" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->pibanhuaisi =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="pibanhuaisi" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->pibanhuaisi =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">植入物感染</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="zhiruwuganran" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->zhiruwuganran =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="zhiruwuganran" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->zhiruwuganran =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">乳糜胸</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="rumixiong" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->rumixiong =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="rumixiong" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->rumixiong =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">重肌症无力</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="zhongjizhengwuli" value="是"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->zhongjizhengwuli =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="zhongjizhengwuli" value="否"
+                                               {notempty name ='shuhou_info'}
+                                               {if($shuhou_info->zhongjizhengwuli =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <div class="input-group col-sm-12">
+                                        <label class="col-sm-2">其他</label>
+                                        <div class="col-sm-4">
+                                            <textarea class="layui-textarea" name="shuhoubinfazheng_other">{notempty name = 'shuhou_info'}{$shuhou_info->shuhoubinfazheng_other}{/notempty}</textarea>
+                                        </div>
+                                    </div>
+
+                                </blockquote>
+
+                            </form>
+                        </div>
+
+    <!--                    二次手术-->
+                        <div class="layui-tab-item">
+                            <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
+                                创建时间：
+                                <span style="color: #ff0000;margin-right: 20px;">
+                                    {empty name = 'erci_info'}
+                                    未保存
+                                    {else}
+                                    {$erci_info->created_time}
+                                    {/empty}
+                                    </span>
+                                上次修改时间：
+                                <span style="color: #ff0000">
+                                    {empty name = 'erci_info'}
+                                    未修改
+                                    {else}
+                                    {$erci_info->edit_time}
+                                    {/empty}
+                                </span>
+                            </div>
+                            <form class="layui-form-item" id="erCiForm">
+                                <button class="btn btn-info save" type="button" onclick="saveForm('../PostoperativeComplicationsSave/erCiSaveNew','#erCiForm')">保存修改</button>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+                                    <label class="col-sm-2">二次手术</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="ercishoushu_check" value="是"
+                                               {notempty name ='erci_info'}
+                                               {if($erci_info->ercishoushu_check =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="ercishoushu_check" value="否"
+                                               {notempty name ='erci_info'}
+                                               {if($erci_info->ercishoushu_check =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <div class="input-group col-sm-12">
+                                        <label class="col-sm-2">时间</label>
+                                        <div class="col-sm-4">
+                                            <input type="date" class="form-control input-sm" name="erci_time" value="{$erci_info =='' ? null:$erci_info->erci_time}">
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                    <div class="input-group col-sm-12">
+                                        <label class="col-sm-2">原因</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control input-sm" name="yuanyin_select">
+                                                <option value="请选择" {notempty name ='erci_info'}
+                                                        {if($erci_info->yuanyin_select =='请选择')} selected {/if}
+                                                    {else}selected
+                                                    {/notempty}/>请选择
+                                                <option value="支气管胸膜瘘"  {notempty name ='erci_info'}
+                                                        {if($erci_info->yuanyin_select =='支气管胸膜瘘')} selected {/if}
+                                                    {/notempty}/>支气管胸膜瘘
+                                                <option value="胸腔活动性出血"  {notempty name ='erci_info'}
+                                                        {if($erci_info->yuanyin_select =='胸腔活动性出血')} selected {/if}
+                                                    {/notempty}/>胸腔活动性出血
+                                                <option value="乳糜胸"  {notempty name ='erci_info'}
+                                                        {if($erci_info->yuanyin_select =='乳糜胸')} selected {/if}
+                                                    {/notempty}/>乳糜胸
+                                                <option value="脓胸"  {notempty name ='erci_info'}
+                                                        {if($erci_info->yuanyin_select =='脓胸')} selected {/if}
+                                                    {/notempty}/>脓胸
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="input-group flex-row-start" style="margin-left: 10px">
+                                                <span class="input-group-addon layui-col-md4 input-sm">其他</span>
+                                                <input type="text" class="form-control input-sm" name="yuanyin_other" value="{$erci_info =='' ? null:$erci_info->yuanyin_other}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </blockquote>
+
+                            </form>
+                        </div>
+
+    <!--                    SICU-->
+                        <div class="layui-tab-item">
+                            <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
+                                创建时间：
+                                <span style="color: #ff0000;margin-right: 20px;">
+                                    {empty name = 'icu_info'}
+                                    未保存
+                                    {else}
+                                    {$icu_info->created_time}
+                                    {/empty}
+                                    </span>
+                                上次修改时间：
+                                <span style="color: #ff0000">
+                                    {empty name = 'icu_info'}
+                                    未修改
+                                    {else}
+                                    {$icu_info->edit_time}
+                                    {/empty}
+                                </span>
+                            </div>
+                            <form class="layui-form-item" id="icuForm">
+                                <button class="btn btn-info save" type="button" onclick="saveForm('../PostoperativeComplicationsSave/icuSaveNew','#icuForm')">保存修改</button>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
+                                    <label class="col-sm-2">SICU</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="icu_check" value="是"
+                                               {notempty name ='icu_info'}
+                                               {if($icu_info->icu_check =='是')} checked {/if}
+                                        {/notempty}
+                                        /> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="icu_check" value="否"
+                                               {notempty name ='icu_info'}
+                                               {if($icu_info->icu_check =='否')} checked {/if}
+                                        {else}
+                                        checked
+                                        {/notempty}
+                                        /> 否
+                                    </label>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <div class="input-group col-sm-12">
+                                        <label class="col-sm-2">入住时间</label>
+                                        <div class="col-sm-4">
+                                            <input type="date" class="form-control input-sm" name="in_time" value="{$icu_info =='' ? null:$icu_info->in_time}">
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                    <div class="input-group col-sm-12">
+                                        <label class="col-sm-2">原因</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control input-sm" name="icu_yuanyin_select">
+                                                <option value="请选择" {notempty name ='icu_info'}
+                                                        {if($icu_info->icu_yuanyin_select =='请选择')} selected {/if}
+                                                    {else}selected
+                                                    {/notempty}/>请选择
+                                                <option value="呼衰"  {notempty name ='icu_info'}
+                                                        {if($icu_info->icu_yuanyin_select =='呼衰')} selected {/if}
+                                                    {/notempty}/>呼衰
+                                                <option value="心衰"  {notempty name ='icu_info'}
+                                                        {if($icu_info->icu_yuanyin_select =='心衰')} selected {/if}
+                                                    {/notempty}/>心衰
+                                                <option value="心梗"  {notempty name ='icu_info'}
+                                                        {if($icu_info->icu_yuanyin_select =='心梗')} selected {/if}
+                                                    {/notempty}/>心梗
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="input-group flex-row-start" style="margin-left: 10px">
+                                                <span class="input-group-addon layui-col-md4 input-sm">其他</span>
+                                                <input type="text" class="form-control input-sm" name="icu_yuanyin_other" value="{$icu_info =='' ? null:$icu_info->icu_yuanyin_other}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                    <div class="input-group col-sm-12">
+                                        <label class="col-sm-2">二次插管</label>
+                                        <div class="col-sm-4">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="ercichaguan_check" value="是"
+                                                       {notempty name ='icu_info'}
+                                                       {if($icu_info->ercichaguan_check =='是')} checked {/if}
+                                                {/notempty}
+                                                /> 是
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="ercichaguan_check" value="否"
+                                                       {notempty name ='icu_info'}
+                                                       {if($icu_info->ercichaguan_check =='否')} checked {/if}
+                                                {else}
+                                                checked
+                                                {/notempty}
+                                                /> 否
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="input-group flex-row-start" style="margin-left: 10px">
+                                                <span class="input-group-addon layui-col-md5 input-sm">呼吸机支持时间</span>
+                                                <input type="text" class="form-control input-sm" name="huxiji" value="{$icu_info =='' ? null:$icu_info->huxiji}">
+                                                <span class="input-group-addon layui-col-md2 input-sm">小时</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <div class="input-group col-sm-12">
+                                        <label class="col-sm-2">离开时间</label>
+                                        <div class="col-sm-4">
+                                            <input type="date" class="form-control input-sm" name="out_time" value="{$icu_info =='' ? null:$icu_info->out_time}">
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <div class="input-group col-sm-12">
+                                        <label class="col-sm-2">转归</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control input-sm" name="zhuangui">
+                                                <option value="请选择" {notempty name ='icu_info'}
+                                                        {if($icu_info->zhuangui =='请选择')} selected {/if}
+                                                    {else}selected
+                                                    {/notempty}/>请选择
+                                                <option value="转回"  {notempty name ='icu_info'}
+                                                        {if($icu_info->zhuangui =='转回')} selected {/if}
+                                                    {/notempty}/>转回
+                                                <option value="出院"  {notempty name ='icu_info'}
+                                                        {if($icu_info->zhuangui =='出院')} selected {/if}
+                                                    {/notempty}/>出院
+                                                <option value="病危离院"  {notempty name ='icu_info'}
+                                                        {if($icu_info->zhuangui =='病危离院')} selected {/if}
+                                                    {/notempty}/>病危离院
+                                                <option value="死亡"  {notempty name ='icu_info'}
+                                                        {if($icu_info->zhuangui =='死亡')} selected {/if}
+                                                    {/notempty}/>死亡
+                                            </select>
+                                        </div>
+                                    </div>
+                                </blockquote>
+
+                            </form>
+
+                        </div>
 
                     </div>
 
                 </div>
-
             </div>
+
         </div>
 
+        </div>
     </div>
-
 </div>
 
 
@@ -1225,7 +1228,7 @@
 <!--左侧导航栏样式-->
 <script>
     window.onload = function(){
-        $('.nav-left').css('display','block');
+        $('#dblist-top').addClass('active');
         $('#postoperativeComplications-left').addClass('active');
     }
 </script>

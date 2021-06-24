@@ -1,6 +1,4 @@
 {include file="public/meta" /}
-{include file="public/header" /}
-{include file="public/left" /}
 {include file="public/nav" /}
 <link rel="stylesheet" href="/static/bootstrap-fileinput/css/fileinput.min.css">
 <script src="/static/bootstrap-fileinput/js/fileinput.js"></script>
@@ -13,8 +11,11 @@
     .layui-form-label{text-align: left}
 </style>
 <!--术前检查页面-->
-<div class="content">
-    <div class="panel panel-info">
+<div class="layui-fluid">
+    <div class="layui-row">
+        {include file="public/left/menu_left" /}
+        <div class="content col-sm-10" style="padding-top: 15px">
+            <div class="panel panel-info">
 
         <div class="panel-heading yw-flex-row">
             <h4 class="panel-title" style="line-height: 28px">术前检查</h4>
@@ -3090,6 +3091,8 @@
         </div>
 
     </div>
+        </div>
+    </div>
 </div>
 
 <!--文件渲染函数-->
@@ -3466,7 +3469,7 @@
 <!--左侧导航栏样式-->
 <script>
     window.onload = function(){
-        $('.nav-left').css('display','block');
+        $('#dblist-top').addClass('active');
         $('#preoperative-left').addClass('active');
     }
 </script>

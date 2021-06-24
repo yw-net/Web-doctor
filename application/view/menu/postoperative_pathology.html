@@ -1,6 +1,4 @@
 {include file="public/meta" /}
-{include file="public/header" /}
-{include file="public/left" /}
 {include file="public/nav" /}
 <style>
     .control-label{text-align: left !important;}
@@ -12,8 +10,11 @@
     .flex-row-start{display: flex;justify-content: flex-start;flex-direction: row;}
 </style>
 <!--术后病理页面-->
-<div class="content">
-    <div class="panel panel-info">
+<div class="layui-fluid">
+    <div class="layui-row">
+        {include file="public/left/menu_left" /}
+        <div class="content col-sm-10" style="padding-top: 15px">
+            <div class="panel panel-info">
 
         <div class="panel-heading yw-flex-row">
             <h4 class="panel-title" style="line-height: 28px">术后病理</h4>
@@ -1286,6 +1287,8 @@
         </div>
 
     </div>
+        </div>
+    </div>
 </div>
 
 <!--多条记录按钮操作-->
@@ -1317,8 +1320,8 @@
 <!--左侧导航栏样式-->
 <script>
     window.onload = function(){
-        $('.nav-left').css('display','block');
         $('#postoperativePathology-left').addClass('active');
+        $('#dblist-top').addClass('active');
     }
 </script>
 

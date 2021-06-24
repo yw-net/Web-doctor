@@ -1,23 +1,24 @@
 {include file="public/meta" /}
-{include file="public/header" /}
-{include file="public/leftempty" /}
 {include file="public/nav" /}
 <style>
     .layui-table-tool{background-color: #dff0d8;}
 </style>
 <!--患者列表主页面-->
-<div class="content">
-    <form class="form-horizontal" method="post">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h4 class="panel-title">患者管理</h4>
+<div class="content-empty layui-fluid">
+    <div class="content-text">
+        <form class="form-horizontal" method="post">
+            <div class="panel panel-info" style="margin-bottom: 0!important;">
+                <div class="panel-heading">
+                    <h4 class="panel-title">患者管理</h4>
+                </div>
+                <div class="panel-body">
+                    <!--表格主体-->
+                    <table class="layui-hide" id="userManager" lay-filter="userManager"></table>
+                </div>
             </div>
-            <div class="panel-body">
-                <!--表格主体-->
-                <table class="layui-hide" id="userManager" lay-filter="userManager"></table>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
+
 </div>
 
 <!--为当前选中页面添加背景-->

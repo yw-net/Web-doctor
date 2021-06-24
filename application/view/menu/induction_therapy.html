@@ -1,6 +1,4 @@
 {include file="public/meta" /}
-{include file="public/header" /}
-{include file="public/left" /}
 {include file="public/nav" /}
 <style>
     .control-label{text-align: left !important;}
@@ -9,8 +7,11 @@
     .flex-row-start{display: flex;justify-content: flex-start;flex-direction: row;}
 </style>
 <!--诱导治疗页面-->
-<div class="content">
-    <div class="panel panel-info">
+<div class="layui-fluid">
+    <div class="layui-row">
+        {include file="public/left/menu_left" /}
+        <div class="content col-sm-10" style="padding-top: 15px">
+            <div class="panel panel-info">
         <div class="panel-heading yw-flex-row">
             <h4 class="panel-title" style="line-height: 28px">诱导治疗</h4>
             <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
@@ -904,12 +905,14 @@
             </div>
         </div>
     </div>
+        </div>
+    </div>
 </div>
 
 <!--左侧导航栏样式-->
 <script>
     window.onload = function(){
-        $('.nav-left').css('display','block');
+        $('#dblist-top').addClass('active');
         $('#inductionTherapy-left').addClass('active');
     }
 </script>

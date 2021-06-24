@@ -21,6 +21,7 @@ Route::rule('reffile/:type/:date/:name','ReferralSave/imgRoute')->pattern(['name
 
 //自动清理冗余图片
 Route::rule('clean','app/command/AutoCleanPhoto');
+Route::rule('PreSave/getCTAddress','PreSave/getCTAddress');
 
 //测试
 Route::rule('test','PreSave/ceshi');

@@ -1,7 +1,7 @@
 {include file="public/meta" /}
-{include file="public/header" /}
-{include file="public/leftSearch" /}
 {include file="public/nav" /}
+
+
 <!--患者基本信息报表页面-->
 
 <style>
@@ -15,82 +15,91 @@
 <script src="/static/js/echarts.min.js"></script>
 <script src="/static/js/china.js"></script>
 
+
 <!--页面主体-->
-<div class="content">
-    <form class="layui-form" action="">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h4 class="panel-title">患者基本信息统计报表</h4>
-            </div>
-            <div class="panel-body">
-                <!--下拉框-->
-                <div class="flex-row">
-                    <!--类别查询框-->
-                    <div class="layui-form-item yw-select">
-                        <label class="layui-form-label">分类：</label>
-                        <div class="layui-input-block">
-                            <select name="type" lay-verify="required" lay-filter="type">
-<!--                                饼图-->
-                                <option value="sex">性别</option>
-<!--                                年龄段柱图-->
-                                <option value="age">年龄</option>
-<!--                                饼图-->
-                                <option value="nat">民族</option>
-<!--                                饼图-->
-                                <option value="sed">二次入院</option>
-<!--                                双线图-->
-                                <option value="io">出入院日期</option>
-<!--                                地图分布图-->
-                                <option value="map">患者分布</option>
-                            </select>
+<div class="layui-fluid">
+    <div class="layui-row">
+        {include file="public/left/count_left" /}
+
+        <div class="content col-sm-10" style="padding: 20px">
+            <form class="layui-form" action="">
+                <div class="panel panel-info" style="margin-bottom: 0!important;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">患者基本信息统计报表</h4>
+                    </div>
+                    <div class="panel-body">
+                        <!--下拉框-->
+                        <div class="flex-row">
+                            <!--类别查询框-->
+                            <div class="layui-form-item yw-select">
+                                <label class="layui-form-label">分类：</label>
+                                <div class="layui-input-block">
+                                    <select name="type" lay-verify="required" lay-filter="type">
+                                        <!--                                饼图-->
+                                        <option value="sex">性别</option>
+                                        <!--                                年龄段柱图-->
+                                        <option value="age">年龄</option>
+                                        <!--                                饼图-->
+                                        <option value="nat">民族</option>
+                                        <!--                                饼图-->
+                                        <option value="sed">二次入院</option>
+                                        <!--                                双线图-->
+                                        <option value="io">出入院日期</option>
+                                        <!--                                地图分布图-->
+                                        <option value="map">患者分布</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--管理员医生查询框-->
+                            <div class="layui-form-item yw-select hide" id="chooseDoctor">
+                                <label class="layui-form-label" style="width: 100px;">选择医生</label>
+                                <div class="layui-input-block">
+                                    <select name="doctor" id="inputDoctor" lay-filter="doctor">
+                                        <option value="0">全部</option>
+                                        {volist name="doctor" id="vo"}
+                                        <option value="{$vo.neckname}">{$vo.neckname}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--图形界面-->
+                        <div id="dbList">
+                            <div id="sex" style="width: 600px;height:400px;" class="show"></div>
+                            <div id="age" style="width: 600px;height:400px;" class="hide"></div>
+                            <div id="nat" style="width: 600px;height:400px;" class="hide"></div>
+                            <div id="sed" style="width: 600px;height:400px;" class="hide"></div>
+                            <div id="io" style="width: 800px;height:580px;" class="hide"></div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div id="map" style="width: 600px;height:600px;" class="hide"></div>
+                                    </td>
+                                    <td>
+                                        <div id="mapRight" style="width: 480px;height:600px;background-color: #dff0d8;margin-left: 20px;" class="hide"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!--表格主体-->
+                        <table class="layui-hide" id="userManager" lay-filter="userManager"></table>
+
+                        <!--页面隐藏传值-->
+                        <div class="hide">
+                            <input type="text" id="hidetextUrl" value="">
+                            <input type="text" id="hidetextClick" value="">
+                            <input type="text" id="hidetextClickIndex" value="">
                         </div>
                     </div>
-                    <!--管理员医生查询框-->
-                    <div class="layui-form-item yw-select hide" id="chooseDoctor">
-                        <label class="layui-form-label" style="width: 100px;">选择医生</label>
-                        <div class="layui-input-block">
-                            <select name="doctor" id="inputDoctor" lay-filter="doctor">
-                                <option value="0">全部</option>
-                                {volist name="doctor" id="vo"}
-                                <option value="{$vo.neckname}">{$vo.neckname}</option>
-                                {/volist}
-                            </select>
-                        </div>
-                    </div>
                 </div>
-
-                <!--图形界面-->
-                <div id="dbList">
-                    <div id="sex" style="width: 600px;height:400px;" class="show"></div>
-                    <div id="age" style="width: 600px;height:400px;" class="hide"></div>
-                    <div id="nat" style="width: 600px;height:400px;" class="hide"></div>
-                    <div id="sed" style="width: 600px;height:400px;" class="hide"></div>
-                    <div id="io" style="width: 800px;height:580px;" class="hide"></div>
-                    <table>
-                        <tr>
-                            <td>
-                                <div id="map" style="width: 600px;height:600px;" class="hide"></div>
-                            </td>
-                            <td>
-                                <div id="mapRight" style="width: 480px;height:600px;background-color: #dff0d8;margin-left: 20px;" class="hide"></div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <!--表格主体-->
-                <table class="layui-hide" id="userManager" lay-filter="userManager"></table>
-
-                <!--页面隐藏传值-->
-                <div class="hide">
-                    <input type="text" id="hidetextUrl" value="">
-                    <input type="text" id="hidetextClick" value="">
-                    <input type="text" id="hidetextClickIndex" value="">
-                </div>
-            </div>
+            </form>
         </div>
-    </form>
+
+    </div>
 </div>
+
 
 <!--表格模版-->
 <script>
@@ -1405,7 +1414,7 @@
     //为当前选中页面添加背景
     window.onload = function(){
         $('#search-top').addClass('active');
-        $('#patient_list-left').addClass('active');
+        $('#basic-info-left').addClass('active');
 
         //页面加载默认加载性别饼图
         $('#sex').removeClass();

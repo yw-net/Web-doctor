@@ -1,253 +1,256 @@
 {include file="public/meta" /}
-{include file="public/header" /}
-{include file="public/left" /}
 {include file="public/nav" /}
 <!--病人基本信息页面-->
 <style>
     .flex-row-start{display: flex;justify-content: flex-start;flex-direction: row;}
     .control-label{text-align: left!important;}
 </style>
-<div class="content">
-    <form class="form-horizontal" action="{:url('Save/savepatients')}" method="post" data-auto="true">
+<div class="layui-fluid">
+    <div class="layui-row">
+        {include file="public/left/menu_left" /}
+        <div class="content col-sm-10" style="padding-top: 15px">
+            <form class="form-horizontal" action="{:url('Save/savepatients')}" method="post" data-auto="true">
 
-        <div class="panel panel-info">
-            <div class="panel-heading yw-flex-row">
-                <h4 class="panel-title" style="line-height: 28px">基本信息</h4>
-                <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
-            </div>
-            <div class="panel-body">
-                <button type="submit" class="btn btn-info save" id="savepatients" style="margin-bottom: 5px">保存修改</button>
-                <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
-                    创建时间：
-                    <span style="color: #ff0000;margin-right: 20px;">
-                        {$patients_name==null ? '未保存': $patients_name[0]['created_time'] }
-                    </span>
-                    上次修改时间：
-                    <span style="color: #ff0000">
-                        {$patients_name==null ? '未修改': $patients_name[0]['edit_time'] }
-                    </span>
+                <div class="panel panel-info">
+                    <div class="panel-heading yw-flex-row">
+                        <h4 class="panel-title" style="line-height: 28px">基本信息</h4>
+                        <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
+                    </div>
+                    <div class="panel-body">
+                        <button type="submit" class="btn btn-info save" id="savepatients" style="margin-bottom: 5px">保存修改</button>
+                        <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
+                            创建时间：
+                            <span style="color: #ff0000;margin-right: 20px;">
+                                {$patients_name==null ? '未保存': $patients_name[0]['created_time'] }
+                            </span>
+                            上次修改时间：
+                            <span style="color: #ff0000">
+                                {$patients_name==null ? '未修改': $patients_name[0]['edit_time'] }
+                            </span>
+                        </div>
+
+                        <input type="text" name="sys" class="form-control input-sm hidden" id="inputID" value="{$patientid}"  readonly="readonly">
+                        <section class="has-success">
+                            <div class="layui-col-md12">
+                                <blockquote class="layui-elem-quote" style="padding: 10px;">患者信息</blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">患者姓名</label>
+                                    <div class="input-group flex-row-start">
+                                        <span class="input-group-addon" style="width: 40px">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </span>
+                                        <input type="text" class="form-control input-sm" id="inputName" placeholder="" name="name" value="{$patients_name[0]['patients_name']}">
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">身份证号</label>
+                                    <div class="input-group flex-row-start">
+                                        <span class="input-group-addon" style="width: 40px">
+                                            <span class="glyphicon glyphicon-subtitles"></span>
+                                        </span>
+                                        <input type="text" class="form-control input-sm" id="inputIdentityCard" placeholder="" name="idcard" value="{$patients_name[0]['identity_card']}">
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">电话</label>
+                                    <div class="input-group flex-row-start">
+                                        <span class="input-group-addon" style="width: 40px">
+                                            <span class="glyphicon glyphicon-phone"></span>
+                                        </span>
+                                        <input type="text" class="form-control input-sm" id="inputPhone" placeholder="" name="phone" value="{$patients_name[0]['phone']}">
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">性别</label>
+                                    <div class="input-group flex-row-start">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="RadioSex" value="1" <?php if($patients_name[0]['sex'] =='1') echo 'checked="checked"'; ?> /> 男
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="RadioSex" value="0" <?php if($patients_name[0]['sex'] =='0') echo 'checked="checked"'; ?> /> 女
+                                        </label>
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">出生日期</label>
+                                    <div class="input-group flex-row-start">
+                                        <input size="16" type="date" value="{$patients_name[0]['birthday']}" class="form-control input-sm" id="inputDate" name="date">
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">年龄</label>
+                                    <div class="input-group flex-row-start">
+                                        <input type="text" class="form-control input-sm" id="inputAge" placeholder="" name="age" value="{$patients_name[0]['age']}">
+                                        <span class="input-group-addon" style="width: 40px">岁</span>
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">民族</label>
+                                    <div class="input-group flex-row-start">
+                                        <select class="form-control input-sm" name="ethnic" id="inputEthnic" value="{$patients_name[0]['national']}">
+                                        </select>
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">身高</label>
+                                    <div class="input-group flex-row-start">
+                                        <input type="text" class="form-control input-sm" id="inputHeight" placeholder="" name="height" value="{$patients_name[0]['height']}">
+                                        <span class="input-group-addon" style="width: 40px">CM</span>
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">体重</label>
+                                    <div class="input-group flex-row-start">
+                                        <input type="text" class="form-control input-sm" id="inputWeight" placeholder="" name="weight" value="{$patients_name[0]['weight']}">
+                                        <span class="input-group-addon" style="width: 40px">KG</span>
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">婚姻状况</label>
+                                    <div class="input-group flex-row-start">
+                                        <select class="form-control input-sm" name="marry">
+                                            <option value="0" <?php if($patients_name[0]['married'] =='0') echo 'selected="selected"'; ?> />未婚</option>
+                                            <option value="2" <?php if($patients_name[0]['married'] =='2') echo 'selected="selected"'; ?> />已婚</option>
+                                            <option value="1" <?php if($patients_name[0]['married'] =='1') echo 'selected="selected"'; ?> />离异</option>
+                                        </select>
+                                    </div>
+                                </blockquote>
+                            </div>
+
+                            <script type="text/javascript">
+                                 $(function(){
+                                     $("#city").citySelect({
+                                         prov:"{$patients_name[0]['adress1a']}",
+                                         city:"{$patients_name[0]['adress1b']}",
+                                         dist:"{$patients_name[0]['adress1c']}",
+                                         nodata:null
+                                     });
+                                 })
+                             </script>
+                            <div class="form-group layui-col-md12" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-2">家庭住址</label>
+                                    <div class="input-group layui-col-md10 flex-row-start" id="city">
+                                        <div class="layui-col-md4">
+                                            <select class="prov layui-col-md4" style="height: 30px;border-color: #3c763d;margin-bottom: 5px;" name="adress1a">{$patients_name[0]['adress1a']}</select>
+                                            <select class="city layui-col-md4" style="height: 30px;border-color: #3c763d;margin-bottom: 5px;border-left: 0" name="adress1b">{$patients_name[0]['adress1b']}</select>
+                                            <select class="dist layui-col-md4" style="height: 30px;border-color: #3c763d;margin-bottom: 5px;border-left: 0;border-right: 0" name="adress1c">{$patients_name[0]['adress1c']}</select>
+                                        </div>
+
+                                        <div class="layui-col-md8">
+                                            <input type="text" class="form-control input-sm col-sm-8" id="inputAdress" placeholder="详细地址" name="adress2" value="{$patients_name[0]['adress2']}">
+                                        </div>
+
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="layui-col-md12">
+                                <blockquote class="layui-elem-quote" style="padding: 10px;margin-top: 5px">住院信息</blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">住院号</label>
+                                    <div class="input-group flex-row-start">
+                                        <input type="text" class="form-control input-sm" id="inputHospitalIdentityCard" placeholder="" name="hospitalid" value="{$patients_name[0]['hospital_id']}">
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">影像号</label>
+                                    <div class="input-group flex-row-start">
+                                        <input type="text" class="form-control input-sm" id="inputPhotoId" placeholder="" name="photoid" value="{$patients_name[0]['id_photo_num']}">
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">病理号</label>
+                                    <div class="input-group flex-row-start">
+                                        <input type="text" class="form-control input-sm" id="inputPathologicalId" placeholder="" name="pathologicalid" value="{$patients_name[0]['id_pathological']}">
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">二次入院</label>
+                                    <div class="input-group flex-row-start">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="RadioSedIn" id="radioSecInYes" value="1" <?php if($patients_name[0]['second_hospital_in'] =='1') echo 'checked="checked"'; ?> /> 是
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="RadioSedIn" id="radioSecInNo" value="0" <?php if($patients_name[0]['second_hospital_in'] =='0') echo 'checked="checked"'; ?> /> 否
+                                        </label>
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">入院日期</label>
+                                    <div class="input-group flex-row-start">
+                                        <input size="16" type="date" class="form-control input-sm" id="inputDateInHospital" name="inhospital" value="{$patients_name[0]['hospitalized_time']}">
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">出院日期</label>
+                                    <div class="input-group flex-row-start">
+                                        <input size="16" type="date" class="form-control input-sm" id="inputDateOutHospital" name="outhospital" value="{$patients_name[0]['leaving_hospital']}">
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">离院去向</label>
+                                    <div class="input-group flex-row-start">
+                                        <input type="text" class="form-control input-sm" id="outHospitalTo" placeholder="" name="outto" value="{$patients_name[0]['hospital_out_to']}">
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">主治医生</label>
+                                    <div class="input-group flex-row-start">
+                                        <select class="form-control input-sm" name="doctor" id="inputDoctor">
+                                            {volist name="doctor" id="vo"}
+                                            <option value="{$vo.neckname}"{if condition="$vo.neckname eq $patients_name[0]['doctor']"}selected{/if} >{$vo.neckname}</option>
+                                            {/volist}
+                                        </select>
+                                    </div>
+                                </blockquote>
+                            </div>
+                        </section>
+                    </div>
                 </div>
 
-                <input type="text" name="sys" class="form-control input-sm hidden" id="inputID" value="{$patientid}"  readonly="readonly">
-                <section class="has-success">
-                    <div class="layui-col-md12">
-                        <blockquote class="layui-elem-quote" style="padding: 10px;">患者信息</blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">患者姓名</label>
-                            <div class="input-group flex-row-start">
-                                <span class="input-group-addon" style="width: 40px">
-                                    <span class="glyphicon glyphicon-user"></span>
-                                </span>
-                                <input type="text" class="form-control input-sm" id="inputName" placeholder="" name="name" value="{$patients_name[0]['patients_name']}">
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">身份证号</label>
-                            <div class="input-group flex-row-start">
-                                <span class="input-group-addon" style="width: 40px">
-                                    <span class="glyphicon glyphicon-subtitles"></span>
-                                </span>
-                                <input type="text" class="form-control input-sm" id="inputIdentityCard" placeholder="" name="idcard" value="{$patients_name[0]['identity_card']}">
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">电话</label>
-                            <div class="input-group flex-row-start">
-                                <span class="input-group-addon" style="width: 40px">
-                                    <span class="glyphicon glyphicon-phone"></span>
-                                </span>
-                                <input type="text" class="form-control input-sm" id="inputPhone" placeholder="" name="phone" value="{$patients_name[0]['phone']}">
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">性别</label>
-                            <div class="input-group flex-row-start">
-                                <label class="radio-inline">
-                                    <input type="radio" name="RadioSex" value="1" <?php if($patients_name[0]['sex'] =='1') echo 'checked="checked"'; ?> /> 男
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="RadioSex" value="0" <?php if($patients_name[0]['sex'] =='0') echo 'checked="checked"'; ?> /> 女
-                                </label>
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">出生日期</label>
-                            <div class="input-group flex-row-start">
-                                <input size="16" type="date" value="{$patients_name[0]['birthday']}" class="form-control input-sm" id="inputDate" name="date">
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">年龄</label>
-                            <div class="input-group flex-row-start">
-                                <input type="text" class="form-control input-sm" id="inputAge" placeholder="" name="age" value="{$patients_name[0]['age']}">
-                                <span class="input-group-addon" style="width: 40px">岁</span>
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">民族</label>
-                            <div class="input-group flex-row-start">
-                                <select class="form-control input-sm" name="ethnic" id="inputEthnic" value="{$patients_name[0]['national']}">
-                                </select>
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">身高</label>
-                            <div class="input-group flex-row-start">
-                                <input type="text" class="form-control input-sm" id="inputHeight" placeholder="" name="height" value="{$patients_name[0]['height']}">
-                                <span class="input-group-addon" style="width: 40px">CM</span>
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">体重</label>
-                            <div class="input-group flex-row-start">
-                                <input type="text" class="form-control input-sm" id="inputWeight" placeholder="" name="weight" value="{$patients_name[0]['weight']}">
-                                <span class="input-group-addon" style="width: 40px">KG</span>
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">婚姻状况</label>
-                            <div class="input-group flex-row-start">
-                                <select class="form-control input-sm" name="marry">
-                                    <option value="0" <?php if($patients_name[0]['married'] =='0') echo 'selected="selected"'; ?> />未婚</option>
-                                    <option value="2" <?php if($patients_name[0]['married'] =='2') echo 'selected="selected"'; ?> />已婚</option>
-                                    <option value="1" <?php if($patients_name[0]['married'] =='1') echo 'selected="selected"'; ?> />离异</option>
-                                </select>
-                            </div>
-                        </blockquote>
-                    </div>
-
-                    <script type="text/javascript">
-                         $(function(){
-                             $("#city").citySelect({
-                                 prov:"{$patients_name[0]['adress1a']}",
-                                 city:"{$patients_name[0]['adress1b']}",
-                                 dist:"{$patients_name[0]['adress1c']}",
-                                 nodata:null
-                             });
-                         })
-                     </script>
-                    <div class="form-group layui-col-md12" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-2">家庭住址</label>
-                            <div class="input-group layui-col-md10 flex-row-start" id="city">
-                                <div class="layui-col-md4">
-                                    <select class="prov layui-col-md4" style="height: 30px;border-color: #3c763d;margin-bottom: 5px;" name="adress1a">{$patients_name[0]['adress1a']}</select>
-                                    <select class="city layui-col-md4" style="height: 30px;border-color: #3c763d;margin-bottom: 5px;border-left: 0" name="adress1b">{$patients_name[0]['adress1b']}</select>
-                                    <select class="dist layui-col-md4" style="height: 30px;border-color: #3c763d;margin-bottom: 5px;border-left: 0;border-right: 0" name="adress1c">{$patients_name[0]['adress1c']}</select>
-                                </div>
-
-                                <div class="layui-col-md8">
-                                    <input type="text" class="form-control input-sm col-sm-8" id="inputAdress" placeholder="详细地址" name="adress2" value="{$patients_name[0]['adress2']}">
-                                </div>
-
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="layui-col-md12">
-                        <blockquote class="layui-elem-quote" style="padding: 10px;margin-top: 5px">住院信息</blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">住院号</label>
-                            <div class="input-group flex-row-start">
-                                <input type="text" class="form-control input-sm" id="inputHospitalIdentityCard" placeholder="" name="hospitalid" value="{$patients_name[0]['hospital_id']}">
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">影像号</label>
-                            <div class="input-group flex-row-start">
-                                <input type="text" class="form-control input-sm" id="inputPhotoId" placeholder="" name="photoid" value="{$patients_name[0]['id_photo_num']}">
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">病理号</label>
-                            <div class="input-group flex-row-start">
-                                <input type="text" class="form-control input-sm" id="inputPathologicalId" placeholder="" name="pathologicalid" value="{$patients_name[0]['id_pathological']}">
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">二次入院</label>
-                            <div class="input-group flex-row-start">
-                                <label class="radio-inline">
-                                    <input type="radio" name="RadioSedIn" id="radioSecInYes" value="1" <?php if($patients_name[0]['second_hospital_in'] =='1') echo 'checked="checked"'; ?> /> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="RadioSedIn" id="radioSecInNo" value="0" <?php if($patients_name[0]['second_hospital_in'] =='0') echo 'checked="checked"'; ?> /> 否
-                                </label>
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">入院日期</label>
-                            <div class="input-group flex-row-start">
-                                <input size="16" type="date" class="form-control input-sm" id="inputDateInHospital" name="inhospital" value="{$patients_name[0]['hospitalized_time']}">
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">出院日期</label>
-                            <div class="input-group flex-row-start">
-                                <input size="16" type="date" class="form-control input-sm" id="inputDateOutHospital" name="outhospital" value="{$patients_name[0]['leaving_hospital']}">
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">离院去向</label>
-                            <div class="input-group flex-row-start">
-                                <input type="text" class="form-control input-sm" id="outHospitalTo" placeholder="" name="outto" value="{$patients_name[0]['hospital_out_to']}">
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
-                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                            <label class="col-sm-4">主治医生</label>
-                            <div class="input-group flex-row-start">
-                                <select class="form-control input-sm" name="doctor" id="inputDoctor">
-                                    {volist name="doctor" id="vo"}
-                                    <option value="{$vo.neckname}"{if condition="$vo.neckname eq $patients_name[0]['doctor']"}selected{/if} >{$vo.neckname}</option>
-                                    {/volist}
-                                </select>
-                            </div>
-                        </blockquote>
-                    </div>
-                </section>
-            </div>
+            </form>
         </div>
-
-    </form>
+    </div>
 </div>
 <script>
     window.onload = function(){
-        $('.nav-left').css('display','block');
+        $('#dblist-top').addClass('active');
         $('#basic-info-left').addClass('active');
         //民族下拉选项框
         var nations = ["汉族", "蒙古族", "回族", "藏族", "维吾尔族", "苗族", "彝族", "壮族", "布依族", "朝鲜族", "满族", "侗族", "瑶族", "白族", "土家族", "哈尼族", "哈萨克族", "傣族", "黎族", "傈僳族", "佤族", "畲族", "高山族", "拉祜族", "水族", "东乡族", "纳西族", "景颇族", "柯尔克孜族", "土族", "达斡尔族", "仫佬族", "羌族", "布朗族", "撒拉族", "毛南族", "仡佬族", "锡伯族", "阿昌族", "普米族", "塔吉克族", "怒族", "乌孜别克族", "俄罗斯族", "鄂温克族", "德昂族", "保安族", "裕固族", "京族", "塔塔尔族", "独龙族", "鄂伦春族", "赫哲族", "门巴族", "珞巴族", "基诺族"];

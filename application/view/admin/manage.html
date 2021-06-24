@@ -1,6 +1,4 @@
 {include file="public/meta" /}
-{include file="public/header" /}
-{include file="public/leftmanage" /}
 {include file="public/nav" /}
 
 <style>
@@ -10,27 +8,22 @@
 </style>
 
 <!--后台管理主页面-->
-<div class="content">
-    <form class="form-horizontal" method="post">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h4 class="panel-title">用户管理</h4>
+<div class="content-empty layui-fluid">
+    <div class="content-text">
+        <form class="form-horizontal" method="post">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">用户管理</h4>
+                </div>
+                <div class="panel-body">
+                    <!--表格主体-->
+                    <table class="layui-hide" id="userManager" lay-filter="userManager"></table>
+                </div>
             </div>
-            <div class="panel-body">
-                <!--表格主体-->
-                <table class="layui-hide" id="userManager" lay-filter="userManager"></table>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
-<!--为当前选中页面添加背景-->
-<script>
-    window.onload = function(){
-        $('#manage-top').addClass('active');
-        $('#user-manage-left').addClass('active');
-    };
-</script>
 
 <!--添加/编辑用户弹出层模版-->
 <script type="text/html" id="editUser">

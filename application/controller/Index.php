@@ -87,19 +87,7 @@ class Index extends Base
         return $this->view->fetch();
     }
 
-    //后台管理页面
-    public function manage ()
-    {
-        $this->isLogin();
-        return $this->view->fetch();
-    }
 
-    //用户中心页面
-    public function myinfo ()
-    {
-        $this->isLogin();
-        return $this->view->fetch();
-    }
 
     //用户中心 加载获取数据
     public function getinfo(){
@@ -116,10 +104,6 @@ class Index extends Base
         }
     }
 
-    //修改密码页面
-    public function password(){
-        $this->isLogin();
-        return $this->view->fetch();
-    }
+
 
 }

@@ -1,62 +1,114 @@
 <style>
     .nav-top>li>a{
         display: inline-block;
-        padding: 6px 20px;
+        padding: 10px 20px;
         color: white;
         font-weight: 600;
         line-height: 40px;
+        border-radius: 0!important;
     }
     .nav-top>li>a:hover{
-        color: #cd470d;
-        background: url(/static/image/sys/nav-hover.jpg) repeat-x;
+        color: white;
+        border-radius: 0!important;
+        background: #f46b45;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #eea849, #f46b45);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #eea849, #f46b45); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     }
     .nav-top > li.active > a{
-        background: url(/static/image/sys/nav-hover.jpg) repeat-x;
-        color: #cd470d;
-        background-color: #fff0;
+        color: white;
+        border-radius: 0!important;
+        background: #f46b45;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #eea849, #f46b45);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #eea849, #f46b45); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     }
     .nav-top > li.active > a:hover{
-        color: #cd470d;
+        color: white;
+        border-radius: 0!important;
         background-color: #fff0;
     }
-    .disable-li{
-
+    .drop-tab{
+        position: relative;
+        z-index: 1000!important;
+        text-align: center;
+        background-color: #f46b45;
+        display: none;
+    }
+    .drop-tab > li >a{
+        color: white;
+        text-decoration: none;
+        display: block;
+    }
+    .drop-tab > li:hover{
+        background-color: #0d65a3;
     }
 </style>
 <!--功能导航模块-->
-<div class="main-right">
-    <div class="nav-content">
-        <ul class="nav nav-pills pull-right nav-top">
-            <li role="presentation" class="" id="group-info-top">
-                <a href="{:url('index/index')}">团队简介</a>
-                <img src="/static/image/sys/nav-space.jpg">
-            </li>
-            <li role="presentation" class="" id="dblist-top">
-                <a href="{:url('/index/patientsList')}">患者信息</a>
-                <img src="/static/image/sys/nav-space.jpg">
-            </li>
-            <li role="presentation" class="" id="search-top">
-                <a href="{:url('/search/patient_list')}">统计报表</a>
-                <img src="/static/image/sys/nav-space.jpg">
-            </li>
-            <li role="presentation" class="" id="myinfo-top">
-                <a href="{:url('/index/myinfo')}">用户中心</a>
-                <img src="/static/image/sys/nav-space.jpg">
-            </li>
-            <li role="presentation" id="manage-top" data-session="{:session('user_level')}">
-                <a href="{:url('/index/manage')}">后台管理</a>
-                <img src="/static/image/sys/nav-space.jpg">
-            </li>
-            <li role="presentation">
-                <a href="{:url('Index/logout')}">退出登录</a>
-                <img src="/static/image/sys/nav-space.jpg">
-            </li>
-        </ul>
+<div class="layui-header layui-layout-admin">
+    <div class="layui-fluid fixed">
+        <div class="layui-hide-xs col-sm-2 info-left">
+            <img src="/static/image/sys/logo-header.png" style="height: 55px">
+        </div>
+        <div class="col-sm-10 nav-content">
+            <ul class="nav nav-pills pull-left nav-top">
+                <li role="presentation" class="" id="group-info-top">
+                    <a href="{:url('index/index')}">团队简介</a>
+                </li>
+                <li role="presentation" class="" id="dblist-top">
+                    <a href="{:url('/index/patientsList')}">患者信息</a>
+                </li>
+                <li role="presentation" class="" id="search-top">
+                    <a href="{:url('/count/baseList')}">统计报表</a>
+                </li>
+            </ul>
+            <ul class="nav nav-pills pull-right nav-top">
+
+                <li id="myinfo-top">
+
+                    <a href="javascript:;" style="pointer-events: none">
+                        <img src="{:session('user_img')}" class="layui-nav-img">
+                        {:session('user_neckname')}医生
+                    </a>
+                    <ul class="drop-tab">
+                        <li>
+                            <a href="{:url('/admin/myinfo')}">资料修改</a>
+                        </li>
+                        <li>
+                            <a href="{:url('admin/password')}">密码修改</a>
+                        </li>
+                        <li id="manage-top" data-session="{:session('user_level')}">
+                            <a href="{:url('/admin/manage')}">用户管理</a>
+                        </li>
+                        <hr>
+                        <li>
+                            <a href="{:url('Index/logout')}">退出登录</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
     </div>
-    <script>
-        var user_level = $('#manage-top').attr('data-session');
-        if (user_level == 0){
-            $('#manage-top').find('a').attr('href','#');
-            $('#manage-top').prop('class','disabled');
-        }
-    </script>
+</div>
+
+<!--判断后台管理权限-->
+<script>
+    var user_level = $('#manage-top').attr('data-session');
+    if (user_level == 0){
+        $('#manage-top').find('a').attr('href','#');
+        $('#manage-top').prop('class','disabled');
+    }
+</script>
+<!--用户用心下拉菜单-->
+<script>
+    $(function() {
+        let tab = $("#myinfo-top");
+        tab.on('mouseover',function(){
+            $('.drop-tab').stop(true).slideDown();
+        });
+        tab.on('mouseout',function(){
+            $('.drop-tab').stop(true).slideUp();
+        })
+    })
+</script>
