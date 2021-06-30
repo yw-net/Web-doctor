@@ -2,7 +2,6 @@
 {include file="public/nav" /}
 <!--病人基本信息页面-->
 <style>
-    .flex-row-start{display: flex;justify-content: flex-start;flex-direction: row;}
     .control-label{text-align: left!important;}
 </style>
 <div class="layui-fluid">
@@ -17,7 +16,7 @@
                         <button type="button" onclick="window.history.go(-1)" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe65c;</i>返回</button>
                     </div>
                     <div class="panel-body">
-                        <button type="submit" class="btn btn-info save" id="savepatients" style="margin-bottom: 5px">保存修改</button>
+                        <button type="submit" class="btn btn-info save" id="savepatients" style="margin-bottom: 5px"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;保存修改</button>
                         <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">
                             创建时间：
                             <span style="color: #ff0000;margin-right: 20px;">

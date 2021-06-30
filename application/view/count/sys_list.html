@@ -1,0 +1,187 @@
+{include file="public/meta" /}
+{include file="public/nav" /}
+
+
+<!--患者基本信息报表页面-->
+
+<!--导入图形报表js文件-->
+<script src="/static/js/echarts.min.js"></script>
+<script src="/static/js/china.js"></script>
+
+<style>
+    .yw-card{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 20px;
+        min-height: 120px;
+        box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+    }
+    .circle-1{
+        height: 80px;
+        width: 80px;
+        font-size: 50px;
+        vertical-align: middle;
+        color: white;
+        background: #00b09b;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to left, #96c93d, #00b09b);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to left, #96c93d, #00b09b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
+    .circle-2{
+        height: 80px;
+        width: 80px;
+        font-size: 50px;
+        vertical-align: middle;
+        color: white;
+        background: #ff7676;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to left, #ff7676, #f54ea2);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to left, #ff7676, #f54ea2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
+    .circle-3{
+        height: 80px;
+        width: 80px;
+        font-size: 50px;
+        vertical-align: middle;
+        color: white;
+        background: #6078ea;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to left, #6078ea, #17ead9);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to left, #6078ea, #17ead9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
+    .circle-4{
+        height: 80px;
+        width: 80px;
+        font-size: 50px;
+        vertical-align: middle;
+        color: white;
+        background: #ff8359;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to left, #ff8359, #ffdf40);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to left, #ff8359, #ffdf40); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
+    .circle-5{
+        height: 80px;
+        width: 80px;
+        font-size: 50px;
+        vertical-align: middle;
+        color: white;
+        background: #7F00FF;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to left, #E100FF, #7F00FF);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to left, #E100FF, #7F00FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
+
+</style>
+<!--页面主体-->
+<div class="layui-fluid">
+    <div class="layui-row">
+        {include file="public/left/count_left" /}
+
+        <div class="content col-sm-10" style="padding: 20px">
+            <form class="layui-form" action="">
+                <div class="panel panel-info" style="margin-bottom: 0!important;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">系统信息</h4>
+                    </div>
+
+
+                    <div class="panel-body">
+                        <div class="row container">
+                            <div class="col-sm-4 ">
+                                <div class="layui-card yw-card" style="border-left: 3px solid #17a00e">
+                                    <div class="yw-flex-row">
+                                        <div>
+                                            <p style="color: #737373;padding: 10px">磁盘总容量</p>
+                                            <h3 style="padding: 10px;color: #17a00e">{$disk_total}</h3>
+                                        </div>
+                                        <div class="layui-circle circle-1">
+                                            <span class="glyphicon glyphicon-tasks" aria-hidden="true" style="padding: 20px;font-size: 40px"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4 ">
+                                <div class="layui-card yw-card" style="border-left: 3px solid #f41127">
+                                    <div class="yw-flex-row">
+                                        <div>
+                                            <p style="color: #737373;padding: 10px">磁盘剩余容量</p>
+                                            <h3 style="padding: 10px;color: #f41127">{$disk_free}</h3>
+                                        </div>
+                                        <div class="layui-circle circle-2">
+                                            <span class="glyphicon glyphicon-hdd" aria-hidden="true" style="padding: 20px;font-size: 40px"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 ">
+                                <div class="layui-card yw-card" style="border-left: 3px solid #0dcaf0">
+                                    <div class="yw-flex-row">
+                                        <div>
+                                            <p style="color: #737373;padding: 10px">最大上传文件大小</p>
+                                            <h3 style="padding: 10px;color: #0dcaf0">{$disk_max_upload}</h3>
+                                        </div>
+                                        <div class="layui-circle circle-3">
+                                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true" style="padding: 20px;font-size: 40px"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 ">
+                                <div class="layui-card yw-card" style="border-left: 3px solid #ffc107">
+                                    <div class="yw-flex-row">
+                                        <div>
+                                            <p style="color: #737373;padding: 10px">患者数量</p>
+                                            <h3 style="padding: 10px;color: #ffc107">{$patients_total}人</h3>
+                                        </div>
+                                        <div class="layui-circle circle-4">
+                                            <span class="glyphicon glyphicon-user" aria-hidden="true" style="padding: 20px;font-size: 40px"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 ">
+                                <div class="layui-card yw-card" style="border-left: 3px solid #7F00FF">
+                                    <div class="yw-flex-row">
+                                        <div>
+                                            <p style="color: #737373;padding: 10px">医生数量</p>
+                                            <h3 style="padding: 10px;color: #7F00FF">{$user_total}人</h3>
+                                        </div>
+                                        <div class="layui-circle circle-5">
+                                            <span class="glyphicon glyphicon-grain" aria-hidden="true" style="padding: 20px;font-size: 40px"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!--系统加载-->
+<script>
+    //为当前选中页面添加背景
+    window.onload = function(){
+        $('#search-top').addClass('active');
+        $('#sys-info-left').addClass('active');
+
+
+    }
+</script>
+
+{include file="public/footer" /}

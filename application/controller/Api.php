@@ -181,6 +181,7 @@ class Api extends Base
     //用户中心-个人信息（修改个人信息按钮）
     public function editMyInfo(){
         $result = $this->request->param();
+        $face_img = $result['img'];
         $data=[
             'name'=>$result['username'],
             'user_age'=>$result['age'],
@@ -199,7 +200,9 @@ class Api extends Base
         $result = User::update($data,$where,$field);
         if ($result){
             session('user_neckname',null);
-            Session::set('user_neckname',$result['neckname']);
+            session::set('user_neckname',$result['neckname']);
+            session('user_img',null);
+            session::set('user_img',$face_img);
             return['msg'=>'修改成功','status'=>100];
         }else{
             return['msg'=>'修改失败！请重试！','status'=>200];

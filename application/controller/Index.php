@@ -2,6 +2,7 @@
 namespace app\controller;
 use app\controller\Base;
 use app\model\Patients;
+use app\model\User_login;
 use think\Db;
 use app\model\User;
 use think\Request;
@@ -65,10 +66,20 @@ class Index extends Base
                     //判断用户头像是否设置
                     $face_img = '../../'.$user->face_img;
                     if($user->face_img == null){
-                        Session::set('user_img','/static/image/sys/face.jpg');
+                        Session::set('user_img','/static/image/sys/default_face.jpg');
                     }else{
                         Session::set('user_img',$face_img);
                     }
+                    //记录用户登录
+                    $userid = $user->userid;
+                    $login_ip = $_SERVER["SERVER_ADDR"];
+                    $date_time= date('y-m-d h:i:s');
+                    $login_info = new User_login();
+                    $login_info->userid = $userid;
+                    $login_info->login_ip = $login_ip;
+                    $login_info->datetime = $date_time;
+                    $login_info->save();
+
                 }
             }
             return ['status' =>$status,'message'=>$result,'data'=>$data];

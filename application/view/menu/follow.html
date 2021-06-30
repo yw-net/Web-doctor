@@ -68,7 +68,7 @@
                                 {empty name = 'lianxiren_info'}
                                 <form class="layui-tab-item layui-show" id="lianXiRenForm1">
                                     <div style="margin-bottom: 10px">
-                                        <button class="btn btn-info save" type="button" onclick="saveTab('../FollowSave/lianXiRenSaveNew','#lianXiRenForm','.lianxiren-id')">保存修改</button>
+                                        <button class="btn btn-info save" type="button" onclick="saveTab('../FollowSave/lianXiRenSaveNew','#lianXiRenForm','.lianxiren-id')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;保存修改</button>
                                     </div>
 
                                     <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
@@ -126,7 +126,7 @@
                                 <form class="layui-tab-item" id="lianXiRenForm{$lianxiren_info_item->lianxiren_id}">
                                     <div style="margin-bottom: 10px">
                                         <button class="btn btn-danger del" type="button" onclick="delBtn('../FollowSave/delLianXiRenInfo','{$lianxiren_info_item->lianxiren_id}','addLianXiRen')">删除</button>
-                                        <button class="btn btn-info save" type="button" onclick="saveTab('../FollowSave/lianXiRenSaveNew','#lianXiRenForm','.lianxiren-id')">保存修改</button>
+                                        <button class="btn btn-info save" type="button" onclick="saveTab('../FollowSave/lianXiRenSaveNew','#lianXiRenForm','.lianxiren-id')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;保存修改</button>
                                     </div>
 
                                     <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
@@ -208,7 +208,7 @@
                             </span>
                         </div>
                         <form class="layui-form-item" id="fuFaZhuanYiForm">
-                            <button class="btn btn-info save" type="button" onclick="saveForm('../FollowSave/fuFaZhuanYiSaveNew','#fuFaZhuanYiForm')">保存修改</button>
+                            <button class="btn btn-info save" type="button" onclick="saveForm('../FollowSave/fuFaZhuanYiSaveNew','#fuFaZhuanYiForm')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;保存修改</button>
                             <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;margin-top: 10px">
                                 <label class="col-sm-2">复发转移</label>
                                 <label class="radio-inline">
@@ -307,7 +307,7 @@
                                         <div class="layui-tab-content" style="overflow: hidden" id="fuFaHouHuaLiaoShow">
                                             {empty name='fufahouhualiao_info'}
                                             <form id="fuFaHouHuaLiaoForm1" class="layui-tab-item fuFaHouHuaLiaoForm layui-show">
-                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouHuaLiaoSaveNew','#fuFaHouHuaLiaoForm','.fufahouhualiao-id')">保存修改</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouHuaLiaoSaveNew','#fuFaHouHuaLiaoForm','.fufahouhualiao-id')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;保存修改</button>
 
                                             </form>
                                             {else}
@@ -315,7 +315,7 @@
                                             <form id="fuFaHouHuaLiaoForm{$fufahouhualiao_info->fufahouhualiao_id}" class="layui-tab-item fuFaHouHuaLiaoForm">
                                                 <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$fufahouhualiao_info->edit_time}</span></div>
                                                 <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delFuFaHouHuaLiaoInfo','{$fufahouhualiao_info->fufahouhualiao_id}','addFuFaHouHuaLiao')">删除</button>
-                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouHuaLiaoSaveNew','#fuFaHouHuaLiaoForm','.fufahouhualiao-id')">保存修改</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouHuaLiaoSaveNew','#fuFaHouHuaLiaoForm','.fufahouhualiao-id')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;保存修改</button>
 
                                             </form>
                                             {/foreach}
@@ -362,7 +362,7 @@
                                         <div class="layui-tab-content" style="overflow: hidden" id="fuFaHouFangLiaoShow">
                                             {empty name='fufahoufangliao_info'}
                                             <form id="fuFaHouFangLiaoForm1" class="layui-tab-item fuFaHouFangLiaoForm layui-show">
-                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouFangLiaoSaveNew','#fuFaHouFangLiaoForm','.fufahoufangliao-id')">保存修改</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouFangLiaoSaveNew','#fuFaHouFangLiaoForm','.fufahoufangliao-id')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;保存修改</button>
 
                                             </form>
                                             {else}
@@ -370,7 +370,7 @@
                                             <form id="fuFaHouFangLiaoForm{$fufahoufangliao_info->fufahoufangliao_id}" class="layui-tab-item fuFaHouFangLiaoForm">
                                                 <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$fufahoufangliao_info->edit_time}</span></div>
                                                 <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delFuFaHouFangLiaoInfo','{$fufahoufangliao_info->fufahoufangliao_id}','addFuFaHouFangLiao')">删除</button>
-                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouFangLiaoSaveNew','#fuFaHouFangLiaoForm','.fufahoufangliao-id')">保存修改</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouFangLiaoSaveNew','#fuFaHouFangLiaoForm','.fufahoufangliao-id')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;保存修改</button>
 
                                             </form>
                                             {/foreach}
@@ -417,7 +417,7 @@
                                         <div class="layui-tab-content" style="overflow: hidden" id="fuFaHouGaMaDaoShow">
                                             {empty name='fufahougamadao_info'}
                                             <form id="fuFaHouGaMaDaoForm1" class="layui-tab-item fuFaHouGaMaDaoForm layui-show">
-                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouGaMaDaoSaveNew','#fuFaHouGaMaDaoForm','.fufahougamadao-id')">保存修改</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouGaMaDaoSaveNew','#fuFaHouGaMaDaoForm','.fufahougamadao-id')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;保存修改</button>
 
                                             </form>
                                             {else}
@@ -425,7 +425,7 @@
                                             <form id="fuFaHouGaMaDaoForm{$fufahougamadao_info->fufahougamadao_id}" class="layui-tab-item fuFaHouGaMaDaoForm">
                                                 <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$fufahougamadao_info->edit_time}</span></div>
                                                 <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delFuFaHouGaMaDaoInfo','{$fufahougamadao_info->fufahougamadao_id}','addFuFaHouGaMaDao')">删除</button>
-                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouGaMaDaoSaveNew','#fuFaHouGaMaDaoForm','.fufahougamadao-id')">保存修改</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouGaMaDaoSaveNew','#fuFaHouGaMaDaoForm','.fufahougamadao-id')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;保存修改</button>
 
                                             </form>
                                             {/foreach}
@@ -473,7 +473,7 @@
                                             {empty name='fufahoubaxiang_info'}
                                             <form id="fuFaHouBaXiangForm1" class="layui-tab-item fuFaHouBaXiangForm layui-show">
                                                 <div style="margin-bottom: 10px">
-                                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouBaXiangSaveNew','#fuFaHouBaXiangForm','.fufahoubaxiang-id')">保存修改</button>
+                                                    <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouBaXiangSaveNew','#fuFaHouBaXiangForm','.fufahoubaxiang-id')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;保存修改</button>
                                                 </div>
                                                 <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
                                                     <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
@@ -507,7 +507,7 @@
                                             <form id="fuFaHouBaXiangForm{$fufahoubaxiang_info->fufahoubaxiang_id}" class="layui-tab-item fuFaHouBaXiangForm">
                                                 <div class="alert alert-warning" role="alert" style="height: 30px;padding: 5px;margin-bottom: 5px">上次修改日期：<span style="color: #ff0000">{$fufahoubaxiang_info->edit_time}</span></div>
                                                 <button class="btn btn-danger del" type="button" onclick="delBtn('../PreSave/delFuFaHouBaXiangInfo','{$fufahoubaxiang_info->fufahoubaxiang_id}','addFuFaHouBaXiang')">删除</button>
-                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouBaXiangSaveNew','#fuFaHouBaXiangForm','.fufahoubaxiang-id')">保存修改</button>
+                                                <button class="btn btn-info save" type="button" onclick="saveTab('../PreSave/fuFaHouBaXiangSaveNew','#fuFaHouBaXiangForm','.fufahoubaxiang-id')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;保存修改</button>
 
                                             </form>
                                             {/foreach}

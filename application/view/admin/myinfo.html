@@ -1,8 +1,8 @@
 {include file="public/meta" /}
 {include file="public/nav" /}
 <style>
-    .edituser-right{width: 150px;height: 170px;margin-top: 10px;margin-left: 40px;}
-    .img-rounded{display: block;width: 180px;height: 200px;}
+    .edituser-right{width: 150px;height: 170px;margin-top: 116px;margin-left: 30px;}
+    .img-rounded{display: block;width: 160px;height: 160px;border: 1px solid #e6e6e6}
     .layui-form-label{width: 100px;}
 </style>
 <!--个人资料页面-->
@@ -14,6 +14,10 @@
             </div>
             <div class="panel-body">
                 <form class="layui-form" action="">
+
+                    <button id="submit" class="btn btn-info save" lay-submit lay-filter="formEditUser" type="button">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;&nbsp;保存修改</button>
+
                     <div class="layui-form-item" style="display: none;">
                         <label class="layui-form-label">用户ID</label>
                         <div class="layui-input-block" style="width: 300px;">
@@ -22,67 +26,82 @@
                     </div>
                     <div style="display: flex;justify-content: flex-start;flex-direction: row">
                         <div class="edituser-left">
-                            <div class="layui-form-item" style="margin-top: 30px;">
-                                <label class="layui-form-label">用户名</label>
-                                <div class="layui-input-block" style="width: 300px;">
+                            <div class="layui-form-item" style="margin-top: 20px;">
+                                <div class="flex-row-start" style="width: 500px;">
+                                    <span class="input-group-addon" style="width: 100px;margin-right: -1px;line-height: 24px">
+                                            所属科室
+                                    </span>
+                                    <select name="userClass" id="userClass">
+                                        <option value="无">无</option>
+                                        <option value="胸外科">胸外科</option>
+                                        <option value="呼吸科">呼吸科</option>
+                                        <option value="麻醉科">麻醉科</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="flex-row-start input-group" style="width: 500px;">
+                                    <span class="input-group-addon" style="width: 100px;margin-right: -1px;line-height: 24px">
+                                            级别职称
+                                    </span>
+                                    <select name="userLevel" id="userLevel" class="input-sm" style="width: 400px">
+                                        <option value="无">无</option>
+                                        <option value="教授">教授</option>
+                                        <option value="副教授">副教授</option>
+                                        <option value="主任医师">主任医师</option>
+                                        <option value="副主任医师">副主任医师</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <div class=" flex-row-start" style="width: 500px;">
+                                    <span class="input-group-addon" style="width: 100px;margin-right: -1px;line-height: 24px">
+                                            用户名
+                                    </span>
                                     <input type="text" name="username" id="username" required  lay-verify="required" autocomplete="off" class="layui-input" value="">
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <label class="layui-form-label">医生姓名</label>
-                                <div class="layui-input-block" style="width: 300px;">
-                                    <input type="text" name="neckname" id="neckname" required  lay-verify="required" autocomplete="off" class="layui-input"
-                                    value="">
+                                <div class="flex-row-start" style="width: 500px;">
+                                    <span class="input-group-addon" style="width: 100px;margin-right: -1px;line-height: 24px">
+                                            医生姓名
+                                    </span>
+                                    <input type="text" name="neckname" id="neckname" required  lay-verify="required" autocomplete="off" class="layui-input" value="">
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <label class="layui-form-label">年龄</label>
-                                <div class="layui-input-block">
+                                <div class="flex-row-start" style="width: 500px;">
+                                    <span class="input-group-addon" style="width: 100px;margin-right: -1px;line-height: 24px">
+                                            年龄
+                                    </span>
                                     <input type="text" name="age" id="age" autocomplete="off" class="layui-input" value="">
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <label class="layui-form-label">性别</label>
-                                <div class="layui-input-block">
-                                    <input type="radio" name="sex" value="1" title="男" id="man">
-                                    <input type="radio" name="sex" value="0" title="女" id="women">
+                                <div class="flex-row-start" style="width: 500px;">
+                                    <span class="input-group-addon" style="width: 100px;margin-right: -1px;line-height: 24px">
+                                            性别
+                                    </span>
+                                    <div style="border: 1px solid #e6e6e6;border-radius: 2px;padding-left: 10px;width: 100%">
+                                        <input type="radio" name="sex" value="1" title="男" id="man">
+                                        <input type="radio" name="sex" value="0" title="女" id="women">
+                                    </div>
+
                                 </div>
                             </div>
+
+
                         </div>
                         <!--            用户照片-->
                         <div class="edituser-right">
                             <img src="" class="img-rounded" id="preImg">
-                            <button type="button" id="upImg" class="btn btn-success"style="height: 30px;width:180px;line-height: 15px;margin-top: 5px;"><i class="layui-icon">&#xe67c;</i>上传照片</button>
+                            <button type="button" id="upImg" class="btn btn-success"style="height: 30px;width:160px;line-height: 15px;margin-top: 5px;"><i class="layui-icon">&#xe67c;</i>上传照片</button>
                         </div>
                         <input type="hidden" name="img" id="img" value="">
                     </div>
 
-                    <div class="layui-form-item">
-                        <label class="layui-form-label" style="width: 110px;">级别职称</label>
-                        <div class="layui-input-inline">
-                            <select name="userLevel" id="userLevel">
-                                <option value="无">无</option>
-                                <option value="教授">教授</option>
-                                <option value="副教授">副教授</option>
-                                <option value="主任医师">主任医师</option>
-                                <option value="副主任医师">副主任医师</option>
-                            </select>
-                        </div>
-                        <label class="layui-form-label" style="width: 110px;">所属科室</label>
-                        <div class="layui-input-inline">
-                            <select name="userClass" id="userClass">
-                                <option value="无">无</option>
-                                <option value="胸外科">胸外科</option>
-                                <option value="呼吸科">呼吸科</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-input-block">
-                            <button id="submit" class="layui-btn" lay-submit lay-filter="formEditUser" type="button">
-                                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;&nbsp;保存</button>
-                        </div>
-                    </div>
+
                 </form>
             </div>
         </div>
@@ -144,7 +163,6 @@
     window.onload = function(){
         //为当前选中页面添加背景
         $('#myinfo-top').addClass('active');
-        $('#basic-info-left').addClass('active');
         //页面加载当前用户资料
         layui.use(['form','layer','upload'], function() {
             var form = layui.form;
@@ -181,6 +199,7 @@
                             case '无':   $("#userClass option[value='无']").prop("selected", true);break;
                             case '胸外科': $("#userClass option[value='胸外科']").prop("selected", true);break;
                             case '呼吸科': $("#userClass option[value='呼吸科']").prop("selected", true);break;
+                            case '麻醉科': $("#userClass option[value='麻醉科']").prop("selected", true);break;
                         };
 
                         form.render();

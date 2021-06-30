@@ -15,8 +15,11 @@
     }
     setInterval("document.getElementById('dateTime').innerHTML = (new Date()).format('yyyy-MM-dd hh:mm:ss');", 1000);
 </script>
+
+
+
 <div class="col-sm-2 layui-hide-xs" style="padding-right: 0;padding-left: 0"></div>
-<div class="col-sm-2 layui-hide-xs" style="position: fixed;padding-left: 0;padding-right: 0;overflow: scroll">
+<div class="col-sm-2 layui-hide-xs" style="position: fixed;padding-left: 0;padding-right: 0;overflow-y: scroll;overflow-x: hidden;top:60px;bottom: 0">
 
     <div class="timer" id="dateTime"></div>
     <a class="menu-left-title menu-left-title-space" href="{:url('/Menu/patients')}?patientsid={$patientid}" id="basic-info-left" style="padding: 0 15px;">

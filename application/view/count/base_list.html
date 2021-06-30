@@ -7,8 +7,7 @@
 <style>
     .yw-select{width: 250px;}
     .flex-row{display: flex;justify-content: flex-start;flex-direction: row;}
-    /*表格头部工具栏背景色*/
-    .layui-table-tool{background-color: #dff0d8;}
+
 </style>
 
 <!--导入图形报表js文件-->
@@ -32,8 +31,10 @@
                         <div class="flex-row">
                             <!--类别查询框-->
                             <div class="layui-form-item yw-select">
-                                <label class="layui-form-label">分类：</label>
-                                <div class="layui-input-block">
+                                <div class="flex-row-start" style="width: 200px;">
+                                    <span class="input-group-addon" style="width: 100px;margin-right: -1px;line-height: 24px">
+                                            选择类别
+                                    </span>
                                     <select name="type" lay-verify="required" lay-filter="type">
                                         <!--                                饼图-->
                                         <option value="sex">性别</option>
@@ -48,12 +49,15 @@
                                         <!--                                地图分布图-->
                                         <option value="map">患者分布</option>
                                     </select>
+
                                 </div>
                             </div>
                             <!--管理员医生查询框-->
                             <div class="layui-form-item yw-select hide" id="chooseDoctor">
-                                <label class="layui-form-label" style="width: 100px;">选择医生</label>
-                                <div class="layui-input-block">
+                                <div class="flex-row-start" style="width: 200px;">
+                                    <span class="input-group-addon" style="width: 100px;margin-right: -1px;line-height: 24px">
+                                            选择医生
+                                    </span>
                                     <select name="doctor" id="inputDoctor" lay-filter="doctor">
                                         <option value="0">全部</option>
                                         {volist name="doctor" id="vo"}

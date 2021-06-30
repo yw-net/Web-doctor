@@ -1,0 +1,341 @@
+{include file="public/meta" /}
+{include file="public/nav" /}
+<style>
+    .layui-form-label{width: 120px;}
+</style>
+<!--高级查询页面-->
+<div class="content-empty layui-fluid">
+    <div class="content-text">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">高级查询</h4>
+            </div>
+            <div class="panel-body">
+<!--                查询条件表格-->
+                <form class="layui-form" id="queryForm">
+
+                    <div class="layui-form-item" style="display: none;">
+                        <label class="layui-form-label">用户ID</label>
+                        <div class="layui-input-block" style="width: 300px;">
+                            <input type="text" name="userid" id="userid" autocomplete="off" class="layui-input" value="">
+                        </div>
+                    </div>
+
+                    <p class="bg-warning" style="padding: 5px;border: 1px solid #FABB6C;border-radius: 4px">
+                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                        &nbsp;说明:
+                    </p>
+
+                    <div class="pull-right" style="margin: 10px 0">
+                        <button class="btn btn-success" id="queryBtn">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            开始查询
+                        </button>
+                    </div>
+
+                    <div class="layui-form-item layui-col-md12">
+
+                        <table class="table table-bordered" id="searchTable">
+                            <thead>
+                                <tr style="color: darkblue">
+                                    <th>一级分类</th>
+                                    <th>二级分类</th>
+                                    <th>参数</th>
+                                    <th>比较符</th>
+                                    <th>参数值</th>
+                                    <th>逻辑关系</th>
+                                    <th width="80px">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="row0">
+                                    <td>
+                                        <select class="form-control input-sm firstSelect" name="fenlei1" style="display: block" onchange="firstChange()" id="fenleiOne0">
+                                            <option value="请选择">请选择</option>
+                                            <option value="基本信息">基本信息</option>
+                                            <option value="既往病史">既往病史</option>
+                                            <option value="症状体征">症状体征</option>
+                                            <option value="术前检查">术前检查</option>
+                                            <option value="诱导治疗">诱导治疗</option>
+                                            <option value="手术信息">手术信息</option>
+                                            <option value="术后并发症">术后并发症</option>
+                                            <option value="术后病理">术后病理</option>
+                                            <option value="辅助治疗">辅助治疗</option>
+                                            <option value="末次随访">末次随访</option>
+                                            <option value="复诊信息">复诊信息</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control input-sm secondSelect" name="fenlei2" style="display: block" id="fenleiTwo0" onchange="secondChange()">
+
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="form-control input-sm" id="inputOne0" type="text" value="" placeholder="请输入关键字">
+                                    </td>
+                                    <td>
+                                        <select class="form-control input-sm" id="bijiaofu0" name="bijiaofu"style="display: block">
+                                            <option value="请选择">请选择</option>
+                                            <option value="包含">包含</option>
+                                            <option value="等于">等于</option>
+                                            <option value="不等于">不等于</option>
+                                            <option value="大于">大于</option>
+                                            <option value="小于">小于</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="form-control input-sm" id="inputTwo0" type="text" value="" placeholder="请输入查询值">
+                                    </td>
+                                    <td>
+                                        <select class="form-control input-sm" id="guanxi0" name="guanxi" style="display: block">
+                                            <option value="请选择">请选择</option>
+                                            <option value="并且">并且</option>
+                                            <option value="或者">或者</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="hidden" id="hidNum" name="hidNum" value="0" />
+
+                                        <button type="button" id="delRow" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                                            删除
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                        <div class="yw-flex-row">
+                            <button class="btn btn-warning">
+                                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                重置
+                            </button>
+                            <button type="button" id="addRow" class="btn btn-info">
+                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                添加条件
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+<!--                查询结果表格-->
+                <table class="layui-hide" id="patientsQuery" lay-filter="patientsQuery"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--表格右侧功能按钮-->
+<script type="text/html" id="toolbar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit" style="text-decoration:none;">详细信息</a>
+</script>
+
+<!--为当前选中页面添加背景-->
+<script>
+    window.onload = function(){
+        $('#query').addClass('active');
+    }
+</script>
+<!--增加按钮-->
+<script>
+    $('#addRow').on('click',function () {
+        var num = $("#hidNum").val(); //
+        num = parseInt(num);
+        num++; //点击自加
+        $("#hidNum").val(num); //重新赋值
+        //添加行
+
+        $("#row0").clone(true).attr("id", "row" + num).appendTo("#searchTable");
+
+    })
+</script>
+<!--删除按钮-->
+<script>
+    $('#delRow').on('click',function () {
+        let t=document.getElementById('searchTable');
+        if ($(this).parent().parent().index() == 0){
+            return;
+        }
+        $(this).parent().parent().remove();
+    })
+</script>
+<!--查询按钮-->
+<script>
+    $('#queryBtn').on('click',function () {
+        console.log('点击查询按钮')
+        let form_data = decodeURIComponent($('#queryForm').serialize());
+
+        let DataDeal = {
+            //将从form中通过$('#form').serialize()获取的值转成json字符串
+            formToJson: function (data) {
+                data=data.replace(/&/g,"\",\"");
+                data=data.replace(/=/g,"\":\"");
+                data="{\""+data+"\"}";
+                return data;
+            },
+            //json对象相同key合并value值
+            jsonData: function (s) {
+                var kv = {}, m, reg = /"[^"]+":"[^"]+"/gi;
+                var m = s.match(reg);
+                if (m == null){
+                    return false;
+                }
+
+                var o={};
+                for(var i=0;i<m.length;i++){
+                    kv=m[i].match(/"[^"]+"/gi);
+                    var _arr1=[];;
+                    for(var j=0;j<kv.length; j++){
+                        _arr1.push(kv[j].replace(/"/g,''));
+                    }
+                    if(_arr1[0] in o){
+                        if(typeof(o[_arr1[0]])=='string')
+                        {
+                            o[_arr1[0]]=[o[_arr1[0]]]
+                        };
+                        o[_arr1[0]].push(_arr1[1])
+                    }else{
+                        o[_arr1[0]]=_arr1[1]
+                    }
+                }
+                return o;
+            },
+        };
+
+        let toData=DataDeal.formToJson(form_data);//转化为json字符串
+
+        let jsonData = DataDeal.jsonData(toData);//json字符串相同key合并value值并转化为json对象
+        console.log(jsonData)
+
+        $.ajax({
+            type:"POST",
+            url:"/Query/resQuery",
+            data:{
+                data:jsonData
+            },
+            dataType:'json',
+            success:function (data) {
+                console.log(data)
+            }
+        });
+        console.log('Ajax结束')
+    })
+
+</script>
+<!--二级分类联动-->
+<script>
+    function firstChange()
+    {
+        let first = document.getElementById("firstSelect");
+        let second = document.getElementById("secondSelect");
+        second.options.length = 0; // 清除second下拉框的所有内容
+        if(first.selectedIndex == 1)
+        {
+            second.options.add(new Option("无", "无", false, true));  // 默认选中区
+        }
+
+
+        if(first.selectedIndex == 2)
+        {
+            second.options.add(new Option("家族肿瘤史", "家族肿瘤史"));
+            second.options.add(new Option("术前合并症", "术前合并症", false, true));  // 默认选中区
+            second.options.add(new Option("个人史", "个人史"));
+            second.options.add(new Option("月经史", "月经史"));
+
+        }
+        if(first.selectedIndex == 3)
+        {
+            second.options.add(new Option("症状", "症状", false, true));  // 默认选中区
+            second.options.add(new Option("体征", "体征"));
+
+        }
+        if(first.selectedIndex == 4)
+        {
+            second.options.add(new Option("血常规", "血常规"));
+            second.options.add(new Option("血生化", "血生化"));
+            second.options.add(new Option("血瘤标志物", "血瘤标志物"));
+            second.options.add(new Option("CT", "CT", false, true));   // 默认选中区
+            second.options.add(new Option("超声", "超声"));
+            second.options.add(new Option("肺功能", "肺功能"));
+            second.options.add(new Option("气管镜", "气管镜"));
+            second.options.add(new Option("头颅MRI/CT", "头颅MRI/CT"));
+            second.options.add(new Option("骨扫描", "骨扫描"));
+            second.options.add(new Option("骨MRI/CT", "骨MRI/CT"));
+            second.options.add(new Option("肝脏CT", "肝脏CT"));
+            second.options.add(new Option("PET", "PET"));
+
+        }
+        if(first.selectedIndex == 5)
+        {
+            second.options.add(new Option("诱导前分期", "诱导前分期", false, true));  // 默认选中区
+            second.options.add(new Option("诱导化疗", "诱导化疗"));
+            second.options.add(new Option("诱导放疗", "诱导放疗"));
+            second.options.add(new Option("靶向诱导", "靶向诱导"));
+            second.options.add(new Option("诱导后分期", "诱导后分期"));
+            second.options.add(new Option("诱导后CT", "诱导后CT"));
+            second.options.add(new Option("诱导后PET", "诱导后PET"));
+
+        }
+        if(first.selectedIndex == 6)
+        {
+            second.options.add(new Option("肿物信息", "肿物信息", false, true));  // 默认选中区
+            second.options.add(new Option("手术信息", "手术信息"));
+
+        }
+        if(first.selectedIndex == 7)
+        {
+            second.options.add(new Option("术中并发症", "术中并发症", false, true));  // 默认选中区
+            second.options.add(new Option("术后并发症", "术后并发症"));
+            second.options.add(new Option("二次手术", "二次手术"));
+            second.options.add(new Option("SICU", "SICU"));
+
+        }
+        if(first.selectedIndex == 8)
+        {
+            second.options.add(new Option("肿物", "肿物", false, true));  // 默认选中区
+            second.options.add(new Option("淋巴结清扫", "淋巴结清扫"));
+            second.options.add(new Option("病理分期", "病理分期"));
+            second.options.add(new Option("免疫组化", "免疫组化"));
+            second.options.add(new Option("基因检查", "基因检查"));
+
+        }
+        if(first.selectedIndex == 9)
+        {
+            second.options.add(new Option("化疗", "化疗", false, true));  // 默认选中区
+            second.options.add(new Option("放疗", "放疗"));
+            second.options.add(new Option("伽玛刀", "伽玛刀"));
+            second.options.add(new Option("靶向", "靶向"));
+
+        }
+        if(first.selectedIndex == 10)
+        {
+            second.options.add(new Option("联系人", "联系人", false, true));  // 默认选中区
+            second.options.add(new Option("复发转移", "复发转移"));
+            second.options.add(new Option("复发后治疗", "复发后治疗"));
+
+        }
+        if(first.selectedIndex == 11)
+        {
+            second.options.add(new Option("无", "无", false, true));  // 默认选中区
+
+        }
+    }
+    function secondChange()
+    {
+        let second = document.getElementById("secondSelect");
+        let index=second.selectedIndex; //序号，取当前选中选项的序号
+        let val = second.options[index].value;
+        console.log(val);
+    }
+
+</script>
+
+<!--layui框架（表格相关操作）-->
+<script>
+
+</script>
+
+{include file="public/footer" /}
