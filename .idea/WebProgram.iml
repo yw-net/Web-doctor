@@ -18,6 +18,7 @@
       <excludeFolder url="file://$MODULE_DIR$/storge/preoperative" />
       <excludeFolder url="file://$MODULE_DIR$/runtime/log" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/diversen/http-send-file" />
+      <excludeFolder url="file://$MODULE_DIR$/runtime/temp" />
       <excludePattern pattern="/runtime/log/*" />
     </content>
     <orderEntry type="inheritedJdk" />
