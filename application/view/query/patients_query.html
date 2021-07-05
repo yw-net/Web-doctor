@@ -11,27 +11,19 @@
                 <h4 class="panel-title">高级查询</h4>
             </div>
             <div class="panel-body">
+                <p class="bg-warning" style="padding: 5px;border: 1px solid #FABB6C;border-radius: 4px">
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                    &nbsp;说明:
+                </p>
+
+                <div class="pull-right" style="margin: 10px 0">
+                    <button class="btn btn-success" id="queryBtn">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        开始查询
+                    </button>
+                </div>
 <!--                查询条件表格-->
                 <form class="layui-form" id="queryForm">
-
-                    <div class="layui-form-item" style="display: none;">
-                        <label class="layui-form-label">用户ID</label>
-                        <div class="layui-input-block" style="width: 300px;">
-                            <input type="text" name="userid" id="userid" autocomplete="off" class="layui-input" value="">
-                        </div>
-                    </div>
-
-                    <p class="bg-warning" style="padding: 5px;border: 1px solid #FABB6C;border-radius: 4px">
-                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                        &nbsp;说明:
-                    </p>
-
-                    <div class="pull-right" style="margin: 10px 0">
-                        <button class="btn btn-success" id="queryBtn">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                            开始查询
-                        </button>
-                    </div>
 
                     <div class="layui-form-item layui-col-md12">
 
@@ -50,7 +42,7 @@
                             <tbody>
                                 <tr id="row0">
                                     <td>
-                                        <select class="form-control input-sm firstSelect" name="fenlei1" style="display: block" onchange="firstChange()" id="fenleiOne0">
+                                        <select class="form-control input-sm" name="fenleiOne0" style="display: block" onchange="firstChange('#fenleiOne0')" id="fenleiOne0">
                                             <option value="请选择">请选择</option>
                                             <option value="基本信息">基本信息</option>
                                             <option value="既往病史">既往病史</option>
@@ -66,31 +58,31 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control input-sm secondSelect" name="fenlei2" style="display: block" id="fenleiTwo0" onchange="secondChange()">
+                                        <select class="form-control input-sm" name="fenleiTwo0" style="display: block">
 
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="form-control input-sm" id="inputOne0" type="text" value="" placeholder="请输入关键字">
+                                        <input class="form-control input-sm" name="inputOne0" type="text" value="" placeholder="请输入关键字">
                                     </td>
                                     <td>
-                                        <select class="form-control input-sm" id="bijiaofu0" name="bijiaofu"style="display: block">
-                                            <option value="请选择">请选择</option>
-                                            <option value="包含">包含</option>
+                                        <select class="form-control input-sm" name="bijiaofu0"style="display: block">
+                                            <option value="">请选择</option>
+                                            <option value="like">包含</option>
                                             <option value="等于">等于</option>
-                                            <option value="不等于">不等于</option>
-                                            <option value="大于">大于</option>
-                                            <option value="小于">小于</option>
+                                            <option value="<>">不等于</option>
+                                            <option value=">">大于</option>
+                                            <option value="<">小于</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="form-control input-sm" id="inputTwo0" type="text" value="" placeholder="请输入查询值">
+                                        <input class="form-control input-sm" name="inputTwo0" type="text" value="" placeholder="请输入查询值">
                                     </td>
                                     <td>
-                                        <select class="form-control input-sm" id="guanxi0" name="guanxi" style="display: block">
-                                            <option value="请选择">请选择</option>
-                                            <option value="并且">并且</option>
-                                            <option value="或者">或者</option>
+                                        <select class="form-control input-sm" name="guanxi0" style="display: block">
+                                            <option value="">请选择</option>
+                                            <option value="and">并且</option>
+                                            <option value="or">或者</option>
                                         </select>
                                     </td>
                                     <td>
@@ -128,10 +120,6 @@
     </div>
 </div>
 
-<!--表格右侧功能按钮-->
-<script type="text/html" id="toolbar">
-    <a class="layui-btn layui-btn-xs" lay-event="edit" style="text-decoration:none;">详细信息</a>
-</script>
 
 <!--为当前选中页面添加背景-->
 <script>
@@ -147,8 +135,31 @@
         num++; //点击自加
         $("#hidNum").val(num); //重新赋值
         //添加行
-
         $("#row0").clone(true).attr("id", "row" + num).appendTo("#searchTable");
+        //获取新建行div
+        let new_id = '#row' + num;
+        //对克隆行属性进行重新赋值
+        $($(new_id).get(0).childNodes.item(1).childNodes.item(1)).attr('id','fenleiOne'+num);
+        $($(new_id).get(0).childNodes.item(1).childNodes.item(1)).attr('name','fenleiOne'+num);
+        $($(new_id).get(0).childNodes.item(1).childNodes.item(1)).attr('onchange',"firstChange('#fenleiOne"+num+"')");
+
+        $($(new_id).get(0).childNodes.item(3).childNodes.item(1)).attr('name','fenleiTwo'+num);
+
+        $($(new_id).get(0).childNodes.item(5).childNodes.item(1)).attr('name','inputOne'+num);
+
+        $($(new_id).get(0).childNodes.item(7).childNodes.item(1)).attr('name','bijiaofu'+num);
+
+        $($(new_id).get(0).childNodes.item(9).childNodes.item(1)).attr('name','inputTwo'+num);
+
+        $($(new_id).get(0).childNodes.item(11).childNodes.item(1)).attr('name','guanxi'+num);
+
+        //清空克隆行的内容
+        $($(new_id).get(0).childNodes.item(1).childNodes.item(1)).selectedIndex =0;
+        $($(new_id).get(0).childNodes.item(3).childNodes.item(1)).val('');
+        $($(new_id).get(0).childNodes.item(5).childNodes.item(1)).val('');
+        $($(new_id).get(0).childNodes.item(7).childNodes.item(1)).selectedIndex =0;
+        $($(new_id).get(0).childNodes.item(9).childNodes.item(1)).val('');
+        $($(new_id).get(0).childNodes.item(11).childNodes.item(1)).selectedIndex =0;
 
     })
 </script>
@@ -165,7 +176,10 @@
 <!--查询按钮-->
 <script>
     $('#queryBtn').on('click',function () {
-        console.log('点击查询按钮')
+        //将条件的最后一行的关系改为 “空” （后面没有加条件，即使选择了关系，也没有作用）
+        $("#searchTable tbody tr:last td select:last").val("0");
+
+        //获取表格数据
         let form_data = decodeURIComponent($('#queryForm').serialize());
 
         let DataDeal = {
@@ -210,125 +224,201 @@
         let jsonData = DataDeal.jsonData(toData);//json字符串相同key合并value值并转化为json对象
         console.log(jsonData)
 
+        var currCondition = [];
+        var fields = 'patients_id,';
+        var join_items = '';
+        var where_items = ''
+        //传入后台sql语句
+        // for (i = 0; i < $("#searchTable tbody tr").length;i++){
+        //
+        //     //组合sql语句
+        //     let currColumn = 'Db::query("select * from '+jsonData['fenleiTwo'+i] +'where'+ jsonData['inputOne'+i] + jsonData['bijiaofu'+i] + jsonData['inputTwo'+i] + jsonData['guanxi'+i];
+        //
+        //     //组合成数组
+        //     currCondition.push(currColumn)
+        // }
+
+        // 完全外连接  full join 或 full outer join 用于or表示任意一张表条件满足
+        // SQL语句：select * from student full join course on student.ID=course.ID
+
+        // 内连接  join 或 inner join 用于and表示同时满足条件
+        // SQL语句：select * from student inner join course on student.ID=course.ID
+
+
+        //传入后台json对象数组
+        for (i = 0; i < $("#searchTable tbody tr").length;i++){
+            if (jsonData['bijiaofu'+i] == '等于'){
+                jsonData['bijiaofu'+i] = '=';
+            }
+            fields += jsonData['inputOne'+i]+',';
+
+            where_items += jsonData['inputOne'+i] + ' ' + jsonData['bijiaofu'+i] + ' ' + jsonData['inputTwo'+i] + ','
+
+        }
+        //去掉字符串最后一个','
+        fields=fields.substring(0,fields.length-1);
+        where_items=where_items.substring(0,where_items.length-1);
+
+        for (i = 1; i < $("#searchTable tbody tr").length;i++){
+            if (jsonData['guanxi'+(i-1)] == 'and'){
+                join_items += 'INNER JOIN '
+                    + jsonData['fenleiTwo'+i]
+                    + ' ON ' + jsonData['fenleiTwo'+(i-1)] + '.patients_id '
+                    + ' = ' + jsonData['fenleiTwo'+i] + '.patients_id '
+                    + ' '
+            }
+            if (jsonData['guanxi'+(i-1)] == 'or'){
+                join_items += 'FULL JOIN '
+                    + jsonData['fenleiTwo'+i]
+                    + ' ON ' + jsonData['fenleiTwo'+(i-1)] + '.patients_id '
+                    + ' = ' + jsonData['fenleiTwo'+i] + '.patients_id '
+                    + ' '
+            }
+
+        }
+        console.log(fields);
+        console.log(join_items);
+        console.log(where_items);
+
+        currCondition = 'SELECT ' + fields + ' FROM ' + jsonData['fenleiTwo0'] +' '+ join_items + ' WHERE ' + where_items
+        // FROM table1
+        // INNER JOIN table2 ON table1.patients_id bijiaofu1 table2.patients_id AND
+        // INNER JOIN table3 ON table2.patients_id bijiaofu2 table3.patients_id OR
+        // INNER JOIN table4 ON table3.patients_id bijiaofu3 table4.patients_id
+        // WHERE
+        // inputOne1 bijiaofu1 inputTwo1 AND
+        // inputOne2 bijiaofu2 inputTwo2 Or
+        // inputOne3 bijiaofu3 inputTwo3 Or
+
+        //传入后台对象数组
+        // for (i = 0; i < $("#searchTable tbody tr").length;i++){
+        //     var col = {
+        //         fenlei:jsonData['fenleiTwo'+i],
+        //         input1:jsonData['inputOne'+i],
+        //         bijiaofu:jsonData['bijiaofu'+i],
+        //         input2:jsonData['inputTwo'+i],
+        //         guanxi:jsonData['guanxi'+i]
+        //     }
+        //     currCondition.push(col)
+        // }
+        console.log(currCondition)
+
+        //提交后台
         $.ajax({
             type:"POST",
             url:"/Query/resQuery",
             data:{
-                data:jsonData
+                data:currCondition
             },
             dataType:'json',
             success:function (data) {
-                console.log(data)
+                // console.log(data)
             }
         });
-        console.log('Ajax结束')
     })
 
 </script>
 <!--二级分类联动-->
 <script>
-    function firstChange()
+    function firstChange(e)
     {
-        let first = document.getElementById("firstSelect");
-        let second = document.getElementById("secondSelect");
+        console.log(e);
+        let first =$(e).get(0);
+        let second = $(first).parent().next().children().get(0);
         second.options.length = 0; // 清除second下拉框的所有内容
         if(first.selectedIndex == 1)
         {
-            second.options.add(new Option("无", "无", false, true));  // 默认选中区
+            second.options.add(new Option("无", "Patients", false, true));  // 默认选中区
         }
 
 
         if(first.selectedIndex == 2)
         {
-            second.options.add(new Option("家族肿瘤史", "家族肿瘤史"));
-            second.options.add(new Option("术前合并症", "术前合并症", false, true));  // 默认选中区
-            second.options.add(new Option("个人史", "个人史"));
-            second.options.add(new Option("月经史", "月经史"));
+            second.options.add(new Option("家族肿瘤史", "History_family"));
+            second.options.add(new Option("术前合并症", "History_surgical", false, true));  // 默认选中区
+            second.options.add(new Option("个人史", "History_self"));
+            second.options.add(new Option("月经史", "History_menstrual"));
 
         }
         if(first.selectedIndex == 3)
         {
-            second.options.add(new Option("症状", "症状", false, true));  // 默认选中区
-            second.options.add(new Option("体征", "体征"));
+            second.options.add(new Option("症状", "Zhengzhuang", false, true));  // 默认选中区
+            second.options.add(new Option("体征", "Tizheng"));
 
         }
         if(first.selectedIndex == 4)
         {
-            second.options.add(new Option("血常规", "血常规"));
-            second.options.add(new Option("血生化", "血生化"));
-            second.options.add(new Option("血瘤标志物", "血瘤标志物"));
-            second.options.add(new Option("CT", "CT", false, true));   // 默认选中区
-            second.options.add(new Option("超声", "超声"));
-            second.options.add(new Option("肺功能", "肺功能"));
-            second.options.add(new Option("气管镜", "气管镜"));
-            second.options.add(new Option("头颅MRI/CT", "头颅MRI/CT"));
-            second.options.add(new Option("骨扫描", "骨扫描"));
-            second.options.add(new Option("骨MRI/CT", "骨MRI/CT"));
-            second.options.add(new Option("肝脏CT", "肝脏CT"));
-            second.options.add(new Option("PET", "PET"));
+            second.options.add(new Option("血常规", "Preoperative_xuechanggui"));
+            second.options.add(new Option("血生化", "Preoperative_xueshenghua"));
+            second.options.add(new Option("血瘤标志物", "Preoperative_xueliubiaozhiwu"));
+            second.options.add(new Option("CT", "Preoperative_ct", false, true));   // 默认选中区
+            second.options.add(new Option("超声", "Preoperative_chaosheng"));
+            second.options.add(new Option("肺功能", "Preoperative_feigongneng"));
+            second.options.add(new Option("气管镜", "Preoperative_qiguanjing"));
+            second.options.add(new Option("头颅MRI/CT", "Preoperative_toulu"));
+            second.options.add(new Option("骨扫描", "Preoperative_gusaomiao"));
+            second.options.add(new Option("骨MRI/CT", "Preoperative_guct"));
+            second.options.add(new Option("肝脏CT", "Preoperative_ganzhangct"));
+            second.options.add(new Option("PET", "Preoperative_pet"));
 
         }
         if(first.selectedIndex == 5)
         {
-            second.options.add(new Option("诱导前分期", "诱导前分期", false, true));  // 默认选中区
-            second.options.add(new Option("诱导化疗", "诱导化疗"));
-            second.options.add(new Option("诱导放疗", "诱导放疗"));
-            second.options.add(new Option("靶向诱导", "靶向诱导"));
-            second.options.add(new Option("诱导后分期", "诱导后分期"));
-            second.options.add(new Option("诱导后CT", "诱导后CT"));
-            second.options.add(new Option("诱导后PET", "诱导后PET"));
+            second.options.add(new Option("诱导前分期", "Induction_therapy_qianfenqi", false, true));  // 默认选中区
+            second.options.add(new Option("诱导化疗", "Induction_therapy_hualiao"));
+            second.options.add(new Option("诱导放疗", "Induction_therapy_fangliao"));
+            second.options.add(new Option("靶向诱导", "Induction_therapy_baxiang"));
+            second.options.add(new Option("诱导后分期", "Induction_therapy_houfenqi"));
+            second.options.add(new Option("诱导后CT", "Induction_therapy_houct"));
+            second.options.add(new Option("诱导后PET", "Induction_therapy_houpet"));
 
         }
         if(first.selectedIndex == 6)
         {
-            second.options.add(new Option("肿物信息", "肿物信息", false, true));  // 默认选中区
-            second.options.add(new Option("手术信息", "手术信息"));
+            second.options.add(new Option("肿物信息", "Surgical_info_zhongwu", false, true));  // 默认选中区
+            second.options.add(new Option("手术信息", "Surgical_info_shoushu"));
 
         }
         if(first.selectedIndex == 7)
         {
-            second.options.add(new Option("术中并发症", "术中并发症", false, true));  // 默认选中区
-            second.options.add(new Option("术后并发症", "术后并发症"));
-            second.options.add(new Option("二次手术", "二次手术"));
-            second.options.add(new Option("SICU", "SICU"));
+            second.options.add(new Option("术中并发症", "postoperative_complications_shuzhong", false, true));  // 默认选中区
+            second.options.add(new Option("术后并发症", "postoperative_complications_shuhou"));
+            second.options.add(new Option("二次手术", "postoperative_complications_erci"));
+            second.options.add(new Option("SICU", "postoperative_complications_icu"));
 
         }
         if(first.selectedIndex == 8)
         {
-            second.options.add(new Option("肿物", "肿物", false, true));  // 默认选中区
-            second.options.add(new Option("淋巴结清扫", "淋巴结清扫"));
-            second.options.add(new Option("病理分期", "病理分期"));
-            second.options.add(new Option("免疫组化", "免疫组化"));
-            second.options.add(new Option("基因检查", "基因检查"));
+            second.options.add(new Option("肿物", "Postoperative_pathology_zhongwu", false, true));  // 默认选中区
+            second.options.add(new Option("淋巴结清扫", "Postoperative_pathology_linba"));
+            second.options.add(new Option("病理分期", "Postoperative_pathology_bingli"));
+            second.options.add(new Option("免疫组化", "Postoperative_pathology_mianyi"));
+            second.options.add(new Option("基因检查", "Postoperative_pathology_jiyin"));
 
         }
         if(first.selectedIndex == 9)
         {
-            second.options.add(new Option("化疗", "化疗", false, true));  // 默认选中区
-            second.options.add(new Option("放疗", "放疗"));
-            second.options.add(new Option("伽玛刀", "伽玛刀"));
-            second.options.add(new Option("靶向", "靶向"));
+            second.options.add(new Option("化疗", "Complementary_treatment_hualiao", false, true));  // 默认选中区
+            second.options.add(new Option("放疗", "Complementary_treatment_fangliao"));
+            second.options.add(new Option("伽玛刀", "Complementary_treatment_gamadao"));
+            second.options.add(new Option("靶向", "Complementary_treatment_baxiang"));
 
         }
         if(first.selectedIndex == 10)
         {
-            second.options.add(new Option("联系人", "联系人", false, true));  // 默认选中区
-            second.options.add(new Option("复发转移", "复发转移"));
-            second.options.add(new Option("复发后治疗", "复发后治疗"));
+            second.options.add(new Option("联系人", "Follow_lianxiren", false, true));  // 默认选中区
+            second.options.add(new Option("复发转移", "Follow_fufazhuanyi"));
+            second.options.add(new Option("复发后化疗", "Follow_fufahouzhiliao_hualiao"));
+            second.options.add(new Option("复发后放疗", "Follow_fufahouzhiliao_fangliao"));
+            second.options.add(new Option("复发后伽玛刀", "Follow_fufahouzhiliao_gamadao"));
+            second.options.add(new Option("复发后靶向", "Follow_fufahouzhiliao_baxiang"));
 
         }
         if(first.selectedIndex == 11)
         {
-            second.options.add(new Option("无", "无", false, true));  // 默认选中区
+            second.options.add(new Option("无", "Referral", false, true));  // 默认选中区
 
         }
-    }
-    function secondChange()
-    {
-        let second = document.getElementById("secondSelect");
-        let index=second.selectedIndex; //序号，取当前选中选项的序号
-        let val = second.options[index].value;
-        console.log(val);
     }
 
 </script>

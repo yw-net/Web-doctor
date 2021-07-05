@@ -611,8 +611,7 @@
         let toData=DataDeal.formToJson(form_data);//转化为json字符串
 
         let jsonData = DataDeal.jsonData(toData);//json字符串相同key合并value值并转化为json对象
-        console.log(patients_id);
-        console.log(jsonData);
+
         $.ajax({
             type:"POST",
             url:"/Save/saveZZ",
