@@ -238,30 +238,6 @@
                                     </div>
                                     <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
                                         <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                            <label class="col-sm-4">累及部位</label>
-                                            <div class="flex-row-start">
-                                                <div class="input-group layui-col-md4" style="margin-top: 0!important;">
-                                                    <select class="form-control input-sm" name="zhongwu_leiji">
-                                                        <option value="请选择" selected/>请选择
-                                                        <option value="叶支气管"  />叶支气管
-                                                        <option value="段支气管"  />段支气管
-                                                        <option value="肺血管"  />肺血管
-                                                        <option value="脏层胸膜"  />脏层胸膜
-                                                        <option value="肺外组织"  />肺外组织
-                                                    </select>
-                                                </div>
-                                                <div class="input-group layui-col-md8">
-                                                    <div class="flex-row-start">
-                                                        <span class="input-group-addon layui-col-md4">其他</span>
-                                                        <input type="text" class="form-control input-sm" name="zhongwu_leiji_other" value="">
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </blockquote>
-                                    </div>
-                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
                                             <label class="col-sm-4">肿物距支气管端距离</label>
                                             <div class="flex-row-start col-sm-8 input-group">
                                                 <input type="text" class="form-control input-sm" name="zhongwu_zhiqiguanjuli" value="">
@@ -291,6 +267,26 @@
                                             <label class="radio-inline">
                                                 <input type="radio" name="zhongwu_yufeijiejie" value="否" checked/> 否
                                             </label>
+                                        </blockquote>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">累及部位</label>
+                                                <div class="input-group col-sm-8" style="margin-top: 0!important;">
+                                                    <select class="form-control input-sm" name="zhongwu_leiji">
+                                                        <option value="请选择" selected/>请选择
+                                                        <option value="叶支气管"  />叶支气管
+                                                        <option value="段支气管"  />段支气管
+                                                        <option value="肺血管"  />肺血管
+                                                        <option value="脏层胸膜"  />脏层胸膜
+                                                        <option value="肺外组织"  />肺外组织
+                                                    </select>
+                                                </div>
+                                                <div class="input-group col-sm-8 col-sm-offset-4" style="margin-top: 2px">
+                                                    <span class="input-group-addon">其他</span>
+                                                    <textarea type="text" class="form-control input-sm" name="zhongwu_leiji_other" value=""></textarea>
+
+                                                </div>
                                         </blockquote>
                                     </div>
 
@@ -334,31 +330,6 @@
                                         </blockquote>
                                     </div>
                                     <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                            <label class="col-sm-4">分化程度</label>
-                                            <div class="flex-row-start">
-                                                <div class="input-group layui-col-md4" style="margin-top: 0!important;">
-                                                    <select class="form-control input-sm" name="zhongwu_fenhuachengdu">
-                                                        <option value="请选择" selected/>请选择
-                                                        <option value="高分化"  />高分化
-                                                        <option value="高中分化"  />高中分化
-                                                        <option value="中分化"  />中分化
-                                                        <option value="中低分化"  />中低分化
-                                                        <option value="低分化"  />低分化
-                                                        <option value="未分化"  />未分化
-                                                    </select>
-                                                </div>
-                                                <div class="input-group layui-col-md8">
-                                                    <div class="flex-row-start">
-                                                        <span class="input-group-addon layui-col-md4">其他</span>
-                                                        <input type="text" class="form-control input-sm" name="zhongwu_fenhuachengdu_other" value="">
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </blockquote>
-                                    </div>
-                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
                                         <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
                                             <label class="col-sm-4">胸膜侵犯</label>
                                             <label class="radio-inline">
@@ -367,6 +338,26 @@
                                             <label class="radio-inline">
                                                 <input type="radio" name="zhongwu_xiongmoqinfan" value="否" checked/> 否
                                             </label>
+                                        </blockquote>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">分化程度</label>
+                                            <div class="input-group col-sm-8" style="margin-top: 0!important;">
+                                                <select class="form-control input-sm" name="zhongwu_fenhuachengdu">
+                                                    <option value="请选择" selected/>请选择
+                                                    <option value="高分化"  />高分化
+                                                    <option value="高中分化"  />高中分化
+                                                    <option value="中分化"  />中分化
+                                                    <option value="中低分化"  />中低分化
+                                                    <option value="低分化"  />低分化
+                                                    <option value="未分化"  />未分化
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-sm-8 col-sm-offset-4" style="margin-top: 2px">
+                                                <span class="input-group-addon">其他</span>
+                                                <textarea type="text" class="form-control input-sm" name="zhongwu_fenhuachengdu_other" value=""></textarea>
+                                            </div>
                                         </blockquote>
                                     </div>
 
@@ -533,30 +524,6 @@
                                     </div>
                                     <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
                                         <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                            <label class="col-sm-4">累及部位</label>
-                                            <div class="flex-row-start">
-                                                <div class="input-group layui-col-md4" style="margin-top: 0!important;">
-                                                    <select class="form-control input-sm" name="zhongwu_leiji">
-                                                        <option value="请选择" {if $zhongwu_info_item->zhongwu_leiji =='请选择'}selected{/if} />请选择
-                                                        <option value="叶支气管"  {if $zhongwu_info_item->zhongwu_leiji =='叶支气管'}selected{/if} />叶支气管
-                                                        <option value="段支气管"  {if $zhongwu_info_item->zhongwu_leiji =='段支气管'}selected{/if} />段支气管
-                                                        <option value="肺血管"  {if $zhongwu_info_item->zhongwu_leiji =='肺血管'}selected{/if} />肺血管
-                                                        <option value="脏层胸膜"  {if $zhongwu_info_item->zhongwu_leiji =='脏层胸膜'}selected{/if} />脏层胸膜
-                                                        <option value="肺外组织"  {if $zhongwu_info_item->zhongwu_leiji =='肺外组织'}selected{/if} />肺外组织
-                                                    </select>
-                                                </div>
-                                                <div class="input-group layui-col-md8">
-                                                    <div class="flex-row-start">
-                                                        <span class="input-group-addon layui-col-md4">其他</span>
-                                                        <input type="text" class="form-control input-sm" name="zhongwu_leiji_other" value="{$zhongwu_info_item->zhongwu_leiji_other}">
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </blockquote>
-                                    </div>
-                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
                                             <label class="col-sm-4">肿物距支气管端距离</label>
                                             <div class="flex-row-start col-sm-8 input-group">
                                                 <input type="text" class="form-control input-sm" name="zhongwu_zhiqiguanjuli" value="{$zhongwu_info_item->zhongwu_zhiqiguanjuli}">
@@ -586,6 +553,26 @@
                                             <label class="radio-inline">
                                                 <input type="radio" name="zhongwu_yufeijiejie" value="否" {if $zhongwu_info_item->zhongwu_yufeijiejie =='否'}checked{/if} /> 否
                                             </label>
+                                        </blockquote>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">累及部位</label>
+                                            <div class="input-group col-sm-8" style="margin-top: 0!important;">
+                                                <select class="form-control input-sm" name="zhongwu_leiji">
+                                                    <option value="请选择" {if $zhongwu_info_item->zhongwu_leiji =='请选择'}selected{/if} />请选择
+                                                    <option value="叶支气管"  {if $zhongwu_info_item->zhongwu_leiji =='叶支气管'}selected{/if} />叶支气管
+                                                    <option value="段支气管"  {if $zhongwu_info_item->zhongwu_leiji =='段支气管'}selected{/if} />段支气管
+                                                    <option value="肺血管"  {if $zhongwu_info_item->zhongwu_leiji =='肺血管'}selected{/if} />肺血管
+                                                    <option value="脏层胸膜"  {if $zhongwu_info_item->zhongwu_leiji =='脏层胸膜'}selected{/if} />脏层胸膜
+                                                    <option value="肺外组织"  {if $zhongwu_info_item->zhongwu_leiji =='肺外组织'}selected{/if} />肺外组织
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-sm-8 col-sm-offset-4" style="margin-top: 2px">
+                                                <span class="input-group-addon">其他</span>
+                                                <textarea type="text" class="form-control input-sm" name="zhongwu_leiji_other" >{$zhongwu_info_item->zhongwu_leiji_other}</textarea>
+
+                                            </div>
                                         </blockquote>
                                     </div>
 
@@ -629,31 +616,6 @@
                                         </blockquote>
                                     </div>
                                     <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
-                                            <label class="col-sm-4">分化程度</label>
-                                            <div class="flex-row-start">
-                                                <div class="input-group layui-col-md4" style="margin-top: 0!important;">
-                                                    <select class="form-control input-sm" name="zhongwu_fenhuachengdu">
-                                                        <option value="请选择" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='请选择'}selected{/if} />请选择
-                                                        <option value="高分化" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='高分化'}selected{/if} />高分化
-                                                        <option value="高中分化" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='高中分化'}selected{/if} />高中分化
-                                                        <option value="中分化" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='中分化'}selected{/if} />中分化
-                                                        <option value="中低分化" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='中低分化'}selected{/if} />中低分化
-                                                        <option value="低分化" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='低分化'}selected{/if} />低分化
-                                                        <option value="未分化" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='未分化'}selected{/if} />未分化
-                                                    </select>
-                                                </div>
-                                                <div class="input-group layui-col-md8">
-                                                    <div class="flex-row-start">
-                                                        <span class="input-group-addon layui-col-md4">其他</span>
-                                                        <input type="text" class="form-control input-sm" name="zhongwu_fenhuachengdu_other" value="{$zhongwu_info_item->zhongwu_fenhuachengdu_other}">
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </blockquote>
-                                    </div>
-                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
                                         <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
                                             <label class="col-sm-4">胸膜侵犯</label>
                                             <label class="radio-inline">
@@ -662,6 +624,27 @@
                                             <label class="radio-inline">
                                                 <input type="radio" name="zhongwu_xiongmoqinfan" value="否" {if $zhongwu_info_item->zhongwu_xiongmoqinfan =='否'}checked{/if} /> 否
                                             </label>
+                                        </blockquote>
+                                    </div>
+                                    <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
+                                        <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                            <label class="col-sm-4">分化程度</label>
+                                            <div class="input-group col-sm-8" style="margin-top: 0!important;">
+                                                <select class="form-control input-sm" name="zhongwu_fenhuachengdu">
+                                                    <option value="请选择" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='请选择'}selected{/if} />请选择
+                                                    <option value="高分化" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='高分化'}selected{/if} />高分化
+                                                    <option value="高中分化" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='高中分化'}selected{/if} />高中分化
+                                                    <option value="中分化" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='中分化'}selected{/if} />中分化
+                                                    <option value="中低分化" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='中低分化'}selected{/if} />中低分化
+                                                    <option value="低分化" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='低分化'}selected{/if} />低分化
+                                                    <option value="未分化" {if $zhongwu_info_item->zhongwu_fenhuachengdu =='未分化'}selected{/if} />未分化
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-sm-8 col-sm-offset-4" style="margin-top: 2px">
+                                                <span class="input-group-addon">其他</span>
+                                                <textarea type="text" class="form-control input-sm" name="zhongwu_fenhuachengdu_other">{$zhongwu_info_item->zhongwu_fenhuachengdu_other}</textarea>
+
+                                            </div>
                                         </blockquote>
                                     </div>
 

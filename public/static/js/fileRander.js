@@ -16,6 +16,7 @@ function initFileInput(formName, uploadUrl ,delUrl ,patients_id ,form_id,preAddr
             showDrag: false,
             showDownload: true,
         },
+        showPreview : true,
         showRemove: false,                 //不显示删除按钮
         showUpload: false,                 //不显示上传按钮
         browseClass: "btn btn-success",

@@ -256,12 +256,10 @@
                                     <label class="control-label col-sm-2" style="text-align: left;">
                                         <input name="fufazhuanyi_checkbox" type="checkbox" value="肝转移" {notempty name = 'fufazhuanyi_info'}{if(strstr($fufazhuanyi_info->fufazhuanyi_checkbox , '肝转移'))} checked {/if}{/notempty}> 肝转移
                                     </label>
-                                    <label class="control-label col-sm-4" style="text-align: left;">
-                                        <div class="input-group flex-row-start">
-                                            <span class="input-group-addon layui-col-md4 input-sm">其他</span>
-                                            <input type="text" class="form-control input-sm" name="fufazhuanyi_other" value="{$fufazhuanyi_info =='' ? null:$fufazhuanyi_info->fufazhuanyi_other}">
-                                        </div>
-                                    </label>
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon">其他</span>
+                                        <textarea type="text" class="form-control input-sm" name="fufazhuanyi_other">{$fufazhuanyi_info =='' ? null:$fufazhuanyi_info->fufazhuanyi_other}</textarea>
+                                    </div>
                                 </div>
                             </blockquote>
 

@@ -1,20 +1,41 @@
 {include file="public/meta" /}
 {include file="public/nav" /}
+<script type="text/javascript" src="http://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/js/bootstrap-select.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/css/bootstrap-select.css">
 <style>
     .layui-form-label{width: 120px;}
+    .bootstrap-select .dropdown-menu {
+        top: 36px !important;
+    }
 </style>
+<script type="text/javascript">
+    $(window).on('load', function () {
+
+        $('.selectpicker').selectpicker({
+            'selectedText': 'cat'
+        });
+
+    });
+</script>
 <!--高级查询页面-->
 <div class="content-empty layui-fluid">
     <div class="content-text">
-        <div class="panel panel-info">
+        <div class="panel panel-info" style="min-height: 550px;overflow-y: scroll;">
             <div class="panel-heading">
                 <h4 class="panel-title">高级查询</h4>
             </div>
             <div class="panel-body">
-                <p class="bg-warning" style="padding: 5px;border: 1px solid #FABB6C;border-radius: 4px">
-                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                    &nbsp;说明:
-                </p>
+
+                <div class="bg-warning" style="padding: 5px;border: 1px solid #FABB6C;border-radius: 4px">
+                    <p style="font-size: 16px;font-weight: bold">&nbsp;参数值输入内容说明：请根据注释输入相应的内容</p>
+                    <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;<code>时间</code>：格式为（YYYY-MM-DD）</p>
+
+                    <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;<code>单选框</code>：参数值-->（<code>1</code>为是、<code>0</code>为否）</p>
+                    <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;<code>多选框</code>：参数值-->可直接输入关键字查询；比较符-->请务必选择<code>包含</code></p>
+                    <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;<code>输入框</code>：参数值-->可直接输入关键字查询</p>
+                    <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;<code>未注释</code>：参数值-->可直接输入关键字查询</p>
+                    <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;<code>文本</code>：参数值-->输入其文本前的文字，表示单选框的"是"查询</p>
+                </div>
 
                 <div class="pull-right" style="margin: 10px 0">
                     <button class="btn btn-success" id="queryBtn">
@@ -23,9 +44,9 @@
                     </button>
                 </div>
 <!--                查询条件表格-->
-                <form class="layui-form" id="queryForm">
+                <form class="" id="queryForm">
 
-                    <div class="layui-form-item layui-col-md12">
+                    <div class="layui-col-md12">
 
                         <table class="table table-bordered" id="searchTable">
                             <thead>
@@ -42,7 +63,7 @@
                             <tbody>
                                 <tr id="row0">
                                     <td>
-                                        <select class="form-control input-sm" name="fenleiOne0" style="display: block" onchange="firstChange('#fenleiOne0')" id="fenleiOne0">
+                                        <select class="form-control" name="fenleiOne0" style="display: block" onchange="firstChange('#fenleiOne0')" id="fenleiOne0">
                                             <option value="请选择">请选择</option>
                                             <option value="基本信息">基本信息</option>
                                             <option value="既往病史">既往病史</option>
@@ -58,15 +79,19 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control input-sm" name="fenleiTwo0" style="display: block">
+                                        <select class="form-control" name="fenleiTwo0" style="display: block" onchange="secondChange('#fenleiTwo0')" id="fenleiTwo0">
 
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="form-control input-sm" name="inputOne0" type="text" value="" placeholder="请输入关键字">
+                                        <select style="display: block" class="selectpicker show-tick input-sm form-control" data-live-search="true" name="inputOne0">
+<!--                                            <option value="请选择" style="color: #ccc">直接选择或搜索选择</option>-->
+
+                                        </select>
+
                                     </td>
                                     <td>
-                                        <select class="form-control input-sm" name="bijiaofu0"style="display: block">
+                                        <select class="form-control" name="bijiaofu0"style="display: block">
                                             <option value="">请选择</option>
                                             <option value="like">包含</option>
                                             <option value="等于">等于</option>
@@ -76,11 +101,11 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="form-control input-sm" name="inputTwo0" type="text" value="" placeholder="请输入查询值">
+                                        <input class="form-control" name="inputTwo0" type="text" value="" placeholder="请输入查询值">
                                     </td>
                                     <td>
-                                        <select class="form-control input-sm" name="guanxi0" style="display: block">
-                                            <option value="">请选择</option>
+                                        <select class="form-control" name="guanxi0" style="display: block">
+                                            <option value="空">请选择</option>
                                             <option value="and">并且</option>
                                             <option value="or">或者</option>
                                         </select>
@@ -112,9 +137,10 @@
                     </div>
 
                 </form>
-
-<!--                查询结果表格-->
-                <table class="layui-hide" id="patientsQuery" lay-filter="patientsQuery"></table>
+            </div>
+            <!--表格主体-->
+            <div>
+                <table class="layui-hide" id="userManager" lay-filter="userManager"></table>
             </div>
         </div>
     </div>
@@ -143,7 +169,9 @@
         $($(new_id).get(0).childNodes.item(1).childNodes.item(1)).attr('name','fenleiOne'+num);
         $($(new_id).get(0).childNodes.item(1).childNodes.item(1)).attr('onchange',"firstChange('#fenleiOne"+num+"')");
 
+        $($(new_id).get(0).childNodes.item(3).childNodes.item(1)).attr('id','fenleiTwo'+num);
         $($(new_id).get(0).childNodes.item(3).childNodes.item(1)).attr('name','fenleiTwo'+num);
+        $($(new_id).get(0).childNodes.item(3).childNodes.item(1)).attr('onchange',"secondChange('#fenleiTwo"+num+"')");
 
         $($(new_id).get(0).childNodes.item(5).childNodes.item(1)).attr('name','inputOne'+num);
 
@@ -156,7 +184,15 @@
         //清空克隆行的内容
         $($(new_id).get(0).childNodes.item(1).childNodes.item(1)).selectedIndex =0;
         $($(new_id).get(0).childNodes.item(3).childNodes.item(1)).val('');
-        $($(new_id).get(0).childNodes.item(5).childNodes.item(1)).val('');
+
+        $($(new_id).get(0).childNodes.item(5).childNodes.item(1)).html('');
+        //处理克隆行selectpicker重复问题
+        $('.selectpicker').data('selectpicker', null);
+        $('.bootstrap-select').css("display","none");
+        $('.bootstrap-select').find("button:first").remove();
+        $('.selectpicker').selectpicker("refresh");
+
+
         $($(new_id).get(0).childNodes.item(7).childNodes.item(1)).selectedIndex =0;
         $($(new_id).get(0).childNodes.item(9).childNodes.item(1)).val('');
         $($(new_id).get(0).childNodes.item(11).childNodes.item(1)).selectedIndex =0;
@@ -166,7 +202,6 @@
 <!--删除按钮-->
 <script>
     $('#delRow').on('click',function () {
-        let t=document.getElementById('searchTable');
         if ($(this).parent().parent().index() == 0){
             return;
         }
@@ -177,7 +212,7 @@
 <script>
     $('#queryBtn').on('click',function () {
         //将条件的最后一行的关系改为 “空” （后面没有加条件，即使选择了关系，也没有作用）
-        $("#searchTable tbody tr:last td select:last").val("0");
+        $("#searchTable tbody tr:last td select:last").selectedIndex = 0;
 
         //获取表格数据
         let form_data = decodeURIComponent($('#queryForm').serialize());
@@ -222,99 +257,90 @@
         let toData=DataDeal.formToJson(form_data);//转化为json字符串
 
         let jsonData = DataDeal.jsonData(toData);//json字符串相同key合并value值并转化为json对象
-        console.log(jsonData)
-
-        var currCondition = [];
-        var fields = 'patients_id,';
-        var join_items = '';
-        var where_items = ''
-        //传入后台sql语句
-        // for (i = 0; i < $("#searchTable tbody tr").length;i++){
-        //
-        //     //组合sql语句
-        //     let currColumn = 'Db::query("select * from '+jsonData['fenleiTwo'+i] +'where'+ jsonData['inputOne'+i] + jsonData['bijiaofu'+i] + jsonData['inputTwo'+i] + jsonData['guanxi'+i];
-        //
-        //     //组合成数组
-        //     currCondition.push(currColumn)
-        // }
-
-        // 完全外连接  full join 或 full outer join 用于or表示任意一张表条件满足
-        // SQL语句：select * from student full join course on student.ID=course.ID
-
-        // 内连接  join 或 inner join 用于and表示同时满足条件
-        // SQL语句：select * from student inner join course on student.ID=course.ID
 
 
-        //传入后台json对象数组
+        var currCondition = [];//查询语句字符串
+        var arr_table = []; //需查询的表名数组化
+        var join_items = ''; //多表条件外连接
+        var where_items = '' //查询条件
+
+
         for (i = 0; i < $("#searchTable tbody tr").length;i++){
+
+            //比较符转换
             if (jsonData['bijiaofu'+i] == '等于'){
                 jsonData['bijiaofu'+i] = '=';
             }
-            fields += jsonData['inputOne'+i]+',';
 
-            where_items += jsonData['inputOne'+i] + ' ' + jsonData['bijiaofu'+i] + ' ' + jsonData['inputTwo'+i] + ','
+            //表名转换为数组
+            arr_table.push(jsonData['fenleiTwo'+i]);
 
-        }
-        //去掉字符串最后一个','
-        fields=fields.substring(0,fields.length-1);
-        where_items=where_items.substring(0,where_items.length-1);
-
-        for (i = 1; i < $("#searchTable tbody tr").length;i++){
-            if (jsonData['guanxi'+(i-1)] == 'and'){
-                join_items += 'INNER JOIN '
-                    + jsonData['fenleiTwo'+i]
-                    + ' ON ' + jsonData['fenleiTwo'+(i-1)] + '.patients_id '
-                    + ' = ' + jsonData['fenleiTwo'+i] + '.patients_id '
-                    + ' '
-            }
-            if (jsonData['guanxi'+(i-1)] == 'or'){
-                join_items += 'FULL JOIN '
-                    + jsonData['fenleiTwo'+i]
-                    + ' ON ' + jsonData['fenleiTwo'+(i-1)] + '.patients_id '
-                    + ' = ' + jsonData['fenleiTwo'+i] + '.patients_id '
-                    + ' '
+            //比较符判断
+            if (jsonData['bijiaofu'+i] == 'like'){
+                //where关系组合-模糊查询
+                where_items += ' ' + jsonData['inputOne'+i] + ' ' + jsonData['bijiaofu'+i] + ' ' + '"%'+jsonData['inputTwo'+i]+'%"' + ' '+jsonData['guanxi'+(i)]
+            }else {
+                //where关系组合-精确查询
+                where_items += ' ' + jsonData['inputOne'+i] + ' ' + jsonData['bijiaofu'+i] + ' ' + '"'+jsonData['inputTwo'+i]+'"' + ' '+jsonData['guanxi'+(i)]
             }
 
+
+
         }
-        console.log(fields);
-        console.log(join_items);
-        console.log(where_items);
 
-        currCondition = 'SELECT ' + fields + ' FROM ' + jsonData['fenleiTwo0'] +' '+ join_items + ' WHERE ' + where_items
-        // FROM table1
-        // INNER JOIN table2 ON table1.patients_id bijiaofu1 table2.patients_id AND
-        // INNER JOIN table3 ON table2.patients_id bijiaofu2 table3.patients_id OR
-        // INNER JOIN table4 ON table3.patients_id bijiaofu3 table4.patients_id
-        // WHERE
-        // inputOne1 bijiaofu1 inputTwo1 AND
-        // inputOne2 bijiaofu2 inputTwo2 Or
-        // inputOne3 bijiaofu3 inputTwo3 Or
+        //对相同的表进行数组去重
+        function uniq(array){
+            var temp = []; //一个新的临时数组
+            for(var i = 0; i < array.length; i++){
+                if(temp.indexOf(array[i]) == -1){
+                    temp.push(array[i]);
+                }
+            }
+            return temp;
+        }
+        arr_table = uniq(arr_table);
 
-        //传入后台对象数组
-        // for (i = 0; i < $("#searchTable tbody tr").length;i++){
-        //     var col = {
-        //         fenlei:jsonData['fenleiTwo'+i],
-        //         input1:jsonData['inputOne'+i],
-        //         bijiaofu:jsonData['bijiaofu'+i],
-        //         input2:jsonData['inputTwo'+i],
-        //         guanxi:jsonData['guanxi'+i]
-        //     }
-        //     currCondition.push(col)
-        // }
+        if (where_items.charAt(where_items.length-1) == 'r'){
+            where_items=where_items.substring(0,where_items.length-2); //去掉where关系最后一个and,or,空
+        }
+        if (where_items.charAt(where_items.length-1) == 'd'){
+            where_items=where_items.substring(0,where_items.length-3); //去掉where关系最后一个and,or,空
+        }
+        if (where_items.charAt(where_items.length-1) == '空'){
+            where_items=where_items.substring(0,where_items.length-1); //去掉where关系最后一个and,or,空
+        }
+
+
+        //多表条件连接
+        for (i = 1; i < arr_table.length;i++){
+            join_items += 'INNER JOIN '
+                + arr_table[i]
+                + ' ON ' + arr_table[i-1] + '.patients_id '
+                + ' = ' + arr_table[i] + '.patients_id '
+                + ' '
+        }
+
+        currCondition = 'SELECT * FROM ' + jsonData['fenleiTwo0'] +' '+ join_items + ' WHERE' + where_items
         console.log(currCondition)
+        //判断条件未输入完整
+        if(currCondition.indexOf("请选择") >= 0 || currCondition.indexOf("undefined") >= 0 || currCondition.indexOf("空")>= 0) {
+            alert('查询条件缺失！');
+            return;
+        }
 
-        //提交后台
-        $.ajax({
-            type:"POST",
-            url:"/Query/resQuery",
-            data:{
-                data:currCondition
-            },
-            dataType:'json',
-            success:function (data) {
-                // console.log(data)
-            }
-        });
+        layui.use(["form","table","layer","laypage","upload"], function() {
+            var table = layui.table;
+            table.reload('userManager', {
+                url: "/Query/resQuery"
+                ,where: { //设定异步数据接口的额外参数
+                    "data":currCondition
+                }
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        })
+
     })
 
 </script>
@@ -322,36 +348,39 @@
 <script>
     function firstChange(e)
     {
-        console.log(e);
         let first =$(e).get(0);
         let second = $(first).parent().next().children().get(0);
         second.options.length = 0; // 清除second下拉框的所有内容
         if(first.selectedIndex == 1)
         {
-            second.options.add(new Option("无", "Patients", false, true));  // 默认选中区
+            second.options.add(new Option("请选择", "", false, true));  // 默认选中区
+            second.options.add(new Option("患者信息", "Patients"));  // 默认选中区
         }
 
 
         if(first.selectedIndex == 2)
         {
+            second.options.add(new Option("请选择", "", false, true));  // 默认选中区
             second.options.add(new Option("家族肿瘤史", "History_family"));
-            second.options.add(new Option("术前合并症", "History_surgical", false, true));  // 默认选中区
+            second.options.add(new Option("术前合并症", "History_surgical"));
             second.options.add(new Option("个人史", "History_self"));
             second.options.add(new Option("月经史", "History_menstrual"));
 
         }
         if(first.selectedIndex == 3)
         {
-            second.options.add(new Option("症状", "Zhengzhuang", false, true));  // 默认选中区
+            second.options.add(new Option("请选择", "", false, true));  // 默认选中区
+            second.options.add(new Option("症状", "Zhengzhuang"));  // 默认选中区
             second.options.add(new Option("体征", "Tizheng"));
 
         }
         if(first.selectedIndex == 4)
         {
+            second.options.add(new Option("请选择", "", false, true));  // 默认选中区
             second.options.add(new Option("血常规", "Preoperative_xuechanggui"));
             second.options.add(new Option("血生化", "Preoperative_xueshenghua"));
             second.options.add(new Option("血瘤标志物", "Preoperative_xueliubiaozhiwu"));
-            second.options.add(new Option("CT", "Preoperative_ct", false, true));   // 默认选中区
+            second.options.add(new Option("CT", "Preoperative_ct"));
             second.options.add(new Option("超声", "Preoperative_chaosheng"));
             second.options.add(new Option("肺功能", "Preoperative_feigongneng"));
             second.options.add(new Option("气管镜", "Preoperative_qiguanjing"));
@@ -364,7 +393,8 @@
         }
         if(first.selectedIndex == 5)
         {
-            second.options.add(new Option("诱导前分期", "Induction_therapy_qianfenqi", false, true));  // 默认选中区
+            second.options.add(new Option("请选择", "", false, true));  // 默认选中区
+            second.options.add(new Option("诱导前分期", "Induction_therapy_qianfenqi"));
             second.options.add(new Option("诱导化疗", "Induction_therapy_hualiao"));
             second.options.add(new Option("诱导放疗", "Induction_therapy_fangliao"));
             second.options.add(new Option("靶向诱导", "Induction_therapy_baxiang"));
@@ -375,13 +405,15 @@
         }
         if(first.selectedIndex == 6)
         {
-            second.options.add(new Option("肿物信息", "Surgical_info_zhongwu", false, true));  // 默认选中区
+            second.options.add(new Option("请选择", "", false, true));  // 默认选中区
+            second.options.add(new Option("肿物信息", "Surgical_info_zhongwu"));
             second.options.add(new Option("手术信息", "Surgical_info_shoushu"));
 
         }
         if(first.selectedIndex == 7)
         {
-            second.options.add(new Option("术中并发症", "postoperative_complications_shuzhong", false, true));  // 默认选中区
+            second.options.add(new Option("请选择", "", false, true));  // 默认选中区
+            second.options.add(new Option("术中并发症", "postoperative_complications_shuzhong"));
             second.options.add(new Option("术后并发症", "postoperative_complications_shuhou"));
             second.options.add(new Option("二次手术", "postoperative_complications_erci"));
             second.options.add(new Option("SICU", "postoperative_complications_icu"));
@@ -389,7 +421,8 @@
         }
         if(first.selectedIndex == 8)
         {
-            second.options.add(new Option("肿物", "Postoperative_pathology_zhongwu", false, true));  // 默认选中区
+            second.options.add(new Option("请选择", "", false, true));  // 默认选中区
+            second.options.add(new Option("肿物", "Postoperative_pathology_zhongwu"));
             second.options.add(new Option("淋巴结清扫", "Postoperative_pathology_linba"));
             second.options.add(new Option("病理分期", "Postoperative_pathology_bingli"));
             second.options.add(new Option("免疫组化", "Postoperative_pathology_mianyi"));
@@ -398,7 +431,8 @@
         }
         if(first.selectedIndex == 9)
         {
-            second.options.add(new Option("化疗", "Complementary_treatment_hualiao", false, true));  // 默认选中区
+            second.options.add(new Option("请选择", "", false, true));  // 默认选中区
+            second.options.add(new Option("化疗", "Complementary_treatment_hualiao"));
             second.options.add(new Option("放疗", "Complementary_treatment_fangliao"));
             second.options.add(new Option("伽玛刀", "Complementary_treatment_gamadao"));
             second.options.add(new Option("靶向", "Complementary_treatment_baxiang"));
@@ -406,7 +440,8 @@
         }
         if(first.selectedIndex == 10)
         {
-            second.options.add(new Option("联系人", "Follow_lianxiren", false, true));  // 默认选中区
+            second.options.add(new Option("请选择", "", false, true));  // 默认选中区
+            second.options.add(new Option("联系人", "Follow_lianxiren"));
             second.options.add(new Option("复发转移", "Follow_fufazhuanyi"));
             second.options.add(new Option("复发后化疗", "Follow_fufahouzhiliao_hualiao"));
             second.options.add(new Option("复发后放疗", "Follow_fufahouzhiliao_fangliao"));
@@ -416,16 +451,1007 @@
         }
         if(first.selectedIndex == 11)
         {
-            second.options.add(new Option("无", "Referral", false, true));  // 默认选中区
+            second.options.add(new Option("请选择", "", false, true));  // 默认选中区
+            second.options.add(new Option("复诊信息", "Referral"));
 
         }
     }
 
 </script>
+<!--参数联动菜单-->
+<script>
+    function secondChange(e)
+    {
+        let second =$(e).get(0);
+        let third = $(second).parent().next().children().get(0);
 
+        switch ($(second).val()) {
+            case 'Patients':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM patients'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();  //防止sql语句错误，移除患者ID选择
+
+                        $(third).selectpicker('refresh');
+                    }
+                });
+                break;
+            case 'History_family':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM history_family'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'History_surgical':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM history_surgical'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'History_self':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM history_self'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'History_menstrual':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM history_menstrual'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Zhengzhuang':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM zhengzhuang'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Tizheng':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM tizheng'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Preoperative_xuechanggui':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM preoperative_xuechanggui'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Preoperative_xueshenghua':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM preoperative_xueshenghua'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Preoperative_xueliubiaozhiwu':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM preoperative_xueliubiaozhiwu'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Preoperative_ct':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM preoperative_ct'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Preoperative_chaosheng':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM preoperative_chaosheng'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Preoperative_feigongneng':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM preoperative_feigongneng'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Preoperative_qiguanjing':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM preoperative_qiguanjing'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Preoperative_toulu':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM preoperative_toulu'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Preoperative_gusaomiao':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM preoperative_gusaomiao'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Preoperative_guct':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM preoperative_guct'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Preoperative_ganzhangct':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM preoperative_ganzhangct'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Preoperative_pet':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM preoperative_pet'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Induction_therapy_qianfenqi':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM induction_therapy_qianfenqi'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Induction_therapy_hualiao':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM induction_therapy_hualiao'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Induction_therapy_fangliao':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM induction_therapy_fangliao'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Induction_therapy_baxiang':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM induction_therapy_baxiang'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Induction_therapy_houfenqi':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM induction_therapy_houfenqi'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Induction_therapy_houct':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM induction_therapy_houct'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Induction_therapy_houpet':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM induction_therapy_houpet'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Surgical_info_zhongwu':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM surgical_info_zhongwu'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Surgical_info_shoushu':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM surgical_info_shoushu'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'postoperative_complications_shuzhong':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM postoperative_complications_shuzhong'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'postoperative_complications_shuhou':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM postoperative_complications_shuhou'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'postoperative_complications_erci':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM postoperative_complications_erci'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'postoperative_complications_icu':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM postoperative_complications_icu'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Postoperative_pathology_zhongwu':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM postoperative_pathology_zhongwu'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Postoperative_pathology_linba':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM postoperative_pathology_linba'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Postoperative_pathology_bingli':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM postoperative_pathology_zhongwu'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Postoperative_pathology_mianyi':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM postoperative_pathology_mianyi'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Postoperative_pathology_jiyin':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM postoperative_pathology_jiyin'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Complementary_treatment_hualiao':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM complementary_treatment_hualiao'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Complementary_treatment_fangliao':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM complementary_treatment_fangliao'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Complementary_treatment_gamadao':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM complementary_treatment_gamadao'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Complementary_treatment_baxiang':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM Complementary_treatment_baxiang'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Follow_lianxiren':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM follow_lianxiren'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Follow_fufazhuanyi':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM Follow_fufazhuanyi'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Follow_fufahouzhiliao_hualiao':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM follow_fufahouzhiliao_hualiao'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Follow_fufahouzhiliao_fangliao':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM follow_fufahouzhiliao_fangliao'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Follow_fufahouzhiliao_gamadao':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM follow_fufahouzhiliao_gamadao'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Follow_fufahouzhiliao_baxiang':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM Follow_fufahouzhiliao_baxiang'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+            case 'Referral':
+                $(third).html('<option value="">请直接选择或输入</option>'); // 清除third下拉框的所有内容
+                $(third).selectpicker('refresh');
+                $.ajax({
+                    type:"POST",
+                    url:"/Query/resTable",
+                    data:{
+                        data:'SHOW FULL COLUMNS FROM referral'
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        $.each(data,function (key,val) {
+                            $(third).append("<option value='"+key+"'>"+val+"</option>");
+                        })
+                        $("option[value='patients_id']").remove();
+                        $(third).selectpicker('refresh');  //防止sql语句错误，移除患者ID选择
+                    }
+                });
+                break;
+        }
+
+    }
+
+</script>
+<!--表格右侧功能按钮-->
+<script type="text/html" id="toolbar">
+    <div class="flex-row-start">
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit" style="text-decoration: none;display: block;padding: 2px;height: 25px;line-height: 20px;border-radius: 2px;width: 70px;font-weight: 500">编辑｜查看</a>
+    </div>
+</script>
+<!--表格样式（性别）-->
+<script type="text/html" id="sexTemplet">
+    {{#  if(d.sex == 1){ }}
+    <span style="color: #334553;">男</span>
+    {{#  } else { }}
+    <span style="color: #B84038;">女</span>
+    {{#  } }}
+</script>
 <!--layui框架（表格相关操作）-->
 <script>
+    layui.use(["form","table","layer","laypage","upload"], function(){
+        var table = layui.table;
+        var form = layui.form;
+        var layer = layui.layer;
+        var laypage = layui.laypage;
+        var upload = layui.upload;
 
+        //表格渲染
+        table.render({
+            elem: '#userManager'
+            ,url:"{:url('Api/patientsManager')}"
+            ,toolbar: '#addNewPatient' //开启头部工具栏，并为其绑定左侧模板
+            ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                ,layEvent: 'LAYTABLE_TIPS'
+                ,icon: 'layui-icon-tips'
+            }]
+            ,page: {
+                limit:10 //一页显示多少条
+                ,limits:[10,15,20]//每页条数的选择项
+                ,groups: 5 //连续页码
+                ,first: "首页"
+                ,last: "尾页"
+                ,prev:"上一页"
+                ,next:"下一页"
+            }
+
+            ,title: '患者基本信息'
+            ,cols: [[
+                {field:'patients_id', title:'患者ID', width:120,sort: true,align:'center'}
+                ,{field:'patients_name', title:'患者姓名',width:120,align:'center'}
+                ,{field:'phone', title:'电话', align:'center'}
+                ,{field:'hospital_id', title:'住院号',sort: true,align:'center'}
+                ,{field:'sex', title:'性别',sort:true,width:80,templet:'#sexTemplet',align:'center'}
+                ,{field:'age', title:'年龄',sort: true,width:80,align:'center'}
+                ,{field:'doctor', title:'主治医生',width:120,sort: true,align:'center'}
+                ,{field:'hospitalized_time', title:'入院日期', width:120,sort:true,align:'center'}
+                ,{field:'leaving_hospital', title:'离院日期', width:120,sort:true,align:'center'}
+                ,{fixed: 'right', title:'操作', toolbar: '#toolbar', align:'center'}
+            ]]
+        });
+
+        //编辑
+        table.on('tool(userManager)', function(obj){
+            var patientsid = obj.data.patients_id;
+            //编辑
+            if(obj.event === 'edit'){
+                $('.nav-left').css('display','block');
+                window.location.href='/menu/patients?patientsid='+patientsid;
+            }
+        });
+    });
 </script>
 
 {include file="public/footer" /}

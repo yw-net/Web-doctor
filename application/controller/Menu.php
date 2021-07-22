@@ -76,7 +76,7 @@ class Menu extends Base
                 $query->field([
                     'patients_name','phone','second_hospital_in','birthday','national','height','weight',
                     'hospitalized_time','leaving_hospital','hospital_out_to','adress1a','adress1b','adress1c','adress2','hospital_id','id_photo_num',
-                    'id_pathological','identity_card','sex','age','married','doctor','created_time','edit_time'
+                    'id_pathological','identity_card','sex','age','married','doctor','created_time','edit_time','hospital_date'
                 ])->where('patients_id','=',$patientsid);
             };
             $result = Patients::all($where);

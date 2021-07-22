@@ -43,6 +43,7 @@ class Save extends Base
         $patientsouthospital = $this->request->param('outhospital');
         $patientsoutto = $this->request->param('outto');
         $patientsdoctor = $this->request->param('doctor');
+        $patientshospitaldate = $this->request->param('hospitaldate');
         if ($patientsdate == null){
             $patientsdate = '2020-01-01';
         }
@@ -74,7 +75,8 @@ class Save extends Base
             'sex'=>$patientssex,
             'age'=>$patientsage,
             'married'=>$patientsmarry,
-            'doctor'=>$patientsdoctor
+            'doctor'=>$patientsdoctor,
+            'hospital_date'=>$patientshospitaldate
         ];
         $where=[
             'patients_id'=>$patientsid
@@ -82,7 +84,7 @@ class Save extends Base
         $field=[
             'patients_id','patients_name','phone','second_hospital_in','birthday','national','height','weight',
             'hospitalized_time','leaving_hospital','hospital_out_to','adress1a','adress1b','adress1c','adress2','hospital_id','id_photo_num',
-            'id_pathological','identity_card','sex','age','married','doctor','created_time','edit_time'
+            'id_pathological','identity_card','sex','age','married','doctor','created_time','edit_time','hospital_date'
         ];
         //查询患者ID是否已经存在
         $is_old = Patients::where('patients_id',$patientsid)->find();

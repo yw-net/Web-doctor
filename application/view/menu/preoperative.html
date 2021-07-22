@@ -2141,9 +2141,9 @@
                                         <label class="checkbox-inline"><input name="jingxiahuojian" type="checkbox" value="钳取"> 钳取</label>
                                         <label class="checkbox-inline"><input name="jingxiahuojian" type="checkbox" value="刷检"> 刷检</label>
                                         <label class="checkbox-inline"><input name="jingxiahuojian" type="checkbox" value="灌洗"> 灌洗</label>
-                                        <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                        <div class="input-group col-sm-offset-2 col-sm-10" style="margin-top: 5px">
                                             <span class="input-group-addon">其他</span>
-                                            <input type="text" class="form-control input-sm layui-input-inline" name="jingxiahuojian_other" value="">
+                                            <textarea type="text" class="form-control input-sm layui-input-inline" name="jingxiahuojian_other"></textarea>
                                         </div>
                                     </blockquote>
 
@@ -2158,9 +2158,9 @@
                                         <label class="checkbox-inline"><input name="tbna" type="checkbox" value="10R"> 10R</label>
                                         <label class="checkbox-inline"><input name="tbna" type="checkbox" value="11L"> 11L</label>
                                         <label class="checkbox-inline"><input name="tbna" type="checkbox" value="11R"> 11R</label>
-                                        <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                        <div class="input-group col-sm-offset-2 col-sm-10" style="margin-top: 5px">
                                             <span class="input-group-addon">其他</span>
-                                            <input type="text" class="form-control input-sm layui-input-inline" name="tbna_other" value="">
+                                            <textarea type="text" class="form-control input-sm layui-input-inline" name="tbna_other"></textarea>
                                         </div>
                                     </blockquote>
 
@@ -2175,17 +2175,17 @@
                                         <label class="checkbox-inline"><input name="ebus" type="checkbox" value="10R"> 10R</label>
                                         <label class="checkbox-inline"><input name="ebus" type="checkbox" value="11L"> 11L</label>
                                         <label class="checkbox-inline"><input name="ebus" type="checkbox" value="11R"> 11R</label>
-                                        <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                        <div class="input-group col-sm-offset-2 col-sm-10" style="margin-top: 5px">
                                             <span class="input-group-addon">其他</span>
-                                            <input type="text" class="form-control input-sm layui-input-inline" name="ebus_other" value="">
+                                            <textarea type="text" class="form-control input-sm layui-input-inline" name="ebus_other"></textarea>
                                         </div>
                                     </blockquote>
 
                                     <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
                                         <label class="col-sm-2">TBLB</label>
 
-                                        <div class="input-group col-sm-4">
-                                            <input type="text" class="form-control input-sm layui-input-inline" name="tblb_other" value="">
+                                        <div class="input-group col-sm-10">
+                                            <textarea type="text" class="form-control input-sm layui-input-inline" name="tblb_other"></textarea>
                                         </div>
                                     </blockquote>
 
@@ -2354,9 +2354,9 @@
                                         <label class="checkbox-inline"><input name="jingxiahuojian" type="checkbox" value="钳取" {if(strstr($qiguanjing_info_item->jingxiahuojian , '钳取'))} checked {/if}> 钳取</label>
                                         <label class="checkbox-inline"><input name="jingxiahuojian" type="checkbox" value="刷检" {if(strstr($qiguanjing_info_item->jingxiahuojian , '刷检'))} checked {/if}> 刷检</label>
                                         <label class="checkbox-inline"><input name="jingxiahuojian" type="checkbox" value="灌洗" {if(strstr($qiguanjing_info_item->jingxiahuojian , '灌洗'))} checked {/if}> 灌洗</label>
-                                        <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                        <div class="input-group col-sm-offset-2 col-sm-10" style="margin-top: 5px">
                                             <span class="input-group-addon">其他</span>
-                                            <input type="text" class="form-control input-sm layui-input-inline" name="jingxiahuojian_other" value="{$qiguanjing_info_item->jingxiahuojian_other}">
+                                            <textarea type="text" class="form-control input-sm layui-input-inline" name="jingxiahuojian_other">{$qiguanjing_info_item->jingxiahuojian_other}</textarea>
                                         </div>
                                     </blockquote>
 
@@ -2371,9 +2371,9 @@
                                         <label class="checkbox-inline"><input name="tbna" type="checkbox" value="10R" {if(strstr($qiguanjing_info_item->tbna , '10R'))} checked {/if}> 10R</label>
                                         <label class="checkbox-inline"><input name="tbna" type="checkbox" value="11L" {if(strstr($qiguanjing_info_item->tbna , '11L'))} checked {/if}> 11L</label>
                                         <label class="checkbox-inline"><input name="tbna" type="checkbox" value="11R" {if(strstr($qiguanjing_info_item->tbna , '11R'))} checked {/if}> 11R</label>
-                                        <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                        <div class="input-group col-sm-offset-2 col-sm-10" style="margin-top: 5px">
                                             <span class="input-group-addon">其他</span>
-                                            <input type="text" class="form-control input-sm layui-input-inline" name="tbna_other" value="{$qiguanjing_info_item->tbna_other}">
+                                            <textarea type="text" class="form-control input-sm layui-input-inline" name="tbna_other">{$qiguanjing_info_item->tbna_other}</textarea>
                                         </div>
                                     </blockquote>
 
@@ -2388,17 +2388,17 @@
                                         <label class="checkbox-inline"><input name="ebus" type="checkbox" value="10R" {if(strstr($qiguanjing_info_item->ebus , '10R'))} checked {/if}> 10R</label>
                                         <label class="checkbox-inline"><input name="ebus" type="checkbox" value="11L" {if(strstr($qiguanjing_info_item->ebus , '11L'))} checked {/if}> 11L</label>
                                         <label class="checkbox-inline"><input name="ebus" type="checkbox" value="11R" {if(strstr($qiguanjing_info_item->ebus , '11R'))} checked {/if}> 11R</label>
-                                        <div class="input-group col-sm-offset-2 col-sm-4" style="margin-top: 5px">
+                                        <div class="input-group col-sm-offset-2 col-sm-10" style="margin-top: 5px">
                                             <span class="input-group-addon">其他</span>
-                                            <input type="text" class="form-control input-sm layui-input-inline" name="ebus_other" value="{$qiguanjing_info_item->ebus_other}">
+                                            <textarea type="text" class="form-control input-sm layui-input-inline" name="ebus_other">{$qiguanjing_info_item->ebus_other}</textarea>
                                         </div>
                                     </blockquote>
 
                                     <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
                                         <label class="col-sm-2">TBLB</label>
 
-                                        <div class="input-group col-sm-4">
-                                            <input type="text" class="form-control input-sm layui-input-inline" name="tblb_other" value="{$qiguanjing_info_item->tblb_other}">
+                                        <div class="input-group col-sm-10">
+                                            <textarea type="text" class="form-control input-sm layui-input-inline" name="tblb_other">{$qiguanjing_info_item->tblb_other}</textarea>
                                         </div>
                                     </blockquote>
 

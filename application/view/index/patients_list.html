@@ -35,7 +35,7 @@
         <div class="layui-inline">
             <input class="layui-input" name="reload" id="reload" autocomplete="off" placeholder="请输入（患者ID/患者姓名/住院号）查询" style="width: 300px;height: 30px;">
         </div>
-        <button type="button" class="layui-btn layui-btn-sm" data-type="search" id="search" style="margin-left: 5px;"><i class="layui-icon">&#xe615;</i>查询</button>
+        <button type="button" class="layui-btn layui-btn-sm" onclick="search();" style="margin-left: 5px;"><i class="layui-icon">&#xe615;</i>查询</button>
         <button type="button" class="layui-btn layui-btn-sm layui-btn-warm" style="margin-left: 15px;" onclick="javascript:location.reload();"><i class="layui-icon">&#xe669;</i>刷新</button>
         <div class="layui-btn-container" style="margin-left: 15px;">
             <a type="button" class="layui-btn layui-btn-sm layui-btn-normal" href="{:url('Api/addpatients')}" style="text-decoration:none;"><i class="layui-icon">&#xe654;</i>添加新患者</a>
@@ -60,6 +60,26 @@
     {{#  } else { }}
     <span style="color: #B84038;">女</span>
     {{#  } }}
+</script>
+
+<!--查询按钮（按用户名、医生姓名查询）-->
+<script>
+    function search() {
+        let inputinfo = $('#reload').val();
+        layui.use(["form","table","layer","laypage","upload"], function() {
+            var table = layui.table;
+            table.reload('userManager', {
+                url: "{:url('Api/searchPatient')}"
+                , where: { //设定异步数据接口的额外参数
+                    "inputinfo": inputinfo
+                }
+                , page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        })
+    }
+
 </script>
 
 <!--layui框架（表格相关操作）-->
@@ -133,23 +153,6 @@
                 window.location.href='/menu/patients?patientsid='+patientsid;
             }
         });
-
-        //查询按钮（按用户名、医生姓名查询）
-        $(function () {
-            $("#search").on('click',function (event) {
-                let inputinfo = $('#reload').val();
-                table.reload('userManager', {
-                    url: "{:url('Api/searchPatient')}"
-                    ,where: { //设定异步数据接口的额外参数
-                        "inputinfo":inputinfo
-                    }
-                    ,page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                });
-
-            })
-        })
 
     });
 </script>

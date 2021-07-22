@@ -111,7 +111,7 @@
                                         /> 否
                                     </label>
                                 </blockquote>
-                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;">
                                     <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
                                         <label class="col-sm-4">术中大出血</label>
                                         <label class="radio-inline">
@@ -132,18 +132,16 @@
                                         </label>
                                     </div>
                                     <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                        <div class="flex-row-start dachuxueshow" style="display: none">
-                                            <div class="input-group layui-col-md4 flex-row-start">
-                                                <span class="input-group-addon layui-col-md4 input-sm">出血量</span>
-                                                <input type="text" class="form-control layui-col-md4 input-sm" name="shuzhongdachuxue_chuxueliang" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdachuxue_chuxueliang}">
-                                                <span class="input-group-addon layui-col-md4 input-sm">ml</span>
-                                            </div>
-
-                                            <div class="input-group layui-col-md6 flex-row-start" style="margin-left: 10px">
-                                                <span class="input-group-addon layui-col-md4 input-sm">原因</span>
-                                                <input type="text" class="form-control input-sm" name="shuzhongdachuxue_yuanyin" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdachuxue_yuanyin}">
-                                            </div>
+                                        <div class="input-group flex-row-start layui-col-md6">
+                                            <span class="input-group-addon layui-col-md4 input-sm">出血量</span>
+                                            <input type="text" class="form-control layui-col-md6 input-sm" name="shuzhongdachuxue_chuxueliang" value="{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdachuxue_chuxueliang}">
+                                            <span class="input-group-addon layui-col-md2 input-sm">ml</span>
                                         </div>
+
+                                    </div>
+                                    <div class="input-group col-sm-offset-2 col-sm-7">
+                                        <span class="input-group-addon">原因</span>
+                                        <textarea type="text" class="form-control input-sm" name="shuzhongdachuxue_yuanyin">{$shuzhong_info ==null ? null:$shuzhong_info->shuzhongdachuxue_yuanyin}</textarea>
                                     </div>
                                 </blockquote>
                                 <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
@@ -479,7 +477,7 @@
                                         </div>
                                     </div>
                                 </blockquote>
-                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;">
                                     <div class="form-group layui-col-md6" style="margin-bottom: 0!important;height: 42px">
                                         <label class="col-sm-4">心率失常</label>
                                         <label class="radio-inline">
@@ -500,45 +498,43 @@
                                         </label>
                                     </div>
                                     <div class="form-group layui-col-md6" style="margin-bottom: 0!important;">
-                                        <div class="flex-row-start dachuxueshow" style="display: none">
-                                            <div class="input-group layui-col-md6 flex-row-start">
-                                                <select class="form-control input-sm" name="xinlvshichang_select" style="display: none">
-                                                    <option value="请选择" {notempty name ='shuhou_info'}
-                                                            {if($shuhou_info->xinlvshichang_select =='请选择')} selected {/if}
-                                                        {else}selected
-                                                        {/notempty}/>请选择
-                                                    <option value="房颤"  {notempty name ='shuhou_info'}
-                                                            {if($shuhou_info->xinlvshichang_select =='房颤')} selected {/if}
-                                                        {/notempty}/>房颤
-                                                    <option value="室颤"  {notempty name ='shuhou_info'}
-                                                            {if($shuhou_info->xinlvshichang_select =='室颤')} selected {/if}
-                                                        {/notempty}/>室颤
-                                                    <option value="房扑"  {notempty name ='shuhou_info'}
-                                                            {if($shuhou_info->xinlvshichang_select =='房扑')} selected {/if}
-                                                        {/notempty}/>房扑
-                                                    <option value="室速"  {notempty name ='shuhou_info'}
-                                                            {if($shuhou_info->xinlvshichang_select =='室速')} selected {/if}
-                                                        {/notempty}/>室速
-                                                    <option value="室上速"  {notempty name ='shuhou_info'}
-                                                            {if($shuhou_info->xinlvshichang_select =='室上速')} selected {/if}
-                                                        {/notempty}/>室上速
-                                                    <option value="停搏"  {notempty name ='shuhou_info'}
-                                                            {if($shuhou_info->xinlvshichang_select =='停搏')} selected {/if}
-                                                        {/notempty}/>停搏
-                                                    <option value="窦缓"  {notempty name ='shuhou_info'}
-                                                            {if($shuhou_info->xinlvshichang_select =='窦缓')} selected {/if}
-                                                        {/notempty}/>窦缓
-                                                    <option value="其他"  {notempty name ='shuhou_info'}
-                                                            {if($shuhou_info->xinlvshichang_select =='其他')} selected {/if}
-                                                        {/notempty}/>其他
-                                                </select>
-                                            </div>
-
-                                            <div class="input-group layui-col-md6 flex-row-start" style="margin-left: 10px">
-                                                <span class="input-group-addon layui-col-md4 input-sm">其他</span>
-                                                <input type="text" class="form-control input-sm" name="xinlvshichang_other" value="{$shuhou_info =='' ? null:$shuhou_info->xinlvshichang_other}">
-                                            </div>
+                                        <div class="input-group layui-col-md6">
+                                            <select class="form-control input-sm" name="xinlvshichang_select" style="display: none">
+                                                <option value="请选择" {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->xinlvshichang_select =='请选择')} selected {/if}
+                                                    {else}selected
+                                                    {/notempty}/>请选择
+                                                <option value="房颤"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->xinlvshichang_select =='房颤')} selected {/if}
+                                                    {/notempty}/>房颤
+                                                <option value="室颤"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->xinlvshichang_select =='室颤')} selected {/if}
+                                                    {/notempty}/>室颤
+                                                <option value="房扑"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->xinlvshichang_select =='房扑')} selected {/if}
+                                                    {/notempty}/>房扑
+                                                <option value="室速"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->xinlvshichang_select =='室速')} selected {/if}
+                                                    {/notempty}/>室速
+                                                <option value="室上速"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->xinlvshichang_select =='室上速')} selected {/if}
+                                                    {/notempty}/>室上速
+                                                <option value="停搏"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->xinlvshichang_select =='停搏')} selected {/if}
+                                                    {/notempty}/>停搏
+                                                <option value="窦缓"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->xinlvshichang_select =='窦缓')} selected {/if}
+                                                    {/notempty}/>窦缓
+                                                <option value="其他"  {notempty name ='shuhou_info'}
+                                                        {if($shuhou_info->xinlvshichang_select =='其他')} selected {/if}
+                                                    {/notempty}/>其他
+                                            </select>
                                         </div>
+
+                                    </div>
+                                    <div class="input-group col-sm-offset-2 col-sm-7">
+                                        <span class="input-group-addon">其他</span>
+                                        <textarea type="text" class="form-control input-sm" name="xinlvshichang_other">{$shuhou_info =='' ? null:$shuhou_info->xinlvshichang_other}</textarea>
                                     </div>
                                 </blockquote>
                                 <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
@@ -945,7 +941,7 @@
                                         </div>
                                     </div>
                                 </blockquote>
-                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;">
                                     <div class="input-group col-sm-12">
                                         <label class="col-sm-2">原因</label>
                                         <div class="col-sm-4">
@@ -968,10 +964,10 @@
                                                     {/notempty}/>脓胸
                                             </select>
                                         </div>
-                                        <div class="col-sm-4">
-                                            <div class="input-group flex-row-start" style="margin-left: 10px">
-                                                <span class="input-group-addon layui-col-md4 input-sm">其他</span>
-                                                <input type="text" class="form-control input-sm" name="yuanyin_other" value="{$erci_info =='' ? null:$erci_info->yuanyin_other}">
+                                        <div class="col-sm-10 col-sm-offset-2" style="margin-top: 5px">
+                                            <div class="input-group">
+                                                <span class="input-group-addon input-group-sm">其他</span>
+                                                <textarea type="text" class="form-control" name="yuanyin_other">{$erci_info =='' ? null:$erci_info->yuanyin_other}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1029,7 +1025,7 @@
                                         </div>
                                     </div>
                                 </blockquote>
-                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;height: 42px;">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px;">
                                     <div class="input-group col-sm-12">
                                         <label class="col-sm-2">原因</label>
                                         <div class="col-sm-4">
@@ -1049,10 +1045,10 @@
                                                     {/notempty}/>心梗
                                             </select>
                                         </div>
-                                        <div class="col-sm-4">
-                                            <div class="input-group flex-row-start" style="margin-left: 10px">
-                                                <span class="input-group-addon layui-col-md4 input-sm">其他</span>
-                                                <input type="text" class="form-control input-sm" name="icu_yuanyin_other" value="{$icu_info =='' ? null:$icu_info->icu_yuanyin_other}">
+                                        <div class="col-sm-10 col-sm-offset-2" style="margin-top: 5px">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">其他</span>
+                                                <textarea type="text" class="form-control" name="icu_yuanyin_other">{$icu_info =='' ? null:$icu_info->icu_yuanyin_other}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1236,20 +1232,14 @@
 <!--点击显示输入框-->
 <script>
     $(function($) {
-        if ($("input[name='shuzhongdachuxue_check']").attr('checked') == 'checked'){
-            $('.dachuxueshow').css('display','');
-        }if ($("input[name='xinlvshichang_check']").attr('checked') == 'checked'){
+
+        if ($("input[name='xinlvshichang_check']").attr('checked') == 'checked'){
             $("select[name='xinlvshichang_select']").css('display','');
-        }if ($("input[name='shuzhongsunshang_check']").attr('checked') == 'checked'){
+        }
+        if ($("input[name='shuzhongsunshang_check']").attr('checked') == 'checked'){
             $("select[name='shuzhongsunshang_select']").css('display','');
         }
-        $("input[name='shuzhongdachuxue_check']").on('click',function(){
-            if ($(this).val() == '是'){
-                $('.dachuxueshow').show(200);
-            }else {
-                $('.dachuxueshow').hide(200);
-            }
-        });
+
         $("input[name='xinlvshichang_check']").on('click',function(){
             if ($(this).val() == '是'){
                 $("select[name='xinlvshichang_select']").show(200);

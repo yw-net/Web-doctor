@@ -125,7 +125,33 @@ class PreSave extends Base
             $imgInfo = filesize($file_path.$value); //获取文件大小
 
             $file_name = explode('/',$value);   //截取字符串
-            array_push($res_info,['caption'=>$file_name[1],'downloadUrl'=>'../prefile/'.$type.'/'.$value,'key'=>$value,'size'=>$imgInfo]);   //组合对象数组
+            $file_type = $file_name[1];
+            $arr=explode(".", $file_type);
+//获取最后一个/后边的字符
+            $last=$arr[count($arr)-1];
+            switch ($last){
+                case 'mp4':
+                    $filetype = 'video/mp4';
+                    $file_type = 'video';
+                    break;
+                case 'mp3':
+                    $filetype = 'audio/mp3';
+                    $file_type = 'audio';
+                    break;
+                case 'jpg':
+                case 'png':
+                case 'bmp':
+                case 'JPEG':
+                case 'jpeg':
+                case 'gif':
+                    $filetype = 'image';
+                    $file_type = 'image';
+                    break;
+                default:
+                    $filetype = 'object';
+                    $file_type = 'object';
+            }
+            array_push($res_info,['caption'=>$file_name[1],'downloadUrl'=>'../prefile/'.$type.'/'.$value,'key'=>$value,'size'=>$imgInfo,'type'=>$file_type,'filetype'=>$filetype]);   //组合对象数组
         }
         $res['img_info'] = $res_info;
     }
@@ -2356,10 +2382,12 @@ class PreSave extends Base
     //测试
     public function ceshi()
     {
-        dump('ddddd');
 
-
-
+        $str="xxx/aaa/bbb/cccc/ddd";
+        $arr=explode("/", $str);
+//获取最后一个/后边的字符
+        $last=$arr[count($arr)-1];
+        dump($last);
 
     }
 

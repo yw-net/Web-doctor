@@ -77,7 +77,7 @@ class Api extends Base
     public function searchPatient(){
         $patients = $this->request->param('inputinfo');
         $result = Db::table('patients')
-            ->where('patients_name',$patients)->whereOr('hospital_id',$patients)->whereOr('patients_id',$patients)
+            ->where('patients_name|hospital_id|patients_id','like','%'.$patients.'%')
             ->select();
         return ["code"=>"0","msg"=>"","data"=>$result];
     }

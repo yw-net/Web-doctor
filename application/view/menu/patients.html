@@ -135,7 +135,6 @@
                                     </div>
                                 </blockquote>
                             </div>
-
                             <script type="text/javascript">
                                  $(function(){
                                      $("#city").citySelect({
@@ -221,6 +220,15 @@
                             </div>
                             <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
                                 <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
+                                    <label class="col-sm-4">住院天数</label>
+                                    <div class="input-group flex-row-start">
+                                        <input size="16" type="text" class="form-control input-sm" id="hospitalDate" name="hospitaldate" value="{$patients_name[0]['hospital_date']}">
+                                        <span class="input-group-addon" style="width: 40px">天</span>
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="form-group layui-col-md6" style="margin-bottom: 5px!important;margin-left: 0;margin-right: 0;height: 42px">
+                                <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
                                     <label class="col-sm-4">离院去向</label>
                                     <div class="input-group flex-row-start">
                                         <input type="text" class="form-control input-sm" id="outHospitalTo" placeholder="" name="outto" value="{$patients_name[0]['hospital_out_to']}">
@@ -247,6 +255,7 @@
         </div>
     </div>
 </div>
+<!--民族下拉选项框-->
 <script>
     window.onload = function(){
         $('#dblist-top').addClass('active');
@@ -272,6 +281,60 @@
 
     }
 </script>
+<!--计算住院天数-->
+<script>
+    //date1和date2是2019-06-18格式
+    $('#hospitalDate').on('click',function () {
+        let in_hospital = $('#inputDateInHospital').val();
+        let out_hospital = $('#inputDateOutHospital').val();
+        let date1 = Date.parse(in_hospital);
+        let date2 = Date.parse(out_hospital);
+        var days= Math.abs(date2 - date1);
+        $('#hospitalDate').val(days/24/3600/1000);
+    })
+
+</script>
+<!--根据身份证号判断籍贯、出生日期、性别、年龄-->
+<script type="text/javascript">
+    //给身份证文本框添加一个失去焦点事件：
+    $("#inputIdentityCard").blur(function() {
+        //获取身份证号码，例如：412702199301010000，这里不再判断身份证号是否合法
+        var idNumber = $("#inputIdentityCard").val();
+        //定义籍贯、出生日期、性别、年龄等变量
+        var provinces,province,birthday,currDate,month,date,age,sex;
+
+        //一、获取籍贯，由于数据量比较大，所以这里只获取到省：
+        //定义地区数组
+        provinces = { 11: "北京", 12: "天津", 13: "河北", 14: "山西", 15: "内蒙古", 21: "辽宁", 22: "吉林", 23: "黑龙江", 31: "上海", 32: "江苏", 33: "浙江", 34: "安徽", 35: "福建", 36: "江西", 37: "山东", 41: "河南", 42: "湖北", 43: "湖南", 44: "广东", 45: "广西", 46: "海南", 50: "重庆", 51: "四川", 52: "贵州", 53: "云南", 54: "西藏", 61: "陕西", 62: "甘肃", 63: "青海", 64: "宁夏", 65: "新疆", 71: "台湾", 81: "香港", 82: "澳门", 91: "国外" };
+        province = provinces[parseInt(idNumber.substr(0, 2))];
+        //二、出生日期
+        birthday = idNumber.substring(6, 10) + "-" + idNumber.substring(10, 12) + "-" + idNumber.substring(12, 14);
+        //三、计算年龄
+        currDate = new Date();
+        month = currDate.getMonth() + 1;
+        date = currDate.getDate();
+        age = currDate.getFullYear() - idNumber.substring(6, 10) - 1;
+        //判断年龄
+        if (idNumber.substring(10, 12) < month || (idNumber.substring(10, 12) == month && idNumber.substring(12, 14) <= date)) {
+            age++;
+        }
+        //四、获取性别
+        if (parseInt(idNumber.substr(16, 1)) % 2 == 1) {
+            //男
+            sex = '1';
+        } else {
+            //女
+            sex = "0";
+        }
+
+        //赋值
+        // $(".prov").val(province); //省份由于采用了插件无法对接所以没有自动进行判定
+        $("#inputDate").val(birthday);
+        $("#inputAge").val(age);
+        $("input[name='RadioSex'][type=radio][value='" + sex + "']").attr("checked", true);
+    });
+</script>
+
 <script>
     //保存成功弹窗
     $("#savepatients").click(function(){

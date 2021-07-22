@@ -1,6 +1,6 @@
 {include file="public/meta" /}
 {include file="public/nav" /}
-<style>
+<style xmlns="http://www.w3.org/1999/html">
     .layui-form-item{margin-bottom: 0;margin-top: 10px;}
     .label-font{width: 150px;font-size: 16px;font-weight: bolder;color: #3c763d;}
     .control-label{text-align: left!important;}
@@ -109,13 +109,13 @@
                                             <label class="col-sm-3" style="margin-top: 10px">
                                                 <input name="check_xiongneifeibiaoxian" type="checkbox" value="肩痛" <?php if($zhengzhuang_info != null)if(strstr($zhengzhuang_info->check_xiongneifeibiaoxian,'肩痛')) echo 'checked="checked"'; ?> />肩痛
                                             </label>
-                                            <label class="col-sm-3" style="margin-top: 10px">
+                                            <label class="col-sm-3" style="margin-top: 10px;margin-bottom: 10px">
                                                 <input name="check_xiongneifeibiaoxian" type="checkbox" value="发热" <?php if($zhengzhuang_info != null)if(strstr($zhengzhuang_info->check_xiongneifeibiaoxian,'发热')) echo 'checked="checked"'; ?> />发热
                                             </label>
 
-                                            <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
+                                            <div class="input-group col-sm-12">
                                                 <span class="input-group-addon">其他</span>
-                                                <input type="text" class="form-control input-sm" name="other_xiongneifeibiaoxian" value="{$zhengzhuang_info ==null ? :$zhengzhuang_info->other_xiongneifeibiaoxian}" />
+                                                <textarea type="text" class="form-control input-sm" name="other_xiongneifeibiaoxian">{$zhengzhuang_info ==null ? :$zhengzhuang_info->other_xiongneifeibiaoxian}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -140,12 +140,12 @@
                                             <label class="col-sm-3" style="margin-top: 10px">
                                                 <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="腔静脉压迫" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongneifeiwaibiaoxian,'腔静脉压迫')) echo 'checked="checked"'; ?> />腔静脉压迫
                                             </label>
-                                            <label class="col-sm-3" style="margin-top: 10px">
+                                            <label class="col-sm-3" style="margin-top: 10px;margin-bottom: 10px">
                                                 <input name="check_xiongneifeiwaibiaoxian" type="checkbox" value="颈交感压迫" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongneifeiwaibiaoxian,'颈交感压迫')) echo 'checked="checked"'; ?> />颈交感压迫
                                             </label>
-                                            <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
+                                            <div class="input-group col-sm-12">
                                                 <span class="input-group-addon">其他</span>
-                                                <input type="text" class="form-control input-sm" name="other_xiongneifeiwaibiaoxian" value="{$zhengzhuang_info==null?:$zhengzhuang_info->other_xiongneifeiwaibiaoxian}" />
+                                                <textarea type="text" class="form-control input-sm" name="other_xiongneifeiwaibiaoxian">{$zhengzhuang_info==null?:$zhengzhuang_info->other_xiongneifeiwaibiaoxian}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -191,12 +191,12 @@
                                             <label class="col-sm-3" style="margin-top: 10px">
                                                 <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="黑色棘皮病" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'黑色棘皮病')) echo 'checked="checked"'; ?> />黑色棘皮病
                                             </label>
-                                            <label class="col-sm-3" style="margin-top: 10px">
+                                            <label class="col-sm-3" style="margin-top: 10px; margin-bottom: 10px">
                                                 <input name="check_xiongwaifeizhuanyibiaoxian" type="checkbox" value="呼吸睡眠暂停综合征" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaifeizhuanyibiaoxian,'呼吸睡眠暂停综合征')) echo 'checked="checked"'; ?> />呼吸睡眠暂停综合征
                                             </label>
-                                            <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
+                                            <div class="input-group col-sm-12">
                                                 <span class="input-group-addon">其他</span>
-                                                <input type="text" class="form-control input-sm" name="other_xiongwaifeizhuanyibiaoxian" value="{$zhengzhuang_info==null ? :$zhengzhuang_info->other_xiongwaifeizhuanyibiaoxian}" />
+                                                <textarea type="text" class="form-control input-sm" name="other_xiongwaifeizhuanyibiaoxian">{$zhengzhuang_info==null ? :$zhengzhuang_info->other_xiongwaifeizhuanyibiaoxian}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -234,12 +234,12 @@
                                             <label class="col-sm-3" style="margin-top: 10px">
                                                 <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="皮下结节" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaizhuanyibiaoxian,'皮下结节')) echo 'checked="checked"'; ?> />皮下结节
                                             </label>
-                                            <label class="col-sm-3" style="margin-top: 10px">
+                                            <label class="col-sm-3" style="margin-top: 10px;margin-bottom: 10px">
                                                 <input name="check_xiongwaizhuanyibiaoxian" type="checkbox" value="黄疸" <?php if ($zhengzhuang_info!=null) if(strstr($zhengzhuang_info->check_xiongwaizhuanyibiaoxian,'黄疸')) echo 'checked="checked"'; ?> />黄疸
                                             </label>
-                                            <div class="input-group" style="width: 240px; margin-top: 10px;display: inline-table">
+                                            <div class="input-group col-sm-12">
                                                 <span class="input-group-addon">其他</span>
-                                                <input type="text" class="form-control input-sm" name="other_xiongwaizhuanyibiaoxian" value="{$zhengzhuang_info==null?:$zhengzhuang_info->other_xiongwaizhuanyibiaoxian}" />
+                                                <textarea type="text" class="form-control input-sm" name="other_xiongwaizhuanyibiaoxian">{$zhengzhuang_info==null?:$zhengzhuang_info->other_xiongwaizhuanyibiaoxian}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -526,8 +526,8 @@
                                 <div class="form-group layui-col-md12" style="margin-bottom: 0!important;">
                                     <blockquote class="layui-elem-quote layui-quote-nm"style="padding: 5px;font-size: 15px">
                                         <label class="col-sm-2">其他</label>
-                                        <div class="input-group col-sm-6">
-                                            <input type="text" class="form-control input-sm" name="other" value="{$tizheng_info==null?:$tizheng_info->other}" />
+                                        <div class="input-group col-sm-10">
+                                            <textarea type="text" class="form-control input-sm" name="other">{$tizheng_info==null?:$tizheng_info->other}</textarea>
                                         </div>
                                     </blockquote>
                                 </div>
