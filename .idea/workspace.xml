@@ -2,30 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6cc34fa4-e766-408e-968d-6289f4a5b782" name="Default Changelist" comment="Initial commit">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/controller/Api.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controller/Api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/controller/Menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controller/Menu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/controller/PreSave.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controller/PreSave.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/controller/Query.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controller/Query.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/controller/Save.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controller/Save.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/index/patients_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/index/patients_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/follow.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/follow.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/history.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/history.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/patients.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/patients.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/postoperative_complications.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/postoperative_complications.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/postoperative_pathology.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/postoperative_pathology.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/preoperative.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/preoperative.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/referral.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/referral.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/surgical_information.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/surgical_information.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/menu/symptomatic.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/menu/symptomatic.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/public/template/postoperativePathologyModel.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/public/template/postoperativePathologyModel.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/public/template/preoperativeModel.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/public/template/preoperativeModel.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/public/template/referralModel.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/public/template/referralModel.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/public/template/surgicalInfoModel.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/public/template/surgicalInfoModel.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/view/query/patients_query.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/view/query/patients_query.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/js/fileRander.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/fileRander.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +148,8 @@
       <workItem from="1625105472714" duration="20431000" />
       <workItem from="1625473877166" duration="71221000" />
       <workItem from="1626750897507" duration="1320000" />
-      <workItem from="1626919829020" duration="440000" />
+      <workItem from="1626919829020" duration="502000" />
+      <workItem from="1626939377063" duration="359000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1620300178435</created>
@@ -320,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625472354479</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Initial commit">
+      <created>1626938511827</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1626938511827</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
