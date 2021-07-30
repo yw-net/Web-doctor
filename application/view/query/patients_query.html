@@ -1,13 +1,14 @@
 {include file="public/meta" /}
 {include file="public/nav" /}
+
 <script type="text/javascript" src="http://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/js/bootstrap-select.js"></script>
 <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/css/bootstrap-select.css">
 <style>
-    .layui-form-label{width: 120px;}
     .bootstrap-select .dropdown-menu {
         top: 36px !important;
     }
 </style>
+
 <script type="text/javascript">
     $(window).on('load', function () {
 
@@ -17,7 +18,8 @@
 
     });
 </script>
-<!--高级查询页面-->
+
+<!--高级查询页面框架-->
 <div class="content-empty layui-fluid">
     <div class="content-text">
         <div class="panel panel-info" style="min-height: 550px;overflow-y: scroll;">
@@ -145,7 +147,6 @@
         </div>
     </div>
 </div>
-
 
 <!--为当前选中页面添加背景-->
 <script>
@@ -283,8 +284,6 @@
                 //where关系组合-精确查询
                 where_items += ' ' + jsonData['inputOne'+i] + ' ' + jsonData['bijiaofu'+i] + ' ' + '"'+jsonData['inputTwo'+i]+'"' + ' '+jsonData['guanxi'+(i)]
             }
-
-
 
         }
 
@@ -1386,8 +1385,8 @@
 </script>
 <!--表格右侧功能按钮-->
 <script type="text/html" id="toolbar">
-    <div class="flex-row-start">
-        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit" style="text-decoration: none;display: block;padding: 2px;height: 25px;line-height: 20px;border-radius: 2px;width: 70px;font-weight: 500">编辑｜查看</a>
+    <div class="yw-flex-row-center">
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit"  style="font-weight: 500;height: 28px;line-height: 28px;text-decoration: none">编辑｜查看</a>
     </div>
 </script>
 <!--表格样式（性别）-->

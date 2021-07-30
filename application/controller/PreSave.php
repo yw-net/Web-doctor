@@ -223,7 +223,6 @@ class PreSave extends Base
     }
 
 
-
     //更新、新增血常规信息
     public function xueChangGuiSaveNew(){
         //数据处理-获取表单数据
@@ -2382,12 +2381,19 @@ class PreSave extends Base
     //测试
     public function ceshi()
     {
+        $res_t= [];
 
-        $str="xxx/aaa/bbb/cccc/ddd";
-        $arr=explode("/", $str);
-//获取最后一个/后边的字符
-        $last=$arr[count($arr)-1];
-        dump($last);
+        $res=Db::query('SELECT * FROM Surgical_info_zhongwu  WHERE zhongwu_name <> "1"') ;
+        dump($res);
+        for ($i=0;$i < count($res);$i++){
+            $patients_id = $res[$i]['patients_id'];
+            dump($res[$i]['patients_id']);
+            $res_patients = Db::table('patients')->where('patients_id',$patients_id)->find();
+            dump($res_patients);
+            array_push($res_t,$res_patients);
+        }
+        $count=count($res_t);
+        dump(["code"=>"0","msg"=>"","count"=>$count,"data"=>$res_t]) ;
 
     }
 

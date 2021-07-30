@@ -1,12 +1,6 @@
 {include file="public/meta" /}
 {include file="public/nav" /}
 
-<style>
-    .img-rounded{display: block;width: 150px;height: 150px;margin-top: 30px;margin-right: 40px;border: 1px solid #1a3424;border-radius: 2px}
-    .layui-table-tool{background-color: #dff0d8;}
-    .layui-form-label{width: 100px;}
-</style>
-
 <!--后台管理主页面-->
 <div class="content-empty layui-fluid">
     <div class="content-text">
@@ -23,7 +17,6 @@
         </form>
     </div>
 </div>
-
 
 <!--添加/编辑用户弹出层模版-->
 <script type="text/html" id="editUser">
@@ -166,13 +159,13 @@
 
 <!--表格右侧功能按钮-->
 <script type="text/html" id="toolbar">
-    <div class="flex-row-start">
-        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit" style="text-decoration: none;display: block;padding: 2px;height: 25px;line-height: 20px;border-radius: 2px;width: 70px;font-weight: 500">编辑｜查看</a>
+    <div class="yw-flex-row-center">
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit" style="font-weight: 500;height: 28px;line-height: 28px;text-decoration: none">编辑｜查看</a>
         <!--不能删除当前用户-->
         {{#  if(d.userid == {:session('user_id')}){ }}
-        <a class="layui-btn layui-btn-normal layui-btn-disabled" style="text-decoration: none;display: block;height: 25px;line-height: 20px;border-radius: 2px;width: 25px;"><i class="layui-icon layui-icon-delete" style="margin:0 -8px;font-weight: 600"></i></a>
+        <a class="layui-btn layui-btn-normal layui-btn-disabled" style="font-weight: 500;height: 28px;line-height: 26px;text-decoration: none"><i class="layui-icon layui-icon-delete" style="margin-right: 0;font-size: 18px!important;"></i></a>
         {{#  } else { }}
-        <a class="layui-btn layui-btn-normal layui-btn-danger" lay-event="del" style="text-decoration: none;display: block;height: 25px;line-height: 20px;border-radius: 2px;width: 25px"><i class="layui-icon layui-icon-delete" style="margin:0 -8px;font-weight: 600"></i></a>
+        <a class="layui-btn layui-btn-normal layui-btn-danger" lay-event="del" style="font-weight: 500;height: 28px;line-height: 26px;text-decoration: none"><i class="layui-icon layui-icon-delete" style="margin-right: 0;font-size: 18px!important;"></i></a>
         {{#  } }}
     </div>
 
@@ -261,7 +254,7 @@
             ,cols: [[
                 {field:'userid', title:'系统ID', width:100,hide:true,sort: true}
                 ,{field:'face_img', title:'用户头像',width:120,templet:'#imgTemplet',align:'center'}
-                ,{field:'name', title:'用户名', width:100}
+                ,{field:'name', title:'用户名'}
                 ,{field:'user_age', title:'年龄',sort:true,hide:true,width:80,align:'center'}
                 ,{field:'user_sex', title:'性别',sort: true,width:80,templet:'#sexTemplet',align:'center'}
                 ,{field:'password', title:'密码',hide:true,width:120}

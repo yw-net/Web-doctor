@@ -169,7 +169,7 @@ class Api extends Base
         if($info)
         {
             $url = "../static/upload/userhead/".$info->getSaveName();
-            return  json_encode(['status'=>100,'message'=>'上传成功,点击提交后保存','url'=>$url]);
+            return  json_encode(['status'=>100,'message'=>'上传成功,保存修改后生效','url'=>$url]);
         }
         else
         {

@@ -683,17 +683,4 @@ class Menu extends Base
         return $this->fetch();
     }
 
-    //测试
-    public function ceshi(){
-        $patientsid = 1000088;
-        //查询数据库-化疗
-        $res_hualiao = Complementary_treatment_hualiao::where('patients_id',$patientsid)->order('hualiao_id','desc')->select();
-        //查询数据库-放疗
-        $res_fangliao = Complementary_treatment_fangliao::where('patients_id',$patientsid)->order('fangliao_id','desc')->select();
-        dump($res_hualiao);
-        dump($res_fangliao);
-
-
-
-    }
 }

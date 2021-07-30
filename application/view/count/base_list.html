@@ -4,12 +4,6 @@
 
 <!--患者基本信息报表页面-->
 
-<style>
-    .yw-select{width: 250px;}
-    .flex-row{display: flex;justify-content: flex-start;flex-direction: row;}
-
-</style>
-
 <!--导入图形报表js文件-->
 <script src="/static/js/echarts.min.js"></script>
 <script src="/static/js/china.js"></script>
@@ -28,9 +22,9 @@
                     </div>
                     <div class="panel-body">
                         <!--下拉框-->
-                        <div class="flex-row">
+                        <div class="flex-row-start">
                             <!--类别查询框-->
-                            <div class="layui-form-item yw-select">
+                            <div class="layui-form-item" style="width: 250px">
                                 <div class="flex-row-start" style="width: 200px;">
                                     <span class="input-group-addon" style="width: 100px;margin-right: -1px;line-height: 24px">
                                             选择类别
@@ -53,7 +47,7 @@
                                 </div>
                             </div>
                             <!--管理员医生查询框-->
-                            <div class="layui-form-item yw-select hide" id="chooseDoctor">
+                            <div class="layui-form-item hide" id="chooseDoctor" style="width: 250px">
                                 <div class="flex-row-start" style="width: 200px;">
                                     <span class="input-group-addon" style="width: 100px;margin-right: -1px;line-height: 24px">
                                             选择医生
@@ -69,12 +63,12 @@
                         </div>
 
                         <!--图形界面-->
-                        <div id="dbList">
-                            <div id="sex" style="width: 600px;height:400px;" class="show"></div>
-                            <div id="age" style="width: 600px;height:400px;" class="hide"></div>
-                            <div id="nat" style="width: 600px;height:400px;" class="hide"></div>
-                            <div id="sed" style="width: 600px;height:400px;" class="hide"></div>
-                            <div id="io" style="width: 800px;height:580px;" class="hide"></div>
+                        <div id="dbList" class="yw-box-shadow">
+                            <div id="sex" style="width: 600px;height:400px;margin: 0 auto" class="show"></div>
+                            <div id="age" style="width: 600px;height:400px;margin: 0 auto" class="hide"></div>
+                            <div id="nat" style="width: 600px;height:400px;margin: 0 auto" class="hide"></div>
+                            <div id="sed" style="width: 600px;height:400px;margin: 0 auto" class="hide"></div>
+                            <div id="io" style="width: 800px;height:580px;margin: 0 auto" class="hide"></div>
                             <table>
                                 <tr>
                                     <td>
@@ -205,12 +199,12 @@
 
 <!--表格右侧功能按钮-->
 <script type="text/html" id="toolbar">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑/查看</a>
+    <a class="layui-btn layui-btn-sm layui-btn-normal" lay-event="edit"  style="font-weight: 500;height: 28px;line-height: 28px;text-decoration: none">编辑｜查看</a>
     <!--不能删除当前用户-->
     {{#  if(d.userid == {:session('user_id')}){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-disabled">删除</a>
+    <a class="layui-btn layui-btn-xs layui-btn-disabled" style="font-weight: 500;height: 28px;line-height: 26px;text-decoration: none"><i class="layui-icon layui-icon-delete" style="margin-right: 0;font-size: 18px!important;"></i></a>
     {{#  } else { }}
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="font-weight: 500;height: 28px;line-height: 26px;text-decoration: none"><i class="layui-icon layui-icon-delete" style="margin-right: 0;font-size: 18px!important;"></i></a>
     {{#  } }}
 </script>
 
@@ -655,9 +649,9 @@
                 ],
                 color: [
                       '#5475f5'
-                    , '#9feaa5'
                     , '#85daef'
-                    , '#00cc69']
+                    , '#00cc69'
+                    , '#9feaa5']
             },
 
             //配置属性
