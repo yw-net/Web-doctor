@@ -199,13 +199,8 @@
 
 <!--表格右侧功能按钮-->
 <script type="text/html" id="toolbar">
-    <a class="layui-btn layui-btn-sm layui-btn-normal" lay-event="edit"  style="font-weight: 500;height: 28px;line-height: 28px;text-decoration: none">编辑｜查看</a>
-    <!--不能删除当前用户-->
-    {{#  if(d.userid == {:session('user_id')}){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-disabled" style="font-weight: 500;height: 28px;line-height: 26px;text-decoration: none"><i class="layui-icon layui-icon-delete" style="margin-right: 0;font-size: 18px!important;"></i></a>
-    {{#  } else { }}
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="font-weight: 500;height: 28px;line-height: 26px;text-decoration: none"><i class="layui-icon layui-icon-delete" style="margin-right: 0;font-size: 18px!important;"></i></a>
-    {{#  } }}
+    <a class="layui-btn layui-btn-sm layui-btn-normal" lay-event="edit"  style="font-weight: 500;height: 26px;line-height: 28px;text-decoration: none">编辑｜查看</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="font-weight: 500;height: 26px;line-height: 26px;text-decoration: none;padding: 0 5px"><i class="layui-icon layui-icon-delete" style="margin-right: 0;font-size: 19px!important;"></i></a>
 </script>
 
 <!--表格样式（性别）-->

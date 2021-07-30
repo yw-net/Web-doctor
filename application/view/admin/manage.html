@@ -151,10 +151,10 @@
     <div class="layui-inline">
         <input class="layui-input" name="reload" id="reload" autocomplete="off" placeholder="请输入用户名或医生姓名" style="width: 300px;height: 30px;">
     </div>
-    <button type="button" class="layui-btn layui-btn-sm" data-type="search" id="search" style="line-height: 15px;"><i class="layui-icon">&#xe615;</i>查询</button>
-    <button type="button" class="layui-btn layui-btn-sm layui-btn-warm" onclick="javascript:location.reload();"><i class="layui-icon">&#xe669;</i>刷新</button>
-    <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" lay-event="addNewUser"><i class="layui-icon">&#xe654;</i>创建新用户</button>
-    <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" lay-event="clearPhoto"><i class="layui-icon">&#xe640;</i>清理冗余头像图片</button>
+    <button type="button" class="layui-btn layui-btn-sm" data-type="search" id="search" style="line-height: 15px;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;查询</button>
+    <button type="button" class="layui-btn layui-btn-sm layui-btn-warm" onclick="javascript:location.reload();"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>&nbsp;刷新</button>
+    <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" lay-event="addNewUser"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>&nbsp;创建新用户</button>
+    <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" lay-event="clearPhoto"><span class="glyphicon glyphicon-floppy-remove" aria-hidden="true"></span>&nbsp;清理冗余头像图片</button>
 </script>
 
 <!--表格右侧功能按钮-->
@@ -163,9 +163,9 @@
         <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit" style="font-weight: 500;height: 28px;line-height: 28px;text-decoration: none">编辑｜查看</a>
         <!--不能删除当前用户-->
         {{#  if(d.userid == {:session('user_id')}){ }}
-        <a class="layui-btn layui-btn-normal layui-btn-disabled" style="font-weight: 500;height: 28px;line-height: 26px;text-decoration: none"><i class="layui-icon layui-icon-delete" style="margin-right: 0;font-size: 18px!important;"></i></a>
+        <a class="layui-btn layui-btn-normal layui-btn-disabled" style="font-weight: 500;height: 28px;line-height: 26px;text-decoration: none;padding: 0 5px"><i class="layui-icon layui-icon-delete" style="margin-right: 0;font-size: 19px!important;"></i></a>
         {{#  } else { }}
-        <a class="layui-btn layui-btn-normal layui-btn-danger" lay-event="del" style="font-weight: 500;height: 28px;line-height: 26px;text-decoration: none"><i class="layui-icon layui-icon-delete" style="margin-right: 0;font-size: 18px!important;"></i></a>
+        <a class="layui-btn layui-btn-normal layui-btn-danger" lay-event="del" style="font-weight: 500;height: 28px;line-height: 26px;text-decoration: none;padding: 0 5px"><i class="layui-icon layui-icon-delete" style="margin-right: 0;font-size: 19px!important;"></i></a>
         {{#  } }}
     </div>
 
